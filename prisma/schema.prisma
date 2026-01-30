@@ -9,18 +9,337 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id                        Int      @id @default(autoincrement())
-  email                     String   @unique
-  
-  password                  String?  
-  provider                  String   @default("local")
-  providerId                String?
-  refreshTokenHash          String?  @db.Text 
+//////////////////////////////////////////////////////
+// USER
+//////////////////////////////////////////////////////
 
-  firstName                 String?
-  lastName                  String?
-  
-  createdAt                 DateTime @default(now())
-  updatedAt                 DateTime @updatedAt
+model User {
+  id            String   @id @default(cuid())
+  name          String?
+  email         String   @unique
+  profileImage  String?
+  level         Int      @default(1)
+  exp           Int      @default(0)
+  streakDays    Int      @default(0)
+  lastLoginAt   DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  storyProgress     StoryProgress[]
+  episodeProgress   EpisodeProgress[]
+  dialogueBookmarks   dialogueBookmark[]
+  masteryProgress   MasteryProgress[]
+  savedExpressions  SavedExpression[]
+  characterFriends  CharacterFriend[]
+  characterMessages CharacterMessage[]
+  sentMessages      Message[] @relation("SentMessages")
+  receivedMessages  Message[] @relation("ReceivedMessages")
+}
+
+//////////////////////////////////////////////////////
+// STORY SYSTEM
+//////////////////////////////////////////////////////
+
+model Story {
+  id          String   @id @default(cuid())
+  title       String
+  koreanTitle String?
+  category    String
+  icon        String
+  difficulty  Int      @default(1)
+  description String?
+  coverImage  String?
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  episodes    Episode[]
+  characters  StoryCharacter[]
+  progress    StoryProgress[]
+}
+
+model Episode {
+  id          String   @id @default(cuid())
+  storyId     String
+  title       String
+  KoreanTitle String?
+  order       Int
+  description String?
+  koreanDescription String?
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  story       Story        @relation(fields: [storyId], references: [id])
+  scenes      Scene[]
+  rewards     EpisodeReward[]
+  progress    EpisodeProgress[]
+
+  @@unique([storyId, order])
+}
+
+model Scene {
+  id          String   @id @default(cuid())
+  episodeId   String
+  title       String
+  koreanTitle String?
+  order       Int
+  bgImageUrl  String?
+  audioUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  episode     Episode @relation(fields: [episodeId], references: [id])
+  dialogues     dialogue[]
+
+  @@unique([episodeId, order])
+}
+
+model dialogue {
+  id             String   @id @default(cuid())
+  sceneId        String
+  order          Int
+  type           String   @default("dialogue")
+  characterName  String?
+  characterId    String?
+  englishText    String
+  koreanText     String
+  charImageLabel String?
+  imageUrl       String?
+  audioUrl       String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  scene          Scene      @relation(fields: [sceneId], references: [id])
+  character      Character?  @relation(fields: [characterId], references: [id])
+
+  bookmarks      dialogueBookmark[]
+
+  @@unique([sceneId, order])
+}
+
+//////////////////////////////////////////////////////
+// STORY PROGRESS
+//////////////////////////////////////////////////////
+
+model StoryProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  storyId     String
+  progressPct Float    @default(0)
+  isCompleted Boolean  @default(false)
+  updatedAt   DateTime @updatedAt
+
+  user        User  @relation(fields: [userId], references: [id])
+  story       Story @relation(fields: [storyId], references: [id])
+
+  @@unique([userId, storyId])
+}
+
+model EpisodeProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  episodeId   String
+  isCompleted Boolean  @default(false)
+  completedAt DateTime?
+  createdAt   DateTime @default(now())
+
+  user        User    @relation(fields: [userId], references: [id])
+  episode     Episode @relation(fields: [episodeId], references: [id])
+
+  @@unique([userId, episodeId])
+}
+
+//////////////////////////////////////////////////////
+// CHARACTER SYSTEM
+//////////////////////////////////////////////////////
+
+model Character {
+  id           String   @id @default(cuid())
+  name         String
+  koreanName   String?
+  avatarImage  String?
+  mainImage    String?
+  description  String
+  personality  String?
+  aiPrompt     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  images        CharacterImage[]
+  dialogues       dialogue[]
+  storyLinks    StoryCharacter[]
+  friends       CharacterFriend[]
+  messages      CharacterMessage[]
+}
+
+model CharacterImage {
+  id          String   @id @default(cuid())
+  characterId String
+  imageUrl    String
+  label       String?   // e.g., "happy", "angry", "sad", "neutral"
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  character   Character @relation(fields: [characterId], references: [id])
+}
+
+model StoryCharacter {
+  id          String   @id @default(cuid())
+  storyId     String
+  characterId String?
+  name        String?
+  isMain      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  story       Story     @relation(fields: [storyId], references: [id])
+  character   Character? @relation(fields: [characterId], references: [id])
+
+  @@unique([storyId, characterId])
+}
+
+//////////////////////////////////////////////////////
+// CHARACTER FRIEND SYSTEM (USER ↔ CHARACTER)
+//////////////////////////////////////////////////////
+
+model CharacterFriend {
+  id           String   @id @default(cuid())
+  userId       String
+  characterId  String
+  affinity     Int      @default(0)
+  isUnlocked   Boolean  @default(false)
+  unlockedAt   DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user         User      @relation(fields: [userId], references: [id])
+  character    Character @relation(fields: [characterId], references: [id])
+
+  @@unique([userId, characterId])
+}
+
+//////////////////////////////////////////////////////
+// CHARACTER CHAT SYSTEM
+//////////////////////////////////////////////////////
+
+model CharacterMessage {
+  id          String   @id @default(cuid())
+  userId      String
+  characterId String
+  content     String
+  isFromUser  Boolean
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User      @relation(fields: [userId], references: [id])
+  character   Character @relation(fields: [characterId], references: [id])
+}
+
+//////////////////////////////////////////////////////
+// dialogue BOOKMARK SYSTEM
+//////////////////////////////////////////////////////
+
+model dialogueBookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  dialogueId  String
+  createdAt DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user      User   @relation(fields: [userId], references: [id])
+  dialogue    dialogue @relation(fields: [dialogueId], references: [id])
+
+  @@unique([userId, dialogueId])
+}
+
+//////////////////////////////////////////////////////
+// EPISODE REWARD SYSTEM
+//////////////////////////////////////////////////////
+
+model EpisodeReward {
+  id         String   @id @default(cuid())
+  episodeId  String
+  type       RewardType
+  payload    Json
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  episode    Episode @relation(fields: [episodeId], references: [id])
+}
+
+enum RewardType {
+  EXP
+  CHARACTER_UNLOCK
+  ITEM
+}
+
+//////////////////////////////////////////////////////
+// MASTERY SYSTEM (REVIEW / SRS)
+//////////////////////////////////////////////////////
+
+model MasteryLevel {
+  id          Int      @id @default(autoincrement())
+  title       String
+  color       String
+
+  expressions Expression[]
+  progress    MasteryProgress[]
+}
+
+model Expression {
+  id             String   @id @default(cuid())
+  masteryLevelId Int
+  english        String
+  korean         String
+  detail         String?
+
+  level          MasteryLevel @relation(fields: [masteryLevelId], references: [id])
+  savedBy        SavedExpression[]
+}
+
+model MasteryProgress {
+  id             String   @id @default(cuid())
+  userId         String
+  masteryLevelId Int
+  progressPct    Int      @default(0)
+  lastReviewedAt DateTime @default(now())
+  nextReviewAt   DateTime
+
+  user           User         @relation(fields: [userId], references: [id])
+  level          MasteryLevel @relation(fields: [masteryLevelId], references: [id])
+
+  @@unique([userId, masteryLevelId])
+}
+
+model SavedExpression {
+  id           String   @id @default(cuid())
+  userId       String
+  expressionId String
+  createdAt    DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user         User       @relation(fields: [userId], references: [id])
+  expression   Expression @relation(fields: [expressionId], references: [id])
+
+  @@unique([userId, expressionId])
+}
+
+//////////////////////////////////////////////////////
+// USER ↔ USER CHAT SYSTEM
+//////////////////////////////////////////////////////
+
+model Message {
+  id          String   @id @default(cuid())
+  content     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  isRead      Boolean  @default(false)
+
+  senderId    String
+  receiverId  String
+
+  sender      User     @relation("SentMessages", fields: [senderId], references: [id])
+  receiver    User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
 }

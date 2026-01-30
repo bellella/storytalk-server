@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.0.1",
   "engineVersion": "f09f2815f091dbba658cdcd2264306d88bb5bda6",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id    Int    @id @default(autoincrement())\n  email String @unique\n\n  password         String?\n  provider         String  @default(\"local\")\n  providerId       String?\n  refreshTokenHash String? @db.Text\n\n  firstName String?\n  lastName  String?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n",
+  "inlineSchema": "generator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\n//////////////////////////////////////////////////////\n// USER\n//////////////////////////////////////////////////////\n\nmodel User {\n  id           String   @id @default(cuid())\n  name         String?\n  email        String   @unique\n  profileImage String?\n  level        Int      @default(1)\n  exp          Int      @default(0)\n  streakDays   Int      @default(0)\n  lastLoginAt  DateTime @default(now())\n  createdAt    DateTime @default(now())\n\n  storyProgress     StoryProgress[]\n  episodeProgress   EpisodeProgress[]\n  dialogueBookmarks dialogueBookmark[]\n  masteryProgress   MasteryProgress[]\n  savedExpressions  SavedExpression[]\n  characterFriends  CharacterFriend[]\n  characterMessages CharacterMessage[]\n  sentMessages      Message[]          @relation(\"SentMessages\")\n  receivedMessages  Message[]          @relation(\"ReceivedMessages\")\n}\n\n//////////////////////////////////////////////////////\n// STORY SYSTEM\n//////////////////////////////////////////////////////\n\nmodel Story {\n  id          String   @id @default(cuid())\n  title       String\n  koreanTitle String?\n  category    String\n  icon        String\n  difficulty  Int      @default(1)\n  description String?\n  coverImage  String?\n  isPublished Boolean  @default(false)\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  episodes   Episode[]\n  characters StoryCharacter[]\n  progress   StoryProgress[]\n}\n\nmodel Episode {\n  id                String   @id @default(cuid())\n  storyId           String\n  title             String\n  KoreanTitle       String?\n  order             Int\n  description       String?\n  koreanDescription String?\n  isPublished       Boolean  @default(false)\n  createdAt         DateTime @default(now())\n  updatedAt         DateTime @updatedAt\n\n  story    Story             @relation(fields: [storyId], references: [id])\n  scenes   Scene[]\n  rewards  EpisodeReward[]\n  progress EpisodeProgress[]\n\n  @@unique([storyId, order])\n}\n\nmodel Scene {\n  id          String   @id @default(cuid())\n  episodeId   String\n  title       String\n  koreanTitle String?\n  order       Int\n  bgImageUrl  String?\n  audioUrl    String?\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  episode   Episode    @relation(fields: [episodeId], references: [id])\n  dialogues dialogue[]\n\n  @@unique([episodeId, order])\n}\n\nmodel dialogue {\n  id             String   @id @default(cuid())\n  sceneId        String\n  order          Int\n  type           String   @default(\"dialogue\")\n  characterName  String?\n  characterId    String?\n  englishText    String\n  koreanText     String\n  charImageLabel String?\n  imageUrl       String?\n  audioUrl       String?\n  createdAt      DateTime @default(now())\n  updatedAt      DateTime @updatedAt\n\n  scene     Scene      @relation(fields: [sceneId], references: [id])\n  character Character? @relation(fields: [characterId], references: [id])\n\n  bookmarks dialogueBookmark[]\n\n  @@unique([sceneId, order])\n}\n\n//////////////////////////////////////////////////////\n// STORY PROGRESS\n//////////////////////////////////////////////////////\n\nmodel StoryProgress {\n  id          String   @id @default(cuid())\n  userId      String\n  storyId     String\n  progressPct Float    @default(0)\n  isCompleted Boolean  @default(false)\n  updatedAt   DateTime @updatedAt\n\n  user  User  @relation(fields: [userId], references: [id])\n  story Story @relation(fields: [storyId], references: [id])\n\n  @@unique([userId, storyId])\n}\n\nmodel EpisodeProgress {\n  id          String    @id @default(cuid())\n  userId      String\n  episodeId   String\n  isCompleted Boolean   @default(false)\n  completedAt DateTime?\n  createdAt   DateTime  @default(now())\n\n  user    User    @relation(fields: [userId], references: [id])\n  episode Episode @relation(fields: [episodeId], references: [id])\n\n  @@unique([userId, episodeId])\n}\n\n//////////////////////////////////////////////////////\n// CHARACTER SYSTEM\n//////////////////////////////////////////////////////\n\nmodel Character {\n  id          String   @id @default(cuid())\n  name        String\n  koreanName  String?\n  avatarImage String?\n  mainImage   String?\n  description String\n  personality String?\n  aiPrompt    String?\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  images     CharacterImage[]\n  dialogues  dialogue[]\n  storyLinks StoryCharacter[]\n  friends    CharacterFriend[]\n  messages   CharacterMessage[]\n}\n\nmodel CharacterImage {\n  id          String   @id @default(cuid())\n  characterId String\n  imageUrl    String\n  label       String? // e.g., \"happy\", \"angry\", \"sad\", \"neutral\"\n  isDefault   Boolean  @default(false)\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  character Character @relation(fields: [characterId], references: [id])\n}\n\nmodel StoryCharacter {\n  id          String   @id @default(cuid())\n  storyId     String\n  characterId String?\n  name        String?\n  isMain      Boolean  @default(true)\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  story     Story      @relation(fields: [storyId], references: [id])\n  character Character? @relation(fields: [characterId], references: [id])\n\n  @@unique([storyId, characterId])\n}\n\n//////////////////////////////////////////////////////\n// CHARACTER FRIEND SYSTEM (USER ↔ CHARACTER)\n//////////////////////////////////////////////////////\n\nmodel CharacterFriend {\n  id          String    @id @default(cuid())\n  userId      String\n  characterId String\n  affinity    Int       @default(0)\n  isUnlocked  Boolean   @default(false)\n  unlockedAt  DateTime?\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n\n  user      User      @relation(fields: [userId], references: [id])\n  character Character @relation(fields: [characterId], references: [id])\n\n  @@unique([userId, characterId])\n}\n\n//////////////////////////////////////////////////////\n// CHARACTER CHAT SYSTEM\n//////////////////////////////////////////////////////\n\nmodel CharacterMessage {\n  id          String   @id @default(cuid())\n  userId      String\n  characterId String\n  content     String\n  isFromUser  Boolean\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  user      User      @relation(fields: [userId], references: [id])\n  character Character @relation(fields: [characterId], references: [id])\n}\n\n//////////////////////////////////////////////////////\n// dialogue BOOKMARK SYSTEM\n//////////////////////////////////////////////////////\n\nmodel dialogueBookmark {\n  id         String   @id @default(cuid())\n  userId     String\n  dialogueId String\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n\n  user     User     @relation(fields: [userId], references: [id])\n  dialogue dialogue @relation(fields: [dialogueId], references: [id])\n\n  @@unique([userId, dialogueId])\n}\n\n//////////////////////////////////////////////////////\n// EPISODE REWARD SYSTEM\n//////////////////////////////////////////////////////\n\nmodel EpisodeReward {\n  id        String     @id @default(cuid())\n  episodeId String\n  type      RewardType\n  payload   Json\n  isActive  Boolean    @default(true)\n  createdAt DateTime   @default(now())\n  updatedAt DateTime   @updatedAt\n\n  episode Episode @relation(fields: [episodeId], references: [id])\n}\n\nenum RewardType {\n  EXP\n  CHARACTER_UNLOCK\n  ITEM\n}\n\n//////////////////////////////////////////////////////\n// MASTERY SYSTEM (REVIEW / SRS)\n//////////////////////////////////////////////////////\n\nmodel MasteryLevel {\n  id    Int    @id @default(autoincrement())\n  title String\n  color String\n\n  expressions Expression[]\n  progress    MasteryProgress[]\n}\n\nmodel Expression {\n  id             String  @id @default(cuid())\n  masteryLevelId Int\n  english        String\n  korean         String\n  detail         String?\n\n  level   MasteryLevel      @relation(fields: [masteryLevelId], references: [id])\n  savedBy SavedExpression[]\n}\n\nmodel MasteryProgress {\n  id             String   @id @default(cuid())\n  userId         String\n  masteryLevelId Int\n  progressPct    Int      @default(0)\n  lastReviewedAt DateTime @default(now())\n  nextReviewAt   DateTime\n\n  user  User         @relation(fields: [userId], references: [id])\n  level MasteryLevel @relation(fields: [masteryLevelId], references: [id])\n\n  @@unique([userId, masteryLevelId])\n}\n\nmodel SavedExpression {\n  id           String   @id @default(cuid())\n  userId       String\n  expressionId String\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n\n  user       User       @relation(fields: [userId], references: [id])\n  expression Expression @relation(fields: [expressionId], references: [id])\n\n  @@unique([userId, expressionId])\n}\n\n//////////////////////////////////////////////////////\n// USER ↔ USER CHAT SYSTEM\n//////////////////////////////////////////////////////\n\nmodel Message {\n  id        String   @id @default(cuid())\n  content   String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  isRead    Boolean  @default(false)\n\n  senderId   String\n  receiverId String\n\n  sender   User @relation(\"SentMessages\", fields: [senderId], references: [id])\n  receiver User @relation(\"ReceivedMessages\", fields: [receiverId], references: [id])\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"provider\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"providerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"refreshTokenHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"profileImage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"level\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"exp\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"streakDays\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"lastLoginAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"storyProgress\",\"kind\":\"object\",\"type\":\"StoryProgress\",\"relationName\":\"StoryProgressToUser\"},{\"name\":\"episodeProgress\",\"kind\":\"object\",\"type\":\"EpisodeProgress\",\"relationName\":\"EpisodeProgressToUser\"},{\"name\":\"dialogueBookmarks\",\"kind\":\"object\",\"type\":\"dialogueBookmark\",\"relationName\":\"UserTodialogueBookmark\"},{\"name\":\"masteryProgress\",\"kind\":\"object\",\"type\":\"MasteryProgress\",\"relationName\":\"MasteryProgressToUser\"},{\"name\":\"savedExpressions\",\"kind\":\"object\",\"type\":\"SavedExpression\",\"relationName\":\"SavedExpressionToUser\"},{\"name\":\"characterFriends\",\"kind\":\"object\",\"type\":\"CharacterFriend\",\"relationName\":\"CharacterFriendToUser\"},{\"name\":\"characterMessages\",\"kind\":\"object\",\"type\":\"CharacterMessage\",\"relationName\":\"CharacterMessageToUser\"},{\"name\":\"sentMessages\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"SentMessages\"},{\"name\":\"receivedMessages\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"ReceivedMessages\"}],\"dbName\":null},\"Story\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"koreanTitle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"icon\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"difficulty\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"coverImage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isPublished\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"episodes\",\"kind\":\"object\",\"type\":\"Episode\",\"relationName\":\"EpisodeToStory\"},{\"name\":\"characters\",\"kind\":\"object\",\"type\":\"StoryCharacter\",\"relationName\":\"StoryToStoryCharacter\"},{\"name\":\"progress\",\"kind\":\"object\",\"type\":\"StoryProgress\",\"relationName\":\"StoryToStoryProgress\"}],\"dbName\":null},\"Episode\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"storyId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"KoreanTitle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"order\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"koreanDescription\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isPublished\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"story\",\"kind\":\"object\",\"type\":\"Story\",\"relationName\":\"EpisodeToStory\"},{\"name\":\"scenes\",\"kind\":\"object\",\"type\":\"Scene\",\"relationName\":\"EpisodeToScene\"},{\"name\":\"rewards\",\"kind\":\"object\",\"type\":\"EpisodeReward\",\"relationName\":\"EpisodeToEpisodeReward\"},{\"name\":\"progress\",\"kind\":\"object\",\"type\":\"EpisodeProgress\",\"relationName\":\"EpisodeToEpisodeProgress\"}],\"dbName\":null},\"Scene\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"episodeId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"koreanTitle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"order\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"bgImageUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"audioUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"episode\",\"kind\":\"object\",\"type\":\"Episode\",\"relationName\":\"EpisodeToScene\"},{\"name\":\"dialogues\",\"kind\":\"object\",\"type\":\"dialogue\",\"relationName\":\"SceneTodialogue\"}],\"dbName\":null},\"dialogue\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sceneId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"order\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"characterName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"characterId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"englishText\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"koreanText\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"charImageLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"imageUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"audioUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"scene\",\"kind\":\"object\",\"type\":\"Scene\",\"relationName\":\"SceneTodialogue\"},{\"name\":\"character\",\"kind\":\"object\",\"type\":\"Character\",\"relationName\":\"CharacterTodialogue\"},{\"name\":\"bookmarks\",\"kind\":\"object\",\"type\":\"dialogueBookmark\",\"relationName\":\"dialogueTodialogueBookmark\"}],\"dbName\":null},\"StoryProgress\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"storyId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"progressPct\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"isCompleted\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"StoryProgressToUser\"},{\"name\":\"story\",\"kind\":\"object\",\"type\":\"Story\",\"relationName\":\"StoryToStoryProgress\"}],\"dbName\":null},\"EpisodeProgress\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"episodeId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isCompleted\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"completedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"EpisodeProgressToUser\"},{\"name\":\"episode\",\"kind\":\"object\",\"type\":\"Episode\",\"relationName\":\"EpisodeToEpisodeProgress\"}],\"dbName\":null},\"Character\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"koreanName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"avatarImage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"mainImage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"personality\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"aiPrompt\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"images\",\"kind\":\"object\",\"type\":\"CharacterImage\",\"relationName\":\"CharacterToCharacterImage\"},{\"name\":\"dialogues\",\"kind\":\"object\",\"type\":\"dialogue\",\"relationName\":\"CharacterTodialogue\"},{\"name\":\"storyLinks\",\"kind\":\"object\",\"type\":\"StoryCharacter\",\"relationName\":\"CharacterToStoryCharacter\"},{\"name\":\"friends\",\"kind\":\"object\",\"type\":\"CharacterFriend\",\"relationName\":\"CharacterToCharacterFriend\"},{\"name\":\"messages\",\"kind\":\"object\",\"type\":\"CharacterMessage\",\"relationName\":\"CharacterToCharacterMessage\"}],\"dbName\":null},\"CharacterImage\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"characterId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"imageUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"label\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isDefault\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"character\",\"kind\":\"object\",\"type\":\"Character\",\"relationName\":\"CharacterToCharacterImage\"}],\"dbName\":null},\"StoryCharacter\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"storyId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"characterId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isMain\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"story\",\"kind\":\"object\",\"type\":\"Story\",\"relationName\":\"StoryToStoryCharacter\"},{\"name\":\"character\",\"kind\":\"object\",\"type\":\"Character\",\"relationName\":\"CharacterToStoryCharacter\"}],\"dbName\":null},\"CharacterFriend\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"characterId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"affinity\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"isUnlocked\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"unlockedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CharacterFriendToUser\"},{\"name\":\"character\",\"kind\":\"object\",\"type\":\"Character\",\"relationName\":\"CharacterToCharacterFriend\"}],\"dbName\":null},\"CharacterMessage\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"characterId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isFromUser\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CharacterMessageToUser\"},{\"name\":\"character\",\"kind\":\"object\",\"type\":\"Character\",\"relationName\":\"CharacterToCharacterMessage\"}],\"dbName\":null},\"dialogueBookmark\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"dialogueId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserTodialogueBookmark\"},{\"name\":\"dialogue\",\"kind\":\"object\",\"type\":\"dialogue\",\"relationName\":\"dialogueTodialogueBookmark\"}],\"dbName\":null},\"EpisodeReward\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"episodeId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"RewardType\"},{\"name\":\"payload\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"episode\",\"kind\":\"object\",\"type\":\"Episode\",\"relationName\":\"EpisodeToEpisodeReward\"}],\"dbName\":null},\"MasteryLevel\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"color\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expressions\",\"kind\":\"object\",\"type\":\"Expression\",\"relationName\":\"ExpressionToMasteryLevel\"},{\"name\":\"progress\",\"kind\":\"object\",\"type\":\"MasteryProgress\",\"relationName\":\"MasteryLevelToMasteryProgress\"}],\"dbName\":null},\"Expression\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"masteryLevelId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"english\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"korean\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"detail\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"level\",\"kind\":\"object\",\"type\":\"MasteryLevel\",\"relationName\":\"ExpressionToMasteryLevel\"},{\"name\":\"savedBy\",\"kind\":\"object\",\"type\":\"SavedExpression\",\"relationName\":\"ExpressionToSavedExpression\"}],\"dbName\":null},\"MasteryProgress\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"masteryLevelId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"progressPct\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"lastReviewedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"nextReviewAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MasteryProgressToUser\"},{\"name\":\"level\",\"kind\":\"object\",\"type\":\"MasteryLevel\",\"relationName\":\"MasteryLevelToMasteryProgress\"}],\"dbName\":null},\"SavedExpression\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expressionId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SavedExpressionToUser\"},{\"name\":\"expression\",\"kind\":\"object\",\"type\":\"Expression\",\"relationName\":\"ExpressionToSavedExpression\"}],\"dbName\":null},\"Message\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"isRead\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"senderId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"receiverId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sender\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SentMessages\"},{\"name\":\"receiver\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ReceivedMessages\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -183,6 +183,186 @@ export interface PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.story`: Exposes CRUD operations for the **Story** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Stories
+    * const stories = await prisma.story.findMany()
+    * ```
+    */
+  get story(): Prisma.StoryDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.episode`: Exposes CRUD operations for the **Episode** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Episodes
+    * const episodes = await prisma.episode.findMany()
+    * ```
+    */
+  get episode(): Prisma.EpisodeDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.scene`: Exposes CRUD operations for the **Scene** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Scenes
+    * const scenes = await prisma.scene.findMany()
+    * ```
+    */
+  get scene(): Prisma.SceneDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.dialogue`: Exposes CRUD operations for the **dialogue** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Dialogues
+    * const dialogues = await prisma.dialogue.findMany()
+    * ```
+    */
+  get dialogue(): Prisma.dialogueDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.storyProgress`: Exposes CRUD operations for the **StoryProgress** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StoryProgresses
+    * const storyProgresses = await prisma.storyProgress.findMany()
+    * ```
+    */
+  get storyProgress(): Prisma.StoryProgressDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.episodeProgress`: Exposes CRUD operations for the **EpisodeProgress** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more EpisodeProgresses
+    * const episodeProgresses = await prisma.episodeProgress.findMany()
+    * ```
+    */
+  get episodeProgress(): Prisma.EpisodeProgressDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.character`: Exposes CRUD operations for the **Character** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Characters
+    * const characters = await prisma.character.findMany()
+    * ```
+    */
+  get character(): Prisma.CharacterDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.characterImage`: Exposes CRUD operations for the **CharacterImage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CharacterImages
+    * const characterImages = await prisma.characterImage.findMany()
+    * ```
+    */
+  get characterImage(): Prisma.CharacterImageDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.storyCharacter`: Exposes CRUD operations for the **StoryCharacter** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StoryCharacters
+    * const storyCharacters = await prisma.storyCharacter.findMany()
+    * ```
+    */
+  get storyCharacter(): Prisma.StoryCharacterDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.characterFriend`: Exposes CRUD operations for the **CharacterFriend** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CharacterFriends
+    * const characterFriends = await prisma.characterFriend.findMany()
+    * ```
+    */
+  get characterFriend(): Prisma.CharacterFriendDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.characterMessage`: Exposes CRUD operations for the **CharacterMessage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CharacterMessages
+    * const characterMessages = await prisma.characterMessage.findMany()
+    * ```
+    */
+  get characterMessage(): Prisma.CharacterMessageDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.dialogueBookmark`: Exposes CRUD operations for the **dialogueBookmark** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DialogueBookmarks
+    * const dialogueBookmarks = await prisma.dialogueBookmark.findMany()
+    * ```
+    */
+  get dialogueBookmark(): Prisma.dialogueBookmarkDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.episodeReward`: Exposes CRUD operations for the **EpisodeReward** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more EpisodeRewards
+    * const episodeRewards = await prisma.episodeReward.findMany()
+    * ```
+    */
+  get episodeReward(): Prisma.EpisodeRewardDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.masteryLevel`: Exposes CRUD operations for the **MasteryLevel** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MasteryLevels
+    * const masteryLevels = await prisma.masteryLevel.findMany()
+    * ```
+    */
+  get masteryLevel(): Prisma.MasteryLevelDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.expression`: Exposes CRUD operations for the **Expression** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Expressions
+    * const expressions = await prisma.expression.findMany()
+    * ```
+    */
+  get expression(): Prisma.ExpressionDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.masteryProgress`: Exposes CRUD operations for the **MasteryProgress** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MasteryProgresses
+    * const masteryProgresses = await prisma.masteryProgress.findMany()
+    * ```
+    */
+  get masteryProgress(): Prisma.MasteryProgressDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.savedExpression`: Exposes CRUD operations for the **SavedExpression** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SavedExpressions
+    * const savedExpressions = await prisma.savedExpression.findMany()
+    * ```
+    */
+  get savedExpression(): Prisma.SavedExpressionDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.message`: Exposes CRUD operations for the **Message** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Messages
+    * const messages = await prisma.message.findMany()
+    * ```
+    */
+  get message(): Prisma.MessageDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {

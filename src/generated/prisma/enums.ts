@@ -9,7 +9,10 @@
 * 🟢 You can import this file directly.
 */
 
+export const RewardType = {
+  EXP: 'EXP',
+  CHARACTER_UNLOCK: 'CHARACTER_UNLOCK',
+  ITEM: 'ITEM'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type RewardType = (typeof RewardType)[keyof typeof RewardType]

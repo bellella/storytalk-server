@@ -25,19 +25,19 @@ export class UsersController {
   /**
    * Returns the profile of the currently logged-in user.
    */
-  @Get('me')
-  getMe(@ReqUser('id') userId: number) {
-    return this.usersService.findOne(userId);
-  }
+  // @Get('me')
+  // getMe(@ReqUser('id') userId: number) {
+  //   return this.usersService.findOne(userId);
+  // }
 
-  /**
-   * Updates the profile of the currently authenticated user.
-   */
-  @Patch('me')
-  updatePersonalInfo(
-    @Body() updatePersonalInfoDto: UpdatePersonalInfoDto,
-    @ReqUser('id') userId: number
-  ) {
-    return this.usersService.updatePersonalInfo(userId, updatePersonalInfoDto);
-  }
+  // /**
+  //  * Updates the profile of the currently authenticated user.
+  //  */
+  // @Patch('me')
+  // updatePersonalInfo(
+  //   @Body() updatePersonalInfoDto: UpdatePersonalInfoDto,
+  //   @ReqUser('id') userId: number
+  // ) {
+  //   return this.usersService.updatePersonalInfo(userId, updatePersonalInfoDto);
+  // }
 }

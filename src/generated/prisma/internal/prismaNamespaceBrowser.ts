@@ -51,7 +51,25 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Story: 'Story',
+  Episode: 'Episode',
+  Scene: 'Scene',
+  dialogue: 'dialogue',
+  StoryProgress: 'StoryProgress',
+  EpisodeProgress: 'EpisodeProgress',
+  Character: 'Character',
+  CharacterImage: 'CharacterImage',
+  StoryCharacter: 'StoryCharacter',
+  CharacterFriend: 'CharacterFriend',
+  CharacterMessage: 'CharacterMessage',
+  dialogueBookmark: 'dialogueBookmark',
+  EpisodeReward: 'EpisodeReward',
+  MasteryLevel: 'MasteryLevel',
+  Expression: 'Expression',
+  MasteryProgress: 'MasteryProgress',
+  SavedExpression: 'SavedExpression',
+  Message: 'Message'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -72,18 +90,257 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const UserScalarFieldEnum = {
   id: 'id',
+  name: 'name',
   email: 'email',
-  password: 'password',
-  provider: 'provider',
-  providerId: 'providerId',
-  refreshTokenHash: 'refreshTokenHash',
-  firstName: 'firstName',
-  lastName: 'lastName',
+  profileImage: 'profileImage',
+  level: 'level',
+  exp: 'exp',
+  streakDays: 'streakDays',
+  lastLoginAt: 'lastLoginAt',
+  createdAt: 'createdAt'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const StoryScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  koreanTitle: 'koreanTitle',
+  category: 'category',
+  icon: 'icon',
+  difficulty: 'difficulty',
+  description: 'description',
+  coverImage: 'coverImage',
+  isPublished: 'isPublished',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+export type StoryScalarFieldEnum = (typeof StoryScalarFieldEnum)[keyof typeof StoryScalarFieldEnum]
+
+
+export const EpisodeScalarFieldEnum = {
+  id: 'id',
+  storyId: 'storyId',
+  title: 'title',
+  KoreanTitle: 'KoreanTitle',
+  order: 'order',
+  description: 'description',
+  koreanDescription: 'koreanDescription',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EpisodeScalarFieldEnum = (typeof EpisodeScalarFieldEnum)[keyof typeof EpisodeScalarFieldEnum]
+
+
+export const SceneScalarFieldEnum = {
+  id: 'id',
+  episodeId: 'episodeId',
+  title: 'title',
+  koreanTitle: 'koreanTitle',
+  order: 'order',
+  bgImageUrl: 'bgImageUrl',
+  audioUrl: 'audioUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SceneScalarFieldEnum = (typeof SceneScalarFieldEnum)[keyof typeof SceneScalarFieldEnum]
+
+
+export const DialogueScalarFieldEnum = {
+  id: 'id',
+  sceneId: 'sceneId',
+  order: 'order',
+  type: 'type',
+  characterName: 'characterName',
+  characterId: 'characterId',
+  englishText: 'englishText',
+  koreanText: 'koreanText',
+  charImageLabel: 'charImageLabel',
+  imageUrl: 'imageUrl',
+  audioUrl: 'audioUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DialogueScalarFieldEnum = (typeof DialogueScalarFieldEnum)[keyof typeof DialogueScalarFieldEnum]
+
+
+export const StoryProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  storyId: 'storyId',
+  progressPct: 'progressPct',
+  isCompleted: 'isCompleted',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StoryProgressScalarFieldEnum = (typeof StoryProgressScalarFieldEnum)[keyof typeof StoryProgressScalarFieldEnum]
+
+
+export const EpisodeProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  episodeId: 'episodeId',
+  isCompleted: 'isCompleted',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type EpisodeProgressScalarFieldEnum = (typeof EpisodeProgressScalarFieldEnum)[keyof typeof EpisodeProgressScalarFieldEnum]
+
+
+export const CharacterScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  koreanName: 'koreanName',
+  avatarImage: 'avatarImage',
+  mainImage: 'mainImage',
+  description: 'description',
+  personality: 'personality',
+  aiPrompt: 'aiPrompt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CharacterScalarFieldEnum = (typeof CharacterScalarFieldEnum)[keyof typeof CharacterScalarFieldEnum]
+
+
+export const CharacterImageScalarFieldEnum = {
+  id: 'id',
+  characterId: 'characterId',
+  imageUrl: 'imageUrl',
+  label: 'label',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CharacterImageScalarFieldEnum = (typeof CharacterImageScalarFieldEnum)[keyof typeof CharacterImageScalarFieldEnum]
+
+
+export const StoryCharacterScalarFieldEnum = {
+  id: 'id',
+  storyId: 'storyId',
+  characterId: 'characterId',
+  name: 'name',
+  isMain: 'isMain',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StoryCharacterScalarFieldEnum = (typeof StoryCharacterScalarFieldEnum)[keyof typeof StoryCharacterScalarFieldEnum]
+
+
+export const CharacterFriendScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  characterId: 'characterId',
+  affinity: 'affinity',
+  isUnlocked: 'isUnlocked',
+  unlockedAt: 'unlockedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CharacterFriendScalarFieldEnum = (typeof CharacterFriendScalarFieldEnum)[keyof typeof CharacterFriendScalarFieldEnum]
+
+
+export const CharacterMessageScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  characterId: 'characterId',
+  content: 'content',
+  isFromUser: 'isFromUser',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CharacterMessageScalarFieldEnum = (typeof CharacterMessageScalarFieldEnum)[keyof typeof CharacterMessageScalarFieldEnum]
+
+
+export const DialogueBookmarkScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  dialogueId: 'dialogueId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DialogueBookmarkScalarFieldEnum = (typeof DialogueBookmarkScalarFieldEnum)[keyof typeof DialogueBookmarkScalarFieldEnum]
+
+
+export const EpisodeRewardScalarFieldEnum = {
+  id: 'id',
+  episodeId: 'episodeId',
+  type: 'type',
+  payload: 'payload',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EpisodeRewardScalarFieldEnum = (typeof EpisodeRewardScalarFieldEnum)[keyof typeof EpisodeRewardScalarFieldEnum]
+
+
+export const MasteryLevelScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  color: 'color'
+} as const
+
+export type MasteryLevelScalarFieldEnum = (typeof MasteryLevelScalarFieldEnum)[keyof typeof MasteryLevelScalarFieldEnum]
+
+
+export const ExpressionScalarFieldEnum = {
+  id: 'id',
+  masteryLevelId: 'masteryLevelId',
+  english: 'english',
+  korean: 'korean',
+  detail: 'detail'
+} as const
+
+export type ExpressionScalarFieldEnum = (typeof ExpressionScalarFieldEnum)[keyof typeof ExpressionScalarFieldEnum]
+
+
+export const MasteryProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  masteryLevelId: 'masteryLevelId',
+  progressPct: 'progressPct',
+  lastReviewedAt: 'lastReviewedAt',
+  nextReviewAt: 'nextReviewAt'
+} as const
+
+export type MasteryProgressScalarFieldEnum = (typeof MasteryProgressScalarFieldEnum)[keyof typeof MasteryProgressScalarFieldEnum]
+
+
+export const SavedExpressionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  expressionId: 'expressionId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SavedExpressionScalarFieldEnum = (typeof SavedExpressionScalarFieldEnum)[keyof typeof SavedExpressionScalarFieldEnum]
+
+
+export const MessageScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  isRead: 'isRead',
+  senderId: 'senderId',
+  receiverId: 'receiverId'
+} as const
+
+export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -92,6 +349,13 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: 'JsonNull'
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -108,4 +372,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull',
+  AnyNull: 'AnyNull'
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

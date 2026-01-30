@@ -22,3 +22,93 @@ export * from './enums.js';
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Story
+ * 
+ */
+export type Story = Prisma.StoryModel
+/**
+ * Model Episode
+ * 
+ */
+export type Episode = Prisma.EpisodeModel
+/**
+ * Model Scene
+ * 
+ */
+export type Scene = Prisma.SceneModel
+/**
+ * Model dialogue
+ * 
+ */
+export type dialogue = Prisma.dialogueModel
+/**
+ * Model StoryProgress
+ * 
+ */
+export type StoryProgress = Prisma.StoryProgressModel
+/**
+ * Model EpisodeProgress
+ * 
+ */
+export type EpisodeProgress = Prisma.EpisodeProgressModel
+/**
+ * Model Character
+ * 
+ */
+export type Character = Prisma.CharacterModel
+/**
+ * Model CharacterImage
+ * 
+ */
+export type CharacterImage = Prisma.CharacterImageModel
+/**
+ * Model StoryCharacter
+ * 
+ */
+export type StoryCharacter = Prisma.StoryCharacterModel
+/**
+ * Model CharacterFriend
+ * 
+ */
+export type CharacterFriend = Prisma.CharacterFriendModel
+/**
+ * Model CharacterMessage
+ * 
+ */
+export type CharacterMessage = Prisma.CharacterMessageModel
+/**
+ * Model dialogueBookmark
+ * 
+ */
+export type dialogueBookmark = Prisma.dialogueBookmarkModel
+/**
+ * Model EpisodeReward
+ * 
+ */
+export type EpisodeReward = Prisma.EpisodeRewardModel
+/**
+ * Model MasteryLevel
+ * 
+ */
+export type MasteryLevel = Prisma.MasteryLevelModel
+/**
+ * Model Expression
+ * 
+ */
+export type Expression = Prisma.ExpressionModel
+/**
+ * Model MasteryProgress
+ * 
+ */
+export type MasteryProgress = Prisma.MasteryProgressModel
+/**
+ * Model SavedExpression
+ * 
+ */
+export type SavedExpression = Prisma.SavedExpressionModel
+/**
+ * Model Message
+ * 
+ */
+export type Message = Prisma.MessageModel
