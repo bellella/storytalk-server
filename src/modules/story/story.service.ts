@@ -193,13 +193,13 @@ export class StoryService {
           id: dialogue.id,
           order: dialogue.order,
           type: dialogue.type,
-          characterId: dialogue.characterId,
-          characterName: dialogue.characterName,
+          characterId: dialogue.characterId ?? undefined,
+          characterName: dialogue.characterName ?? undefined,
           englishText: dialogue.englishText,
           koreanText: dialogue.koreanText,
-          charImageLabel: dialogue.charImageLabel,
+          charImageLabel: dialogue.charImageLabel ?? undefined,
           imageUrl,
-          audioUrl: dialogue.audioUrl,
+          audioUrl: dialogue.audioUrl ?? undefined,
         };
       });
 
