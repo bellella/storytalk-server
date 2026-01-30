@@ -26,14 +26,3 @@ export class StoryController {
     return await this.storyService.getStoryDetail(id);
   }
 }
-
-@Controller('episodes')
-export class EpisodeController {
-  constructor(private readonly storyService: StoryService) {}
-
-  @Get(':id')
-  @ApiOkResponse({ type: EpisodeDetailDto })
-  async getEpisodeDetail(@Param('id') id: string): Promise<EpisodeDetailDto> {
-    return await this.storyService.getEpisodeDetail(id);
-  }
-}

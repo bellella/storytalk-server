@@ -8,6 +8,7 @@ import { UsersModule } from './modules/users/users.module';
 import { HealthModule } from './modules/health/health.module';
 import { MailModule } from './modules/mail/mail.module';
 import { StoryModule } from './modules/story/story.module';
+import { EpisodeModule } from './modules/episode/episode.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { StoryModule } from './modules/story/story.module';
     HealthModule,
     MailModule,
     StoryModule,
+    EpisodeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
