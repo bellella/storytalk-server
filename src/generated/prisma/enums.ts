@@ -9,6 +9,42 @@
 * 🟢 You can import this file directly.
 */
 
+export const AuthProvider = {
+  GOOGLE: 'GOOGLE',
+  APPLE: 'APPLE'
+} as const
+
+export type AuthProvider = (typeof AuthProvider)[keyof typeof AuthProvider]
+
+
+export const QuizType = {
+  INTERPRETATION: 'INTERPRETATION',
+  STORY_COMPREHENSION: 'STORY_COMPREHENSION',
+  NEXT_DIALOGUE_PREDICTION: 'NEXT_DIALOGUE_PREDICTION',
+  GRAMMAR: 'GRAMMAR'
+} as const
+
+export type QuizType = (typeof QuizType)[keyof typeof QuizType]
+
+
+export const QuizSourceType = {
+  EPISODE: 'EPISODE',
+  LESSON: 'LESSON'
+} as const
+
+export type QuizSourceType = (typeof QuizSourceType)[keyof typeof QuizSourceType]
+
+
+export const EpisodeStage = {
+  STORY_IN_PROGRESS: 'STORY_IN_PROGRESS',
+  STORY_COMPLETED: 'STORY_COMPLETED',
+  QUIZ_IN_PROGRESS: 'QUIZ_IN_PROGRESS',
+  QUIZ_COMPLETED: 'QUIZ_COMPLETED'
+} as const
+
+export type EpisodeStage = (typeof EpisodeStage)[keyof typeof EpisodeStage]
+
+
 export const RewardType = {
   EXP: 'EXP',
   CHARACTER_UNLOCK: 'CHARACTER_UNLOCK',

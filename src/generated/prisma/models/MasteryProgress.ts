@@ -27,18 +27,22 @@ export type AggregateMasteryProgress = {
 }
 
 export type MasteryProgressAvgAggregateOutputType = {
+  id: number | null
+  userId: number | null
   masteryLevelId: number | null
   progressPct: number | null
 }
 
 export type MasteryProgressSumAggregateOutputType = {
+  id: number | null
+  userId: number | null
   masteryLevelId: number | null
   progressPct: number | null
 }
 
 export type MasteryProgressMinAggregateOutputType = {
-  id: string | null
-  userId: string | null
+  id: number | null
+  userId: number | null
   masteryLevelId: number | null
   progressPct: number | null
   lastReviewedAt: Date | null
@@ -46,8 +50,8 @@ export type MasteryProgressMinAggregateOutputType = {
 }
 
 export type MasteryProgressMaxAggregateOutputType = {
-  id: string | null
-  userId: string | null
+  id: number | null
+  userId: number | null
   masteryLevelId: number | null
   progressPct: number | null
   lastReviewedAt: Date | null
@@ -66,11 +70,15 @@ export type MasteryProgressCountAggregateOutputType = {
 
 
 export type MasteryProgressAvgAggregateInputType = {
+  id?: true
+  userId?: true
   masteryLevelId?: true
   progressPct?: true
 }
 
 export type MasteryProgressSumAggregateInputType = {
+  id?: true
+  userId?: true
   masteryLevelId?: true
   progressPct?: true
 }
@@ -190,8 +198,8 @@ export type MasteryProgressGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 export type MasteryProgressGroupByOutputType = {
-  id: string
-  userId: string
+  id: number
+  userId: number
   masteryLevelId: number
   progressPct: number
   lastReviewedAt: Date
@@ -222,8 +230,8 @@ export type MasteryProgressWhereInput = {
   AND?: Prisma.MasteryProgressWhereInput | Prisma.MasteryProgressWhereInput[]
   OR?: Prisma.MasteryProgressWhereInput[]
   NOT?: Prisma.MasteryProgressWhereInput | Prisma.MasteryProgressWhereInput[]
-  id?: Prisma.StringFilter<"MasteryProgress"> | string
-  userId?: Prisma.StringFilter<"MasteryProgress"> | string
+  id?: Prisma.IntFilter<"MasteryProgress"> | number
+  userId?: Prisma.IntFilter<"MasteryProgress"> | number
   masteryLevelId?: Prisma.IntFilter<"MasteryProgress"> | number
   progressPct?: Prisma.IntFilter<"MasteryProgress"> | number
   lastReviewedAt?: Prisma.DateTimeFilter<"MasteryProgress"> | Date | string
@@ -244,12 +252,12 @@ export type MasteryProgressOrderByWithRelationInput = {
 }
 
 export type MasteryProgressWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   userId_masteryLevelId?: Prisma.MasteryProgressUserIdMasteryLevelIdCompoundUniqueInput
   AND?: Prisma.MasteryProgressWhereInput | Prisma.MasteryProgressWhereInput[]
   OR?: Prisma.MasteryProgressWhereInput[]
   NOT?: Prisma.MasteryProgressWhereInput | Prisma.MasteryProgressWhereInput[]
-  userId?: Prisma.StringFilter<"MasteryProgress"> | string
+  userId?: Prisma.IntFilter<"MasteryProgress"> | number
   masteryLevelId?: Prisma.IntFilter<"MasteryProgress"> | number
   progressPct?: Prisma.IntFilter<"MasteryProgress"> | number
   lastReviewedAt?: Prisma.DateTimeFilter<"MasteryProgress"> | Date | string
@@ -276,8 +284,8 @@ export type MasteryProgressScalarWhereWithAggregatesInput = {
   AND?: Prisma.MasteryProgressScalarWhereWithAggregatesInput | Prisma.MasteryProgressScalarWhereWithAggregatesInput[]
   OR?: Prisma.MasteryProgressScalarWhereWithAggregatesInput[]
   NOT?: Prisma.MasteryProgressScalarWhereWithAggregatesInput | Prisma.MasteryProgressScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"MasteryProgress"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"MasteryProgress"> | string
+  id?: Prisma.IntWithAggregatesFilter<"MasteryProgress"> | number
+  userId?: Prisma.IntWithAggregatesFilter<"MasteryProgress"> | number
   masteryLevelId?: Prisma.IntWithAggregatesFilter<"MasteryProgress"> | number
   progressPct?: Prisma.IntWithAggregatesFilter<"MasteryProgress"> | number
   lastReviewedAt?: Prisma.DateTimeWithAggregatesFilter<"MasteryProgress"> | Date | string
@@ -285,7 +293,6 @@ export type MasteryProgressScalarWhereWithAggregatesInput = {
 }
 
 export type MasteryProgressCreateInput = {
-  id?: string
   progressPct?: number
   lastReviewedAt?: Date | string
   nextReviewAt: Date | string
@@ -294,8 +301,8 @@ export type MasteryProgressCreateInput = {
 }
 
 export type MasteryProgressUncheckedCreateInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   masteryLevelId: number
   progressPct?: number
   lastReviewedAt?: Date | string
@@ -303,7 +310,6 @@ export type MasteryProgressUncheckedCreateInput = {
 }
 
 export type MasteryProgressUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   progressPct?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextReviewAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -312,8 +318,8 @@ export type MasteryProgressUpdateInput = {
 }
 
 export type MasteryProgressUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   masteryLevelId?: Prisma.IntFieldUpdateOperationsInput | number
   progressPct?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -321,8 +327,8 @@ export type MasteryProgressUncheckedUpdateInput = {
 }
 
 export type MasteryProgressCreateManyInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   masteryLevelId: number
   progressPct?: number
   lastReviewedAt?: Date | string
@@ -330,15 +336,14 @@ export type MasteryProgressCreateManyInput = {
 }
 
 export type MasteryProgressUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   progressPct?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextReviewAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type MasteryProgressUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   masteryLevelId?: Prisma.IntFieldUpdateOperationsInput | number
   progressPct?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -356,7 +361,7 @@ export type MasteryProgressOrderByRelationAggregateInput = {
 }
 
 export type MasteryProgressUserIdMasteryLevelIdCompoundUniqueInput = {
-  userId: string
+  userId: number
   masteryLevelId: number
 }
 
@@ -370,6 +375,8 @@ export type MasteryProgressCountOrderByAggregateInput = {
 }
 
 export type MasteryProgressAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   masteryLevelId?: Prisma.SortOrder
   progressPct?: Prisma.SortOrder
 }
@@ -393,6 +400,8 @@ export type MasteryProgressMinOrderByAggregateInput = {
 }
 
 export type MasteryProgressSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   masteryLevelId?: Prisma.SortOrder
   progressPct?: Prisma.SortOrder
 }
@@ -482,7 +491,6 @@ export type MasteryProgressUncheckedUpdateManyWithoutLevelNestedInput = {
 }
 
 export type MasteryProgressCreateWithoutUserInput = {
-  id?: string
   progressPct?: number
   lastReviewedAt?: Date | string
   nextReviewAt: Date | string
@@ -490,7 +498,7 @@ export type MasteryProgressCreateWithoutUserInput = {
 }
 
 export type MasteryProgressUncheckedCreateWithoutUserInput = {
-  id?: string
+  id?: number
   masteryLevelId: number
   progressPct?: number
   lastReviewedAt?: Date | string
@@ -527,8 +535,8 @@ export type MasteryProgressScalarWhereInput = {
   AND?: Prisma.MasteryProgressScalarWhereInput | Prisma.MasteryProgressScalarWhereInput[]
   OR?: Prisma.MasteryProgressScalarWhereInput[]
   NOT?: Prisma.MasteryProgressScalarWhereInput | Prisma.MasteryProgressScalarWhereInput[]
-  id?: Prisma.StringFilter<"MasteryProgress"> | string
-  userId?: Prisma.StringFilter<"MasteryProgress"> | string
+  id?: Prisma.IntFilter<"MasteryProgress"> | number
+  userId?: Prisma.IntFilter<"MasteryProgress"> | number
   masteryLevelId?: Prisma.IntFilter<"MasteryProgress"> | number
   progressPct?: Prisma.IntFilter<"MasteryProgress"> | number
   lastReviewedAt?: Prisma.DateTimeFilter<"MasteryProgress"> | Date | string
@@ -536,7 +544,6 @@ export type MasteryProgressScalarWhereInput = {
 }
 
 export type MasteryProgressCreateWithoutLevelInput = {
-  id?: string
   progressPct?: number
   lastReviewedAt?: Date | string
   nextReviewAt: Date | string
@@ -544,8 +551,8 @@ export type MasteryProgressCreateWithoutLevelInput = {
 }
 
 export type MasteryProgressUncheckedCreateWithoutLevelInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   progressPct?: number
   lastReviewedAt?: Date | string
   nextReviewAt: Date | string
@@ -578,7 +585,7 @@ export type MasteryProgressUpdateManyWithWhereWithoutLevelInput = {
 }
 
 export type MasteryProgressCreateManyUserInput = {
-  id?: string
+  id?: number
   masteryLevelId: number
   progressPct?: number
   lastReviewedAt?: Date | string
@@ -586,7 +593,6 @@ export type MasteryProgressCreateManyUserInput = {
 }
 
 export type MasteryProgressUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   progressPct?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextReviewAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -594,7 +600,7 @@ export type MasteryProgressUpdateWithoutUserInput = {
 }
 
 export type MasteryProgressUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   masteryLevelId?: Prisma.IntFieldUpdateOperationsInput | number
   progressPct?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -602,7 +608,7 @@ export type MasteryProgressUncheckedUpdateWithoutUserInput = {
 }
 
 export type MasteryProgressUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   masteryLevelId?: Prisma.IntFieldUpdateOperationsInput | number
   progressPct?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -610,15 +616,14 @@ export type MasteryProgressUncheckedUpdateManyWithoutUserInput = {
 }
 
 export type MasteryProgressCreateManyLevelInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   progressPct?: number
   lastReviewedAt?: Date | string
   nextReviewAt: Date | string
 }
 
 export type MasteryProgressUpdateWithoutLevelInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   progressPct?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextReviewAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -626,16 +631,16 @@ export type MasteryProgressUpdateWithoutLevelInput = {
 }
 
 export type MasteryProgressUncheckedUpdateWithoutLevelInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   progressPct?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextReviewAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type MasteryProgressUncheckedUpdateManyWithoutLevelInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   progressPct?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nextReviewAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -706,8 +711,8 @@ export type $MasteryProgressPayload<ExtArgs extends runtime.Types.Extensions.Int
     level: Prisma.$MasteryLevelPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    userId: string
+    id: number
+    userId: number
     masteryLevelId: number
     progressPct: number
     lastReviewedAt: Date
@@ -1137,8 +1142,8 @@ export interface Prisma__MasteryProgressClient<T, Null = never, ExtArgs extends 
  * Fields of the MasteryProgress model
  */
 export interface MasteryProgressFieldRefs {
-  readonly id: Prisma.FieldRef<"MasteryProgress", 'String'>
-  readonly userId: Prisma.FieldRef<"MasteryProgress", 'String'>
+  readonly id: Prisma.FieldRef<"MasteryProgress", 'Int'>
+  readonly userId: Prisma.FieldRef<"MasteryProgress", 'Int'>
   readonly masteryLevelId: Prisma.FieldRef<"MasteryProgress", 'Int'>
   readonly progressPct: Prisma.FieldRef<"MasteryProgress", 'Int'>
   readonly lastReviewedAt: Prisma.FieldRef<"MasteryProgress", 'DateTime'>

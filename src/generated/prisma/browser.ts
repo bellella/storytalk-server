@@ -48,10 +48,30 @@ export type dialogue = Prisma.dialogueModel
  */
 export type StoryProgress = Prisma.StoryProgressModel
 /**
- * Model EpisodeProgress
+ * Model ReviewItem
  * 
  */
-export type EpisodeProgress = Prisma.EpisodeProgressModel
+export type ReviewItem = Prisma.ReviewItemModel
+/**
+ * Model Quiz
+ * 
+ */
+export type Quiz = Prisma.QuizModel
+/**
+ * Model QuizOption
+ * 
+ */
+export type QuizOption = Prisma.QuizOptionModel
+/**
+ * Model UserQuizAnswer
+ * 
+ */
+export type UserQuizAnswer = Prisma.UserQuizAnswerModel
+/**
+ * Model UserEpisode
+ * 
+ */
+export type UserEpisode = Prisma.UserEpisodeModel
 /**
  * Model Character
  * 

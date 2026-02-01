@@ -2,7 +2,6 @@
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
-  moduleFormat = "cjs" 
 }
 
 datasource db {
@@ -13,26 +12,38 @@ datasource db {
 // USER
 //////////////////////////////////////////////////////
 
+enum AuthProvider {
+  GOOGLE
+  APPLE
+}
+
 model User {
-  id            String   @id @default(cuid())
-  name          String?
-  email         String   @unique
-  profileImage  String?
-  level         Int      @default(1)
-  exp           Int      @default(0)
-  streakDays    Int      @default(0)
-  lastLoginAt   DateTime @default(now())
-  createdAt     DateTime @default(now())
+  id           Int          @id @default(autoincrement())
+  name         String?
+  email        String
+  provider     AuthProvider
+  providerId   String
+
+  @@unique([email, provider])
+  profileImage String?
+  level        Int          @default(1)
+  exp          Int          @default(0)
+  streakDays   Int          @default(0)
+  lastLoginAt  DateTime     @default(now())
+  registeredAt   DateTime?     
+  createdAt    DateTime     @default(now())
+
+  isNew        Boolean      @default(true)
 
   storyProgress     StoryProgress[]
-  episodeProgress   EpisodeProgress[]
-  dialogueBookmarks   dialogueBookmark[]
+  userEpisodes      UserEpisode[]
+  dialogueBookmarks dialogueBookmark[]
   masteryProgress   MasteryProgress[]
   savedExpressions  SavedExpression[]
   characterFriends  CharacterFriend[]
   characterMessages CharacterMessage[]
-  sentMessages      Message[] @relation("SentMessages")
-  receivedMessages  Message[] @relation("ReceivedMessages")
+  sentMessages      Message[]          @relation("SentMessages")
+  receivedMessages  Message[]          @relation("ReceivedMessages")
 }
 
 //////////////////////////////////////////////////////
@@ -40,7 +51,7 @@ model User {
 //////////////////////////////////////////////////////
 
 model Story {
-  id          String   @id @default(cuid())
+  id          Int      @id @default(autoincrement())
   title       String
   koreanTitle String?
   category    String
@@ -52,34 +63,34 @@ model Story {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  episodes    Episode[]
-  characters  StoryCharacter[]
-  progress    StoryProgress[]
+  episodes   Episode[]
+  characters StoryCharacter[]
+  progress   StoryProgress[]
 }
 
 model Episode {
-  id          String   @id @default(cuid())
-  storyId     String
-  title       String
-  KoreanTitle String?
-  order       Int
-  description String?
+  id                Int      @id @default(autoincrement())
+  storyId           Int
+  title             String
+  KoreanTitle       String?
+  order             Int
+  description       String?
   koreanDescription String?
-  isPublished Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  isPublished       Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
-  story       Story        @relation(fields: [storyId], references: [id])
-  scenes      Scene[]
-  rewards     EpisodeReward[]
-  progress    EpisodeProgress[]
+  story        Story           @relation(fields: [storyId], references: [id])
+  scenes       Scene[]
+  rewards      EpisodeReward[]
+  userEpisodes UserEpisode[]
 
   @@unique([storyId, order])
 }
 
 model Scene {
-  id          String   @id @default(cuid())
-  episodeId   String
+  id          Int      @id @default(autoincrement())
+  episodeId   Int
   title       String
   koreanTitle String?
   order       Int
@@ -88,19 +99,19 @@ model Scene {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  episode     Episode @relation(fields: [episodeId], references: [id])
-  dialogues     dialogue[]
+  episode   Episode    @relation(fields: [episodeId], references: [id])
+  dialogues dialogue[]
 
   @@unique([episodeId, order])
 }
 
 model dialogue {
-  id             String   @id @default(cuid())
-  sceneId        String
+  id             Int      @id @default(autoincrement())
+  sceneId        Int
   order          Int
   type           String   @default("dialogue")
   characterName  String?
-  characterId    String?
+  characterId    Int?
   englishText    String
   koreanText     String
   charImageLabel String?
@@ -109,10 +120,10 @@ model dialogue {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  scene          Scene      @relation(fields: [sceneId], references: [id])
-  character      Character?  @relation(fields: [characterId], references: [id])
+  scene     Scene      @relation(fields: [sceneId], references: [id])
+  character Character? @relation(fields: [characterId], references: [id])
 
-  bookmarks      dialogueBookmark[]
+  bookmarks dialogueBookmark[]
 
   @@unique([sceneId, order])
 }
@@ -122,31 +133,118 @@ model dialogue {
 //////////////////////////////////////////////////////
 
 model StoryProgress {
-  id          String   @id @default(cuid())
-  userId      String
-  storyId     String
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  storyId     Int
   progressPct Float    @default(0)
   isCompleted Boolean  @default(false)
   updatedAt   DateTime @updatedAt
 
-  user        User  @relation(fields: [userId], references: [id])
-  story       Story @relation(fields: [storyId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
+  story Story @relation(fields: [storyId], references: [id])
 
   @@unique([userId, storyId])
 }
 
-model EpisodeProgress {
-  id          String   @id @default(cuid())
-  userId      String
-  episodeId   String
-  isCompleted Boolean  @default(false)
-  completedAt DateTime?
-  createdAt   DateTime @default(now())
+model ReviewItem {
+  id          Int     @id @default(autoincrement())
+  episodeId   Int
+  dialogueId  Int
+  description String?
+  order       Int
 
-  user        User    @relation(fields: [userId], references: [id])
-  episode     Episode @relation(fields: [episodeId], references: [id])
+  @@unique([episodeId, dialogueId])
+  @@index([episodeId])
+}
+
+enum QuizType {
+  INTERPRETATION
+  STORY_COMPREHENSION
+  NEXT_DIALOGUE_PREDICTION
+  GRAMMAR
+}
+
+enum QuizSourceType {
+  EPISODE
+  LESSON
+}
+
+model Quiz {
+  id         Int            @id @default(autoincrement())
+  sourceType QuizSourceType
+  sourceId   Int
+  type       QuizType
+
+  questionEnglish String
+  questionKorean  String?
+  answerIndex     Int
+  description     String?
+  order           Int?
+
+  isActive Boolean @default(true)
+
+  options         QuizOption[]
+  userQuizAnswers UserQuizAnswer[]
+
+  @@index([sourceType, sourceId])
+}
+
+model QuizOption {
+  id     Int    @id @default(autoincrement())
+  quizId Int
+  text   String
+  order  Int
+
+  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@index([quizId])
+}
+
+model UserQuizAnswer {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  quizId        Int
+  attemptCount  Int
+  selectedIndex Int
+  isCorrect     Boolean
+  createdAt     DateTime @default(now())
+
+  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, quizId, attemptCount])
+  @@index([userId])
+  @@index([quizId])
+  @@index([userId, quizId])
+}
+
+enum EpisodeStage {
+  STORY_IN_PROGRESS
+  STORY_COMPLETED
+  QUIZ_IN_PROGRESS
+  QUIZ_COMPLETED
+}
+
+model UserEpisode {
+  id        Int @id @default(autoincrement())
+  userId    Int
+  episodeId Int
+
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+
+  lastSceneId  Int?
+  currentStage EpisodeStage
+
+  score       Int?
+  isCompleted Boolean @default(false)
+
+  meta    Json?
+  user    User    @relation(fields: [userId], references: [id])
+  episode Episode @relation(fields: [episodeId], references: [id])
 
   @@unique([userId, episodeId])
+  @@index([userId])
+  @@index([episodeId])
 }
 
 //////////////////////////////////////////////////////
@@ -154,47 +252,47 @@ model EpisodeProgress {
 //////////////////////////////////////////////////////
 
 model Character {
-  id           String   @id @default(cuid())
-  name         String
-  koreanName   String?
-  avatarImage  String?
-  mainImage    String?
-  description  String
-  personality  String?
-  aiPrompt     String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  name        String
+  koreanName  String?
+  avatarImage String?
+  mainImage   String?
+  description String
+  personality String?
+  aiPrompt    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  images        CharacterImage[]
-  dialogues       dialogue[]
-  storyLinks    StoryCharacter[]
-  friends       CharacterFriend[]
-  messages      CharacterMessage[]
+  images     CharacterImage[]
+  dialogues  dialogue[]
+  storyLinks StoryCharacter[]
+  friends    CharacterFriend[]
+  messages   CharacterMessage[]
 }
 
 model CharacterImage {
-  id          String   @id @default(cuid())
-  characterId String
+  id          Int      @id @default(autoincrement())
+  characterId Int
   imageUrl    String
-  label       String?   // e.g., "happy", "angry", "sad", "neutral"
+  label       String? // e.g., "happy", "angry", "sad", "neutral"
   isDefault   Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  character   Character @relation(fields: [characterId], references: [id])
+  character Character @relation(fields: [characterId], references: [id])
 }
 
 model StoryCharacter {
-  id          String   @id @default(cuid())
-  storyId     String
-  characterId String?
+  id          Int      @id @default(autoincrement())
+  storyId     Int
+  characterId Int?
   name        String?
   isMain      Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  story       Story     @relation(fields: [storyId], references: [id])
-  character   Character? @relation(fields: [characterId], references: [id])
+  story     Story      @relation(fields: [storyId], references: [id])
+  character Character? @relation(fields: [characterId], references: [id])
 
   @@unique([storyId, characterId])
 }
@@ -204,17 +302,17 @@ model StoryCharacter {
 //////////////////////////////////////////////////////
 
 model CharacterFriend {
-  id           String   @id @default(cuid())
-  userId       String
-  characterId  String
-  affinity     Int      @default(0)
-  isUnlocked   Boolean  @default(false)
-  unlockedAt   DateTime?
-  createdAt    DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  characterId Int
+  affinity    Int       @default(0)
+  isUnlocked  Boolean   @default(false)
+  unlockedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
-  user         User      @relation(fields: [userId], references: [id])
-  character    Character @relation(fields: [characterId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+  character Character @relation(fields: [characterId], references: [id])
 
   @@unique([userId, characterId])
 }
@@ -224,16 +322,16 @@ model CharacterFriend {
 //////////////////////////////////////////////////////
 
 model CharacterMessage {
-  id          String   @id @default(cuid())
-  userId      String
-  characterId String
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  characterId Int
   content     String
   isFromUser  Boolean
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  user        User      @relation(fields: [userId], references: [id])
-  character   Character @relation(fields: [characterId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+  character Character @relation(fields: [characterId], references: [id])
 }
 
 //////////////////////////////////////////////////////
@@ -241,14 +339,14 @@ model CharacterMessage {
 //////////////////////////////////////////////////////
 
 model dialogueBookmark {
-  id        String   @id @default(cuid())
-  userId    String
-  dialogueId  String
-  createdAt DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  dialogueId Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  user      User   @relation(fields: [userId], references: [id])
-  dialogue    dialogue @relation(fields: [dialogueId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+  dialogue dialogue @relation(fields: [dialogueId], references: [id])
 
   @@unique([userId, dialogueId])
 }
@@ -258,15 +356,15 @@ model dialogueBookmark {
 //////////////////////////////////////////////////////
 
 model EpisodeReward {
-  id         String   @id @default(cuid())
-  episodeId  String
-  type       RewardType
-  payload    Json
-  isActive   Boolean  @default(true)
-  createdAt  DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        Int        @id @default(autoincrement())
+  episodeId Int
+  type      RewardType
+  payload   Json
+  isActive  Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
-  episode    Episode @relation(fields: [episodeId], references: [id])
+  episode Episode @relation(fields: [episodeId], references: [id])
 }
 
 enum RewardType {
@@ -280,48 +378,48 @@ enum RewardType {
 //////////////////////////////////////////////////////
 
 model MasteryLevel {
-  id          Int      @id @default(autoincrement())
-  title       String
-  color       String
+  id    Int    @id @default(autoincrement())
+  title String
+  color String
 
   expressions Expression[]
   progress    MasteryProgress[]
 }
 
 model Expression {
-  id             String   @id @default(cuid())
+  id             Int     @id @default(autoincrement())
   masteryLevelId Int
   english        String
   korean         String
   detail         String?
 
-  level          MasteryLevel @relation(fields: [masteryLevelId], references: [id])
-  savedBy        SavedExpression[]
+  level   MasteryLevel      @relation(fields: [masteryLevelId], references: [id])
+  savedBy SavedExpression[]
 }
 
 model MasteryProgress {
-  id             String   @id @default(cuid())
-  userId         String
+  id             Int      @id @default(autoincrement())
+  userId         Int
   masteryLevelId Int
   progressPct    Int      @default(0)
   lastReviewedAt DateTime @default(now())
   nextReviewAt   DateTime
 
-  user           User         @relation(fields: [userId], references: [id])
-  level          MasteryLevel @relation(fields: [masteryLevelId], references: [id])
+  user  User         @relation(fields: [userId], references: [id])
+  level MasteryLevel @relation(fields: [masteryLevelId], references: [id])
 
   @@unique([userId, masteryLevelId])
 }
 
 model SavedExpression {
-  id           String   @id @default(cuid())
-  userId       String
-  expressionId String
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  expressionId Int
   createdAt    DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  updatedAt    DateTime @updatedAt
 
-  user         User       @relation(fields: [userId], references: [id])
-  expression   Expression @relation(fields: [expressionId], references: [id])
+  user       User       @relation(fields: [userId], references: [id])
+  expression Expression @relation(fields: [expressionId], references: [id])
 
   @@unique([userId, expressionId])
 }
@@ -331,15 +429,15 @@ model SavedExpression {
 //////////////////////////////////////////////////////
 
 model Message {
-  id          String   @id @default(cuid())
-  content     String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  isRead      Boolean  @default(false)
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isRead    Boolean  @default(false)
 
-  senderId    String
-  receiverId  String
+  senderId   Int
+  receiverId Int
 
-  sender      User     @relation("SentMessages", fields: [senderId], references: [id])
-  receiver    User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  sender   User @relation("SentMessages", fields: [senderId], references: [id])
+  receiver User @relation("ReceivedMessages", fields: [receiverId], references: [id])
 }

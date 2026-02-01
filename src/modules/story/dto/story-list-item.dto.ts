@@ -1,5 +1,5 @@
 export class StoryListItemDto {
-  id: string;
+  id: number;
   title: string;
   description?: string;
   coverImage?: string;

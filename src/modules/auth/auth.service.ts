@@ -1,107 +1,153 @@
-// import { Injectable, UnauthorizedException } from '@nestjs/common';
-// import { JwtService } from '@nestjs/jwt';
-// import { ConfigService } from '@nestjs/config';
-// import { UsersService } from '../users/users.service';
-// import { JwtPayload } from '@/types/jwt.type';
-// import { LocalRegisterDto } from './dto/local-auth.dto';
-// import { User } from '@/generated/prisma/client';
-// import * as bcrypt from 'bcrypt';
-// import { AuthUser, SocialProfile, SocialProvider } from '@/types/auth.type';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { OAuth2Client } from 'google-auth-library';
+import appleSignin from 'apple-signin-auth';
+import { UserService } from '../users/user.service';
+import { GoogleLoginDto } from './dto/google-login.dto';
+import { AppleLoginDto } from './dto/apple-login.dto';
+import { AuthProvider } from '@/generated/prisma/enums';
+import { SocialLoginResponseDto } from './dto/social-login.dto';
 
-// @Injectable()
-// export class AuthService {
-//   constructor(
-//     private usersService: UsersService,
-//     private configService: ConfigService,
-//     private jwtService: JwtService
-//   ) {}
+@Injectable()
+export class AuthService {
+  private googleClient: OAuth2Client;
 
-//   /**
-//    * Registers a new user with email and password.
-//    */
-//   async registerLocalUser(localRegisterDto: LocalRegisterDto): Promise<User> {
-//     const existingUser = await this.usersService.findOneByEmail(
-//       localRegisterDto.email
-//     );
-//     if (existingUser) {
-//       throw new UnauthorizedException('User with this email already exists.');
-//     }
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService
+  ) {
+    this.googleClient = new OAuth2Client(
+      this.configService.get<string>('GOOGLE_CLIENT_ID')
+    );
+  }
 
-//     // Hash the password before storage
-//     const hashedPassword = await bcrypt.hash(localRegisterDto.password, 10);
+  /**
+   * Google 로그인 처리
+   */
+  async googleLogin(dto: GoogleLoginDto) {
+    const { idToken } = dto;
 
-//     // Call UsersService to create the user
-//     return this.usersService.create({
-//       ...localRegisterDto,
-//       password: hashedPassword,
-//       provider: 'local',
-//     });
-//   }
+    try {
+      const ticket = await this.googleClient.verifyIdToken({
+        idToken,
+        audience: this.configService.get<string>('GOOGLE_CLIENT_ID'),
+      });
 
-//   /**
-//    * Validates local user credentials (used by LocalStrategy).
-//    * @returns The User entity if credentials are valid, otherwise null.
-//    */
-//   async validateLocalUser(email: string, pass: string): Promise<User | null> {
-//     const user = await this.usersService.findOneByEmail(email);
+      const payload = ticket.getPayload();
+      if (!payload) {
+        throw new UnauthorizedException('Invalid Google token');
+      }
 
-//     if (!user || !user.password) {
-//       return null;
-//     }
+      const { sub: googleId, email, name, picture } = payload;
 
-//     const isMatch = await bcrypt.compare(pass, user.password);
+      if (!email) {
+        throw new UnauthorizedException('Email not provided by Google');
+      }
 
-//     if (isMatch) {
-//       // Credentials are valid
-//       return user;
-//     }
-//     return null;
-//   }
+      return this.handleSocialLogin({
+        provider: AuthProvider.GOOGLE,
+        providerId: googleId,
+        email,
+        name: name || null,
+        profileImage: picture || null,
+      });
+    } catch (error) {
+      throw new UnauthorizedException('Failed to verify Google token');
+    }
+  }
 
-//   /**
-//    * Finds or creates a user based on the social profile.
-//    * Handles Shopify account creation and returns the new user flag.
-//    */
-//   async upsertSocialUser(
-//     profile: SocialProfile,
-//     provider: SocialProvider
-//   ): Promise<AuthUser> {
-//     const email = profile.email;
-//     let user = await this.usersService.findOneByEmail(email);
-//     let isNewUser = false;
+  /**
+   * Apple 로그인 처리
+   */
+  async appleLogin(dto: AppleLoginDto) {
+    const { identityToken, name } = dto;
 
-//     if (!user) {
-//       isNewUser = true;
-//       user = await this.usersService.create({
-//         email,
-//         provider,
-//         firstName: profile.firstName,
-//         lastName: profile.lastName,
-//       });
-//     }
+    try {
+      const applePayload = await appleSignin.verifyIdToken(identityToken, {
+        audience: this.configService.get<string>('APPLE_CLIENT_ID'),
+        ignoreExpiration: false,
+      });
 
-//     return { user, isNewUser };
-//   }
+      const { sub: appleId, email } = applePayload;
 
-//   /**
-//    * Generates Access Token and Refresh Token for the user.
-//    */
-//   async getTokens(userId: number, email: string) {
-//     const payload: JwtPayload = { sub: userId, email };
+      if (!email) {
+        throw new UnauthorizedException('Email not provided by Apple');
+      }
 
-//     // Generate Access Token (short lived)
-//     const [accessToken, refreshToken] = await Promise.all([
-//       this.jwtService.signAsync(payload, {
-//         secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
-//         expiresIn: '3d',
-//       }),
-//       // Generate Refresh Token (long lived)
-//       this.jwtService.signAsync(payload, {
-//         secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-//         expiresIn: '7d',
-//       }),
-//     ]);
+      return this.handleSocialLogin({
+        provider: AuthProvider.APPLE,
+        providerId: appleId,
+        email,
+        name: name || null,
+        profileImage: null,
+      });
+    } catch (error) {
+      throw new UnauthorizedException('Failed to verify Apple token');
+    }
+  }
 
-//     return { accessToken, refreshToken };
-//   }
-// }
+  /**
+   * 소셜 로그인 공통 처리 (회원가입 or 로그인)
+   */
+  private async handleSocialLogin(data: {
+    provider: AuthProvider;
+    providerId: string;
+    email: string;
+    name: string | null;
+    profileImage: string | null;
+  }): Promise<SocialLoginResponseDto> {
+    let user = await this.userService.findOneByEmailAndProvider(
+      data.email,
+      data.provider
+    );
+    let isNew = user?.isNew ?? false;
+
+    // 유저 정보 없음
+    if (!user) {
+      user = await this.userService.create({
+        email: data.email,
+        name: data.name,
+        provider: data.provider,
+        providerId: data.providerId,
+        profileImage: data.profileImage,
+        isNew: true,
+      });
+      isNew = true;
+    }
+
+    const tokens = await this.generateTokens(user.id, user.email);
+
+    return {
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        profileImage: user.profileImage,
+      },
+      tokens,
+      isNew,
+    };
+  }
+
+  /**
+   * Access Token 및 Refresh Token 생성
+   */
+  private async generateTokens(userId: number, email: string) {
+    const payload = { sub: userId, email };
+
+    const [accessToken, refreshToken] = await Promise.all([
+      this.jwtService.signAsync(payload, {
+        secret: this.configService.get<string>('JWT_SECRET'),
+        expiresIn: '1d',
+      }),
+      this.jwtService.signAsync(payload, {
+        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+        expiresIn: '7d',
+      }),
+    ]);
+
+    return { accessToken, refreshToken };
+  }
+}

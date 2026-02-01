@@ -27,62 +27,78 @@ export type AggregateUser = {
 }
 
 export type UserAvgAggregateOutputType = {
+  id: number | null
   level: number | null
   exp: number | null
   streakDays: number | null
 }
 
 export type UserSumAggregateOutputType = {
+  id: number | null
   level: number | null
   exp: number | null
   streakDays: number | null
 }
 
 export type UserMinAggregateOutputType = {
-  id: string | null
+  id: number | null
   name: string | null
   email: string | null
+  provider: $Enums.AuthProvider | null
+  providerId: string | null
   profileImage: string | null
   level: number | null
   exp: number | null
   streakDays: number | null
   lastLoginAt: Date | null
+  registeredAt: Date | null
   createdAt: Date | null
+  isNew: boolean | null
 }
 
 export type UserMaxAggregateOutputType = {
-  id: string | null
+  id: number | null
   name: string | null
   email: string | null
+  provider: $Enums.AuthProvider | null
+  providerId: string | null
   profileImage: string | null
   level: number | null
   exp: number | null
   streakDays: number | null
   lastLoginAt: Date | null
+  registeredAt: Date | null
   createdAt: Date | null
+  isNew: boolean | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
   name: number
   email: number
+  provider: number
+  providerId: number
   profileImage: number
   level: number
   exp: number
   streakDays: number
   lastLoginAt: number
+  registeredAt: number
   createdAt: number
+  isNew: number
   _all: number
 }
 
 
 export type UserAvgAggregateInputType = {
+  id?: true
   level?: true
   exp?: true
   streakDays?: true
 }
 
 export type UserSumAggregateInputType = {
+  id?: true
   level?: true
   exp?: true
   streakDays?: true
@@ -92,36 +108,48 @@ export type UserMinAggregateInputType = {
   id?: true
   name?: true
   email?: true
+  provider?: true
+  providerId?: true
   profileImage?: true
   level?: true
   exp?: true
   streakDays?: true
   lastLoginAt?: true
+  registeredAt?: true
   createdAt?: true
+  isNew?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
   name?: true
   email?: true
+  provider?: true
+  providerId?: true
   profileImage?: true
   level?: true
   exp?: true
   streakDays?: true
   lastLoginAt?: true
+  registeredAt?: true
   createdAt?: true
+  isNew?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
   name?: true
   email?: true
+  provider?: true
+  providerId?: true
   profileImage?: true
   level?: true
   exp?: true
   streakDays?: true
   lastLoginAt?: true
+  registeredAt?: true
   createdAt?: true
+  isNew?: true
   _all?: true
 }
 
@@ -212,15 +240,19 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 }
 
 export type UserGroupByOutputType = {
-  id: string
+  id: number
   name: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage: string | null
   level: number
   exp: number
   streakDays: number
   lastLoginAt: Date
+  registeredAt: Date | null
   createdAt: Date
+  isNew: boolean
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -247,17 +279,21 @@ export type UserWhereInput = {
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  id?: Prisma.StringFilter<"User"> | string
+  id?: Prisma.IntFilter<"User"> | number
   name?: Prisma.StringNullableFilter<"User"> | string | null
   email?: Prisma.StringFilter<"User"> | string
+  provider?: Prisma.EnumAuthProviderFilter<"User"> | $Enums.AuthProvider
+  providerId?: Prisma.StringFilter<"User"> | string
   profileImage?: Prisma.StringNullableFilter<"User"> | string | null
   level?: Prisma.IntFilter<"User"> | number
   exp?: Prisma.IntFilter<"User"> | number
   streakDays?: Prisma.IntFilter<"User"> | number
   lastLoginAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  registeredAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  isNew?: Prisma.BoolFilter<"User"> | boolean
   storyProgress?: Prisma.StoryProgressListRelationFilter
-  episodeProgress?: Prisma.EpisodeProgressListRelationFilter
+  userEpisodes?: Prisma.UserEpisodeListRelationFilter
   dialogueBookmarks?: Prisma.DialogueBookmarkListRelationFilter
   masteryProgress?: Prisma.MasteryProgressListRelationFilter
   savedExpressions?: Prisma.SavedExpressionListRelationFilter
@@ -271,14 +307,18 @@ export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
+  provider?: Prisma.SortOrder
+  providerId?: Prisma.SortOrder
   profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
   level?: Prisma.SortOrder
   exp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
+  registeredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  isNew?: Prisma.SortOrder
   storyProgress?: Prisma.StoryProgressOrderByRelationAggregateInput
-  episodeProgress?: Prisma.EpisodeProgressOrderByRelationAggregateInput
+  userEpisodes?: Prisma.UserEpisodeOrderByRelationAggregateInput
   dialogueBookmarks?: Prisma.dialogueBookmarkOrderByRelationAggregateInput
   masteryProgress?: Prisma.MasteryProgressOrderByRelationAggregateInput
   savedExpressions?: Prisma.SavedExpressionOrderByRelationAggregateInput
@@ -289,20 +329,25 @@ export type UserOrderByWithRelationInput = {
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
-  email?: string
+  id?: number
+  email_provider?: Prisma.UserEmailProviderCompoundUniqueInput
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringNullableFilter<"User"> | string | null
+  email?: Prisma.StringFilter<"User"> | string
+  provider?: Prisma.EnumAuthProviderFilter<"User"> | $Enums.AuthProvider
+  providerId?: Prisma.StringFilter<"User"> | string
   profileImage?: Prisma.StringNullableFilter<"User"> | string | null
   level?: Prisma.IntFilter<"User"> | number
   exp?: Prisma.IntFilter<"User"> | number
   streakDays?: Prisma.IntFilter<"User"> | number
   lastLoginAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  registeredAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  isNew?: Prisma.BoolFilter<"User"> | boolean
   storyProgress?: Prisma.StoryProgressListRelationFilter
-  episodeProgress?: Prisma.EpisodeProgressListRelationFilter
+  userEpisodes?: Prisma.UserEpisodeListRelationFilter
   dialogueBookmarks?: Prisma.DialogueBookmarkListRelationFilter
   masteryProgress?: Prisma.MasteryProgressListRelationFilter
   savedExpressions?: Prisma.SavedExpressionListRelationFilter
@@ -310,18 +355,22 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   characterMessages?: Prisma.CharacterMessageListRelationFilter
   sentMessages?: Prisma.MessageListRelationFilter
   receivedMessages?: Prisma.MessageListRelationFilter
-}, "id" | "email">
+}, "id" | "email_provider">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
+  provider?: Prisma.SortOrder
+  providerId?: Prisma.SortOrder
   profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
   level?: Prisma.SortOrder
   exp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
+  registeredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  isNew?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -333,29 +382,36 @@ export type UserScalarWhereWithAggregatesInput = {
   AND?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"User"> | string
+  id?: Prisma.IntWithAggregatesFilter<"User"> | number
   name?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
+  provider?: Prisma.EnumAuthProviderWithAggregatesFilter<"User"> | $Enums.AuthProvider
+  providerId?: Prisma.StringWithAggregatesFilter<"User"> | string
   profileImage?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   level?: Prisma.IntWithAggregatesFilter<"User"> | number
   exp?: Prisma.IntWithAggregatesFilter<"User"> | number
   streakDays?: Prisma.IntWithAggregatesFilter<"User"> | number
   lastLoginAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  registeredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  isNew?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
 }
 
 export type UserCreateInput = {
-  id?: string
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionCreateNestedManyWithoutUserInput
@@ -366,17 +422,21 @@ export type UserCreateInput = {
 }
 
 export type UserUncheckedCreateInput = {
-  id?: string
+  id?: number
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressUncheckedCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionUncheckedCreateNestedManyWithoutUserInput
@@ -387,17 +447,20 @@ export type UserUncheckedCreateInput = {
 }
 
 export type UserUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUpdateManyWithoutUserNestedInput
@@ -408,17 +471,21 @@ export type UserUpdateInput = {
 }
 
 export type UserUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUncheckedUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUncheckedUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUncheckedUpdateManyWithoutUserNestedInput
@@ -429,54 +496,75 @@ export type UserUncheckedUpdateInput = {
 }
 
 export type UserCreateManyInput = {
-  id?: string
+  id?: number
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
 }
 
 export type UserUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UserUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+export type UserEmailProviderCompoundUniqueInput = {
+  email: string
+  provider: $Enums.AuthProvider
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  provider?: Prisma.SortOrder
+  providerId?: Prisma.SortOrder
   profileImage?: Prisma.SortOrder
   level?: Prisma.SortOrder
   exp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
+  registeredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  isNew?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   level?: Prisma.SortOrder
   exp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
@@ -486,27 +574,36 @@ export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  provider?: Prisma.SortOrder
+  providerId?: Prisma.SortOrder
   profileImage?: Prisma.SortOrder
   level?: Prisma.SortOrder
   exp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
+  registeredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  isNew?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  provider?: Prisma.SortOrder
+  providerId?: Prisma.SortOrder
   profileImage?: Prisma.SortOrder
   level?: Prisma.SortOrder
   exp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
+  registeredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  isNew?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   level?: Prisma.SortOrder
   exp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
@@ -517,12 +614,16 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
+export type EnumAuthProviderFieldUpdateOperationsInput = {
+  set?: $Enums.AuthProvider
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -535,6 +636,14 @@ export type IntFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type UserCreateNestedOneWithoutStoryProgressInput = {
@@ -551,18 +660,18 @@ export type UserUpdateOneRequiredWithoutStoryProgressNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStoryProgressInput, Prisma.UserUpdateWithoutStoryProgressInput>, Prisma.UserUncheckedUpdateWithoutStoryProgressInput>
 }
 
-export type UserCreateNestedOneWithoutEpisodeProgressInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutEpisodeProgressInput, Prisma.UserUncheckedCreateWithoutEpisodeProgressInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEpisodeProgressInput
+export type UserCreateNestedOneWithoutUserEpisodesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserEpisodesInput, Prisma.UserUncheckedCreateWithoutUserEpisodesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserEpisodesInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutEpisodeProgressNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutEpisodeProgressInput, Prisma.UserUncheckedCreateWithoutEpisodeProgressInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEpisodeProgressInput
-  upsert?: Prisma.UserUpsertWithoutEpisodeProgressInput
+export type UserUpdateOneRequiredWithoutUserEpisodesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserEpisodesInput, Prisma.UserUncheckedCreateWithoutUserEpisodesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserEpisodesInput
+  upsert?: Prisma.UserUpsertWithoutUserEpisodesInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEpisodeProgressInput, Prisma.UserUpdateWithoutEpisodeProgressInput>, Prisma.UserUncheckedUpdateWithoutEpisodeProgressInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserEpisodesInput, Prisma.UserUpdateWithoutUserEpisodesInput>, Prisma.UserUncheckedUpdateWithoutUserEpisodesInput>
 }
 
 export type UserCreateNestedOneWithoutCharacterFriendsInput = {
@@ -664,16 +773,19 @@ export type UserUpdateOneRequiredWithoutReceivedMessagesNestedInput = {
 }
 
 export type UserCreateWithoutStoryProgressInput = {
-  id?: string
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
-  episodeProgress?: Prisma.EpisodeProgressCreateNestedManyWithoutUserInput
+  isNew?: boolean
+  userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionCreateNestedManyWithoutUserInput
@@ -684,16 +796,20 @@ export type UserCreateWithoutStoryProgressInput = {
 }
 
 export type UserUncheckedCreateWithoutStoryProgressInput = {
-  id?: string
+  id?: number
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
-  episodeProgress?: Prisma.EpisodeProgressUncheckedCreateNestedManyWithoutUserInput
+  isNew?: boolean
+  userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressUncheckedCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionUncheckedCreateNestedManyWithoutUserInput
@@ -720,16 +836,19 @@ export type UserUpdateToOneWithWhereWithoutStoryProgressInput = {
 }
 
 export type UserUpdateWithoutStoryProgressInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  episodeProgress?: Prisma.EpisodeProgressUpdateManyWithoutUserNestedInput
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUpdateManyWithoutUserNestedInput
@@ -740,16 +859,20 @@ export type UserUpdateWithoutStoryProgressInput = {
 }
 
 export type UserUncheckedUpdateWithoutStoryProgressInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  episodeProgress?: Prisma.EpisodeProgressUncheckedUpdateManyWithoutUserNestedInput
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUncheckedUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUncheckedUpdateManyWithoutUserNestedInput
@@ -759,16 +882,19 @@ export type UserUncheckedUpdateWithoutStoryProgressInput = {
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutReceiverNestedInput
 }
 
-export type UserCreateWithoutEpisodeProgressInput = {
-  id?: string
+export type UserCreateWithoutUserEpisodesInput = {
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressCreateNestedManyWithoutUserInput
@@ -779,16 +905,20 @@ export type UserCreateWithoutEpisodeProgressInput = {
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutReceiverInput
 }
 
-export type UserUncheckedCreateWithoutEpisodeProgressInput = {
-  id?: string
+export type UserUncheckedCreateWithoutUserEpisodesInput = {
+  id?: number
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressUncheckedCreateNestedManyWithoutUserInput
@@ -799,32 +929,35 @@ export type UserUncheckedCreateWithoutEpisodeProgressInput = {
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutReceiverInput
 }
 
-export type UserCreateOrConnectWithoutEpisodeProgressInput = {
+export type UserCreateOrConnectWithoutUserEpisodesInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutEpisodeProgressInput, Prisma.UserUncheckedCreateWithoutEpisodeProgressInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserEpisodesInput, Prisma.UserUncheckedCreateWithoutUserEpisodesInput>
 }
 
-export type UserUpsertWithoutEpisodeProgressInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutEpisodeProgressInput, Prisma.UserUncheckedUpdateWithoutEpisodeProgressInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutEpisodeProgressInput, Prisma.UserUncheckedCreateWithoutEpisodeProgressInput>
+export type UserUpsertWithoutUserEpisodesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUserEpisodesInput, Prisma.UserUncheckedUpdateWithoutUserEpisodesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserEpisodesInput, Prisma.UserUncheckedCreateWithoutUserEpisodesInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutEpisodeProgressInput = {
+export type UserUpdateToOneWithWhereWithoutUserEpisodesInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutEpisodeProgressInput, Prisma.UserUncheckedUpdateWithoutEpisodeProgressInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUserEpisodesInput, Prisma.UserUncheckedUpdateWithoutUserEpisodesInput>
 }
 
-export type UserUpdateWithoutEpisodeProgressInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+export type UserUpdateWithoutUserEpisodesInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUpdateManyWithoutUserNestedInput
@@ -835,16 +968,20 @@ export type UserUpdateWithoutEpisodeProgressInput = {
   receivedMessages?: Prisma.MessageUpdateManyWithoutReceiverNestedInput
 }
 
-export type UserUncheckedUpdateWithoutEpisodeProgressInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+export type UserUncheckedUpdateWithoutUserEpisodesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUncheckedUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -856,17 +993,20 @@ export type UserUncheckedUpdateWithoutEpisodeProgressInput = {
 }
 
 export type UserCreateWithoutCharacterFriendsInput = {
-  id?: string
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionCreateNestedManyWithoutUserInput
@@ -876,17 +1016,21 @@ export type UserCreateWithoutCharacterFriendsInput = {
 }
 
 export type UserUncheckedCreateWithoutCharacterFriendsInput = {
-  id?: string
+  id?: number
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressUncheckedCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionUncheckedCreateNestedManyWithoutUserInput
@@ -912,17 +1056,20 @@ export type UserUpdateToOneWithWhereWithoutCharacterFriendsInput = {
 }
 
 export type UserUpdateWithoutCharacterFriendsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUpdateManyWithoutUserNestedInput
@@ -932,17 +1079,21 @@ export type UserUpdateWithoutCharacterFriendsInput = {
 }
 
 export type UserUncheckedUpdateWithoutCharacterFriendsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUncheckedUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUncheckedUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUncheckedUpdateManyWithoutUserNestedInput
@@ -952,17 +1103,20 @@ export type UserUncheckedUpdateWithoutCharacterFriendsInput = {
 }
 
 export type UserCreateWithoutCharacterMessagesInput = {
-  id?: string
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionCreateNestedManyWithoutUserInput
@@ -972,17 +1126,21 @@ export type UserCreateWithoutCharacterMessagesInput = {
 }
 
 export type UserUncheckedCreateWithoutCharacterMessagesInput = {
-  id?: string
+  id?: number
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressUncheckedCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionUncheckedCreateNestedManyWithoutUserInput
@@ -1008,17 +1166,20 @@ export type UserUpdateToOneWithWhereWithoutCharacterMessagesInput = {
 }
 
 export type UserUpdateWithoutCharacterMessagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUpdateManyWithoutUserNestedInput
@@ -1028,17 +1189,21 @@ export type UserUpdateWithoutCharacterMessagesInput = {
 }
 
 export type UserUncheckedUpdateWithoutCharacterMessagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUncheckedUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUncheckedUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUncheckedUpdateManyWithoutUserNestedInput
@@ -1048,17 +1213,20 @@ export type UserUncheckedUpdateWithoutCharacterMessagesInput = {
 }
 
 export type UserCreateWithoutDialogueBookmarksInput = {
-  id?: string
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
@@ -1068,17 +1236,21 @@ export type UserCreateWithoutDialogueBookmarksInput = {
 }
 
 export type UserUncheckedCreateWithoutDialogueBookmarksInput = {
-  id?: string
+  id?: number
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressUncheckedCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionUncheckedCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
@@ -1104,17 +1276,20 @@ export type UserUpdateToOneWithWhereWithoutDialogueBookmarksInput = {
 }
 
 export type UserUpdateWithoutDialogueBookmarksInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
@@ -1124,17 +1299,21 @@ export type UserUpdateWithoutDialogueBookmarksInput = {
 }
 
 export type UserUncheckedUpdateWithoutDialogueBookmarksInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUncheckedUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUncheckedUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUncheckedUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
@@ -1144,17 +1323,20 @@ export type UserUncheckedUpdateWithoutDialogueBookmarksInput = {
 }
 
 export type UserCreateWithoutMasteryProgressInput = {
-  id?: string
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
@@ -1164,17 +1346,21 @@ export type UserCreateWithoutMasteryProgressInput = {
 }
 
 export type UserUncheckedCreateWithoutMasteryProgressInput = {
-  id?: string
+  id?: number
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionUncheckedCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
@@ -1200,17 +1386,20 @@ export type UserUpdateToOneWithWhereWithoutMasteryProgressInput = {
 }
 
 export type UserUpdateWithoutMasteryProgressInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
@@ -1220,17 +1409,21 @@ export type UserUpdateWithoutMasteryProgressInput = {
 }
 
 export type UserUncheckedUpdateWithoutMasteryProgressInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUncheckedUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUncheckedUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
@@ -1240,17 +1433,20 @@ export type UserUncheckedUpdateWithoutMasteryProgressInput = {
 }
 
 export type UserCreateWithoutSavedExpressionsInput = {
-  id?: string
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
@@ -1260,17 +1456,21 @@ export type UserCreateWithoutSavedExpressionsInput = {
 }
 
 export type UserUncheckedCreateWithoutSavedExpressionsInput = {
-  id?: string
+  id?: number
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressUncheckedCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
@@ -1296,17 +1496,20 @@ export type UserUpdateToOneWithWhereWithoutSavedExpressionsInput = {
 }
 
 export type UserUpdateWithoutSavedExpressionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
@@ -1316,17 +1519,21 @@ export type UserUpdateWithoutSavedExpressionsInput = {
 }
 
 export type UserUncheckedUpdateWithoutSavedExpressionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUncheckedUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUncheckedUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
@@ -1336,17 +1543,20 @@ export type UserUncheckedUpdateWithoutSavedExpressionsInput = {
 }
 
 export type UserCreateWithoutSentMessagesInput = {
-  id?: string
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionCreateNestedManyWithoutUserInput
@@ -1356,17 +1566,21 @@ export type UserCreateWithoutSentMessagesInput = {
 }
 
 export type UserUncheckedCreateWithoutSentMessagesInput = {
-  id?: string
+  id?: number
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressUncheckedCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionUncheckedCreateNestedManyWithoutUserInput
@@ -1381,17 +1595,20 @@ export type UserCreateOrConnectWithoutSentMessagesInput = {
 }
 
 export type UserCreateWithoutReceivedMessagesInput = {
-  id?: string
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionCreateNestedManyWithoutUserInput
@@ -1401,17 +1618,21 @@ export type UserCreateWithoutReceivedMessagesInput = {
 }
 
 export type UserUncheckedCreateWithoutReceivedMessagesInput = {
-  id?: string
+  id?: number
   name?: string | null
   email: string
+  provider: $Enums.AuthProvider
+  providerId: string
   profileImage?: string | null
   level?: number
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
   createdAt?: Date | string
+  isNew?: boolean
   storyProgress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutUserInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   masteryProgress?: Prisma.MasteryProgressUncheckedCreateNestedManyWithoutUserInput
   savedExpressions?: Prisma.SavedExpressionUncheckedCreateNestedManyWithoutUserInput
@@ -1437,17 +1658,20 @@ export type UserUpdateToOneWithWhereWithoutSentMessagesInput = {
 }
 
 export type UserUpdateWithoutSentMessagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUpdateManyWithoutUserNestedInput
@@ -1457,17 +1681,21 @@ export type UserUpdateWithoutSentMessagesInput = {
 }
 
 export type UserUncheckedUpdateWithoutSentMessagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUncheckedUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUncheckedUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUncheckedUpdateManyWithoutUserNestedInput
@@ -1488,17 +1716,20 @@ export type UserUpdateToOneWithWhereWithoutReceivedMessagesInput = {
 }
 
 export type UserUpdateWithoutReceivedMessagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUpdateManyWithoutUserNestedInput
@@ -1508,17 +1739,21 @@ export type UserUpdateWithoutReceivedMessagesInput = {
 }
 
 export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   level?: Prisma.IntFieldUpdateOperationsInput | number
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
   storyProgress?: Prisma.StoryProgressUncheckedUpdateManyWithoutUserNestedInput
-  episodeProgress?: Prisma.EpisodeProgressUncheckedUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   masteryProgress?: Prisma.MasteryProgressUncheckedUpdateManyWithoutUserNestedInput
   savedExpressions?: Prisma.SavedExpressionUncheckedUpdateManyWithoutUserNestedInput
@@ -1534,7 +1769,7 @@ export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
 
 export type UserCountOutputType = {
   storyProgress: number
-  episodeProgress: number
+  userEpisodes: number
   dialogueBookmarks: number
   masteryProgress: number
   savedExpressions: number
@@ -1546,7 +1781,7 @@ export type UserCountOutputType = {
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   storyProgress?: boolean | UserCountOutputTypeCountStoryProgressArgs
-  episodeProgress?: boolean | UserCountOutputTypeCountEpisodeProgressArgs
+  userEpisodes?: boolean | UserCountOutputTypeCountUserEpisodesArgs
   dialogueBookmarks?: boolean | UserCountOutputTypeCountDialogueBookmarksArgs
   masteryProgress?: boolean | UserCountOutputTypeCountMasteryProgressArgs
   savedExpressions?: boolean | UserCountOutputTypeCountSavedExpressionsArgs
@@ -1576,8 +1811,8 @@ export type UserCountOutputTypeCountStoryProgressArgs<ExtArgs extends runtime.Ty
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountEpisodeProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.EpisodeProgressWhereInput
+export type UserCountOutputTypeCountUserEpisodesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserEpisodeWhereInput
 }
 
 /**
@@ -1634,14 +1869,18 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   name?: boolean
   email?: boolean
+  provider?: boolean
+  providerId?: boolean
   profileImage?: boolean
   level?: boolean
   exp?: boolean
   streakDays?: boolean
   lastLoginAt?: boolean
+  registeredAt?: boolean
   createdAt?: boolean
+  isNew?: boolean
   storyProgress?: boolean | Prisma.User$storyProgressArgs<ExtArgs>
-  episodeProgress?: boolean | Prisma.User$episodeProgressArgs<ExtArgs>
+  userEpisodes?: boolean | Prisma.User$userEpisodesArgs<ExtArgs>
   dialogueBookmarks?: boolean | Prisma.User$dialogueBookmarksArgs<ExtArgs>
   masteryProgress?: boolean | Prisma.User$masteryProgressArgs<ExtArgs>
   savedExpressions?: boolean | Prisma.User$savedExpressionsArgs<ExtArgs>
@@ -1656,42 +1895,54 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   name?: boolean
   email?: boolean
+  provider?: boolean
+  providerId?: boolean
   profileImage?: boolean
   level?: boolean
   exp?: boolean
   streakDays?: boolean
   lastLoginAt?: boolean
+  registeredAt?: boolean
   createdAt?: boolean
+  isNew?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   email?: boolean
+  provider?: boolean
+  providerId?: boolean
   profileImage?: boolean
   level?: boolean
   exp?: boolean
   streakDays?: boolean
   lastLoginAt?: boolean
+  registeredAt?: boolean
   createdAt?: boolean
+  isNew?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
   name?: boolean
   email?: boolean
+  provider?: boolean
+  providerId?: boolean
   profileImage?: boolean
   level?: boolean
   exp?: boolean
   streakDays?: boolean
   lastLoginAt?: boolean
+  registeredAt?: boolean
   createdAt?: boolean
+  isNew?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "profileImage" | "level" | "exp" | "streakDays" | "lastLoginAt" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "provider" | "providerId" | "profileImage" | "level" | "exp" | "streakDays" | "lastLoginAt" | "registeredAt" | "createdAt" | "isNew", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   storyProgress?: boolean | Prisma.User$storyProgressArgs<ExtArgs>
-  episodeProgress?: boolean | Prisma.User$episodeProgressArgs<ExtArgs>
+  userEpisodes?: boolean | Prisma.User$userEpisodesArgs<ExtArgs>
   dialogueBookmarks?: boolean | Prisma.User$dialogueBookmarksArgs<ExtArgs>
   masteryProgress?: boolean | Prisma.User$masteryProgressArgs<ExtArgs>
   savedExpressions?: boolean | Prisma.User$savedExpressionsArgs<ExtArgs>
@@ -1708,7 +1959,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     storyProgress: Prisma.$StoryProgressPayload<ExtArgs>[]
-    episodeProgress: Prisma.$EpisodeProgressPayload<ExtArgs>[]
+    userEpisodes: Prisma.$UserEpisodePayload<ExtArgs>[]
     dialogueBookmarks: Prisma.$dialogueBookmarkPayload<ExtArgs>[]
     masteryProgress: Prisma.$MasteryProgressPayload<ExtArgs>[]
     savedExpressions: Prisma.$SavedExpressionPayload<ExtArgs>[]
@@ -1718,15 +1969,19 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     receivedMessages: Prisma.$MessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
+    id: number
     name: string | null
     email: string
+    provider: $Enums.AuthProvider
+    providerId: string
     profileImage: string | null
     level: number
     exp: number
     streakDays: number
     lastLoginAt: Date
+    registeredAt: Date | null
     createdAt: Date
+    isNew: boolean
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -2122,7 +2377,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   storyProgress<T extends Prisma.User$storyProgressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$storyProgressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StoryProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  episodeProgress<T extends Prisma.User$episodeProgressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$episodeProgressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EpisodeProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userEpisodes<T extends Prisma.User$userEpisodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userEpisodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserEpisodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dialogueBookmarks<T extends Prisma.User$dialogueBookmarksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$dialogueBookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$dialogueBookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   masteryProgress<T extends Prisma.User$masteryProgressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$masteryProgressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MasteryProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   savedExpressions<T extends Prisma.User$savedExpressionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$savedExpressionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SavedExpressionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2159,15 +2414,19 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  * Fields of the User model
  */
 export interface UserFieldRefs {
-  readonly id: Prisma.FieldRef<"User", 'String'>
+  readonly id: Prisma.FieldRef<"User", 'Int'>
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
+  readonly provider: Prisma.FieldRef<"User", 'AuthProvider'>
+  readonly providerId: Prisma.FieldRef<"User", 'String'>
   readonly profileImage: Prisma.FieldRef<"User", 'String'>
   readonly level: Prisma.FieldRef<"User", 'Int'>
   readonly exp: Prisma.FieldRef<"User", 'Int'>
   readonly streakDays: Prisma.FieldRef<"User", 'Int'>
   readonly lastLoginAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly registeredAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly isNew: Prisma.FieldRef<"User", 'Boolean'>
 }
     
 
@@ -2580,27 +2839,27 @@ export type User$storyProgressArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * User.episodeProgress
+ * User.userEpisodes
  */
-export type User$episodeProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$userEpisodesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the EpisodeProgress
+   * Select specific fields to fetch from the UserEpisode
    */
-  select?: Prisma.EpisodeProgressSelect<ExtArgs> | null
+  select?: Prisma.UserEpisodeSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the EpisodeProgress
+   * Omit specific fields from the UserEpisode
    */
-  omit?: Prisma.EpisodeProgressOmit<ExtArgs> | null
+  omit?: Prisma.UserEpisodeOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.EpisodeProgressInclude<ExtArgs> | null
-  where?: Prisma.EpisodeProgressWhereInput
-  orderBy?: Prisma.EpisodeProgressOrderByWithRelationInput | Prisma.EpisodeProgressOrderByWithRelationInput[]
-  cursor?: Prisma.EpisodeProgressWhereUniqueInput
+  include?: Prisma.UserEpisodeInclude<ExtArgs> | null
+  where?: Prisma.UserEpisodeWhereInput
+  orderBy?: Prisma.UserEpisodeOrderByWithRelationInput | Prisma.UserEpisodeOrderByWithRelationInput[]
+  cursor?: Prisma.UserEpisodeWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.EpisodeProgressScalarFieldEnum | Prisma.EpisodeProgressScalarFieldEnum[]
+  distinct?: Prisma.UserEpisodeScalarFieldEnum | Prisma.UserEpisodeScalarFieldEnum[]
 }
 
 /**

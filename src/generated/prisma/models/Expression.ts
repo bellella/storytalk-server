@@ -27,15 +27,17 @@ export type AggregateExpression = {
 }
 
 export type ExpressionAvgAggregateOutputType = {
+  id: number | null
   masteryLevelId: number | null
 }
 
 export type ExpressionSumAggregateOutputType = {
+  id: number | null
   masteryLevelId: number | null
 }
 
 export type ExpressionMinAggregateOutputType = {
-  id: string | null
+  id: number | null
   masteryLevelId: number | null
   english: string | null
   korean: string | null
@@ -43,7 +45,7 @@ export type ExpressionMinAggregateOutputType = {
 }
 
 export type ExpressionMaxAggregateOutputType = {
-  id: string | null
+  id: number | null
   masteryLevelId: number | null
   english: string | null
   korean: string | null
@@ -61,10 +63,12 @@ export type ExpressionCountAggregateOutputType = {
 
 
 export type ExpressionAvgAggregateInputType = {
+  id?: true
   masteryLevelId?: true
 }
 
 export type ExpressionSumAggregateInputType = {
+  id?: true
   masteryLevelId?: true
 }
 
@@ -180,7 +184,7 @@ export type ExpressionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 export type ExpressionGroupByOutputType = {
-  id: string
+  id: number
   masteryLevelId: number
   english: string
   korean: string
@@ -211,7 +215,7 @@ export type ExpressionWhereInput = {
   AND?: Prisma.ExpressionWhereInput | Prisma.ExpressionWhereInput[]
   OR?: Prisma.ExpressionWhereInput[]
   NOT?: Prisma.ExpressionWhereInput | Prisma.ExpressionWhereInput[]
-  id?: Prisma.StringFilter<"Expression"> | string
+  id?: Prisma.IntFilter<"Expression"> | number
   masteryLevelId?: Prisma.IntFilter<"Expression"> | number
   english?: Prisma.StringFilter<"Expression"> | string
   korean?: Prisma.StringFilter<"Expression"> | string
@@ -231,7 +235,7 @@ export type ExpressionOrderByWithRelationInput = {
 }
 
 export type ExpressionWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   AND?: Prisma.ExpressionWhereInput | Prisma.ExpressionWhereInput[]
   OR?: Prisma.ExpressionWhereInput[]
   NOT?: Prisma.ExpressionWhereInput | Prisma.ExpressionWhereInput[]
@@ -260,7 +264,7 @@ export type ExpressionScalarWhereWithAggregatesInput = {
   AND?: Prisma.ExpressionScalarWhereWithAggregatesInput | Prisma.ExpressionScalarWhereWithAggregatesInput[]
   OR?: Prisma.ExpressionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ExpressionScalarWhereWithAggregatesInput | Prisma.ExpressionScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"Expression"> | string
+  id?: Prisma.IntWithAggregatesFilter<"Expression"> | number
   masteryLevelId?: Prisma.IntWithAggregatesFilter<"Expression"> | number
   english?: Prisma.StringWithAggregatesFilter<"Expression"> | string
   korean?: Prisma.StringWithAggregatesFilter<"Expression"> | string
@@ -268,7 +272,6 @@ export type ExpressionScalarWhereWithAggregatesInput = {
 }
 
 export type ExpressionCreateInput = {
-  id?: string
   english: string
   korean: string
   detail?: string | null
@@ -277,7 +280,7 @@ export type ExpressionCreateInput = {
 }
 
 export type ExpressionUncheckedCreateInput = {
-  id?: string
+  id?: number
   masteryLevelId: number
   english: string
   korean: string
@@ -286,7 +289,6 @@ export type ExpressionUncheckedCreateInput = {
 }
 
 export type ExpressionUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   english?: Prisma.StringFieldUpdateOperationsInput | string
   korean?: Prisma.StringFieldUpdateOperationsInput | string
   detail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -295,7 +297,7 @@ export type ExpressionUpdateInput = {
 }
 
 export type ExpressionUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   masteryLevelId?: Prisma.IntFieldUpdateOperationsInput | number
   english?: Prisma.StringFieldUpdateOperationsInput | string
   korean?: Prisma.StringFieldUpdateOperationsInput | string
@@ -304,7 +306,7 @@ export type ExpressionUncheckedUpdateInput = {
 }
 
 export type ExpressionCreateManyInput = {
-  id?: string
+  id?: number
   masteryLevelId: number
   english: string
   korean: string
@@ -312,14 +314,13 @@ export type ExpressionCreateManyInput = {
 }
 
 export type ExpressionUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   english?: Prisma.StringFieldUpdateOperationsInput | string
   korean?: Prisma.StringFieldUpdateOperationsInput | string
   detail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ExpressionUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   masteryLevelId?: Prisma.IntFieldUpdateOperationsInput | number
   english?: Prisma.StringFieldUpdateOperationsInput | string
   korean?: Prisma.StringFieldUpdateOperationsInput | string
@@ -345,6 +346,7 @@ export type ExpressionCountOrderByAggregateInput = {
 }
 
 export type ExpressionAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   masteryLevelId?: Prisma.SortOrder
 }
 
@@ -365,6 +367,7 @@ export type ExpressionMinOrderByAggregateInput = {
 }
 
 export type ExpressionSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   masteryLevelId?: Prisma.SortOrder
 }
 
@@ -430,7 +433,6 @@ export type ExpressionUpdateOneRequiredWithoutSavedByNestedInput = {
 }
 
 export type ExpressionCreateWithoutLevelInput = {
-  id?: string
   english: string
   korean: string
   detail?: string | null
@@ -438,7 +440,7 @@ export type ExpressionCreateWithoutLevelInput = {
 }
 
 export type ExpressionUncheckedCreateWithoutLevelInput = {
-  id?: string
+  id?: number
   english: string
   korean: string
   detail?: string | null
@@ -475,7 +477,7 @@ export type ExpressionScalarWhereInput = {
   AND?: Prisma.ExpressionScalarWhereInput | Prisma.ExpressionScalarWhereInput[]
   OR?: Prisma.ExpressionScalarWhereInput[]
   NOT?: Prisma.ExpressionScalarWhereInput | Prisma.ExpressionScalarWhereInput[]
-  id?: Prisma.StringFilter<"Expression"> | string
+  id?: Prisma.IntFilter<"Expression"> | number
   masteryLevelId?: Prisma.IntFilter<"Expression"> | number
   english?: Prisma.StringFilter<"Expression"> | string
   korean?: Prisma.StringFilter<"Expression"> | string
@@ -483,7 +485,6 @@ export type ExpressionScalarWhereInput = {
 }
 
 export type ExpressionCreateWithoutSavedByInput = {
-  id?: string
   english: string
   korean: string
   detail?: string | null
@@ -491,7 +492,7 @@ export type ExpressionCreateWithoutSavedByInput = {
 }
 
 export type ExpressionUncheckedCreateWithoutSavedByInput = {
-  id?: string
+  id?: number
   masteryLevelId: number
   english: string
   korean: string
@@ -515,7 +516,6 @@ export type ExpressionUpdateToOneWithWhereWithoutSavedByInput = {
 }
 
 export type ExpressionUpdateWithoutSavedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   english?: Prisma.StringFieldUpdateOperationsInput | string
   korean?: Prisma.StringFieldUpdateOperationsInput | string
   detail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -523,7 +523,7 @@ export type ExpressionUpdateWithoutSavedByInput = {
 }
 
 export type ExpressionUncheckedUpdateWithoutSavedByInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   masteryLevelId?: Prisma.IntFieldUpdateOperationsInput | number
   english?: Prisma.StringFieldUpdateOperationsInput | string
   korean?: Prisma.StringFieldUpdateOperationsInput | string
@@ -531,14 +531,13 @@ export type ExpressionUncheckedUpdateWithoutSavedByInput = {
 }
 
 export type ExpressionCreateManyLevelInput = {
-  id?: string
+  id?: number
   english: string
   korean: string
   detail?: string | null
 }
 
 export type ExpressionUpdateWithoutLevelInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   english?: Prisma.StringFieldUpdateOperationsInput | string
   korean?: Prisma.StringFieldUpdateOperationsInput | string
   detail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -546,7 +545,7 @@ export type ExpressionUpdateWithoutLevelInput = {
 }
 
 export type ExpressionUncheckedUpdateWithoutLevelInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   english?: Prisma.StringFieldUpdateOperationsInput | string
   korean?: Prisma.StringFieldUpdateOperationsInput | string
   detail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -554,7 +553,7 @@ export type ExpressionUncheckedUpdateWithoutLevelInput = {
 }
 
 export type ExpressionUncheckedUpdateManyWithoutLevelInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   english?: Prisma.StringFieldUpdateOperationsInput | string
   korean?: Prisma.StringFieldUpdateOperationsInput | string
   detail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -648,7 +647,7 @@ export type $ExpressionPayload<ExtArgs extends runtime.Types.Extensions.Internal
     savedBy: Prisma.$SavedExpressionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
+    id: number
     masteryLevelId: number
     english: string
     korean: string
@@ -1078,7 +1077,7 @@ export interface Prisma__ExpressionClient<T, Null = never, ExtArgs extends runti
  * Fields of the Expression model
  */
 export interface ExpressionFieldRefs {
-  readonly id: Prisma.FieldRef<"Expression", 'String'>
+  readonly id: Prisma.FieldRef<"Expression", 'Int'>
   readonly masteryLevelId: Prisma.FieldRef<"Expression", 'Int'>
   readonly english: Prisma.FieldRef<"Expression", 'String'>
   readonly korean: Prisma.FieldRef<"Expression", 'String'>

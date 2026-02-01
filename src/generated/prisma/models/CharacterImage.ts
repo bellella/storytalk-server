@@ -20,13 +20,25 @@ export type CharacterImageModel = runtime.Types.Result.DefaultSelection<Prisma.$
 
 export type AggregateCharacterImage = {
   _count: CharacterImageCountAggregateOutputType | null
+  _avg: CharacterImageAvgAggregateOutputType | null
+  _sum: CharacterImageSumAggregateOutputType | null
   _min: CharacterImageMinAggregateOutputType | null
   _max: CharacterImageMaxAggregateOutputType | null
 }
 
+export type CharacterImageAvgAggregateOutputType = {
+  id: number | null
+  characterId: number | null
+}
+
+export type CharacterImageSumAggregateOutputType = {
+  id: number | null
+  characterId: number | null
+}
+
 export type CharacterImageMinAggregateOutputType = {
-  id: string | null
-  characterId: string | null
+  id: number | null
+  characterId: number | null
   imageUrl: string | null
   label: string | null
   isDefault: boolean | null
@@ -35,8 +47,8 @@ export type CharacterImageMinAggregateOutputType = {
 }
 
 export type CharacterImageMaxAggregateOutputType = {
-  id: string | null
-  characterId: string | null
+  id: number | null
+  characterId: number | null
   imageUrl: string | null
   label: string | null
   isDefault: boolean | null
@@ -55,6 +67,16 @@ export type CharacterImageCountAggregateOutputType = {
   _all: number
 }
 
+
+export type CharacterImageAvgAggregateInputType = {
+  id?: true
+  characterId?: true
+}
+
+export type CharacterImageSumAggregateInputType = {
+  id?: true
+  characterId?: true
+}
 
 export type CharacterImageMinAggregateInputType = {
   id?: true
@@ -125,6 +147,18 @@ export type CharacterImageAggregateArgs<ExtArgs extends runtime.Types.Extensions
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: CharacterImageAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: CharacterImageSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: CharacterImageMinAggregateInputType
@@ -155,19 +189,23 @@ export type CharacterImageGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   _count?: CharacterImageCountAggregateInputType | true
+  _avg?: CharacterImageAvgAggregateInputType
+  _sum?: CharacterImageSumAggregateInputType
   _min?: CharacterImageMinAggregateInputType
   _max?: CharacterImageMaxAggregateInputType
 }
 
 export type CharacterImageGroupByOutputType = {
-  id: string
-  characterId: string
+  id: number
+  characterId: number
   imageUrl: string
   label: string | null
   isDefault: boolean
   createdAt: Date
   updatedAt: Date
   _count: CharacterImageCountAggregateOutputType | null
+  _avg: CharacterImageAvgAggregateOutputType | null
+  _sum: CharacterImageSumAggregateOutputType | null
   _min: CharacterImageMinAggregateOutputType | null
   _max: CharacterImageMaxAggregateOutputType | null
 }
@@ -191,8 +229,8 @@ export type CharacterImageWhereInput = {
   AND?: Prisma.CharacterImageWhereInput | Prisma.CharacterImageWhereInput[]
   OR?: Prisma.CharacterImageWhereInput[]
   NOT?: Prisma.CharacterImageWhereInput | Prisma.CharacterImageWhereInput[]
-  id?: Prisma.StringFilter<"CharacterImage"> | string
-  characterId?: Prisma.StringFilter<"CharacterImage"> | string
+  id?: Prisma.IntFilter<"CharacterImage"> | number
+  characterId?: Prisma.IntFilter<"CharacterImage"> | number
   imageUrl?: Prisma.StringFilter<"CharacterImage"> | string
   label?: Prisma.StringNullableFilter<"CharacterImage"> | string | null
   isDefault?: Prisma.BoolFilter<"CharacterImage"> | boolean
@@ -213,11 +251,11 @@ export type CharacterImageOrderByWithRelationInput = {
 }
 
 export type CharacterImageWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   AND?: Prisma.CharacterImageWhereInput | Prisma.CharacterImageWhereInput[]
   OR?: Prisma.CharacterImageWhereInput[]
   NOT?: Prisma.CharacterImageWhereInput | Prisma.CharacterImageWhereInput[]
-  characterId?: Prisma.StringFilter<"CharacterImage"> | string
+  characterId?: Prisma.IntFilter<"CharacterImage"> | number
   imageUrl?: Prisma.StringFilter<"CharacterImage"> | string
   label?: Prisma.StringNullableFilter<"CharacterImage"> | string | null
   isDefault?: Prisma.BoolFilter<"CharacterImage"> | boolean
@@ -235,16 +273,18 @@ export type CharacterImageOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CharacterImageCountOrderByAggregateInput
+  _avg?: Prisma.CharacterImageAvgOrderByAggregateInput
   _max?: Prisma.CharacterImageMaxOrderByAggregateInput
   _min?: Prisma.CharacterImageMinOrderByAggregateInput
+  _sum?: Prisma.CharacterImageSumOrderByAggregateInput
 }
 
 export type CharacterImageScalarWhereWithAggregatesInput = {
   AND?: Prisma.CharacterImageScalarWhereWithAggregatesInput | Prisma.CharacterImageScalarWhereWithAggregatesInput[]
   OR?: Prisma.CharacterImageScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CharacterImageScalarWhereWithAggregatesInput | Prisma.CharacterImageScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"CharacterImage"> | string
-  characterId?: Prisma.StringWithAggregatesFilter<"CharacterImage"> | string
+  id?: Prisma.IntWithAggregatesFilter<"CharacterImage"> | number
+  characterId?: Prisma.IntWithAggregatesFilter<"CharacterImage"> | number
   imageUrl?: Prisma.StringWithAggregatesFilter<"CharacterImage"> | string
   label?: Prisma.StringNullableWithAggregatesFilter<"CharacterImage"> | string | null
   isDefault?: Prisma.BoolWithAggregatesFilter<"CharacterImage"> | boolean
@@ -253,7 +293,6 @@ export type CharacterImageScalarWhereWithAggregatesInput = {
 }
 
 export type CharacterImageCreateInput = {
-  id?: string
   imageUrl: string
   label?: string | null
   isDefault?: boolean
@@ -263,8 +302,8 @@ export type CharacterImageCreateInput = {
 }
 
 export type CharacterImageUncheckedCreateInput = {
-  id?: string
-  characterId: string
+  id?: number
+  characterId: number
   imageUrl: string
   label?: string | null
   isDefault?: boolean
@@ -273,7 +312,6 @@ export type CharacterImageUncheckedCreateInput = {
 }
 
 export type CharacterImageUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -283,8 +321,8 @@ export type CharacterImageUpdateInput = {
 }
 
 export type CharacterImageUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  characterId?: Prisma.IntFieldUpdateOperationsInput | number
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -293,8 +331,8 @@ export type CharacterImageUncheckedUpdateInput = {
 }
 
 export type CharacterImageCreateManyInput = {
-  id?: string
-  characterId: string
+  id?: number
+  characterId: number
   imageUrl: string
   label?: string | null
   isDefault?: boolean
@@ -303,7 +341,6 @@ export type CharacterImageCreateManyInput = {
 }
 
 export type CharacterImageUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -312,8 +349,8 @@ export type CharacterImageUpdateManyMutationInput = {
 }
 
 export type CharacterImageUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  characterId?: Prisma.IntFieldUpdateOperationsInput | number
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -341,6 +378,11 @@ export type CharacterImageCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type CharacterImageAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
+}
+
 export type CharacterImageMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
@@ -359,6 +401,11 @@ export type CharacterImageMinOrderByAggregateInput = {
   isDefault?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type CharacterImageSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
 }
 
 export type CharacterImageCreateNestedManyWithoutCharacterInput = {
@@ -404,7 +451,6 @@ export type CharacterImageUncheckedUpdateManyWithoutCharacterNestedInput = {
 }
 
 export type CharacterImageCreateWithoutCharacterInput = {
-  id?: string
   imageUrl: string
   label?: string | null
   isDefault?: boolean
@@ -413,7 +459,7 @@ export type CharacterImageCreateWithoutCharacterInput = {
 }
 
 export type CharacterImageUncheckedCreateWithoutCharacterInput = {
-  id?: string
+  id?: number
   imageUrl: string
   label?: string | null
   isDefault?: boolean
@@ -451,8 +497,8 @@ export type CharacterImageScalarWhereInput = {
   AND?: Prisma.CharacterImageScalarWhereInput | Prisma.CharacterImageScalarWhereInput[]
   OR?: Prisma.CharacterImageScalarWhereInput[]
   NOT?: Prisma.CharacterImageScalarWhereInput | Prisma.CharacterImageScalarWhereInput[]
-  id?: Prisma.StringFilter<"CharacterImage"> | string
-  characterId?: Prisma.StringFilter<"CharacterImage"> | string
+  id?: Prisma.IntFilter<"CharacterImage"> | number
+  characterId?: Prisma.IntFilter<"CharacterImage"> | number
   imageUrl?: Prisma.StringFilter<"CharacterImage"> | string
   label?: Prisma.StringNullableFilter<"CharacterImage"> | string | null
   isDefault?: Prisma.BoolFilter<"CharacterImage"> | boolean
@@ -461,7 +507,7 @@ export type CharacterImageScalarWhereInput = {
 }
 
 export type CharacterImageCreateManyCharacterInput = {
-  id?: string
+  id?: number
   imageUrl: string
   label?: string | null
   isDefault?: boolean
@@ -470,7 +516,6 @@ export type CharacterImageCreateManyCharacterInput = {
 }
 
 export type CharacterImageUpdateWithoutCharacterInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -479,7 +524,7 @@ export type CharacterImageUpdateWithoutCharacterInput = {
 }
 
 export type CharacterImageUncheckedUpdateWithoutCharacterInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -488,7 +533,7 @@ export type CharacterImageUncheckedUpdateWithoutCharacterInput = {
 }
 
 export type CharacterImageUncheckedUpdateManyWithoutCharacterInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -558,8 +603,8 @@ export type $CharacterImagePayload<ExtArgs extends runtime.Types.Extensions.Inte
     character: Prisma.$CharacterPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    characterId: string
+    id: number
+    characterId: number
     imageUrl: string
     label: string | null
     isDefault: boolean
@@ -989,8 +1034,8 @@ export interface Prisma__CharacterImageClient<T, Null = never, ExtArgs extends r
  * Fields of the CharacterImage model
  */
 export interface CharacterImageFieldRefs {
-  readonly id: Prisma.FieldRef<"CharacterImage", 'String'>
-  readonly characterId: Prisma.FieldRef<"CharacterImage", 'String'>
+  readonly id: Prisma.FieldRef<"CharacterImage", 'Int'>
+  readonly characterId: Prisma.FieldRef<"CharacterImage", 'Int'>
   readonly imageUrl: Prisma.FieldRef<"CharacterImage", 'String'>
   readonly label: Prisma.FieldRef<"CharacterImage", 'String'>
   readonly isDefault: Prisma.FieldRef<"CharacterImage", 'Boolean'>

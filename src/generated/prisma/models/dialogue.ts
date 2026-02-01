@@ -27,20 +27,26 @@ export type AggregateDialogue = {
 }
 
 export type DialogueAvgAggregateOutputType = {
+  id: number | null
+  sceneId: number | null
   order: number | null
+  characterId: number | null
 }
 
 export type DialogueSumAggregateOutputType = {
+  id: number | null
+  sceneId: number | null
   order: number | null
+  characterId: number | null
 }
 
 export type DialogueMinAggregateOutputType = {
-  id: string | null
-  sceneId: string | null
+  id: number | null
+  sceneId: number | null
   order: number | null
   type: string | null
   characterName: string | null
-  characterId: string | null
+  characterId: number | null
   englishText: string | null
   koreanText: string | null
   charImageLabel: string | null
@@ -51,12 +57,12 @@ export type DialogueMinAggregateOutputType = {
 }
 
 export type DialogueMaxAggregateOutputType = {
-  id: string | null
-  sceneId: string | null
+  id: number | null
+  sceneId: number | null
   order: number | null
   type: string | null
   characterName: string | null
-  characterId: string | null
+  characterId: number | null
   englishText: string | null
   koreanText: string | null
   charImageLabel: string | null
@@ -85,11 +91,17 @@ export type DialogueCountAggregateOutputType = {
 
 
 export type DialogueAvgAggregateInputType = {
+  id?: true
+  sceneId?: true
   order?: true
+  characterId?: true
 }
 
 export type DialogueSumAggregateInputType = {
+  id?: true
+  sceneId?: true
   order?: true
+  characterId?: true
 }
 
 export type DialogueMinAggregateInputType = {
@@ -228,12 +240,12 @@ export type dialogueGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 export type DialogueGroupByOutputType = {
-  id: string
-  sceneId: string
+  id: number
+  sceneId: number
   order: number
   type: string
   characterName: string | null
-  characterId: string | null
+  characterId: number | null
   englishText: string
   koreanText: string
   charImageLabel: string | null
@@ -267,12 +279,12 @@ export type dialogueWhereInput = {
   AND?: Prisma.dialogueWhereInput | Prisma.dialogueWhereInput[]
   OR?: Prisma.dialogueWhereInput[]
   NOT?: Prisma.dialogueWhereInput | Prisma.dialogueWhereInput[]
-  id?: Prisma.StringFilter<"dialogue"> | string
-  sceneId?: Prisma.StringFilter<"dialogue"> | string
+  id?: Prisma.IntFilter<"dialogue"> | number
+  sceneId?: Prisma.IntFilter<"dialogue"> | number
   order?: Prisma.IntFilter<"dialogue"> | number
   type?: Prisma.StringFilter<"dialogue"> | string
   characterName?: Prisma.StringNullableFilter<"dialogue"> | string | null
-  characterId?: Prisma.StringNullableFilter<"dialogue"> | string | null
+  characterId?: Prisma.IntNullableFilter<"dialogue"> | number | null
   englishText?: Prisma.StringFilter<"dialogue"> | string
   koreanText?: Prisma.StringFilter<"dialogue"> | string
   charImageLabel?: Prisma.StringNullableFilter<"dialogue"> | string | null
@@ -305,16 +317,16 @@ export type dialogueOrderByWithRelationInput = {
 }
 
 export type dialogueWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   sceneId_order?: Prisma.dialogueSceneIdOrderCompoundUniqueInput
   AND?: Prisma.dialogueWhereInput | Prisma.dialogueWhereInput[]
   OR?: Prisma.dialogueWhereInput[]
   NOT?: Prisma.dialogueWhereInput | Prisma.dialogueWhereInput[]
-  sceneId?: Prisma.StringFilter<"dialogue"> | string
+  sceneId?: Prisma.IntFilter<"dialogue"> | number
   order?: Prisma.IntFilter<"dialogue"> | number
   type?: Prisma.StringFilter<"dialogue"> | string
   characterName?: Prisma.StringNullableFilter<"dialogue"> | string | null
-  characterId?: Prisma.StringNullableFilter<"dialogue"> | string | null
+  characterId?: Prisma.IntNullableFilter<"dialogue"> | number | null
   englishText?: Prisma.StringFilter<"dialogue"> | string
   koreanText?: Prisma.StringFilter<"dialogue"> | string
   charImageLabel?: Prisma.StringNullableFilter<"dialogue"> | string | null
@@ -352,12 +364,12 @@ export type dialogueScalarWhereWithAggregatesInput = {
   AND?: Prisma.dialogueScalarWhereWithAggregatesInput | Prisma.dialogueScalarWhereWithAggregatesInput[]
   OR?: Prisma.dialogueScalarWhereWithAggregatesInput[]
   NOT?: Prisma.dialogueScalarWhereWithAggregatesInput | Prisma.dialogueScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"dialogue"> | string
-  sceneId?: Prisma.StringWithAggregatesFilter<"dialogue"> | string
+  id?: Prisma.IntWithAggregatesFilter<"dialogue"> | number
+  sceneId?: Prisma.IntWithAggregatesFilter<"dialogue"> | number
   order?: Prisma.IntWithAggregatesFilter<"dialogue"> | number
   type?: Prisma.StringWithAggregatesFilter<"dialogue"> | string
   characterName?: Prisma.StringNullableWithAggregatesFilter<"dialogue"> | string | null
-  characterId?: Prisma.StringNullableWithAggregatesFilter<"dialogue"> | string | null
+  characterId?: Prisma.IntNullableWithAggregatesFilter<"dialogue"> | number | null
   englishText?: Prisma.StringWithAggregatesFilter<"dialogue"> | string
   koreanText?: Prisma.StringWithAggregatesFilter<"dialogue"> | string
   charImageLabel?: Prisma.StringNullableWithAggregatesFilter<"dialogue"> | string | null
@@ -368,7 +380,6 @@ export type dialogueScalarWhereWithAggregatesInput = {
 }
 
 export type dialogueCreateInput = {
-  id?: string
   order: number
   type?: string
   characterName?: string | null
@@ -385,12 +396,12 @@ export type dialogueCreateInput = {
 }
 
 export type dialogueUncheckedCreateInput = {
-  id?: string
-  sceneId: string
+  id?: number
+  sceneId: number
   order: number
   type?: string
   characterName?: string | null
-  characterId?: string | null
+  characterId?: number | null
   englishText: string
   koreanText: string
   charImageLabel?: string | null
@@ -402,7 +413,6 @@ export type dialogueUncheckedCreateInput = {
 }
 
 export type dialogueUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -419,12 +429,12 @@ export type dialogueUpdateInput = {
 }
 
 export type dialogueUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  sceneId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  sceneId?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  characterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   englishText?: Prisma.StringFieldUpdateOperationsInput | string
   koreanText?: Prisma.StringFieldUpdateOperationsInput | string
   charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -436,12 +446,12 @@ export type dialogueUncheckedUpdateInput = {
 }
 
 export type dialogueCreateManyInput = {
-  id?: string
-  sceneId: string
+  id?: number
+  sceneId: number
   order: number
   type?: string
   characterName?: string | null
-  characterId?: string | null
+  characterId?: number | null
   englishText: string
   koreanText: string
   charImageLabel?: string | null
@@ -452,7 +462,6 @@ export type dialogueCreateManyInput = {
 }
 
 export type dialogueUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -466,12 +475,12 @@ export type dialogueUpdateManyMutationInput = {
 }
 
 export type dialogueUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  sceneId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  sceneId?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  characterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   englishText?: Prisma.StringFieldUpdateOperationsInput | string
   koreanText?: Prisma.StringFieldUpdateOperationsInput | string
   charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -492,7 +501,7 @@ export type dialogueOrderByRelationAggregateInput = {
 }
 
 export type dialogueSceneIdOrderCompoundUniqueInput = {
-  sceneId: string
+  sceneId: number
   order: number
 }
 
@@ -513,7 +522,10 @@ export type dialogueCountOrderByAggregateInput = {
 }
 
 export type dialogueAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  sceneId?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
 }
 
 export type dialogueMaxOrderByAggregateInput = {
@@ -549,7 +561,10 @@ export type dialogueMinOrderByAggregateInput = {
 }
 
 export type dialogueSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  sceneId?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
 }
 
 export type DialogueScalarRelationFilter = {
@@ -597,6 +612,14 @@ export type dialogueUncheckedUpdateManyWithoutSceneNestedInput = {
   update?: Prisma.dialogueUpdateWithWhereUniqueWithoutSceneInput | Prisma.dialogueUpdateWithWhereUniqueWithoutSceneInput[]
   updateMany?: Prisma.dialogueUpdateManyWithWhereWithoutSceneInput | Prisma.dialogueUpdateManyWithWhereWithoutSceneInput[]
   deleteMany?: Prisma.dialogueScalarWhereInput | Prisma.dialogueScalarWhereInput[]
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type dialogueCreateNestedManyWithoutCharacterInput = {
@@ -656,7 +679,6 @@ export type dialogueUpdateOneRequiredWithoutBookmarksNestedInput = {
 }
 
 export type dialogueCreateWithoutSceneInput = {
-  id?: string
   order: number
   type?: string
   characterName?: string | null
@@ -672,11 +694,11 @@ export type dialogueCreateWithoutSceneInput = {
 }
 
 export type dialogueUncheckedCreateWithoutSceneInput = {
-  id?: string
+  id?: number
   order: number
   type?: string
   characterName?: string | null
-  characterId?: string | null
+  characterId?: number | null
   englishText: string
   koreanText: string
   charImageLabel?: string | null
@@ -717,12 +739,12 @@ export type dialogueScalarWhereInput = {
   AND?: Prisma.dialogueScalarWhereInput | Prisma.dialogueScalarWhereInput[]
   OR?: Prisma.dialogueScalarWhereInput[]
   NOT?: Prisma.dialogueScalarWhereInput | Prisma.dialogueScalarWhereInput[]
-  id?: Prisma.StringFilter<"dialogue"> | string
-  sceneId?: Prisma.StringFilter<"dialogue"> | string
+  id?: Prisma.IntFilter<"dialogue"> | number
+  sceneId?: Prisma.IntFilter<"dialogue"> | number
   order?: Prisma.IntFilter<"dialogue"> | number
   type?: Prisma.StringFilter<"dialogue"> | string
   characterName?: Prisma.StringNullableFilter<"dialogue"> | string | null
-  characterId?: Prisma.StringNullableFilter<"dialogue"> | string | null
+  characterId?: Prisma.IntNullableFilter<"dialogue"> | number | null
   englishText?: Prisma.StringFilter<"dialogue"> | string
   koreanText?: Prisma.StringFilter<"dialogue"> | string
   charImageLabel?: Prisma.StringNullableFilter<"dialogue"> | string | null
@@ -733,7 +755,6 @@ export type dialogueScalarWhereInput = {
 }
 
 export type dialogueCreateWithoutCharacterInput = {
-  id?: string
   order: number
   type?: string
   characterName?: string | null
@@ -749,8 +770,8 @@ export type dialogueCreateWithoutCharacterInput = {
 }
 
 export type dialogueUncheckedCreateWithoutCharacterInput = {
-  id?: string
-  sceneId: string
+  id?: number
+  sceneId: number
   order: number
   type?: string
   characterName?: string | null
@@ -791,7 +812,6 @@ export type dialogueUpdateManyWithWhereWithoutCharacterInput = {
 }
 
 export type dialogueCreateWithoutBookmarksInput = {
-  id?: string
   order: number
   type?: string
   characterName?: string | null
@@ -807,12 +827,12 @@ export type dialogueCreateWithoutBookmarksInput = {
 }
 
 export type dialogueUncheckedCreateWithoutBookmarksInput = {
-  id?: string
-  sceneId: string
+  id?: number
+  sceneId: number
   order: number
   type?: string
   characterName?: string | null
-  characterId?: string | null
+  characterId?: number | null
   englishText: string
   koreanText: string
   charImageLabel?: string | null
@@ -839,7 +859,6 @@ export type dialogueUpdateToOneWithWhereWithoutBookmarksInput = {
 }
 
 export type dialogueUpdateWithoutBookmarksInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -855,12 +874,12 @@ export type dialogueUpdateWithoutBookmarksInput = {
 }
 
 export type dialogueUncheckedUpdateWithoutBookmarksInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  sceneId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  sceneId?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  characterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   englishText?: Prisma.StringFieldUpdateOperationsInput | string
   koreanText?: Prisma.StringFieldUpdateOperationsInput | string
   charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -871,11 +890,11 @@ export type dialogueUncheckedUpdateWithoutBookmarksInput = {
 }
 
 export type dialogueCreateManySceneInput = {
-  id?: string
+  id?: number
   order: number
   type?: string
   characterName?: string | null
-  characterId?: string | null
+  characterId?: number | null
   englishText: string
   koreanText: string
   charImageLabel?: string | null
@@ -886,7 +905,6 @@ export type dialogueCreateManySceneInput = {
 }
 
 export type dialogueUpdateWithoutSceneInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -902,11 +920,11 @@ export type dialogueUpdateWithoutSceneInput = {
 }
 
 export type dialogueUncheckedUpdateWithoutSceneInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  characterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   englishText?: Prisma.StringFieldUpdateOperationsInput | string
   koreanText?: Prisma.StringFieldUpdateOperationsInput | string
   charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -918,11 +936,11 @@ export type dialogueUncheckedUpdateWithoutSceneInput = {
 }
 
 export type dialogueUncheckedUpdateManyWithoutSceneInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  characterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   englishText?: Prisma.StringFieldUpdateOperationsInput | string
   koreanText?: Prisma.StringFieldUpdateOperationsInput | string
   charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -933,8 +951,8 @@ export type dialogueUncheckedUpdateManyWithoutSceneInput = {
 }
 
 export type dialogueCreateManyCharacterInput = {
-  id?: string
-  sceneId: string
+  id?: number
+  sceneId: number
   order: number
   type?: string
   characterName?: string | null
@@ -948,7 +966,6 @@ export type dialogueCreateManyCharacterInput = {
 }
 
 export type dialogueUpdateWithoutCharacterInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   order?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -964,8 +981,8 @@ export type dialogueUpdateWithoutCharacterInput = {
 }
 
 export type dialogueUncheckedUpdateWithoutCharacterInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  sceneId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  sceneId?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -980,8 +997,8 @@ export type dialogueUncheckedUpdateWithoutCharacterInput = {
 }
 
 export type dialogueUncheckedUpdateManyWithoutCharacterInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  sceneId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  sceneId?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.StringFieldUpdateOperationsInput | string
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1121,12 +1138,12 @@ export type $dialoguePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     bookmarks: Prisma.$dialogueBookmarkPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    sceneId: string
+    id: number
+    sceneId: number
     order: number
     type: string
     characterName: string | null
-    characterId: string | null
+    characterId: number | null
     englishText: string
     koreanText: string
     charImageLabel: string | null
@@ -1560,12 +1577,12 @@ export interface Prisma__dialogueClient<T, Null = never, ExtArgs extends runtime
  * Fields of the dialogue model
  */
 export interface dialogueFieldRefs {
-  readonly id: Prisma.FieldRef<"dialogue", 'String'>
-  readonly sceneId: Prisma.FieldRef<"dialogue", 'String'>
+  readonly id: Prisma.FieldRef<"dialogue", 'Int'>
+  readonly sceneId: Prisma.FieldRef<"dialogue", 'Int'>
   readonly order: Prisma.FieldRef<"dialogue", 'Int'>
   readonly type: Prisma.FieldRef<"dialogue", 'String'>
   readonly characterName: Prisma.FieldRef<"dialogue", 'String'>
-  readonly characterId: Prisma.FieldRef<"dialogue", 'String'>
+  readonly characterId: Prisma.FieldRef<"dialogue", 'Int'>
   readonly englishText: Prisma.FieldRef<"dialogue", 'String'>
   readonly koreanText: Prisma.FieldRef<"dialogue", 'String'>
   readonly charImageLabel: Prisma.FieldRef<"dialogue", 'String'>

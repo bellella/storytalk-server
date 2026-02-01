@@ -27,16 +27,20 @@ export type AggregateScene = {
 }
 
 export type SceneAvgAggregateOutputType = {
+  id: number | null
+  episodeId: number | null
   order: number | null
 }
 
 export type SceneSumAggregateOutputType = {
+  id: number | null
+  episodeId: number | null
   order: number | null
 }
 
 export type SceneMinAggregateOutputType = {
-  id: string | null
-  episodeId: string | null
+  id: number | null
+  episodeId: number | null
   title: string | null
   koreanTitle: string | null
   order: number | null
@@ -47,8 +51,8 @@ export type SceneMinAggregateOutputType = {
 }
 
 export type SceneMaxAggregateOutputType = {
-  id: string | null
-  episodeId: string | null
+  id: number | null
+  episodeId: number | null
   title: string | null
   koreanTitle: string | null
   order: number | null
@@ -73,10 +77,14 @@ export type SceneCountAggregateOutputType = {
 
 
 export type SceneAvgAggregateInputType = {
+  id?: true
+  episodeId?: true
   order?: true
 }
 
 export type SceneSumAggregateInputType = {
+  id?: true
+  episodeId?: true
   order?: true
 }
 
@@ -204,8 +212,8 @@ export type SceneGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 }
 
 export type SceneGroupByOutputType = {
-  id: string
-  episodeId: string
+  id: number
+  episodeId: number
   title: string
   koreanTitle: string | null
   order: number
@@ -239,8 +247,8 @@ export type SceneWhereInput = {
   AND?: Prisma.SceneWhereInput | Prisma.SceneWhereInput[]
   OR?: Prisma.SceneWhereInput[]
   NOT?: Prisma.SceneWhereInput | Prisma.SceneWhereInput[]
-  id?: Prisma.StringFilter<"Scene"> | string
-  episodeId?: Prisma.StringFilter<"Scene"> | string
+  id?: Prisma.IntFilter<"Scene"> | number
+  episodeId?: Prisma.IntFilter<"Scene"> | number
   title?: Prisma.StringFilter<"Scene"> | string
   koreanTitle?: Prisma.StringNullableFilter<"Scene"> | string | null
   order?: Prisma.IntFilter<"Scene"> | number
@@ -267,12 +275,12 @@ export type SceneOrderByWithRelationInput = {
 }
 
 export type SceneWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   episodeId_order?: Prisma.SceneEpisodeIdOrderCompoundUniqueInput
   AND?: Prisma.SceneWhereInput | Prisma.SceneWhereInput[]
   OR?: Prisma.SceneWhereInput[]
   NOT?: Prisma.SceneWhereInput | Prisma.SceneWhereInput[]
-  episodeId?: Prisma.StringFilter<"Scene"> | string
+  episodeId?: Prisma.IntFilter<"Scene"> | number
   title?: Prisma.StringFilter<"Scene"> | string
   koreanTitle?: Prisma.StringNullableFilter<"Scene"> | string | null
   order?: Prisma.IntFilter<"Scene"> | number
@@ -305,8 +313,8 @@ export type SceneScalarWhereWithAggregatesInput = {
   AND?: Prisma.SceneScalarWhereWithAggregatesInput | Prisma.SceneScalarWhereWithAggregatesInput[]
   OR?: Prisma.SceneScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SceneScalarWhereWithAggregatesInput | Prisma.SceneScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"Scene"> | string
-  episodeId?: Prisma.StringWithAggregatesFilter<"Scene"> | string
+  id?: Prisma.IntWithAggregatesFilter<"Scene"> | number
+  episodeId?: Prisma.IntWithAggregatesFilter<"Scene"> | number
   title?: Prisma.StringWithAggregatesFilter<"Scene"> | string
   koreanTitle?: Prisma.StringNullableWithAggregatesFilter<"Scene"> | string | null
   order?: Prisma.IntWithAggregatesFilter<"Scene"> | number
@@ -317,7 +325,6 @@ export type SceneScalarWhereWithAggregatesInput = {
 }
 
 export type SceneCreateInput = {
-  id?: string
   title: string
   koreanTitle?: string | null
   order: number
@@ -330,8 +337,8 @@ export type SceneCreateInput = {
 }
 
 export type SceneUncheckedCreateInput = {
-  id?: string
-  episodeId: string
+  id?: number
+  episodeId: number
   title: string
   koreanTitle?: string | null
   order: number
@@ -343,7 +350,6 @@ export type SceneUncheckedCreateInput = {
 }
 
 export type SceneUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -356,8 +362,8 @@ export type SceneUpdateInput = {
 }
 
 export type SceneUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  episodeId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  episodeId?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -369,8 +375,8 @@ export type SceneUncheckedUpdateInput = {
 }
 
 export type SceneCreateManyInput = {
-  id?: string
-  episodeId: string
+  id?: number
+  episodeId: number
   title: string
   koreanTitle?: string | null
   order: number
@@ -381,7 +387,6 @@ export type SceneCreateManyInput = {
 }
 
 export type SceneUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -392,8 +397,8 @@ export type SceneUpdateManyMutationInput = {
 }
 
 export type SceneUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  episodeId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  episodeId?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -414,7 +419,7 @@ export type SceneOrderByRelationAggregateInput = {
 }
 
 export type SceneEpisodeIdOrderCompoundUniqueInput = {
-  episodeId: string
+  episodeId: number
   order: number
 }
 
@@ -431,6 +436,8 @@ export type SceneCountOrderByAggregateInput = {
 }
 
 export type SceneAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  episodeId?: Prisma.SortOrder
   order?: Prisma.SortOrder
 }
 
@@ -459,6 +466,8 @@ export type SceneMinOrderByAggregateInput = {
 }
 
 export type SceneSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  episodeId?: Prisma.SortOrder
   order?: Prisma.SortOrder
 }
 
@@ -524,7 +533,6 @@ export type SceneUpdateOneRequiredWithoutDialoguesNestedInput = {
 }
 
 export type SceneCreateWithoutEpisodeInput = {
-  id?: string
   title: string
   koreanTitle?: string | null
   order: number
@@ -536,7 +544,7 @@ export type SceneCreateWithoutEpisodeInput = {
 }
 
 export type SceneUncheckedCreateWithoutEpisodeInput = {
-  id?: string
+  id?: number
   title: string
   koreanTitle?: string | null
   order: number
@@ -577,8 +585,8 @@ export type SceneScalarWhereInput = {
   AND?: Prisma.SceneScalarWhereInput | Prisma.SceneScalarWhereInput[]
   OR?: Prisma.SceneScalarWhereInput[]
   NOT?: Prisma.SceneScalarWhereInput | Prisma.SceneScalarWhereInput[]
-  id?: Prisma.StringFilter<"Scene"> | string
-  episodeId?: Prisma.StringFilter<"Scene"> | string
+  id?: Prisma.IntFilter<"Scene"> | number
+  episodeId?: Prisma.IntFilter<"Scene"> | number
   title?: Prisma.StringFilter<"Scene"> | string
   koreanTitle?: Prisma.StringNullableFilter<"Scene"> | string | null
   order?: Prisma.IntFilter<"Scene"> | number
@@ -589,7 +597,6 @@ export type SceneScalarWhereInput = {
 }
 
 export type SceneCreateWithoutDialoguesInput = {
-  id?: string
   title: string
   koreanTitle?: string | null
   order: number
@@ -601,8 +608,8 @@ export type SceneCreateWithoutDialoguesInput = {
 }
 
 export type SceneUncheckedCreateWithoutDialoguesInput = {
-  id?: string
-  episodeId: string
+  id?: number
+  episodeId: number
   title: string
   koreanTitle?: string | null
   order: number
@@ -629,7 +636,6 @@ export type SceneUpdateToOneWithWhereWithoutDialoguesInput = {
 }
 
 export type SceneUpdateWithoutDialoguesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -641,8 +647,8 @@ export type SceneUpdateWithoutDialoguesInput = {
 }
 
 export type SceneUncheckedUpdateWithoutDialoguesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  episodeId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  episodeId?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -653,7 +659,7 @@ export type SceneUncheckedUpdateWithoutDialoguesInput = {
 }
 
 export type SceneCreateManyEpisodeInput = {
-  id?: string
+  id?: number
   title: string
   koreanTitle?: string | null
   order: number
@@ -664,7 +670,6 @@ export type SceneCreateManyEpisodeInput = {
 }
 
 export type SceneUpdateWithoutEpisodeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -676,7 +681,7 @@ export type SceneUpdateWithoutEpisodeInput = {
 }
 
 export type SceneUncheckedUpdateWithoutEpisodeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -688,7 +693,7 @@ export type SceneUncheckedUpdateWithoutEpisodeInput = {
 }
 
 export type SceneUncheckedUpdateManyWithoutEpisodeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -802,8 +807,8 @@ export type $ScenePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     dialogues: Prisma.$dialoguePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    episodeId: string
+    id: number
+    episodeId: number
     title: string
     koreanTitle: string | null
     order: number
@@ -1236,8 +1241,8 @@ export interface Prisma__SceneClient<T, Null = never, ExtArgs extends runtime.Ty
  * Fields of the Scene model
  */
 export interface SceneFieldRefs {
-  readonly id: Prisma.FieldRef<"Scene", 'String'>
-  readonly episodeId: Prisma.FieldRef<"Scene", 'String'>
+  readonly id: Prisma.FieldRef<"Scene", 'Int'>
+  readonly episodeId: Prisma.FieldRef<"Scene", 'Int'>
   readonly title: Prisma.FieldRef<"Scene", 'String'>
   readonly koreanTitle: Prisma.FieldRef<"Scene", 'String'>
   readonly order: Prisma.FieldRef<"Scene", 'Int'>

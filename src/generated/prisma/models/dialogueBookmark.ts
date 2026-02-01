@@ -20,22 +20,36 @@ export type dialogueBookmarkModel = runtime.Types.Result.DefaultSelection<Prisma
 
 export type AggregateDialogueBookmark = {
   _count: DialogueBookmarkCountAggregateOutputType | null
+  _avg: DialogueBookmarkAvgAggregateOutputType | null
+  _sum: DialogueBookmarkSumAggregateOutputType | null
   _min: DialogueBookmarkMinAggregateOutputType | null
   _max: DialogueBookmarkMaxAggregateOutputType | null
 }
 
+export type DialogueBookmarkAvgAggregateOutputType = {
+  id: number | null
+  userId: number | null
+  dialogueId: number | null
+}
+
+export type DialogueBookmarkSumAggregateOutputType = {
+  id: number | null
+  userId: number | null
+  dialogueId: number | null
+}
+
 export type DialogueBookmarkMinAggregateOutputType = {
-  id: string | null
-  userId: string | null
-  dialogueId: string | null
+  id: number | null
+  userId: number | null
+  dialogueId: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type DialogueBookmarkMaxAggregateOutputType = {
-  id: string | null
-  userId: string | null
-  dialogueId: string | null
+  id: number | null
+  userId: number | null
+  dialogueId: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -49,6 +63,18 @@ export type DialogueBookmarkCountAggregateOutputType = {
   _all: number
 }
 
+
+export type DialogueBookmarkAvgAggregateInputType = {
+  id?: true
+  userId?: true
+  dialogueId?: true
+}
+
+export type DialogueBookmarkSumAggregateInputType = {
+  id?: true
+  userId?: true
+  dialogueId?: true
+}
 
 export type DialogueBookmarkMinAggregateInputType = {
   id?: true
@@ -113,6 +139,18 @@ export type DialogueBookmarkAggregateArgs<ExtArgs extends runtime.Types.Extensio
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: DialogueBookmarkAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: DialogueBookmarkSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: DialogueBookmarkMinAggregateInputType
@@ -143,17 +181,21 @@ export type dialogueBookmarkGroupByArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   _count?: DialogueBookmarkCountAggregateInputType | true
+  _avg?: DialogueBookmarkAvgAggregateInputType
+  _sum?: DialogueBookmarkSumAggregateInputType
   _min?: DialogueBookmarkMinAggregateInputType
   _max?: DialogueBookmarkMaxAggregateInputType
 }
 
 export type DialogueBookmarkGroupByOutputType = {
-  id: string
-  userId: string
-  dialogueId: string
+  id: number
+  userId: number
+  dialogueId: number
   createdAt: Date
   updatedAt: Date
   _count: DialogueBookmarkCountAggregateOutputType | null
+  _avg: DialogueBookmarkAvgAggregateOutputType | null
+  _sum: DialogueBookmarkSumAggregateOutputType | null
   _min: DialogueBookmarkMinAggregateOutputType | null
   _max: DialogueBookmarkMaxAggregateOutputType | null
 }
@@ -177,9 +219,9 @@ export type dialogueBookmarkWhereInput = {
   AND?: Prisma.dialogueBookmarkWhereInput | Prisma.dialogueBookmarkWhereInput[]
   OR?: Prisma.dialogueBookmarkWhereInput[]
   NOT?: Prisma.dialogueBookmarkWhereInput | Prisma.dialogueBookmarkWhereInput[]
-  id?: Prisma.StringFilter<"dialogueBookmark"> | string
-  userId?: Prisma.StringFilter<"dialogueBookmark"> | string
-  dialogueId?: Prisma.StringFilter<"dialogueBookmark"> | string
+  id?: Prisma.IntFilter<"dialogueBookmark"> | number
+  userId?: Prisma.IntFilter<"dialogueBookmark"> | number
+  dialogueId?: Prisma.IntFilter<"dialogueBookmark"> | number
   createdAt?: Prisma.DateTimeFilter<"dialogueBookmark"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"dialogueBookmark"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -197,13 +239,13 @@ export type dialogueBookmarkOrderByWithRelationInput = {
 }
 
 export type dialogueBookmarkWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   userId_dialogueId?: Prisma.dialogueBookmarkUserIdDialogueIdCompoundUniqueInput
   AND?: Prisma.dialogueBookmarkWhereInput | Prisma.dialogueBookmarkWhereInput[]
   OR?: Prisma.dialogueBookmarkWhereInput[]
   NOT?: Prisma.dialogueBookmarkWhereInput | Prisma.dialogueBookmarkWhereInput[]
-  userId?: Prisma.StringFilter<"dialogueBookmark"> | string
-  dialogueId?: Prisma.StringFilter<"dialogueBookmark"> | string
+  userId?: Prisma.IntFilter<"dialogueBookmark"> | number
+  dialogueId?: Prisma.IntFilter<"dialogueBookmark"> | number
   createdAt?: Prisma.DateTimeFilter<"dialogueBookmark"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"dialogueBookmark"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -217,23 +259,24 @@ export type dialogueBookmarkOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.dialogueBookmarkCountOrderByAggregateInput
+  _avg?: Prisma.dialogueBookmarkAvgOrderByAggregateInput
   _max?: Prisma.dialogueBookmarkMaxOrderByAggregateInput
   _min?: Prisma.dialogueBookmarkMinOrderByAggregateInput
+  _sum?: Prisma.dialogueBookmarkSumOrderByAggregateInput
 }
 
 export type dialogueBookmarkScalarWhereWithAggregatesInput = {
   AND?: Prisma.dialogueBookmarkScalarWhereWithAggregatesInput | Prisma.dialogueBookmarkScalarWhereWithAggregatesInput[]
   OR?: Prisma.dialogueBookmarkScalarWhereWithAggregatesInput[]
   NOT?: Prisma.dialogueBookmarkScalarWhereWithAggregatesInput | Prisma.dialogueBookmarkScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"dialogueBookmark"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"dialogueBookmark"> | string
-  dialogueId?: Prisma.StringWithAggregatesFilter<"dialogueBookmark"> | string
+  id?: Prisma.IntWithAggregatesFilter<"dialogueBookmark"> | number
+  userId?: Prisma.IntWithAggregatesFilter<"dialogueBookmark"> | number
+  dialogueId?: Prisma.IntWithAggregatesFilter<"dialogueBookmark"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"dialogueBookmark"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"dialogueBookmark"> | Date | string
 }
 
 export type dialogueBookmarkCreateInput = {
-  id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutDialogueBookmarksInput
@@ -241,15 +284,14 @@ export type dialogueBookmarkCreateInput = {
 }
 
 export type dialogueBookmarkUncheckedCreateInput = {
-  id?: string
-  userId: string
-  dialogueId: string
+  id?: number
+  userId: number
+  dialogueId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type dialogueBookmarkUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutDialogueBookmarksNestedInput
@@ -257,31 +299,30 @@ export type dialogueBookmarkUpdateInput = {
 }
 
 export type dialogueBookmarkUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  dialogueId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type dialogueBookmarkCreateManyInput = {
-  id?: string
-  userId: string
-  dialogueId: string
+  id?: number
+  userId: number
+  dialogueId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type dialogueBookmarkUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type dialogueBookmarkUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  dialogueId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -297,8 +338,8 @@ export type dialogueBookmarkOrderByRelationAggregateInput = {
 }
 
 export type dialogueBookmarkUserIdDialogueIdCompoundUniqueInput = {
-  userId: string
-  dialogueId: string
+  userId: number
+  dialogueId: number
 }
 
 export type dialogueBookmarkCountOrderByAggregateInput = {
@@ -307,6 +348,12 @@ export type dialogueBookmarkCountOrderByAggregateInput = {
   dialogueId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type dialogueBookmarkAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  dialogueId?: Prisma.SortOrder
 }
 
 export type dialogueBookmarkMaxOrderByAggregateInput = {
@@ -323,6 +370,12 @@ export type dialogueBookmarkMinOrderByAggregateInput = {
   dialogueId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type dialogueBookmarkSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  dialogueId?: Prisma.SortOrder
 }
 
 export type dialogueBookmarkCreateNestedManyWithoutUserInput = {
@@ -410,15 +463,14 @@ export type dialogueBookmarkUncheckedUpdateManyWithoutDialogueNestedInput = {
 }
 
 export type dialogueBookmarkCreateWithoutUserInput = {
-  id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   dialogue: Prisma.dialogueCreateNestedOneWithoutBookmarksInput
 }
 
 export type dialogueBookmarkUncheckedCreateWithoutUserInput = {
-  id?: string
-  dialogueId: string
+  id?: number
+  dialogueId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -453,23 +505,22 @@ export type dialogueBookmarkScalarWhereInput = {
   AND?: Prisma.dialogueBookmarkScalarWhereInput | Prisma.dialogueBookmarkScalarWhereInput[]
   OR?: Prisma.dialogueBookmarkScalarWhereInput[]
   NOT?: Prisma.dialogueBookmarkScalarWhereInput | Prisma.dialogueBookmarkScalarWhereInput[]
-  id?: Prisma.StringFilter<"dialogueBookmark"> | string
-  userId?: Prisma.StringFilter<"dialogueBookmark"> | string
-  dialogueId?: Prisma.StringFilter<"dialogueBookmark"> | string
+  id?: Prisma.IntFilter<"dialogueBookmark"> | number
+  userId?: Prisma.IntFilter<"dialogueBookmark"> | number
+  dialogueId?: Prisma.IntFilter<"dialogueBookmark"> | number
   createdAt?: Prisma.DateTimeFilter<"dialogueBookmark"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"dialogueBookmark"> | Date | string
 }
 
 export type dialogueBookmarkCreateWithoutDialogueInput = {
-  id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutDialogueBookmarksInput
 }
 
 export type dialogueBookmarkUncheckedCreateWithoutDialogueInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -501,57 +552,55 @@ export type dialogueBookmarkUpdateManyWithWhereWithoutDialogueInput = {
 }
 
 export type dialogueBookmarkCreateManyUserInput = {
-  id?: string
-  dialogueId: string
+  id?: number
+  dialogueId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type dialogueBookmarkUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dialogue?: Prisma.dialogueUpdateOneRequiredWithoutBookmarksNestedInput
 }
 
 export type dialogueBookmarkUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  dialogueId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type dialogueBookmarkUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  dialogueId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type dialogueBookmarkCreateManyDialogueInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type dialogueBookmarkUpdateWithoutDialogueInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutDialogueBookmarksNestedInput
 }
 
 export type dialogueBookmarkUncheckedUpdateWithoutDialogueInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type dialogueBookmarkUncheckedUpdateManyWithoutDialogueInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -617,9 +666,9 @@ export type $dialogueBookmarkPayload<ExtArgs extends runtime.Types.Extensions.In
     dialogue: Prisma.$dialoguePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    userId: string
-    dialogueId: string
+    id: number
+    userId: number
+    dialogueId: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["dialogueBookmark"]>
@@ -1047,9 +1096,9 @@ export interface Prisma__dialogueBookmarkClient<T, Null = never, ExtArgs extends
  * Fields of the dialogueBookmark model
  */
 export interface dialogueBookmarkFieldRefs {
-  readonly id: Prisma.FieldRef<"dialogueBookmark", 'String'>
-  readonly userId: Prisma.FieldRef<"dialogueBookmark", 'String'>
-  readonly dialogueId: Prisma.FieldRef<"dialogueBookmark", 'String'>
+  readonly id: Prisma.FieldRef<"dialogueBookmark", 'Int'>
+  readonly userId: Prisma.FieldRef<"dialogueBookmark", 'Int'>
+  readonly dialogueId: Prisma.FieldRef<"dialogueBookmark", 'Int'>
   readonly createdAt: Prisma.FieldRef<"dialogueBookmark", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"dialogueBookmark", 'DateTime'>
 }

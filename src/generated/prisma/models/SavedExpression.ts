@@ -20,22 +20,36 @@ export type SavedExpressionModel = runtime.Types.Result.DefaultSelection<Prisma.
 
 export type AggregateSavedExpression = {
   _count: SavedExpressionCountAggregateOutputType | null
+  _avg: SavedExpressionAvgAggregateOutputType | null
+  _sum: SavedExpressionSumAggregateOutputType | null
   _min: SavedExpressionMinAggregateOutputType | null
   _max: SavedExpressionMaxAggregateOutputType | null
 }
 
+export type SavedExpressionAvgAggregateOutputType = {
+  id: number | null
+  userId: number | null
+  expressionId: number | null
+}
+
+export type SavedExpressionSumAggregateOutputType = {
+  id: number | null
+  userId: number | null
+  expressionId: number | null
+}
+
 export type SavedExpressionMinAggregateOutputType = {
-  id: string | null
-  userId: string | null
-  expressionId: string | null
+  id: number | null
+  userId: number | null
+  expressionId: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type SavedExpressionMaxAggregateOutputType = {
-  id: string | null
-  userId: string | null
-  expressionId: string | null
+  id: number | null
+  userId: number | null
+  expressionId: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -49,6 +63,18 @@ export type SavedExpressionCountAggregateOutputType = {
   _all: number
 }
 
+
+export type SavedExpressionAvgAggregateInputType = {
+  id?: true
+  userId?: true
+  expressionId?: true
+}
+
+export type SavedExpressionSumAggregateInputType = {
+  id?: true
+  userId?: true
+  expressionId?: true
+}
 
 export type SavedExpressionMinAggregateInputType = {
   id?: true
@@ -113,6 +139,18 @@ export type SavedExpressionAggregateArgs<ExtArgs extends runtime.Types.Extension
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: SavedExpressionAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: SavedExpressionSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: SavedExpressionMinAggregateInputType
@@ -143,17 +181,21 @@ export type SavedExpressionGroupByArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   _count?: SavedExpressionCountAggregateInputType | true
+  _avg?: SavedExpressionAvgAggregateInputType
+  _sum?: SavedExpressionSumAggregateInputType
   _min?: SavedExpressionMinAggregateInputType
   _max?: SavedExpressionMaxAggregateInputType
 }
 
 export type SavedExpressionGroupByOutputType = {
-  id: string
-  userId: string
-  expressionId: string
+  id: number
+  userId: number
+  expressionId: number
   createdAt: Date
   updatedAt: Date
   _count: SavedExpressionCountAggregateOutputType | null
+  _avg: SavedExpressionAvgAggregateOutputType | null
+  _sum: SavedExpressionSumAggregateOutputType | null
   _min: SavedExpressionMinAggregateOutputType | null
   _max: SavedExpressionMaxAggregateOutputType | null
 }
@@ -177,9 +219,9 @@ export type SavedExpressionWhereInput = {
   AND?: Prisma.SavedExpressionWhereInput | Prisma.SavedExpressionWhereInput[]
   OR?: Prisma.SavedExpressionWhereInput[]
   NOT?: Prisma.SavedExpressionWhereInput | Prisma.SavedExpressionWhereInput[]
-  id?: Prisma.StringFilter<"SavedExpression"> | string
-  userId?: Prisma.StringFilter<"SavedExpression"> | string
-  expressionId?: Prisma.StringFilter<"SavedExpression"> | string
+  id?: Prisma.IntFilter<"SavedExpression"> | number
+  userId?: Prisma.IntFilter<"SavedExpression"> | number
+  expressionId?: Prisma.IntFilter<"SavedExpression"> | number
   createdAt?: Prisma.DateTimeFilter<"SavedExpression"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SavedExpression"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -197,13 +239,13 @@ export type SavedExpressionOrderByWithRelationInput = {
 }
 
 export type SavedExpressionWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   userId_expressionId?: Prisma.SavedExpressionUserIdExpressionIdCompoundUniqueInput
   AND?: Prisma.SavedExpressionWhereInput | Prisma.SavedExpressionWhereInput[]
   OR?: Prisma.SavedExpressionWhereInput[]
   NOT?: Prisma.SavedExpressionWhereInput | Prisma.SavedExpressionWhereInput[]
-  userId?: Prisma.StringFilter<"SavedExpression"> | string
-  expressionId?: Prisma.StringFilter<"SavedExpression"> | string
+  userId?: Prisma.IntFilter<"SavedExpression"> | number
+  expressionId?: Prisma.IntFilter<"SavedExpression"> | number
   createdAt?: Prisma.DateTimeFilter<"SavedExpression"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SavedExpression"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -217,23 +259,24 @@ export type SavedExpressionOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SavedExpressionCountOrderByAggregateInput
+  _avg?: Prisma.SavedExpressionAvgOrderByAggregateInput
   _max?: Prisma.SavedExpressionMaxOrderByAggregateInput
   _min?: Prisma.SavedExpressionMinOrderByAggregateInput
+  _sum?: Prisma.SavedExpressionSumOrderByAggregateInput
 }
 
 export type SavedExpressionScalarWhereWithAggregatesInput = {
   AND?: Prisma.SavedExpressionScalarWhereWithAggregatesInput | Prisma.SavedExpressionScalarWhereWithAggregatesInput[]
   OR?: Prisma.SavedExpressionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SavedExpressionScalarWhereWithAggregatesInput | Prisma.SavedExpressionScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"SavedExpression"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"SavedExpression"> | string
-  expressionId?: Prisma.StringWithAggregatesFilter<"SavedExpression"> | string
+  id?: Prisma.IntWithAggregatesFilter<"SavedExpression"> | number
+  userId?: Prisma.IntWithAggregatesFilter<"SavedExpression"> | number
+  expressionId?: Prisma.IntWithAggregatesFilter<"SavedExpression"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SavedExpression"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SavedExpression"> | Date | string
 }
 
 export type SavedExpressionCreateInput = {
-  id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutSavedExpressionsInput
@@ -241,15 +284,14 @@ export type SavedExpressionCreateInput = {
 }
 
 export type SavedExpressionUncheckedCreateInput = {
-  id?: string
-  userId: string
-  expressionId: string
+  id?: number
+  userId: number
+  expressionId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SavedExpressionUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutSavedExpressionsNestedInput
@@ -257,31 +299,30 @@ export type SavedExpressionUpdateInput = {
 }
 
 export type SavedExpressionUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  expressionId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  expressionId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SavedExpressionCreateManyInput = {
-  id?: string
-  userId: string
-  expressionId: string
+  id?: number
+  userId: number
+  expressionId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SavedExpressionUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SavedExpressionUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  expressionId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  expressionId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -297,8 +338,8 @@ export type SavedExpressionOrderByRelationAggregateInput = {
 }
 
 export type SavedExpressionUserIdExpressionIdCompoundUniqueInput = {
-  userId: string
-  expressionId: string
+  userId: number
+  expressionId: number
 }
 
 export type SavedExpressionCountOrderByAggregateInput = {
@@ -307,6 +348,12 @@ export type SavedExpressionCountOrderByAggregateInput = {
   expressionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type SavedExpressionAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  expressionId?: Prisma.SortOrder
 }
 
 export type SavedExpressionMaxOrderByAggregateInput = {
@@ -323,6 +370,12 @@ export type SavedExpressionMinOrderByAggregateInput = {
   expressionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type SavedExpressionSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  expressionId?: Prisma.SortOrder
 }
 
 export type SavedExpressionCreateNestedManyWithoutUserInput = {
@@ -410,15 +463,14 @@ export type SavedExpressionUncheckedUpdateManyWithoutExpressionNestedInput = {
 }
 
 export type SavedExpressionCreateWithoutUserInput = {
-  id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   expression: Prisma.ExpressionCreateNestedOneWithoutSavedByInput
 }
 
 export type SavedExpressionUncheckedCreateWithoutUserInput = {
-  id?: string
-  expressionId: string
+  id?: number
+  expressionId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -453,23 +505,22 @@ export type SavedExpressionScalarWhereInput = {
   AND?: Prisma.SavedExpressionScalarWhereInput | Prisma.SavedExpressionScalarWhereInput[]
   OR?: Prisma.SavedExpressionScalarWhereInput[]
   NOT?: Prisma.SavedExpressionScalarWhereInput | Prisma.SavedExpressionScalarWhereInput[]
-  id?: Prisma.StringFilter<"SavedExpression"> | string
-  userId?: Prisma.StringFilter<"SavedExpression"> | string
-  expressionId?: Prisma.StringFilter<"SavedExpression"> | string
+  id?: Prisma.IntFilter<"SavedExpression"> | number
+  userId?: Prisma.IntFilter<"SavedExpression"> | number
+  expressionId?: Prisma.IntFilter<"SavedExpression"> | number
   createdAt?: Prisma.DateTimeFilter<"SavedExpression"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SavedExpression"> | Date | string
 }
 
 export type SavedExpressionCreateWithoutExpressionInput = {
-  id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutSavedExpressionsInput
 }
 
 export type SavedExpressionUncheckedCreateWithoutExpressionInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -501,57 +552,55 @@ export type SavedExpressionUpdateManyWithWhereWithoutExpressionInput = {
 }
 
 export type SavedExpressionCreateManyUserInput = {
-  id?: string
-  expressionId: string
+  id?: number
+  expressionId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SavedExpressionUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expression?: Prisma.ExpressionUpdateOneRequiredWithoutSavedByNestedInput
 }
 
 export type SavedExpressionUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  expressionId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  expressionId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SavedExpressionUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  expressionId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  expressionId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SavedExpressionCreateManyExpressionInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SavedExpressionUpdateWithoutExpressionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutSavedExpressionsNestedInput
 }
 
 export type SavedExpressionUncheckedUpdateWithoutExpressionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SavedExpressionUncheckedUpdateManyWithoutExpressionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -617,9 +666,9 @@ export type $SavedExpressionPayload<ExtArgs extends runtime.Types.Extensions.Int
     expression: Prisma.$ExpressionPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    userId: string
-    expressionId: string
+    id: number
+    userId: number
+    expressionId: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["savedExpression"]>
@@ -1047,9 +1096,9 @@ export interface Prisma__SavedExpressionClient<T, Null = never, ExtArgs extends 
  * Fields of the SavedExpression model
  */
 export interface SavedExpressionFieldRefs {
-  readonly id: Prisma.FieldRef<"SavedExpression", 'String'>
-  readonly userId: Prisma.FieldRef<"SavedExpression", 'String'>
-  readonly expressionId: Prisma.FieldRef<"SavedExpression", 'String'>
+  readonly id: Prisma.FieldRef<"SavedExpression", 'Int'>
+  readonly userId: Prisma.FieldRef<"SavedExpression", 'Int'>
+  readonly expressionId: Prisma.FieldRef<"SavedExpression", 'Int'>
   readonly createdAt: Prisma.FieldRef<"SavedExpression", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SavedExpression", 'DateTime'>
 }

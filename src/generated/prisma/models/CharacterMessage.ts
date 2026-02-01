@@ -20,14 +20,28 @@ export type CharacterMessageModel = runtime.Types.Result.DefaultSelection<Prisma
 
 export type AggregateCharacterMessage = {
   _count: CharacterMessageCountAggregateOutputType | null
+  _avg: CharacterMessageAvgAggregateOutputType | null
+  _sum: CharacterMessageSumAggregateOutputType | null
   _min: CharacterMessageMinAggregateOutputType | null
   _max: CharacterMessageMaxAggregateOutputType | null
 }
 
+export type CharacterMessageAvgAggregateOutputType = {
+  id: number | null
+  userId: number | null
+  characterId: number | null
+}
+
+export type CharacterMessageSumAggregateOutputType = {
+  id: number | null
+  userId: number | null
+  characterId: number | null
+}
+
 export type CharacterMessageMinAggregateOutputType = {
-  id: string | null
-  userId: string | null
-  characterId: string | null
+  id: number | null
+  userId: number | null
+  characterId: number | null
   content: string | null
   isFromUser: boolean | null
   createdAt: Date | null
@@ -35,9 +49,9 @@ export type CharacterMessageMinAggregateOutputType = {
 }
 
 export type CharacterMessageMaxAggregateOutputType = {
-  id: string | null
-  userId: string | null
-  characterId: string | null
+  id: number | null
+  userId: number | null
+  characterId: number | null
   content: string | null
   isFromUser: boolean | null
   createdAt: Date | null
@@ -55,6 +69,18 @@ export type CharacterMessageCountAggregateOutputType = {
   _all: number
 }
 
+
+export type CharacterMessageAvgAggregateInputType = {
+  id?: true
+  userId?: true
+  characterId?: true
+}
+
+export type CharacterMessageSumAggregateInputType = {
+  id?: true
+  userId?: true
+  characterId?: true
+}
 
 export type CharacterMessageMinAggregateInputType = {
   id?: true
@@ -125,6 +151,18 @@ export type CharacterMessageAggregateArgs<ExtArgs extends runtime.Types.Extensio
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: CharacterMessageAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: CharacterMessageSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: CharacterMessageMinAggregateInputType
@@ -155,19 +193,23 @@ export type CharacterMessageGroupByArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   _count?: CharacterMessageCountAggregateInputType | true
+  _avg?: CharacterMessageAvgAggregateInputType
+  _sum?: CharacterMessageSumAggregateInputType
   _min?: CharacterMessageMinAggregateInputType
   _max?: CharacterMessageMaxAggregateInputType
 }
 
 export type CharacterMessageGroupByOutputType = {
-  id: string
-  userId: string
-  characterId: string
+  id: number
+  userId: number
+  characterId: number
   content: string
   isFromUser: boolean
   createdAt: Date
   updatedAt: Date
   _count: CharacterMessageCountAggregateOutputType | null
+  _avg: CharacterMessageAvgAggregateOutputType | null
+  _sum: CharacterMessageSumAggregateOutputType | null
   _min: CharacterMessageMinAggregateOutputType | null
   _max: CharacterMessageMaxAggregateOutputType | null
 }
@@ -191,9 +233,9 @@ export type CharacterMessageWhereInput = {
   AND?: Prisma.CharacterMessageWhereInput | Prisma.CharacterMessageWhereInput[]
   OR?: Prisma.CharacterMessageWhereInput[]
   NOT?: Prisma.CharacterMessageWhereInput | Prisma.CharacterMessageWhereInput[]
-  id?: Prisma.StringFilter<"CharacterMessage"> | string
-  userId?: Prisma.StringFilter<"CharacterMessage"> | string
-  characterId?: Prisma.StringFilter<"CharacterMessage"> | string
+  id?: Prisma.IntFilter<"CharacterMessage"> | number
+  userId?: Prisma.IntFilter<"CharacterMessage"> | number
+  characterId?: Prisma.IntFilter<"CharacterMessage"> | number
   content?: Prisma.StringFilter<"CharacterMessage"> | string
   isFromUser?: Prisma.BoolFilter<"CharacterMessage"> | boolean
   createdAt?: Prisma.DateTimeFilter<"CharacterMessage"> | Date | string
@@ -215,12 +257,12 @@ export type CharacterMessageOrderByWithRelationInput = {
 }
 
 export type CharacterMessageWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   AND?: Prisma.CharacterMessageWhereInput | Prisma.CharacterMessageWhereInput[]
   OR?: Prisma.CharacterMessageWhereInput[]
   NOT?: Prisma.CharacterMessageWhereInput | Prisma.CharacterMessageWhereInput[]
-  userId?: Prisma.StringFilter<"CharacterMessage"> | string
-  characterId?: Prisma.StringFilter<"CharacterMessage"> | string
+  userId?: Prisma.IntFilter<"CharacterMessage"> | number
+  characterId?: Prisma.IntFilter<"CharacterMessage"> | number
   content?: Prisma.StringFilter<"CharacterMessage"> | string
   isFromUser?: Prisma.BoolFilter<"CharacterMessage"> | boolean
   createdAt?: Prisma.DateTimeFilter<"CharacterMessage"> | Date | string
@@ -238,17 +280,19 @@ export type CharacterMessageOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CharacterMessageCountOrderByAggregateInput
+  _avg?: Prisma.CharacterMessageAvgOrderByAggregateInput
   _max?: Prisma.CharacterMessageMaxOrderByAggregateInput
   _min?: Prisma.CharacterMessageMinOrderByAggregateInput
+  _sum?: Prisma.CharacterMessageSumOrderByAggregateInput
 }
 
 export type CharacterMessageScalarWhereWithAggregatesInput = {
   AND?: Prisma.CharacterMessageScalarWhereWithAggregatesInput | Prisma.CharacterMessageScalarWhereWithAggregatesInput[]
   OR?: Prisma.CharacterMessageScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CharacterMessageScalarWhereWithAggregatesInput | Prisma.CharacterMessageScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"CharacterMessage"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"CharacterMessage"> | string
-  characterId?: Prisma.StringWithAggregatesFilter<"CharacterMessage"> | string
+  id?: Prisma.IntWithAggregatesFilter<"CharacterMessage"> | number
+  userId?: Prisma.IntWithAggregatesFilter<"CharacterMessage"> | number
+  characterId?: Prisma.IntWithAggregatesFilter<"CharacterMessage"> | number
   content?: Prisma.StringWithAggregatesFilter<"CharacterMessage"> | string
   isFromUser?: Prisma.BoolWithAggregatesFilter<"CharacterMessage"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CharacterMessage"> | Date | string
@@ -256,7 +300,6 @@ export type CharacterMessageScalarWhereWithAggregatesInput = {
 }
 
 export type CharacterMessageCreateInput = {
-  id?: string
   content: string
   isFromUser: boolean
   createdAt?: Date | string
@@ -266,9 +309,9 @@ export type CharacterMessageCreateInput = {
 }
 
 export type CharacterMessageUncheckedCreateInput = {
-  id?: string
-  userId: string
-  characterId: string
+  id?: number
+  userId: number
+  characterId: number
   content: string
   isFromUser: boolean
   createdAt?: Date | string
@@ -276,7 +319,6 @@ export type CharacterMessageUncheckedCreateInput = {
 }
 
 export type CharacterMessageUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   isFromUser?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -286,9 +328,9 @@ export type CharacterMessageUpdateInput = {
 }
 
 export type CharacterMessageUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  characterId?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
   isFromUser?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -296,9 +338,9 @@ export type CharacterMessageUncheckedUpdateInput = {
 }
 
 export type CharacterMessageCreateManyInput = {
-  id?: string
-  userId: string
-  characterId: string
+  id?: number
+  userId: number
+  characterId: number
   content: string
   isFromUser: boolean
   createdAt?: Date | string
@@ -306,7 +348,6 @@ export type CharacterMessageCreateManyInput = {
 }
 
 export type CharacterMessageUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   isFromUser?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -314,9 +355,9 @@ export type CharacterMessageUpdateManyMutationInput = {
 }
 
 export type CharacterMessageUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  characterId?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
   isFromUser?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -343,6 +384,12 @@ export type CharacterMessageCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type CharacterMessageAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
+}
+
 export type CharacterMessageMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -361,6 +408,12 @@ export type CharacterMessageMinOrderByAggregateInput = {
   isFromUser?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type CharacterMessageSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
 }
 
 export type CharacterMessageCreateNestedManyWithoutUserInput = {
@@ -448,7 +501,6 @@ export type CharacterMessageUncheckedUpdateManyWithoutCharacterNestedInput = {
 }
 
 export type CharacterMessageCreateWithoutUserInput = {
-  id?: string
   content: string
   isFromUser: boolean
   createdAt?: Date | string
@@ -457,8 +509,8 @@ export type CharacterMessageCreateWithoutUserInput = {
 }
 
 export type CharacterMessageUncheckedCreateWithoutUserInput = {
-  id?: string
-  characterId: string
+  id?: number
+  characterId: number
   content: string
   isFromUser: boolean
   createdAt?: Date | string
@@ -495,9 +547,9 @@ export type CharacterMessageScalarWhereInput = {
   AND?: Prisma.CharacterMessageScalarWhereInput | Prisma.CharacterMessageScalarWhereInput[]
   OR?: Prisma.CharacterMessageScalarWhereInput[]
   NOT?: Prisma.CharacterMessageScalarWhereInput | Prisma.CharacterMessageScalarWhereInput[]
-  id?: Prisma.StringFilter<"CharacterMessage"> | string
-  userId?: Prisma.StringFilter<"CharacterMessage"> | string
-  characterId?: Prisma.StringFilter<"CharacterMessage"> | string
+  id?: Prisma.IntFilter<"CharacterMessage"> | number
+  userId?: Prisma.IntFilter<"CharacterMessage"> | number
+  characterId?: Prisma.IntFilter<"CharacterMessage"> | number
   content?: Prisma.StringFilter<"CharacterMessage"> | string
   isFromUser?: Prisma.BoolFilter<"CharacterMessage"> | boolean
   createdAt?: Prisma.DateTimeFilter<"CharacterMessage"> | Date | string
@@ -505,7 +557,6 @@ export type CharacterMessageScalarWhereInput = {
 }
 
 export type CharacterMessageCreateWithoutCharacterInput = {
-  id?: string
   content: string
   isFromUser: boolean
   createdAt?: Date | string
@@ -514,8 +565,8 @@ export type CharacterMessageCreateWithoutCharacterInput = {
 }
 
 export type CharacterMessageUncheckedCreateWithoutCharacterInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   content: string
   isFromUser: boolean
   createdAt?: Date | string
@@ -549,8 +600,8 @@ export type CharacterMessageUpdateManyWithWhereWithoutCharacterInput = {
 }
 
 export type CharacterMessageCreateManyUserInput = {
-  id?: string
-  characterId: string
+  id?: number
+  characterId: number
   content: string
   isFromUser: boolean
   createdAt?: Date | string
@@ -558,7 +609,6 @@ export type CharacterMessageCreateManyUserInput = {
 }
 
 export type CharacterMessageUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   isFromUser?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -567,8 +617,8 @@ export type CharacterMessageUpdateWithoutUserInput = {
 }
 
 export type CharacterMessageUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  characterId?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
   isFromUser?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -576,8 +626,8 @@ export type CharacterMessageUncheckedUpdateWithoutUserInput = {
 }
 
 export type CharacterMessageUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  characterId?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
   isFromUser?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -585,8 +635,8 @@ export type CharacterMessageUncheckedUpdateManyWithoutUserInput = {
 }
 
 export type CharacterMessageCreateManyCharacterInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   content: string
   isFromUser: boolean
   createdAt?: Date | string
@@ -594,7 +644,6 @@ export type CharacterMessageCreateManyCharacterInput = {
 }
 
 export type CharacterMessageUpdateWithoutCharacterInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   isFromUser?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -603,8 +652,8 @@ export type CharacterMessageUpdateWithoutCharacterInput = {
 }
 
 export type CharacterMessageUncheckedUpdateWithoutCharacterInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
   isFromUser?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -612,8 +661,8 @@ export type CharacterMessageUncheckedUpdateWithoutCharacterInput = {
 }
 
 export type CharacterMessageUncheckedUpdateManyWithoutCharacterInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
   isFromUser?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -689,9 +738,9 @@ export type $CharacterMessagePayload<ExtArgs extends runtime.Types.Extensions.In
     character: Prisma.$CharacterPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    userId: string
-    characterId: string
+    id: number
+    userId: number
+    characterId: number
     content: string
     isFromUser: boolean
     createdAt: Date
@@ -1121,9 +1170,9 @@ export interface Prisma__CharacterMessageClient<T, Null = never, ExtArgs extends
  * Fields of the CharacterMessage model
  */
 export interface CharacterMessageFieldRefs {
-  readonly id: Prisma.FieldRef<"CharacterMessage", 'String'>
-  readonly userId: Prisma.FieldRef<"CharacterMessage", 'String'>
-  readonly characterId: Prisma.FieldRef<"CharacterMessage", 'String'>
+  readonly id: Prisma.FieldRef<"CharacterMessage", 'Int'>
+  readonly userId: Prisma.FieldRef<"CharacterMessage", 'Int'>
+  readonly characterId: Prisma.FieldRef<"CharacterMessage", 'Int'>
   readonly content: Prisma.FieldRef<"CharacterMessage", 'String'>
   readonly isFromUser: Prisma.FieldRef<"CharacterMessage", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"CharacterMessage", 'DateTime'>

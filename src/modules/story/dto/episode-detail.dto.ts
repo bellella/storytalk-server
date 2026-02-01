@@ -1,9 +1,9 @@
 export class DialogueDto {
-  id: string;
+  id: number;
   order: number;
   type: string;
   characterName?: string;
-  characterId?: string;
+  characterId?: number;
   englishText: string;
   koreanText: string;
   charImageLabel?: string;
@@ -12,7 +12,7 @@ export class DialogueDto {
 }
 
 export class SceneDto {
-  id: string;
+  id: number;
   title: string;
   koreanTitle?: string;
   order: number;
@@ -22,16 +22,16 @@ export class SceneDto {
 }
 
 export class CharacterImageDto {
-  id: string;
-  characterId: string;
+  id: number;
+  characterId: number;
   imageUrl: string;
   label?: string;
   isDefault: boolean;
 }
 
 export class EpisodeDetailDto {
-  id: string;
-  storyId: string;
+  id: number;
+  storyId: number;
   title: string;
   koreanTitle?: string;
   order: number;

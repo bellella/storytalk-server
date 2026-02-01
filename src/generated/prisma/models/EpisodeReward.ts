@@ -20,13 +20,25 @@ export type EpisodeRewardModel = runtime.Types.Result.DefaultSelection<Prisma.$E
 
 export type AggregateEpisodeReward = {
   _count: EpisodeRewardCountAggregateOutputType | null
+  _avg: EpisodeRewardAvgAggregateOutputType | null
+  _sum: EpisodeRewardSumAggregateOutputType | null
   _min: EpisodeRewardMinAggregateOutputType | null
   _max: EpisodeRewardMaxAggregateOutputType | null
 }
 
+export type EpisodeRewardAvgAggregateOutputType = {
+  id: number | null
+  episodeId: number | null
+}
+
+export type EpisodeRewardSumAggregateOutputType = {
+  id: number | null
+  episodeId: number | null
+}
+
 export type EpisodeRewardMinAggregateOutputType = {
-  id: string | null
-  episodeId: string | null
+  id: number | null
+  episodeId: number | null
   type: $Enums.RewardType | null
   isActive: boolean | null
   createdAt: Date | null
@@ -34,8 +46,8 @@ export type EpisodeRewardMinAggregateOutputType = {
 }
 
 export type EpisodeRewardMaxAggregateOutputType = {
-  id: string | null
-  episodeId: string | null
+  id: number | null
+  episodeId: number | null
   type: $Enums.RewardType | null
   isActive: boolean | null
   createdAt: Date | null
@@ -53,6 +65,16 @@ export type EpisodeRewardCountAggregateOutputType = {
   _all: number
 }
 
+
+export type EpisodeRewardAvgAggregateInputType = {
+  id?: true
+  episodeId?: true
+}
+
+export type EpisodeRewardSumAggregateInputType = {
+  id?: true
+  episodeId?: true
+}
 
 export type EpisodeRewardMinAggregateInputType = {
   id?: true
@@ -121,6 +143,18 @@ export type EpisodeRewardAggregateArgs<ExtArgs extends runtime.Types.Extensions.
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: EpisodeRewardAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: EpisodeRewardSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: EpisodeRewardMinAggregateInputType
@@ -151,19 +185,23 @@ export type EpisodeRewardGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   _count?: EpisodeRewardCountAggregateInputType | true
+  _avg?: EpisodeRewardAvgAggregateInputType
+  _sum?: EpisodeRewardSumAggregateInputType
   _min?: EpisodeRewardMinAggregateInputType
   _max?: EpisodeRewardMaxAggregateInputType
 }
 
 export type EpisodeRewardGroupByOutputType = {
-  id: string
-  episodeId: string
+  id: number
+  episodeId: number
   type: $Enums.RewardType
   payload: runtime.JsonValue
   isActive: boolean
   createdAt: Date
   updatedAt: Date
   _count: EpisodeRewardCountAggregateOutputType | null
+  _avg: EpisodeRewardAvgAggregateOutputType | null
+  _sum: EpisodeRewardSumAggregateOutputType | null
   _min: EpisodeRewardMinAggregateOutputType | null
   _max: EpisodeRewardMaxAggregateOutputType | null
 }
@@ -187,8 +225,8 @@ export type EpisodeRewardWhereInput = {
   AND?: Prisma.EpisodeRewardWhereInput | Prisma.EpisodeRewardWhereInput[]
   OR?: Prisma.EpisodeRewardWhereInput[]
   NOT?: Prisma.EpisodeRewardWhereInput | Prisma.EpisodeRewardWhereInput[]
-  id?: Prisma.StringFilter<"EpisodeReward"> | string
-  episodeId?: Prisma.StringFilter<"EpisodeReward"> | string
+  id?: Prisma.IntFilter<"EpisodeReward"> | number
+  episodeId?: Prisma.IntFilter<"EpisodeReward"> | number
   type?: Prisma.EnumRewardTypeFilter<"EpisodeReward"> | $Enums.RewardType
   payload?: Prisma.JsonFilter<"EpisodeReward">
   isActive?: Prisma.BoolFilter<"EpisodeReward"> | boolean
@@ -209,11 +247,11 @@ export type EpisodeRewardOrderByWithRelationInput = {
 }
 
 export type EpisodeRewardWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   AND?: Prisma.EpisodeRewardWhereInput | Prisma.EpisodeRewardWhereInput[]
   OR?: Prisma.EpisodeRewardWhereInput[]
   NOT?: Prisma.EpisodeRewardWhereInput | Prisma.EpisodeRewardWhereInput[]
-  episodeId?: Prisma.StringFilter<"EpisodeReward"> | string
+  episodeId?: Prisma.IntFilter<"EpisodeReward"> | number
   type?: Prisma.EnumRewardTypeFilter<"EpisodeReward"> | $Enums.RewardType
   payload?: Prisma.JsonFilter<"EpisodeReward">
   isActive?: Prisma.BoolFilter<"EpisodeReward"> | boolean
@@ -231,16 +269,18 @@ export type EpisodeRewardOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.EpisodeRewardCountOrderByAggregateInput
+  _avg?: Prisma.EpisodeRewardAvgOrderByAggregateInput
   _max?: Prisma.EpisodeRewardMaxOrderByAggregateInput
   _min?: Prisma.EpisodeRewardMinOrderByAggregateInput
+  _sum?: Prisma.EpisodeRewardSumOrderByAggregateInput
 }
 
 export type EpisodeRewardScalarWhereWithAggregatesInput = {
   AND?: Prisma.EpisodeRewardScalarWhereWithAggregatesInput | Prisma.EpisodeRewardScalarWhereWithAggregatesInput[]
   OR?: Prisma.EpisodeRewardScalarWhereWithAggregatesInput[]
   NOT?: Prisma.EpisodeRewardScalarWhereWithAggregatesInput | Prisma.EpisodeRewardScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"EpisodeReward"> | string
-  episodeId?: Prisma.StringWithAggregatesFilter<"EpisodeReward"> | string
+  id?: Prisma.IntWithAggregatesFilter<"EpisodeReward"> | number
+  episodeId?: Prisma.IntWithAggregatesFilter<"EpisodeReward"> | number
   type?: Prisma.EnumRewardTypeWithAggregatesFilter<"EpisodeReward"> | $Enums.RewardType
   payload?: Prisma.JsonWithAggregatesFilter<"EpisodeReward">
   isActive?: Prisma.BoolWithAggregatesFilter<"EpisodeReward"> | boolean
@@ -249,7 +289,6 @@ export type EpisodeRewardScalarWhereWithAggregatesInput = {
 }
 
 export type EpisodeRewardCreateInput = {
-  id?: string
   type: $Enums.RewardType
   payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
@@ -259,8 +298,8 @@ export type EpisodeRewardCreateInput = {
 }
 
 export type EpisodeRewardUncheckedCreateInput = {
-  id?: string
-  episodeId: string
+  id?: number
+  episodeId: number
   type: $Enums.RewardType
   payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
@@ -269,7 +308,6 @@ export type EpisodeRewardUncheckedCreateInput = {
 }
 
 export type EpisodeRewardUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumRewardTypeFieldUpdateOperationsInput | $Enums.RewardType
   payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -279,8 +317,8 @@ export type EpisodeRewardUpdateInput = {
 }
 
 export type EpisodeRewardUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  episodeId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  episodeId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumRewardTypeFieldUpdateOperationsInput | $Enums.RewardType
   payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -289,8 +327,8 @@ export type EpisodeRewardUncheckedUpdateInput = {
 }
 
 export type EpisodeRewardCreateManyInput = {
-  id?: string
-  episodeId: string
+  id?: number
+  episodeId: number
   type: $Enums.RewardType
   payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
@@ -299,7 +337,6 @@ export type EpisodeRewardCreateManyInput = {
 }
 
 export type EpisodeRewardUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumRewardTypeFieldUpdateOperationsInput | $Enums.RewardType
   payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -308,8 +345,8 @@ export type EpisodeRewardUpdateManyMutationInput = {
 }
 
 export type EpisodeRewardUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  episodeId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  episodeId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumRewardTypeFieldUpdateOperationsInput | $Enums.RewardType
   payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -337,6 +374,11 @@ export type EpisodeRewardCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type EpisodeRewardAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  episodeId?: Prisma.SortOrder
+}
+
 export type EpisodeRewardMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   episodeId?: Prisma.SortOrder
@@ -353,6 +395,11 @@ export type EpisodeRewardMinOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type EpisodeRewardSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  episodeId?: Prisma.SortOrder
 }
 
 export type EpisodeRewardCreateNestedManyWithoutEpisodeInput = {
@@ -402,7 +449,6 @@ export type EnumRewardTypeFieldUpdateOperationsInput = {
 }
 
 export type EpisodeRewardCreateWithoutEpisodeInput = {
-  id?: string
   type: $Enums.RewardType
   payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
@@ -411,7 +457,7 @@ export type EpisodeRewardCreateWithoutEpisodeInput = {
 }
 
 export type EpisodeRewardUncheckedCreateWithoutEpisodeInput = {
-  id?: string
+  id?: number
   type: $Enums.RewardType
   payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
@@ -449,8 +495,8 @@ export type EpisodeRewardScalarWhereInput = {
   AND?: Prisma.EpisodeRewardScalarWhereInput | Prisma.EpisodeRewardScalarWhereInput[]
   OR?: Prisma.EpisodeRewardScalarWhereInput[]
   NOT?: Prisma.EpisodeRewardScalarWhereInput | Prisma.EpisodeRewardScalarWhereInput[]
-  id?: Prisma.StringFilter<"EpisodeReward"> | string
-  episodeId?: Prisma.StringFilter<"EpisodeReward"> | string
+  id?: Prisma.IntFilter<"EpisodeReward"> | number
+  episodeId?: Prisma.IntFilter<"EpisodeReward"> | number
   type?: Prisma.EnumRewardTypeFilter<"EpisodeReward"> | $Enums.RewardType
   payload?: Prisma.JsonFilter<"EpisodeReward">
   isActive?: Prisma.BoolFilter<"EpisodeReward"> | boolean
@@ -459,7 +505,7 @@ export type EpisodeRewardScalarWhereInput = {
 }
 
 export type EpisodeRewardCreateManyEpisodeInput = {
-  id?: string
+  id?: number
   type: $Enums.RewardType
   payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
@@ -468,7 +514,6 @@ export type EpisodeRewardCreateManyEpisodeInput = {
 }
 
 export type EpisodeRewardUpdateWithoutEpisodeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumRewardTypeFieldUpdateOperationsInput | $Enums.RewardType
   payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -477,7 +522,7 @@ export type EpisodeRewardUpdateWithoutEpisodeInput = {
 }
 
 export type EpisodeRewardUncheckedUpdateWithoutEpisodeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumRewardTypeFieldUpdateOperationsInput | $Enums.RewardType
   payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -486,7 +531,7 @@ export type EpisodeRewardUncheckedUpdateWithoutEpisodeInput = {
 }
 
 export type EpisodeRewardUncheckedUpdateManyWithoutEpisodeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumRewardTypeFieldUpdateOperationsInput | $Enums.RewardType
   payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -556,8 +601,8 @@ export type $EpisodeRewardPayload<ExtArgs extends runtime.Types.Extensions.Inter
     episode: Prisma.$EpisodePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    episodeId: string
+    id: number
+    episodeId: number
     type: $Enums.RewardType
     payload: runtime.JsonValue
     isActive: boolean
@@ -987,8 +1032,8 @@ export interface Prisma__EpisodeRewardClient<T, Null = never, ExtArgs extends ru
  * Fields of the EpisodeReward model
  */
 export interface EpisodeRewardFieldRefs {
-  readonly id: Prisma.FieldRef<"EpisodeReward", 'String'>
-  readonly episodeId: Prisma.FieldRef<"EpisodeReward", 'String'>
+  readonly id: Prisma.FieldRef<"EpisodeReward", 'Int'>
+  readonly episodeId: Prisma.FieldRef<"EpisodeReward", 'Int'>
   readonly type: Prisma.FieldRef<"EpisodeReward", 'RewardType'>
   readonly payload: Prisma.FieldRef<"EpisodeReward", 'Json'>
   readonly isActive: Prisma.FieldRef<"EpisodeReward", 'Boolean'>

@@ -1,5 +1,7 @@
+import { UserEpisodeDto } from '@/modules/episode/dto/user-episode.dto';
+
 export class StoryDetailDto {
-  id: string;
+  id: number;
   title: string;
   description?: string;
   coverImage?: string;
@@ -9,15 +11,16 @@ export class StoryDetailDto {
   totalEpisodes: number;
   likeCount: number; // 임시 필드 (필요시 DB 추가)
   characters: {
-    id: string;
+    id: number;
     name: string;
     description?: string;
     avatarImage?: string;
   }[];
   episodes: {
-    id: string;
+    id: number;
     title: string;
     order: number;
     duration: string; // '5 min' 등
+    userEpisode?: UserEpisodeDto;
   }[];
 }

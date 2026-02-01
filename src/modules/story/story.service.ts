@@ -1,22 +1,31 @@
 // src/story/story.service.ts
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { StoryDetailDto } from './dto/story-detail.dto';
-import { StoryListItemDto } from './dto/story-list-item.dto';
-import {
-  EpisodeDetailDto,
-  SceneDto,
-  DialogueDto,
-  CharacterImageDto,
-} from './dto/episode-detail.dto';
 import { CursorRequestDto } from '@/common/dtos/cursor-request.dto';
 import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
+import { EpisodeStage } from '@/generated/prisma/client';
+import { CurrentUser } from '@/types/auth.type';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { QuizDto, QuizOptionDto } from '../episode/dto/quiz.dto';
+import { ReviewItemDto } from '../episode/dto/review-item.dto';
+import { UserEpisodeDto } from '../episode/dto/user-episode.dto';
+import { PrismaService } from '../prisma/prisma.service';
+import {
+  CharacterImageDto,
+  DialogueDto,
+  EpisodeDetailDto,
+  SceneDto,
+} from './dto/episode-detail.dto';
+import { StoryDetailDto } from './dto/story-detail.dto';
+import { StoryListItemDto } from './dto/story-list-item.dto';
 
 @Injectable()
 export class StoryService {
   constructor(private prisma: PrismaService) {}
 
-  async getStoryDetail(storyId: string): Promise<StoryDetailDto> {
+  async getStoryDetail(
+    storyId: number,
+    user: CurrentUser | undefined
+  ): Promise<StoryDetailDto> {
+    // 1️⃣ 스토리 기본 조회 (에피소드, 캐릭터 포함)
     const story = await this.prisma.story.findUnique({
       where: { id: storyId },
       include: {
@@ -26,7 +35,7 @@ export class StoryService {
             id: true,
             title: true,
             order: true,
-            // 시안에 있는 '5분' 등의 정보는 Episode 모델에 추가 필드가 필요할 수 있습니다.
+            // duration 등 추가 필드 필요 시 여기서 select
           },
         },
         characters: {
@@ -46,24 +55,58 @@ export class StoryService {
 
     if (!story) throw new NotFoundException('스토리를 찾을 수 없습니다.');
 
-    // 시안에 맞춰 데이터 가공
+    // 2️⃣ 유저가 로그인 되어 있다면 Episode 진행 상태 조회
+    let userEpisodeMap: Record<number, UserEpisodeDto> = {};
+    if (user) {
+      const stageWeights = {
+        [EpisodeStage.STORY_IN_PROGRESS]: 25,
+        [EpisodeStage.STORY_COMPLETED]: 50,
+        [EpisodeStage.QUIZ_IN_PROGRESS]: 75,
+        [EpisodeStage.QUIZ_COMPLETED]: 100,
+      };
+      const userEpisodeResults = await this.prisma.userEpisode.findMany({
+        where: {
+          userId: user.id,
+          episode: { storyId }, // Prisma에서 relation 조건 가능
+        },
+      });
+
+      // episodeId 기준으로 맵핑
+      userEpisodeMap = Object.fromEntries(
+        userEpisodeResults.map((uer) => [
+          uer.episodeId,
+          {
+            ...uer,
+            progressPct: stageWeights[uer.currentStage] ?? 0,
+          },
+        ])
+      );
+    }
+
+    // 3️⃣ 데이터 가공
     return {
-      ...story,
+      id: story.id,
+      title: story.title,
       description: story.description ?? undefined,
       coverImage: story.coverImage ?? undefined,
+      category: story.category,
+      difficulty: story.difficulty,
       totalEpisodes: story.episodes.length,
       status: story.isPublished ? '연재중' : '준비중',
-      episodes: story.episodes.map((episode) => ({
-        ...episode,
-        duration: '5 min', // TODO: Episode 모델에 duration 필드 추가 필요
+      likeCount: 123, // TODO: 실제 좋아요 카운트 로직으로 교체
+      episodes: story.episodes.map((ep) => ({
+        id: ep.id,
+        title: ep.title,
+        order: ep.order,
+        duration: '5 min', // TODO: Episode 모델에 duration 필드 추가
+        userEpisode: userEpisodeMap[ep.id] ?? null, // 유저 진행 상태 포함
       })),
       characters: story.characters.map((sc) => ({
         id: sc.character?.id!,
         name: sc.character?.name!,
-        description: sc.character?.description ?? undefined,
-        avatarImage: sc.character?.avatarImage ?? undefined,
+        description: sc.character?.description!,
+        avatarImage: sc.character?.avatarImage!,
       })),
-      likeCount: 123,
     };
   }
 
@@ -76,7 +119,7 @@ export class StoryService {
       where: cursorString
         ? {
             id: {
-              gt: cursorString,
+              gt: parseInt(cursorString, 10),
             },
           }
         : undefined,
@@ -108,12 +151,14 @@ export class StoryService {
       likeCount: 123, // TODO: DB에 likeCount 필드 추가 필요
     }));
 
-    const nextCursor = hasNextPage ? items[items.length - 1].id : null;
+    const nextCursor = hasNextPage
+      ? items[items.length - 1].id.toString()
+      : null;
 
     return new CursorResponseDto(storyListItems, null, nextCursor);
   }
 
-  async getEpisodeDetail(episodeId: string): Promise<EpisodeDetailDto> {
+  async getEpisodeDetail(episodeId: number): Promise<EpisodeDetailDto> {
     // Episode와 관련된 모든 데이터 가져오기
     const episode = await this.prisma.episode.findUnique({
       where: { id: episodeId },
@@ -150,7 +195,7 @@ export class StoryService {
     }
 
     // StoryCharacter에 걸려있는 모든 CharacterImage 수집
-    const characterImagesMap = new Map<string, CharacterImageDto[]>();
+    const characterImagesMap = new Map<number, CharacterImageDto[]>();
     episode.story.characters.forEach((storyChar) => {
       if (storyChar.character) {
         const images = storyChar.character.images.map(
@@ -225,5 +270,110 @@ export class StoryService {
       scenes,
       characterImages: allCharacterImages,
     };
+  }
+
+  async getReviewItems(episodeId: number): Promise<ReviewItemDto[]> {
+    const reviewItems = await this.prisma.reviewItem.findMany({
+      where: { episodeId },
+      orderBy: { order: 'asc' },
+    });
+
+    // dialogueId들을 수집
+    const dialogueIds = reviewItems.map((item) => item.dialogueId);
+
+    // 모든 dialogue를 한 번에 조회 (character 포함)
+    const dialogues = await this.prisma.dialogue.findMany({
+      where: {
+        id: {
+          in: dialogueIds,
+        },
+      },
+      include: {
+        character: true,
+      },
+    });
+
+    // dialogue를 Map으로 변환하여 빠른 조회
+    const dialogueMap = new Map(
+      dialogues.map((dialogue) => [dialogue.id, dialogue])
+    );
+
+    return reviewItems.map((item) => {
+      const dialogue = dialogueMap.get(item.dialogueId);
+      if (!dialogue) {
+        throw new NotFoundException(
+          `Dialogue with id ${item.dialogueId} not found`
+        );
+      }
+
+      return {
+        id: item.id,
+        episodeId: item.episodeId,
+        dialogueId: item.dialogueId,
+        description: item.description ?? undefined,
+        order: item.order,
+        dialogue: {
+          id: dialogue.id,
+          order: dialogue.order,
+          type: dialogue.type,
+          characterName: dialogue.characterName ?? undefined,
+          characterId: dialogue.characterId ?? undefined,
+          englishText: dialogue.englishText,
+          koreanText: dialogue.koreanText,
+          charImageLabel: dialogue.charImageLabel ?? undefined,
+          imageUrl: dialogue.imageUrl ?? undefined,
+          audioUrl: dialogue.audioUrl ?? undefined,
+          character: dialogue.character
+            ? {
+                id: dialogue.character.id,
+                name: dialogue.character.name,
+                koreanName: dialogue.character.koreanName ?? undefined,
+                avatarImage: dialogue.character.avatarImage ?? undefined,
+                mainImage: dialogue.character.mainImage ?? undefined,
+                description: dialogue.character.description,
+              }
+            : undefined,
+        },
+      };
+    });
+  }
+
+  async getQuizzes(episodeId: number): Promise<QuizDto[]> {
+    const quizzes = await this.prisma.quiz.findMany({
+      where: {
+        sourceType: 'EPISODE',
+        sourceId: episodeId,
+        isActive: true,
+      },
+      include: {
+        options: {
+          orderBy: { order: 'asc' },
+        },
+      },
+      orderBy: {
+        order: 'asc',
+      },
+    });
+
+    return quizzes.map((quiz) => ({
+      id: quiz.id,
+      sourceType: quiz.sourceType,
+      sourceId: quiz.sourceId,
+      type: quiz.type,
+      questionEnglish: quiz.questionEnglish,
+      questionKorean: quiz.questionKorean ?? undefined,
+      answerIndex: quiz.answerIndex,
+      description: quiz.description ?? undefined,
+      order: quiz.order ?? undefined,
+      isActive: quiz.isActive,
+      options: quiz.options.map(
+        (option): QuizOptionDto => ({
+          id: option.id,
+          quizId: option.quizId,
+          text: option.text,
+          order: option.order,
+        })
+      ),
+    }));
   }
 }

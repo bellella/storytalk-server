@@ -27,15 +27,17 @@ export type AggregateStory = {
 }
 
 export type StoryAvgAggregateOutputType = {
+  id: number | null
   difficulty: number | null
 }
 
 export type StorySumAggregateOutputType = {
+  id: number | null
   difficulty: number | null
 }
 
 export type StoryMinAggregateOutputType = {
-  id: string | null
+  id: number | null
   title: string | null
   koreanTitle: string | null
   category: string | null
@@ -49,7 +51,7 @@ export type StoryMinAggregateOutputType = {
 }
 
 export type StoryMaxAggregateOutputType = {
-  id: string | null
+  id: number | null
   title: string | null
   koreanTitle: string | null
   category: string | null
@@ -79,10 +81,12 @@ export type StoryCountAggregateOutputType = {
 
 
 export type StoryAvgAggregateInputType = {
+  id?: true
   difficulty?: true
 }
 
 export type StorySumAggregateInputType = {
+  id?: true
   difficulty?: true
 }
 
@@ -216,7 +220,7 @@ export type StoryGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 }
 
 export type StoryGroupByOutputType = {
-  id: string
+  id: number
   title: string
   koreanTitle: string | null
   category: string
@@ -253,7 +257,7 @@ export type StoryWhereInput = {
   AND?: Prisma.StoryWhereInput | Prisma.StoryWhereInput[]
   OR?: Prisma.StoryWhereInput[]
   NOT?: Prisma.StoryWhereInput | Prisma.StoryWhereInput[]
-  id?: Prisma.StringFilter<"Story"> | string
+  id?: Prisma.IntFilter<"Story"> | number
   title?: Prisma.StringFilter<"Story"> | string
   koreanTitle?: Prisma.StringNullableFilter<"Story"> | string | null
   category?: Prisma.StringFilter<"Story"> | string
@@ -287,7 +291,7 @@ export type StoryOrderByWithRelationInput = {
 }
 
 export type StoryWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   AND?: Prisma.StoryWhereInput | Prisma.StoryWhereInput[]
   OR?: Prisma.StoryWhereInput[]
   NOT?: Prisma.StoryWhereInput | Prisma.StoryWhereInput[]
@@ -329,7 +333,7 @@ export type StoryScalarWhereWithAggregatesInput = {
   AND?: Prisma.StoryScalarWhereWithAggregatesInput | Prisma.StoryScalarWhereWithAggregatesInput[]
   OR?: Prisma.StoryScalarWhereWithAggregatesInput[]
   NOT?: Prisma.StoryScalarWhereWithAggregatesInput | Prisma.StoryScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"Story"> | string
+  id?: Prisma.IntWithAggregatesFilter<"Story"> | number
   title?: Prisma.StringWithAggregatesFilter<"Story"> | string
   koreanTitle?: Prisma.StringNullableWithAggregatesFilter<"Story"> | string | null
   category?: Prisma.StringWithAggregatesFilter<"Story"> | string
@@ -343,7 +347,6 @@ export type StoryScalarWhereWithAggregatesInput = {
 }
 
 export type StoryCreateInput = {
-  id?: string
   title: string
   koreanTitle?: string | null
   category: string
@@ -360,7 +363,7 @@ export type StoryCreateInput = {
 }
 
 export type StoryUncheckedCreateInput = {
-  id?: string
+  id?: number
   title: string
   koreanTitle?: string | null
   category: string
@@ -377,7 +380,6 @@ export type StoryUncheckedCreateInput = {
 }
 
 export type StoryUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
@@ -394,7 +396,7 @@ export type StoryUpdateInput = {
 }
 
 export type StoryUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
@@ -411,7 +413,7 @@ export type StoryUncheckedUpdateInput = {
 }
 
 export type StoryCreateManyInput = {
-  id?: string
+  id?: number
   title: string
   koreanTitle?: string | null
   category: string
@@ -425,7 +427,6 @@ export type StoryCreateManyInput = {
 }
 
 export type StoryUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
@@ -439,7 +440,7 @@ export type StoryUpdateManyMutationInput = {
 }
 
 export type StoryUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
@@ -467,6 +468,7 @@ export type StoryCountOrderByAggregateInput = {
 }
 
 export type StoryAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
 }
 
@@ -499,16 +501,13 @@ export type StoryMinOrderByAggregateInput = {
 }
 
 export type StorySumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
 }
 
 export type StoryScalarRelationFilter = {
   is?: Prisma.StoryWhereInput
   isNot?: Prisma.StoryWhereInput
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
 }
 
 export type StoryCreateNestedOneWithoutEpisodesInput = {
@@ -554,7 +553,6 @@ export type StoryUpdateOneRequiredWithoutCharactersNestedInput = {
 }
 
 export type StoryCreateWithoutEpisodesInput = {
-  id?: string
   title: string
   koreanTitle?: string | null
   category: string
@@ -570,7 +568,7 @@ export type StoryCreateWithoutEpisodesInput = {
 }
 
 export type StoryUncheckedCreateWithoutEpisodesInput = {
-  id?: string
+  id?: number
   title: string
   koreanTitle?: string | null
   category: string
@@ -602,7 +600,6 @@ export type StoryUpdateToOneWithWhereWithoutEpisodesInput = {
 }
 
 export type StoryUpdateWithoutEpisodesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
@@ -618,7 +615,7 @@ export type StoryUpdateWithoutEpisodesInput = {
 }
 
 export type StoryUncheckedUpdateWithoutEpisodesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
@@ -634,7 +631,6 @@ export type StoryUncheckedUpdateWithoutEpisodesInput = {
 }
 
 export type StoryCreateWithoutProgressInput = {
-  id?: string
   title: string
   koreanTitle?: string | null
   category: string
@@ -650,7 +646,7 @@ export type StoryCreateWithoutProgressInput = {
 }
 
 export type StoryUncheckedCreateWithoutProgressInput = {
-  id?: string
+  id?: number
   title: string
   koreanTitle?: string | null
   category: string
@@ -682,7 +678,6 @@ export type StoryUpdateToOneWithWhereWithoutProgressInput = {
 }
 
 export type StoryUpdateWithoutProgressInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
@@ -698,7 +693,7 @@ export type StoryUpdateWithoutProgressInput = {
 }
 
 export type StoryUncheckedUpdateWithoutProgressInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
@@ -714,7 +709,6 @@ export type StoryUncheckedUpdateWithoutProgressInput = {
 }
 
 export type StoryCreateWithoutCharactersInput = {
-  id?: string
   title: string
   koreanTitle?: string | null
   category: string
@@ -730,7 +724,7 @@ export type StoryCreateWithoutCharactersInput = {
 }
 
 export type StoryUncheckedCreateWithoutCharactersInput = {
-  id?: string
+  id?: number
   title: string
   koreanTitle?: string | null
   category: string
@@ -762,7 +756,6 @@ export type StoryUpdateToOneWithWhereWithoutCharactersInput = {
 }
 
 export type StoryUpdateWithoutCharactersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
@@ -778,7 +771,7 @@ export type StoryUpdateWithoutCharactersInput = {
 }
 
 export type StoryUncheckedUpdateWithoutCharactersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
@@ -920,7 +913,7 @@ export type $StoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     progress: Prisma.$StoryProgressPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
+    id: number
     title: string
     koreanTitle: string | null
     category: string
@@ -1357,7 +1350,7 @@ export interface Prisma__StoryClient<T, Null = never, ExtArgs extends runtime.Ty
  * Fields of the Story model
  */
 export interface StoryFieldRefs {
-  readonly id: Prisma.FieldRef<"Story", 'String'>
+  readonly id: Prisma.FieldRef<"Story", 'Int'>
   readonly title: Prisma.FieldRef<"Story", 'String'>
   readonly koreanTitle: Prisma.FieldRef<"Story", 'String'>
   readonly category: Prisma.FieldRef<"Story", 'String'>

@@ -20,12 +20,22 @@ export type CharacterModel = runtime.Types.Result.DefaultSelection<Prisma.$Chara
 
 export type AggregateCharacter = {
   _count: CharacterCountAggregateOutputType | null
+  _avg: CharacterAvgAggregateOutputType | null
+  _sum: CharacterSumAggregateOutputType | null
   _min: CharacterMinAggregateOutputType | null
   _max: CharacterMaxAggregateOutputType | null
 }
 
+export type CharacterAvgAggregateOutputType = {
+  id: number | null
+}
+
+export type CharacterSumAggregateOutputType = {
+  id: number | null
+}
+
 export type CharacterMinAggregateOutputType = {
-  id: string | null
+  id: number | null
   name: string | null
   koreanName: string | null
   avatarImage: string | null
@@ -38,7 +48,7 @@ export type CharacterMinAggregateOutputType = {
 }
 
 export type CharacterMaxAggregateOutputType = {
-  id: string | null
+  id: number | null
   name: string | null
   koreanName: string | null
   avatarImage: string | null
@@ -64,6 +74,14 @@ export type CharacterCountAggregateOutputType = {
   _all: number
 }
 
+
+export type CharacterAvgAggregateInputType = {
+  id?: true
+}
+
+export type CharacterSumAggregateInputType = {
+  id?: true
+}
 
 export type CharacterMinAggregateInputType = {
   id?: true
@@ -143,6 +161,18 @@ export type CharacterAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inte
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: CharacterAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: CharacterSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: CharacterMinAggregateInputType
@@ -173,12 +203,14 @@ export type CharacterGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   _count?: CharacterCountAggregateInputType | true
+  _avg?: CharacterAvgAggregateInputType
+  _sum?: CharacterSumAggregateInputType
   _min?: CharacterMinAggregateInputType
   _max?: CharacterMaxAggregateInputType
 }
 
 export type CharacterGroupByOutputType = {
-  id: string
+  id: number
   name: string
   koreanName: string | null
   avatarImage: string | null
@@ -189,6 +221,8 @@ export type CharacterGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   _count: CharacterCountAggregateOutputType | null
+  _avg: CharacterAvgAggregateOutputType | null
+  _sum: CharacterSumAggregateOutputType | null
   _min: CharacterMinAggregateOutputType | null
   _max: CharacterMaxAggregateOutputType | null
 }
@@ -212,7 +246,7 @@ export type CharacterWhereInput = {
   AND?: Prisma.CharacterWhereInput | Prisma.CharacterWhereInput[]
   OR?: Prisma.CharacterWhereInput[]
   NOT?: Prisma.CharacterWhereInput | Prisma.CharacterWhereInput[]
-  id?: Prisma.StringFilter<"Character"> | string
+  id?: Prisma.IntFilter<"Character"> | number
   name?: Prisma.StringFilter<"Character"> | string
   koreanName?: Prisma.StringNullableFilter<"Character"> | string | null
   avatarImage?: Prisma.StringNullableFilter<"Character"> | string | null
@@ -248,7 +282,7 @@ export type CharacterOrderByWithRelationInput = {
 }
 
 export type CharacterWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   AND?: Prisma.CharacterWhereInput | Prisma.CharacterWhereInput[]
   OR?: Prisma.CharacterWhereInput[]
   NOT?: Prisma.CharacterWhereInput | Prisma.CharacterWhereInput[]
@@ -280,15 +314,17 @@ export type CharacterOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CharacterCountOrderByAggregateInput
+  _avg?: Prisma.CharacterAvgOrderByAggregateInput
   _max?: Prisma.CharacterMaxOrderByAggregateInput
   _min?: Prisma.CharacterMinOrderByAggregateInput
+  _sum?: Prisma.CharacterSumOrderByAggregateInput
 }
 
 export type CharacterScalarWhereWithAggregatesInput = {
   AND?: Prisma.CharacterScalarWhereWithAggregatesInput | Prisma.CharacterScalarWhereWithAggregatesInput[]
   OR?: Prisma.CharacterScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CharacterScalarWhereWithAggregatesInput | Prisma.CharacterScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"Character"> | string
+  id?: Prisma.IntWithAggregatesFilter<"Character"> | number
   name?: Prisma.StringWithAggregatesFilter<"Character"> | string
   koreanName?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
   avatarImage?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
@@ -301,7 +337,6 @@ export type CharacterScalarWhereWithAggregatesInput = {
 }
 
 export type CharacterCreateInput = {
-  id?: string
   name: string
   koreanName?: string | null
   avatarImage?: string | null
@@ -319,7 +354,7 @@ export type CharacterCreateInput = {
 }
 
 export type CharacterUncheckedCreateInput = {
-  id?: string
+  id?: number
   name: string
   koreanName?: string | null
   avatarImage?: string | null
@@ -337,7 +372,6 @@ export type CharacterUncheckedCreateInput = {
 }
 
 export type CharacterUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   koreanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -355,7 +389,7 @@ export type CharacterUpdateInput = {
 }
 
 export type CharacterUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   koreanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -373,7 +407,7 @@ export type CharacterUncheckedUpdateInput = {
 }
 
 export type CharacterCreateManyInput = {
-  id?: string
+  id?: number
   name: string
   koreanName?: string | null
   avatarImage?: string | null
@@ -386,7 +420,6 @@ export type CharacterCreateManyInput = {
 }
 
 export type CharacterUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   koreanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -399,7 +432,7 @@ export type CharacterUpdateManyMutationInput = {
 }
 
 export type CharacterUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   koreanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -429,6 +462,10 @@ export type CharacterCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type CharacterAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+}
+
 export type CharacterMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -453,6 +490,10 @@ export type CharacterMinOrderByAggregateInput = {
   aiPrompt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type CharacterSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
 }
 
 export type CharacterScalarRelationFilter = {
@@ -535,7 +576,6 @@ export type CharacterUpdateOneRequiredWithoutMessagesNestedInput = {
 }
 
 export type CharacterCreateWithoutDialoguesInput = {
-  id?: string
   name: string
   koreanName?: string | null
   avatarImage?: string | null
@@ -552,7 +592,7 @@ export type CharacterCreateWithoutDialoguesInput = {
 }
 
 export type CharacterUncheckedCreateWithoutDialoguesInput = {
-  id?: string
+  id?: number
   name: string
   koreanName?: string | null
   avatarImage?: string | null
@@ -585,7 +625,6 @@ export type CharacterUpdateToOneWithWhereWithoutDialoguesInput = {
 }
 
 export type CharacterUpdateWithoutDialoguesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   koreanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -602,7 +641,7 @@ export type CharacterUpdateWithoutDialoguesInput = {
 }
 
 export type CharacterUncheckedUpdateWithoutDialoguesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   koreanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -619,7 +658,6 @@ export type CharacterUncheckedUpdateWithoutDialoguesInput = {
 }
 
 export type CharacterCreateWithoutImagesInput = {
-  id?: string
   name: string
   koreanName?: string | null
   avatarImage?: string | null
@@ -636,7 +674,7 @@ export type CharacterCreateWithoutImagesInput = {
 }
 
 export type CharacterUncheckedCreateWithoutImagesInput = {
-  id?: string
+  id?: number
   name: string
   koreanName?: string | null
   avatarImage?: string | null
@@ -669,7 +707,6 @@ export type CharacterUpdateToOneWithWhereWithoutImagesInput = {
 }
 
 export type CharacterUpdateWithoutImagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   koreanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -686,7 +723,7 @@ export type CharacterUpdateWithoutImagesInput = {
 }
 
 export type CharacterUncheckedUpdateWithoutImagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   koreanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -703,7 +740,6 @@ export type CharacterUncheckedUpdateWithoutImagesInput = {
 }
 
 export type CharacterCreateWithoutStoryLinksInput = {
-  id?: string
   name: string
   koreanName?: string | null
   avatarImage?: string | null
@@ -720,7 +756,7 @@ export type CharacterCreateWithoutStoryLinksInput = {
 }
 
 export type CharacterUncheckedCreateWithoutStoryLinksInput = {
-  id?: string
+  id?: number
   name: string
   koreanName?: string | null
   avatarImage?: string | null
@@ -753,7 +789,6 @@ export type CharacterUpdateToOneWithWhereWithoutStoryLinksInput = {
 }
 
 export type CharacterUpdateWithoutStoryLinksInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   koreanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -770,7 +805,7 @@ export type CharacterUpdateWithoutStoryLinksInput = {
 }
 
 export type CharacterUncheckedUpdateWithoutStoryLinksInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   koreanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -787,7 +822,6 @@ export type CharacterUncheckedUpdateWithoutStoryLinksInput = {
 }
 
 export type CharacterCreateWithoutFriendsInput = {
-  id?: string
   name: string
   koreanName?: string | null
   avatarImage?: string | null
@@ -804,7 +838,7 @@ export type CharacterCreateWithoutFriendsInput = {
 }
 
 export type CharacterUncheckedCreateWithoutFriendsInput = {
-  id?: string
+  id?: number
   name: string
   koreanName?: string | null
   avatarImage?: string | null
@@ -837,7 +871,6 @@ export type CharacterUpdateToOneWithWhereWithoutFriendsInput = {
 }
 
 export type CharacterUpdateWithoutFriendsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   koreanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -854,7 +887,7 @@ export type CharacterUpdateWithoutFriendsInput = {
 }
 
 export type CharacterUncheckedUpdateWithoutFriendsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   koreanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -871,7 +904,6 @@ export type CharacterUncheckedUpdateWithoutFriendsInput = {
 }
 
 export type CharacterCreateWithoutMessagesInput = {
-  id?: string
   name: string
   koreanName?: string | null
   avatarImage?: string | null
@@ -888,7 +920,7 @@ export type CharacterCreateWithoutMessagesInput = {
 }
 
 export type CharacterUncheckedCreateWithoutMessagesInput = {
-  id?: string
+  id?: number
   name: string
   koreanName?: string | null
   avatarImage?: string | null
@@ -921,7 +953,6 @@ export type CharacterUpdateToOneWithWhereWithoutMessagesInput = {
 }
 
 export type CharacterUpdateWithoutMessagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   koreanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -938,7 +969,7 @@ export type CharacterUpdateWithoutMessagesInput = {
 }
 
 export type CharacterUncheckedUpdateWithoutMessagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   koreanName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1101,7 +1132,7 @@ export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     messages: Prisma.$CharacterMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
+    id: number
     name: string
     koreanName: string | null
     avatarImage: string | null
@@ -1539,7 +1570,7 @@ export interface Prisma__CharacterClient<T, Null = never, ExtArgs extends runtim
  * Fields of the Character model
  */
 export interface CharacterFieldRefs {
-  readonly id: Prisma.FieldRef<"Character", 'String'>
+  readonly id: Prisma.FieldRef<"Character", 'Int'>
   readonly name: Prisma.FieldRef<"Character", 'String'>
   readonly koreanName: Prisma.FieldRef<"Character", 'String'>
   readonly avatarImage: Prisma.FieldRef<"Character", 'String'>

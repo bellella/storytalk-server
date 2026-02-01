@@ -57,7 +57,11 @@ export const ModelName = {
   Scene: 'Scene',
   dialogue: 'dialogue',
   StoryProgress: 'StoryProgress',
-  EpisodeProgress: 'EpisodeProgress',
+  ReviewItem: 'ReviewItem',
+  Quiz: 'Quiz',
+  QuizOption: 'QuizOption',
+  UserQuizAnswer: 'UserQuizAnswer',
+  UserEpisode: 'UserEpisode',
   Character: 'Character',
   CharacterImage: 'CharacterImage',
   StoryCharacter: 'StoryCharacter',
@@ -92,12 +96,16 @@ export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
+  provider: 'provider',
+  providerId: 'providerId',
   profileImage: 'profileImage',
   level: 'level',
   exp: 'exp',
   streakDays: 'streakDays',
   lastLoginAt: 'lastLoginAt',
-  createdAt: 'createdAt'
+  registeredAt: 'registeredAt',
+  createdAt: 'createdAt',
+  isNew: 'isNew'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -182,16 +190,70 @@ export const StoryProgressScalarFieldEnum = {
 export type StoryProgressScalarFieldEnum = (typeof StoryProgressScalarFieldEnum)[keyof typeof StoryProgressScalarFieldEnum]
 
 
-export const EpisodeProgressScalarFieldEnum = {
+export const ReviewItemScalarFieldEnum = {
+  id: 'id',
+  episodeId: 'episodeId',
+  dialogueId: 'dialogueId',
+  description: 'description',
+  order: 'order'
+} as const
+
+export type ReviewItemScalarFieldEnum = (typeof ReviewItemScalarFieldEnum)[keyof typeof ReviewItemScalarFieldEnum]
+
+
+export const QuizScalarFieldEnum = {
+  id: 'id',
+  sourceType: 'sourceType',
+  sourceId: 'sourceId',
+  type: 'type',
+  questionEnglish: 'questionEnglish',
+  questionKorean: 'questionKorean',
+  answerIndex: 'answerIndex',
+  description: 'description',
+  order: 'order',
+  isActive: 'isActive'
+} as const
+
+export type QuizScalarFieldEnum = (typeof QuizScalarFieldEnum)[keyof typeof QuizScalarFieldEnum]
+
+
+export const QuizOptionScalarFieldEnum = {
+  id: 'id',
+  quizId: 'quizId',
+  text: 'text',
+  order: 'order'
+} as const
+
+export type QuizOptionScalarFieldEnum = (typeof QuizOptionScalarFieldEnum)[keyof typeof QuizOptionScalarFieldEnum]
+
+
+export const UserQuizAnswerScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  episodeId: 'episodeId',
-  isCompleted: 'isCompleted',
-  completedAt: 'completedAt',
+  quizId: 'quizId',
+  attemptCount: 'attemptCount',
+  selectedIndex: 'selectedIndex',
+  isCorrect: 'isCorrect',
   createdAt: 'createdAt'
 } as const
 
-export type EpisodeProgressScalarFieldEnum = (typeof EpisodeProgressScalarFieldEnum)[keyof typeof EpisodeProgressScalarFieldEnum]
+export type UserQuizAnswerScalarFieldEnum = (typeof UserQuizAnswerScalarFieldEnum)[keyof typeof UserQuizAnswerScalarFieldEnum]
+
+
+export const UserEpisodeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  episodeId: 'episodeId',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  lastSceneId: 'lastSceneId',
+  currentStage: 'currentStage',
+  score: 'score',
+  isCompleted: 'isCompleted',
+  meta: 'meta'
+} as const
+
+export type UserEpisodeScalarFieldEnum = (typeof UserEpisodeScalarFieldEnum)[keyof typeof UserEpisodeScalarFieldEnum]
 
 
 export const CharacterScalarFieldEnum = {
@@ -349,6 +411,14 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull'
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const JsonNullValueInput = {

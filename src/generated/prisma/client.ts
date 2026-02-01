@@ -12,6 +12,8 @@
 
 import * as process from 'node:process'
 import * as path from 'node:path'
+import { fileURLToPath } from 'node:url'
+globalThis['__dirname'] = path.dirname(fileURLToPath(import.meta.url))
 
 import * as runtime from "@prisma/client/runtime/client"
 import * as $Enums from "./enums.js"
@@ -68,10 +70,30 @@ export type dialogue = Prisma.dialogueModel
  */
 export type StoryProgress = Prisma.StoryProgressModel
 /**
- * Model EpisodeProgress
+ * Model ReviewItem
  * 
  */
-export type EpisodeProgress = Prisma.EpisodeProgressModel
+export type ReviewItem = Prisma.ReviewItemModel
+/**
+ * Model Quiz
+ * 
+ */
+export type Quiz = Prisma.QuizModel
+/**
+ * Model QuizOption
+ * 
+ */
+export type QuizOption = Prisma.QuizOptionModel
+/**
+ * Model UserQuizAnswer
+ * 
+ */
+export type UserQuizAnswer = Prisma.UserQuizAnswerModel
+/**
+ * Model UserEpisode
+ * 
+ */
+export type UserEpisode = Prisma.UserEpisodeModel
 /**
  * Model Character
  * 

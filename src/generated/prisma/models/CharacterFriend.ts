@@ -27,17 +27,23 @@ export type AggregateCharacterFriend = {
 }
 
 export type CharacterFriendAvgAggregateOutputType = {
+  id: number | null
+  userId: number | null
+  characterId: number | null
   affinity: number | null
 }
 
 export type CharacterFriendSumAggregateOutputType = {
+  id: number | null
+  userId: number | null
+  characterId: number | null
   affinity: number | null
 }
 
 export type CharacterFriendMinAggregateOutputType = {
-  id: string | null
-  userId: string | null
-  characterId: string | null
+  id: number | null
+  userId: number | null
+  characterId: number | null
   affinity: number | null
   isUnlocked: boolean | null
   unlockedAt: Date | null
@@ -46,9 +52,9 @@ export type CharacterFriendMinAggregateOutputType = {
 }
 
 export type CharacterFriendMaxAggregateOutputType = {
-  id: string | null
-  userId: string | null
-  characterId: string | null
+  id: number | null
+  userId: number | null
+  characterId: number | null
   affinity: number | null
   isUnlocked: boolean | null
   unlockedAt: Date | null
@@ -70,10 +76,16 @@ export type CharacterFriendCountAggregateOutputType = {
 
 
 export type CharacterFriendAvgAggregateInputType = {
+  id?: true
+  userId?: true
+  characterId?: true
   affinity?: true
 }
 
 export type CharacterFriendSumAggregateInputType = {
+  id?: true
+  userId?: true
+  characterId?: true
   affinity?: true
 }
 
@@ -198,9 +210,9 @@ export type CharacterFriendGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 export type CharacterFriendGroupByOutputType = {
-  id: string
-  userId: string
-  characterId: string
+  id: number
+  userId: number
+  characterId: number
   affinity: number
   isUnlocked: boolean
   unlockedAt: Date | null
@@ -232,9 +244,9 @@ export type CharacterFriendWhereInput = {
   AND?: Prisma.CharacterFriendWhereInput | Prisma.CharacterFriendWhereInput[]
   OR?: Prisma.CharacterFriendWhereInput[]
   NOT?: Prisma.CharacterFriendWhereInput | Prisma.CharacterFriendWhereInput[]
-  id?: Prisma.StringFilter<"CharacterFriend"> | string
-  userId?: Prisma.StringFilter<"CharacterFriend"> | string
-  characterId?: Prisma.StringFilter<"CharacterFriend"> | string
+  id?: Prisma.IntFilter<"CharacterFriend"> | number
+  userId?: Prisma.IntFilter<"CharacterFriend"> | number
+  characterId?: Prisma.IntFilter<"CharacterFriend"> | number
   affinity?: Prisma.IntFilter<"CharacterFriend"> | number
   isUnlocked?: Prisma.BoolFilter<"CharacterFriend"> | boolean
   unlockedAt?: Prisma.DateTimeNullableFilter<"CharacterFriend"> | Date | string | null
@@ -258,13 +270,13 @@ export type CharacterFriendOrderByWithRelationInput = {
 }
 
 export type CharacterFriendWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   userId_characterId?: Prisma.CharacterFriendUserIdCharacterIdCompoundUniqueInput
   AND?: Prisma.CharacterFriendWhereInput | Prisma.CharacterFriendWhereInput[]
   OR?: Prisma.CharacterFriendWhereInput[]
   NOT?: Prisma.CharacterFriendWhereInput | Prisma.CharacterFriendWhereInput[]
-  userId?: Prisma.StringFilter<"CharacterFriend"> | string
-  characterId?: Prisma.StringFilter<"CharacterFriend"> | string
+  userId?: Prisma.IntFilter<"CharacterFriend"> | number
+  characterId?: Prisma.IntFilter<"CharacterFriend"> | number
   affinity?: Prisma.IntFilter<"CharacterFriend"> | number
   isUnlocked?: Prisma.BoolFilter<"CharacterFriend"> | boolean
   unlockedAt?: Prisma.DateTimeNullableFilter<"CharacterFriend"> | Date | string | null
@@ -294,9 +306,9 @@ export type CharacterFriendScalarWhereWithAggregatesInput = {
   AND?: Prisma.CharacterFriendScalarWhereWithAggregatesInput | Prisma.CharacterFriendScalarWhereWithAggregatesInput[]
   OR?: Prisma.CharacterFriendScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CharacterFriendScalarWhereWithAggregatesInput | Prisma.CharacterFriendScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"CharacterFriend"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"CharacterFriend"> | string
-  characterId?: Prisma.StringWithAggregatesFilter<"CharacterFriend"> | string
+  id?: Prisma.IntWithAggregatesFilter<"CharacterFriend"> | number
+  userId?: Prisma.IntWithAggregatesFilter<"CharacterFriend"> | number
+  characterId?: Prisma.IntWithAggregatesFilter<"CharacterFriend"> | number
   affinity?: Prisma.IntWithAggregatesFilter<"CharacterFriend"> | number
   isUnlocked?: Prisma.BoolWithAggregatesFilter<"CharacterFriend"> | boolean
   unlockedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CharacterFriend"> | Date | string | null
@@ -305,7 +317,6 @@ export type CharacterFriendScalarWhereWithAggregatesInput = {
 }
 
 export type CharacterFriendCreateInput = {
-  id?: string
   affinity?: number
   isUnlocked?: boolean
   unlockedAt?: Date | string | null
@@ -316,9 +327,9 @@ export type CharacterFriendCreateInput = {
 }
 
 export type CharacterFriendUncheckedCreateInput = {
-  id?: string
-  userId: string
-  characterId: string
+  id?: number
+  userId: number
+  characterId: number
   affinity?: number
   isUnlocked?: boolean
   unlockedAt?: Date | string | null
@@ -327,7 +338,6 @@ export type CharacterFriendUncheckedCreateInput = {
 }
 
 export type CharacterFriendUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unlockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -338,9 +348,9 @@ export type CharacterFriendUpdateInput = {
 }
 
 export type CharacterFriendUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  characterId?: Prisma.IntFieldUpdateOperationsInput | number
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unlockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -349,9 +359,9 @@ export type CharacterFriendUncheckedUpdateInput = {
 }
 
 export type CharacterFriendCreateManyInput = {
-  id?: string
-  userId: string
-  characterId: string
+  id?: number
+  userId: number
+  characterId: number
   affinity?: number
   isUnlocked?: boolean
   unlockedAt?: Date | string | null
@@ -360,7 +370,6 @@ export type CharacterFriendCreateManyInput = {
 }
 
 export type CharacterFriendUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unlockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -369,9 +378,9 @@ export type CharacterFriendUpdateManyMutationInput = {
 }
 
 export type CharacterFriendUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  characterId?: Prisma.IntFieldUpdateOperationsInput | number
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unlockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -390,8 +399,8 @@ export type CharacterFriendOrderByRelationAggregateInput = {
 }
 
 export type CharacterFriendUserIdCharacterIdCompoundUniqueInput = {
-  userId: string
-  characterId: string
+  userId: number
+  characterId: number
 }
 
 export type CharacterFriendCountOrderByAggregateInput = {
@@ -406,6 +415,9 @@ export type CharacterFriendCountOrderByAggregateInput = {
 }
 
 export type CharacterFriendAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
   affinity?: Prisma.SortOrder
 }
 
@@ -432,6 +444,9 @@ export type CharacterFriendMinOrderByAggregateInput = {
 }
 
 export type CharacterFriendSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
   affinity?: Prisma.SortOrder
 }
 
@@ -520,7 +535,6 @@ export type CharacterFriendUncheckedUpdateManyWithoutCharacterNestedInput = {
 }
 
 export type CharacterFriendCreateWithoutUserInput = {
-  id?: string
   affinity?: number
   isUnlocked?: boolean
   unlockedAt?: Date | string | null
@@ -530,8 +544,8 @@ export type CharacterFriendCreateWithoutUserInput = {
 }
 
 export type CharacterFriendUncheckedCreateWithoutUserInput = {
-  id?: string
-  characterId: string
+  id?: number
+  characterId: number
   affinity?: number
   isUnlocked?: boolean
   unlockedAt?: Date | string | null
@@ -569,9 +583,9 @@ export type CharacterFriendScalarWhereInput = {
   AND?: Prisma.CharacterFriendScalarWhereInput | Prisma.CharacterFriendScalarWhereInput[]
   OR?: Prisma.CharacterFriendScalarWhereInput[]
   NOT?: Prisma.CharacterFriendScalarWhereInput | Prisma.CharacterFriendScalarWhereInput[]
-  id?: Prisma.StringFilter<"CharacterFriend"> | string
-  userId?: Prisma.StringFilter<"CharacterFriend"> | string
-  characterId?: Prisma.StringFilter<"CharacterFriend"> | string
+  id?: Prisma.IntFilter<"CharacterFriend"> | number
+  userId?: Prisma.IntFilter<"CharacterFriend"> | number
+  characterId?: Prisma.IntFilter<"CharacterFriend"> | number
   affinity?: Prisma.IntFilter<"CharacterFriend"> | number
   isUnlocked?: Prisma.BoolFilter<"CharacterFriend"> | boolean
   unlockedAt?: Prisma.DateTimeNullableFilter<"CharacterFriend"> | Date | string | null
@@ -580,7 +594,6 @@ export type CharacterFriendScalarWhereInput = {
 }
 
 export type CharacterFriendCreateWithoutCharacterInput = {
-  id?: string
   affinity?: number
   isUnlocked?: boolean
   unlockedAt?: Date | string | null
@@ -590,8 +603,8 @@ export type CharacterFriendCreateWithoutCharacterInput = {
 }
 
 export type CharacterFriendUncheckedCreateWithoutCharacterInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   affinity?: number
   isUnlocked?: boolean
   unlockedAt?: Date | string | null
@@ -626,8 +639,8 @@ export type CharacterFriendUpdateManyWithWhereWithoutCharacterInput = {
 }
 
 export type CharacterFriendCreateManyUserInput = {
-  id?: string
-  characterId: string
+  id?: number
+  characterId: number
   affinity?: number
   isUnlocked?: boolean
   unlockedAt?: Date | string | null
@@ -636,7 +649,6 @@ export type CharacterFriendCreateManyUserInput = {
 }
 
 export type CharacterFriendUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unlockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -646,8 +658,8 @@ export type CharacterFriendUpdateWithoutUserInput = {
 }
 
 export type CharacterFriendUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  characterId?: Prisma.IntFieldUpdateOperationsInput | number
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unlockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -656,8 +668,8 @@ export type CharacterFriendUncheckedUpdateWithoutUserInput = {
 }
 
 export type CharacterFriendUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  characterId?: Prisma.IntFieldUpdateOperationsInput | number
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unlockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -666,8 +678,8 @@ export type CharacterFriendUncheckedUpdateManyWithoutUserInput = {
 }
 
 export type CharacterFriendCreateManyCharacterInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   affinity?: number
   isUnlocked?: boolean
   unlockedAt?: Date | string | null
@@ -676,7 +688,6 @@ export type CharacterFriendCreateManyCharacterInput = {
 }
 
 export type CharacterFriendUpdateWithoutCharacterInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unlockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -686,8 +697,8 @@ export type CharacterFriendUpdateWithoutCharacterInput = {
 }
 
 export type CharacterFriendUncheckedUpdateWithoutCharacterInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unlockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -696,8 +707,8 @@ export type CharacterFriendUncheckedUpdateWithoutCharacterInput = {
 }
 
 export type CharacterFriendUncheckedUpdateManyWithoutCharacterInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unlockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -778,9 +789,9 @@ export type $CharacterFriendPayload<ExtArgs extends runtime.Types.Extensions.Int
     character: Prisma.$CharacterPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    userId: string
-    characterId: string
+    id: number
+    userId: number
+    characterId: number
     affinity: number
     isUnlocked: boolean
     unlockedAt: Date | null
@@ -1211,9 +1222,9 @@ export interface Prisma__CharacterFriendClient<T, Null = never, ExtArgs extends 
  * Fields of the CharacterFriend model
  */
 export interface CharacterFriendFieldRefs {
-  readonly id: Prisma.FieldRef<"CharacterFriend", 'String'>
-  readonly userId: Prisma.FieldRef<"CharacterFriend", 'String'>
-  readonly characterId: Prisma.FieldRef<"CharacterFriend", 'String'>
+  readonly id: Prisma.FieldRef<"CharacterFriend", 'Int'>
+  readonly userId: Prisma.FieldRef<"CharacterFriend", 'Int'>
+  readonly characterId: Prisma.FieldRef<"CharacterFriend", 'Int'>
   readonly affinity: Prisma.FieldRef<"CharacterFriend", 'Int'>
   readonly isUnlocked: Prisma.FieldRef<"CharacterFriend", 'Boolean'>
   readonly unlockedAt: Prisma.FieldRef<"CharacterFriend", 'DateTime'>

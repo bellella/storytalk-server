@@ -27,26 +27,32 @@ export type AggregateStoryProgress = {
 }
 
 export type StoryProgressAvgAggregateOutputType = {
+  id: number | null
+  userId: number | null
+  storyId: number | null
   progressPct: number | null
 }
 
 export type StoryProgressSumAggregateOutputType = {
+  id: number | null
+  userId: number | null
+  storyId: number | null
   progressPct: number | null
 }
 
 export type StoryProgressMinAggregateOutputType = {
-  id: string | null
-  userId: string | null
-  storyId: string | null
+  id: number | null
+  userId: number | null
+  storyId: number | null
   progressPct: number | null
   isCompleted: boolean | null
   updatedAt: Date | null
 }
 
 export type StoryProgressMaxAggregateOutputType = {
-  id: string | null
-  userId: string | null
-  storyId: string | null
+  id: number | null
+  userId: number | null
+  storyId: number | null
   progressPct: number | null
   isCompleted: boolean | null
   updatedAt: Date | null
@@ -64,10 +70,16 @@ export type StoryProgressCountAggregateOutputType = {
 
 
 export type StoryProgressAvgAggregateInputType = {
+  id?: true
+  userId?: true
+  storyId?: true
   progressPct?: true
 }
 
 export type StoryProgressSumAggregateInputType = {
+  id?: true
+  userId?: true
+  storyId?: true
   progressPct?: true
 }
 
@@ -186,9 +198,9 @@ export type StoryProgressGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 export type StoryProgressGroupByOutputType = {
-  id: string
-  userId: string
-  storyId: string
+  id: number
+  userId: number
+  storyId: number
   progressPct: number
   isCompleted: boolean
   updatedAt: Date
@@ -218,9 +230,9 @@ export type StoryProgressWhereInput = {
   AND?: Prisma.StoryProgressWhereInput | Prisma.StoryProgressWhereInput[]
   OR?: Prisma.StoryProgressWhereInput[]
   NOT?: Prisma.StoryProgressWhereInput | Prisma.StoryProgressWhereInput[]
-  id?: Prisma.StringFilter<"StoryProgress"> | string
-  userId?: Prisma.StringFilter<"StoryProgress"> | string
-  storyId?: Prisma.StringFilter<"StoryProgress"> | string
+  id?: Prisma.IntFilter<"StoryProgress"> | number
+  userId?: Prisma.IntFilter<"StoryProgress"> | number
+  storyId?: Prisma.IntFilter<"StoryProgress"> | number
   progressPct?: Prisma.FloatFilter<"StoryProgress"> | number
   isCompleted?: Prisma.BoolFilter<"StoryProgress"> | boolean
   updatedAt?: Prisma.DateTimeFilter<"StoryProgress"> | Date | string
@@ -240,13 +252,13 @@ export type StoryProgressOrderByWithRelationInput = {
 }
 
 export type StoryProgressWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   userId_storyId?: Prisma.StoryProgressUserIdStoryIdCompoundUniqueInput
   AND?: Prisma.StoryProgressWhereInput | Prisma.StoryProgressWhereInput[]
   OR?: Prisma.StoryProgressWhereInput[]
   NOT?: Prisma.StoryProgressWhereInput | Prisma.StoryProgressWhereInput[]
-  userId?: Prisma.StringFilter<"StoryProgress"> | string
-  storyId?: Prisma.StringFilter<"StoryProgress"> | string
+  userId?: Prisma.IntFilter<"StoryProgress"> | number
+  storyId?: Prisma.IntFilter<"StoryProgress"> | number
   progressPct?: Prisma.FloatFilter<"StoryProgress"> | number
   isCompleted?: Prisma.BoolFilter<"StoryProgress"> | boolean
   updatedAt?: Prisma.DateTimeFilter<"StoryProgress"> | Date | string
@@ -272,16 +284,15 @@ export type StoryProgressScalarWhereWithAggregatesInput = {
   AND?: Prisma.StoryProgressScalarWhereWithAggregatesInput | Prisma.StoryProgressScalarWhereWithAggregatesInput[]
   OR?: Prisma.StoryProgressScalarWhereWithAggregatesInput[]
   NOT?: Prisma.StoryProgressScalarWhereWithAggregatesInput | Prisma.StoryProgressScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"StoryProgress"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"StoryProgress"> | string
-  storyId?: Prisma.StringWithAggregatesFilter<"StoryProgress"> | string
+  id?: Prisma.IntWithAggregatesFilter<"StoryProgress"> | number
+  userId?: Prisma.IntWithAggregatesFilter<"StoryProgress"> | number
+  storyId?: Prisma.IntWithAggregatesFilter<"StoryProgress"> | number
   progressPct?: Prisma.FloatWithAggregatesFilter<"StoryProgress"> | number
   isCompleted?: Prisma.BoolWithAggregatesFilter<"StoryProgress"> | boolean
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"StoryProgress"> | Date | string
 }
 
 export type StoryProgressCreateInput = {
-  id?: string
   progressPct?: number
   isCompleted?: boolean
   updatedAt?: Date | string
@@ -290,16 +301,15 @@ export type StoryProgressCreateInput = {
 }
 
 export type StoryProgressUncheckedCreateInput = {
-  id?: string
-  userId: string
-  storyId: string
+  id?: number
+  userId: number
+  storyId: number
   progressPct?: number
   isCompleted?: boolean
   updatedAt?: Date | string
 }
 
 export type StoryProgressUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   progressPct?: Prisma.FloatFieldUpdateOperationsInput | number
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -308,34 +318,33 @@ export type StoryProgressUpdateInput = {
 }
 
 export type StoryProgressUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  storyId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  storyId?: Prisma.IntFieldUpdateOperationsInput | number
   progressPct?: Prisma.FloatFieldUpdateOperationsInput | number
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StoryProgressCreateManyInput = {
-  id?: string
-  userId: string
-  storyId: string
+  id?: number
+  userId: number
+  storyId: number
   progressPct?: number
   isCompleted?: boolean
   updatedAt?: Date | string
 }
 
 export type StoryProgressUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   progressPct?: Prisma.FloatFieldUpdateOperationsInput | number
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StoryProgressUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  storyId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  storyId?: Prisma.IntFieldUpdateOperationsInput | number
   progressPct?: Prisma.FloatFieldUpdateOperationsInput | number
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -352,8 +361,8 @@ export type StoryProgressOrderByRelationAggregateInput = {
 }
 
 export type StoryProgressUserIdStoryIdCompoundUniqueInput = {
-  userId: string
-  storyId: string
+  userId: number
+  storyId: number
 }
 
 export type StoryProgressCountOrderByAggregateInput = {
@@ -366,6 +375,9 @@ export type StoryProgressCountOrderByAggregateInput = {
 }
 
 export type StoryProgressAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  storyId?: Prisma.SortOrder
   progressPct?: Prisma.SortOrder
 }
 
@@ -388,6 +400,9 @@ export type StoryProgressMinOrderByAggregateInput = {
 }
 
 export type StoryProgressSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  storyId?: Prisma.SortOrder
   progressPct?: Prisma.SortOrder
 }
 
@@ -484,7 +499,6 @@ export type FloatFieldUpdateOperationsInput = {
 }
 
 export type StoryProgressCreateWithoutUserInput = {
-  id?: string
   progressPct?: number
   isCompleted?: boolean
   updatedAt?: Date | string
@@ -492,8 +506,8 @@ export type StoryProgressCreateWithoutUserInput = {
 }
 
 export type StoryProgressUncheckedCreateWithoutUserInput = {
-  id?: string
-  storyId: string
+  id?: number
+  storyId: number
   progressPct?: number
   isCompleted?: boolean
   updatedAt?: Date | string
@@ -529,16 +543,15 @@ export type StoryProgressScalarWhereInput = {
   AND?: Prisma.StoryProgressScalarWhereInput | Prisma.StoryProgressScalarWhereInput[]
   OR?: Prisma.StoryProgressScalarWhereInput[]
   NOT?: Prisma.StoryProgressScalarWhereInput | Prisma.StoryProgressScalarWhereInput[]
-  id?: Prisma.StringFilter<"StoryProgress"> | string
-  userId?: Prisma.StringFilter<"StoryProgress"> | string
-  storyId?: Prisma.StringFilter<"StoryProgress"> | string
+  id?: Prisma.IntFilter<"StoryProgress"> | number
+  userId?: Prisma.IntFilter<"StoryProgress"> | number
+  storyId?: Prisma.IntFilter<"StoryProgress"> | number
   progressPct?: Prisma.FloatFilter<"StoryProgress"> | number
   isCompleted?: Prisma.BoolFilter<"StoryProgress"> | boolean
   updatedAt?: Prisma.DateTimeFilter<"StoryProgress"> | Date | string
 }
 
 export type StoryProgressCreateWithoutStoryInput = {
-  id?: string
   progressPct?: number
   isCompleted?: boolean
   updatedAt?: Date | string
@@ -546,8 +559,8 @@ export type StoryProgressCreateWithoutStoryInput = {
 }
 
 export type StoryProgressUncheckedCreateWithoutStoryInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   progressPct?: number
   isCompleted?: boolean
   updatedAt?: Date | string
@@ -580,15 +593,14 @@ export type StoryProgressUpdateManyWithWhereWithoutStoryInput = {
 }
 
 export type StoryProgressCreateManyUserInput = {
-  id?: string
-  storyId: string
+  id?: number
+  storyId: number
   progressPct?: number
   isCompleted?: boolean
   updatedAt?: Date | string
 }
 
 export type StoryProgressUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   progressPct?: Prisma.FloatFieldUpdateOperationsInput | number
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -596,31 +608,30 @@ export type StoryProgressUpdateWithoutUserInput = {
 }
 
 export type StoryProgressUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  storyId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  storyId?: Prisma.IntFieldUpdateOperationsInput | number
   progressPct?: Prisma.FloatFieldUpdateOperationsInput | number
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StoryProgressUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  storyId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  storyId?: Prisma.IntFieldUpdateOperationsInput | number
   progressPct?: Prisma.FloatFieldUpdateOperationsInput | number
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StoryProgressCreateManyStoryInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   progressPct?: number
   isCompleted?: boolean
   updatedAt?: Date | string
 }
 
 export type StoryProgressUpdateWithoutStoryInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   progressPct?: Prisma.FloatFieldUpdateOperationsInput | number
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -628,16 +639,16 @@ export type StoryProgressUpdateWithoutStoryInput = {
 }
 
 export type StoryProgressUncheckedUpdateWithoutStoryInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   progressPct?: Prisma.FloatFieldUpdateOperationsInput | number
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StoryProgressUncheckedUpdateManyWithoutStoryInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   progressPct?: Prisma.FloatFieldUpdateOperationsInput | number
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -708,9 +719,9 @@ export type $StoryProgressPayload<ExtArgs extends runtime.Types.Extensions.Inter
     story: Prisma.$StoryPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    userId: string
-    storyId: string
+    id: number
+    userId: number
+    storyId: number
     progressPct: number
     isCompleted: boolean
     updatedAt: Date
@@ -1139,9 +1150,9 @@ export interface Prisma__StoryProgressClient<T, Null = never, ExtArgs extends ru
  * Fields of the StoryProgress model
  */
 export interface StoryProgressFieldRefs {
-  readonly id: Prisma.FieldRef<"StoryProgress", 'String'>
-  readonly userId: Prisma.FieldRef<"StoryProgress", 'String'>
-  readonly storyId: Prisma.FieldRef<"StoryProgress", 'String'>
+  readonly id: Prisma.FieldRef<"StoryProgress", 'Int'>
+  readonly userId: Prisma.FieldRef<"StoryProgress", 'Int'>
+  readonly storyId: Prisma.FieldRef<"StoryProgress", 'Int'>
   readonly progressPct: Prisma.FieldRef<"StoryProgress", 'Float'>
   readonly isCompleted: Prisma.FieldRef<"StoryProgress", 'Boolean'>
   readonly updatedAt: Prisma.FieldRef<"StoryProgress", 'DateTime'>
