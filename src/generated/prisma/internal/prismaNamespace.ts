@@ -396,8 +396,8 @@ export const ModelName = {
   UserQuizAnswer: 'UserQuizAnswer',
   UserEpisode: 'UserEpisode',
   Character: 'Character',
-  CharacterImage: 'CharacterImage',
   StoryCharacter: 'StoryCharacter',
+  CharacterImage: 'CharacterImage',
   CharacterFriend: 'CharacterFriend',
   CharacterMessage: 'CharacterMessage',
   dialogueBookmark: 'dialogueBookmark',
@@ -422,7 +422,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "story" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "quiz" | "quizOption" | "userQuizAnswer" | "userEpisode" | "character" | "characterImage" | "storyCharacter" | "characterFriend" | "characterMessage" | "dialogueBookmark" | "episodeReward" | "masteryLevel" | "expression" | "masteryProgress" | "savedExpression" | "message"
+    modelProps: "user" | "story" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "quiz" | "quizOption" | "userQuizAnswer" | "userEpisode" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterMessage" | "dialogueBookmark" | "episodeReward" | "masteryLevel" | "expression" | "masteryProgress" | "savedExpression" | "message"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1314,80 +1314,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    CharacterImage: {
-      payload: Prisma.$CharacterImagePayload<ExtArgs>
-      fields: Prisma.CharacterImageFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.CharacterImageFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.CharacterImageFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>
-        }
-        findFirst: {
-          args: Prisma.CharacterImageFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.CharacterImageFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>
-        }
-        findMany: {
-          args: Prisma.CharacterImageFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>[]
-        }
-        create: {
-          args: Prisma.CharacterImageCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>
-        }
-        createMany: {
-          args: Prisma.CharacterImageCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.CharacterImageCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>[]
-        }
-        delete: {
-          args: Prisma.CharacterImageDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>
-        }
-        update: {
-          args: Prisma.CharacterImageUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>
-        }
-        deleteMany: {
-          args: Prisma.CharacterImageDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.CharacterImageUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.CharacterImageUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>[]
-        }
-        upsert: {
-          args: Prisma.CharacterImageUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>
-        }
-        aggregate: {
-          args: Prisma.CharacterImageAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateCharacterImage>
-        }
-        groupBy: {
-          args: Prisma.CharacterImageGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CharacterImageGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.CharacterImageCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CharacterImageCountAggregateOutputType> | number
-        }
-      }
-    }
     StoryCharacter: {
       payload: Prisma.$StoryCharacterPayload<ExtArgs>
       fields: Prisma.StoryCharacterFieldRefs
@@ -1459,6 +1385,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.StoryCharacterCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.StoryCharacterCountAggregateOutputType> | number
+        }
+      }
+    }
+    CharacterImage: {
+      payload: Prisma.$CharacterImagePayload<ExtArgs>
+      fields: Prisma.CharacterImageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CharacterImageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CharacterImageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>
+        }
+        findFirst: {
+          args: Prisma.CharacterImageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CharacterImageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>
+        }
+        findMany: {
+          args: Prisma.CharacterImageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>[]
+        }
+        create: {
+          args: Prisma.CharacterImageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>
+        }
+        createMany: {
+          args: Prisma.CharacterImageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CharacterImageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>[]
+        }
+        delete: {
+          args: Prisma.CharacterImageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>
+        }
+        update: {
+          args: Prisma.CharacterImageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>
+        }
+        deleteMany: {
+          args: Prisma.CharacterImageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CharacterImageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CharacterImageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>[]
+        }
+        upsert: {
+          args: Prisma.CharacterImageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterImagePayload>
+        }
+        aggregate: {
+          args: Prisma.CharacterImageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCharacterImage>
+        }
+        groupBy: {
+          args: Prisma.CharacterImageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharacterImageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CharacterImageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharacterImageCountAggregateOutputType> | number
         }
       }
     }
@@ -2333,6 +2333,7 @@ export type UserEpisodeScalarFieldEnum = (typeof UserEpisodeScalarFieldEnum)[key
 
 export const CharacterScalarFieldEnum = {
   id: 'id',
+  scope: 'scope',
   name: 'name',
   koreanName: 'koreanName',
   avatarImage: 'avatarImage',
@@ -2347,6 +2348,17 @@ export const CharacterScalarFieldEnum = {
 export type CharacterScalarFieldEnum = (typeof CharacterScalarFieldEnum)[keyof typeof CharacterScalarFieldEnum]
 
 
+export const StoryCharacterScalarFieldEnum = {
+  id: 'id',
+  storyId: 'storyId',
+  characterId: 'characterId',
+  name: 'name',
+  createdAt: 'createdAt'
+} as const
+
+export type StoryCharacterScalarFieldEnum = (typeof StoryCharacterScalarFieldEnum)[keyof typeof StoryCharacterScalarFieldEnum]
+
+
 export const CharacterImageScalarFieldEnum = {
   id: 'id',
   characterId: 'characterId',
@@ -2358,19 +2370,6 @@ export const CharacterImageScalarFieldEnum = {
 } as const
 
 export type CharacterImageScalarFieldEnum = (typeof CharacterImageScalarFieldEnum)[keyof typeof CharacterImageScalarFieldEnum]
-
-
-export const StoryCharacterScalarFieldEnum = {
-  id: 'id',
-  storyId: 'storyId',
-  characterId: 'characterId',
-  name: 'name',
-  isMain: 'isMain',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type StoryCharacterScalarFieldEnum = (typeof StoryCharacterScalarFieldEnum)[keyof typeof StoryCharacterScalarFieldEnum]
 
 
 export const CharacterFriendScalarFieldEnum = {
@@ -2668,6 +2667,20 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'CharacterScope'
+ */
+export type EnumCharacterScopeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CharacterScope'>
+    
+
+
+/**
+ * Reference to a field of type 'CharacterScope[]'
+ */
+export type ListEnumCharacterScopeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CharacterScope[]'>
+    
+
+
+/**
  * Reference to a field of type 'RewardType'
  */
 export type EnumRewardTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RewardType'>
@@ -2771,8 +2784,8 @@ export type GlobalOmitConfig = {
   userQuizAnswer?: Prisma.UserQuizAnswerOmit
   userEpisode?: Prisma.UserEpisodeOmit
   character?: Prisma.CharacterOmit
-  characterImage?: Prisma.CharacterImageOmit
   storyCharacter?: Prisma.StoryCharacterOmit
+  characterImage?: Prisma.CharacterImageOmit
   characterFriend?: Prisma.CharacterFriendOmit
   characterMessage?: Prisma.CharacterMessageOmit
   dialogueBookmark?: Prisma.dialogueBookmarkOmit

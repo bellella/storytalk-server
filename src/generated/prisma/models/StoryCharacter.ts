@@ -43,9 +43,7 @@ export type StoryCharacterMinAggregateOutputType = {
   storyId: number | null
   characterId: number | null
   name: string | null
-  isMain: boolean | null
   createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type StoryCharacterMaxAggregateOutputType = {
@@ -53,9 +51,7 @@ export type StoryCharacterMaxAggregateOutputType = {
   storyId: number | null
   characterId: number | null
   name: string | null
-  isMain: boolean | null
   createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type StoryCharacterCountAggregateOutputType = {
@@ -63,9 +59,7 @@ export type StoryCharacterCountAggregateOutputType = {
   storyId: number
   characterId: number
   name: number
-  isMain: number
   createdAt: number
-  updatedAt: number
   _all: number
 }
 
@@ -87,9 +81,7 @@ export type StoryCharacterMinAggregateInputType = {
   storyId?: true
   characterId?: true
   name?: true
-  isMain?: true
   createdAt?: true
-  updatedAt?: true
 }
 
 export type StoryCharacterMaxAggregateInputType = {
@@ -97,9 +89,7 @@ export type StoryCharacterMaxAggregateInputType = {
   storyId?: true
   characterId?: true
   name?: true
-  isMain?: true
   createdAt?: true
-  updatedAt?: true
 }
 
 export type StoryCharacterCountAggregateInputType = {
@@ -107,9 +97,7 @@ export type StoryCharacterCountAggregateInputType = {
   storyId?: true
   characterId?: true
   name?: true
-  isMain?: true
   createdAt?: true
-  updatedAt?: true
   _all?: true
 }
 
@@ -202,11 +190,9 @@ export type StoryCharacterGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 export type StoryCharacterGroupByOutputType = {
   id: number
   storyId: number
-  characterId: number | null
-  name: string | null
-  isMain: boolean
+  characterId: number
+  name: string
   createdAt: Date
-  updatedAt: Date
   _count: StoryCharacterCountAggregateOutputType | null
   _avg: StoryCharacterAvgAggregateOutputType | null
   _sum: StoryCharacterSumAggregateOutputType | null
@@ -235,23 +221,19 @@ export type StoryCharacterWhereInput = {
   NOT?: Prisma.StoryCharacterWhereInput | Prisma.StoryCharacterWhereInput[]
   id?: Prisma.IntFilter<"StoryCharacter"> | number
   storyId?: Prisma.IntFilter<"StoryCharacter"> | number
-  characterId?: Prisma.IntNullableFilter<"StoryCharacter"> | number | null
-  name?: Prisma.StringNullableFilter<"StoryCharacter"> | string | null
-  isMain?: Prisma.BoolFilter<"StoryCharacter"> | boolean
+  characterId?: Prisma.IntFilter<"StoryCharacter"> | number
+  name?: Prisma.StringFilter<"StoryCharacter"> | string
   createdAt?: Prisma.DateTimeFilter<"StoryCharacter"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"StoryCharacter"> | Date | string
   story?: Prisma.XOR<Prisma.StoryScalarRelationFilter, Prisma.StoryWhereInput>
-  character?: Prisma.XOR<Prisma.CharacterNullableScalarRelationFilter, Prisma.CharacterWhereInput> | null
+  character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
 }
 
 export type StoryCharacterOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   storyId?: Prisma.SortOrder
-  characterId?: Prisma.SortOrderInput | Prisma.SortOrder
-  name?: Prisma.SortOrderInput | Prisma.SortOrder
-  isMain?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   story?: Prisma.StoryOrderByWithRelationInput
   character?: Prisma.CharacterOrderByWithRelationInput
 }
@@ -263,23 +245,19 @@ export type StoryCharacterWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.StoryCharacterWhereInput[]
   NOT?: Prisma.StoryCharacterWhereInput | Prisma.StoryCharacterWhereInput[]
   storyId?: Prisma.IntFilter<"StoryCharacter"> | number
-  characterId?: Prisma.IntNullableFilter<"StoryCharacter"> | number | null
-  name?: Prisma.StringNullableFilter<"StoryCharacter"> | string | null
-  isMain?: Prisma.BoolFilter<"StoryCharacter"> | boolean
+  characterId?: Prisma.IntFilter<"StoryCharacter"> | number
+  name?: Prisma.StringFilter<"StoryCharacter"> | string
   createdAt?: Prisma.DateTimeFilter<"StoryCharacter"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"StoryCharacter"> | Date | string
   story?: Prisma.XOR<Prisma.StoryScalarRelationFilter, Prisma.StoryWhereInput>
-  character?: Prisma.XOR<Prisma.CharacterNullableScalarRelationFilter, Prisma.CharacterWhereInput> | null
+  character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
 }, "id" | "storyId_characterId">
 
 export type StoryCharacterOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   storyId?: Prisma.SortOrder
-  characterId?: Prisma.SortOrderInput | Prisma.SortOrder
-  name?: Prisma.SortOrderInput | Prisma.SortOrder
-  isMain?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   _count?: Prisma.StoryCharacterCountOrderByAggregateInput
   _avg?: Prisma.StoryCharacterAvgOrderByAggregateInput
   _max?: Prisma.StoryCharacterMaxOrderByAggregateInput
@@ -293,76 +271,60 @@ export type StoryCharacterScalarWhereWithAggregatesInput = {
   NOT?: Prisma.StoryCharacterScalarWhereWithAggregatesInput | Prisma.StoryCharacterScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"StoryCharacter"> | number
   storyId?: Prisma.IntWithAggregatesFilter<"StoryCharacter"> | number
-  characterId?: Prisma.IntNullableWithAggregatesFilter<"StoryCharacter"> | number | null
-  name?: Prisma.StringNullableWithAggregatesFilter<"StoryCharacter"> | string | null
-  isMain?: Prisma.BoolWithAggregatesFilter<"StoryCharacter"> | boolean
+  characterId?: Prisma.IntWithAggregatesFilter<"StoryCharacter"> | number
+  name?: Prisma.StringWithAggregatesFilter<"StoryCharacter"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"StoryCharacter"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"StoryCharacter"> | Date | string
 }
 
 export type StoryCharacterCreateInput = {
-  name?: string | null
-  isMain?: boolean
+  name: string
   createdAt?: Date | string
-  updatedAt?: Date | string
-  story: Prisma.StoryCreateNestedOneWithoutCharactersInput
-  character?: Prisma.CharacterCreateNestedOneWithoutStoryLinksInput
+  story: Prisma.StoryCreateNestedOneWithoutStoryCharactersInput
+  character: Prisma.CharacterCreateNestedOneWithoutStoryLinksInput
 }
 
 export type StoryCharacterUncheckedCreateInput = {
   id?: number
   storyId: number
-  characterId?: number | null
-  name?: string | null
-  isMain?: boolean
+  characterId: number
+  name: string
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type StoryCharacterUpdateInput = {
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isMain?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  story?: Prisma.StoryUpdateOneRequiredWithoutCharactersNestedInput
-  character?: Prisma.CharacterUpdateOneWithoutStoryLinksNestedInput
+  story?: Prisma.StoryUpdateOneRequiredWithoutStoryCharactersNestedInput
+  character?: Prisma.CharacterUpdateOneRequiredWithoutStoryLinksNestedInput
 }
 
 export type StoryCharacterUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   storyId?: Prisma.IntFieldUpdateOperationsInput | number
-  characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isMain?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  characterId?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StoryCharacterCreateManyInput = {
   id?: number
   storyId: number
-  characterId?: number | null
-  name?: string | null
-  isMain?: boolean
+  characterId: number
+  name: string
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type StoryCharacterUpdateManyMutationInput = {
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isMain?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StoryCharacterUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   storyId?: Prisma.IntFieldUpdateOperationsInput | number
-  characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isMain?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  characterId?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StoryCharacterListRelationFilter = {
@@ -385,9 +347,7 @@ export type StoryCharacterCountOrderByAggregateInput = {
   storyId?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  isMain?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type StoryCharacterAvgOrderByAggregateInput = {
@@ -401,9 +361,7 @@ export type StoryCharacterMaxOrderByAggregateInput = {
   storyId?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  isMain?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type StoryCharacterMinOrderByAggregateInput = {
@@ -411,9 +369,7 @@ export type StoryCharacterMinOrderByAggregateInput = {
   storyId?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  isMain?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type StoryCharacterSumOrderByAggregateInput = {
@@ -507,20 +463,16 @@ export type StoryCharacterUncheckedUpdateManyWithoutCharacterNestedInput = {
 }
 
 export type StoryCharacterCreateWithoutStoryInput = {
-  name?: string | null
-  isMain?: boolean
+  name: string
   createdAt?: Date | string
-  updatedAt?: Date | string
-  character?: Prisma.CharacterCreateNestedOneWithoutStoryLinksInput
+  character: Prisma.CharacterCreateNestedOneWithoutStoryLinksInput
 }
 
 export type StoryCharacterUncheckedCreateWithoutStoryInput = {
   id?: number
-  characterId?: number | null
-  name?: string | null
-  isMain?: boolean
+  characterId: number
+  name: string
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type StoryCharacterCreateOrConnectWithoutStoryInput = {
@@ -555,28 +507,22 @@ export type StoryCharacterScalarWhereInput = {
   NOT?: Prisma.StoryCharacterScalarWhereInput | Prisma.StoryCharacterScalarWhereInput[]
   id?: Prisma.IntFilter<"StoryCharacter"> | number
   storyId?: Prisma.IntFilter<"StoryCharacter"> | number
-  characterId?: Prisma.IntNullableFilter<"StoryCharacter"> | number | null
-  name?: Prisma.StringNullableFilter<"StoryCharacter"> | string | null
-  isMain?: Prisma.BoolFilter<"StoryCharacter"> | boolean
+  characterId?: Prisma.IntFilter<"StoryCharacter"> | number
+  name?: Prisma.StringFilter<"StoryCharacter"> | string
   createdAt?: Prisma.DateTimeFilter<"StoryCharacter"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"StoryCharacter"> | Date | string
 }
 
 export type StoryCharacterCreateWithoutCharacterInput = {
-  name?: string | null
-  isMain?: boolean
+  name: string
   createdAt?: Date | string
-  updatedAt?: Date | string
-  story: Prisma.StoryCreateNestedOneWithoutCharactersInput
+  story: Prisma.StoryCreateNestedOneWithoutStoryCharactersInput
 }
 
 export type StoryCharacterUncheckedCreateWithoutCharacterInput = {
   id?: number
   storyId: number
-  name?: string | null
-  isMain?: boolean
+  name: string
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type StoryCharacterCreateOrConnectWithoutCharacterInput = {
@@ -607,72 +553,56 @@ export type StoryCharacterUpdateManyWithWhereWithoutCharacterInput = {
 
 export type StoryCharacterCreateManyStoryInput = {
   id?: number
-  characterId?: number | null
-  name?: string | null
-  isMain?: boolean
+  characterId: number
+  name: string
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type StoryCharacterUpdateWithoutStoryInput = {
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isMain?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  character?: Prisma.CharacterUpdateOneWithoutStoryLinksNestedInput
+  character?: Prisma.CharacterUpdateOneRequiredWithoutStoryLinksNestedInput
 }
 
 export type StoryCharacterUncheckedUpdateWithoutStoryInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isMain?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  characterId?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StoryCharacterUncheckedUpdateManyWithoutStoryInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isMain?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  characterId?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StoryCharacterCreateManyCharacterInput = {
   id?: number
   storyId: number
-  name?: string | null
-  isMain?: boolean
+  name: string
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type StoryCharacterUpdateWithoutCharacterInput = {
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isMain?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  story?: Prisma.StoryUpdateOneRequiredWithoutCharactersNestedInput
+  story?: Prisma.StoryUpdateOneRequiredWithoutStoryCharactersNestedInput
 }
 
 export type StoryCharacterUncheckedUpdateWithoutCharacterInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   storyId?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isMain?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StoryCharacterUncheckedUpdateManyWithoutCharacterInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   storyId?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isMain?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -682,11 +612,9 @@ export type StoryCharacterSelect<ExtArgs extends runtime.Types.Extensions.Intern
   storyId?: boolean
   characterId?: boolean
   name?: boolean
-  isMain?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
-  character?: boolean | Prisma.StoryCharacter$characterArgs<ExtArgs>
+  character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["storyCharacter"]>
 
 export type StoryCharacterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -694,11 +622,9 @@ export type StoryCharacterSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   storyId?: boolean
   characterId?: boolean
   name?: boolean
-  isMain?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
-  character?: boolean | Prisma.StoryCharacter$characterArgs<ExtArgs>
+  character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["storyCharacter"]>
 
 export type StoryCharacterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -706,11 +632,9 @@ export type StoryCharacterSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   storyId?: boolean
   characterId?: boolean
   name?: boolean
-  isMain?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
-  character?: boolean | Prisma.StoryCharacter$characterArgs<ExtArgs>
+  character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["storyCharacter"]>
 
 export type StoryCharacterSelectScalar = {
@@ -718,39 +642,35 @@ export type StoryCharacterSelectScalar = {
   storyId?: boolean
   characterId?: boolean
   name?: boolean
-  isMain?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
 }
 
-export type StoryCharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storyId" | "characterId" | "name" | "isMain" | "createdAt" | "updatedAt", ExtArgs["result"]["storyCharacter"]>
+export type StoryCharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storyId" | "characterId" | "name" | "createdAt", ExtArgs["result"]["storyCharacter"]>
 export type StoryCharacterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
-  character?: boolean | Prisma.StoryCharacter$characterArgs<ExtArgs>
+  character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }
 export type StoryCharacterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
-  character?: boolean | Prisma.StoryCharacter$characterArgs<ExtArgs>
+  character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }
 export type StoryCharacterIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   story?: boolean | Prisma.StoryDefaultArgs<ExtArgs>
-  character?: boolean | Prisma.StoryCharacter$characterArgs<ExtArgs>
+  character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }
 
 export type $StoryCharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "StoryCharacter"
   objects: {
     story: Prisma.$StoryPayload<ExtArgs>
-    character: Prisma.$CharacterPayload<ExtArgs> | null
+    character: Prisma.$CharacterPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     storyId: number
-    characterId: number | null
-    name: string | null
-    isMain: boolean
+    characterId: number
+    name: string
     createdAt: Date
-    updatedAt: Date
   }, ExtArgs["result"]["storyCharacter"]>
   composites: {}
 }
@@ -1146,7 +1066,7 @@ readonly fields: StoryCharacterFieldRefs;
 export interface Prisma__StoryCharacterClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   story<T extends Prisma.StoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoryDefaultArgs<ExtArgs>>): Prisma.Prisma__StoryClient<runtime.Types.Result.GetResult<Prisma.$StoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  character<T extends Prisma.StoryCharacter$characterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoryCharacter$characterArgs<ExtArgs>>): Prisma.Prisma__CharacterClient<runtime.Types.Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  character<T extends Prisma.CharacterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CharacterDefaultArgs<ExtArgs>>): Prisma.Prisma__CharacterClient<runtime.Types.Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1180,9 +1100,7 @@ export interface StoryCharacterFieldRefs {
   readonly storyId: Prisma.FieldRef<"StoryCharacter", 'Int'>
   readonly characterId: Prisma.FieldRef<"StoryCharacter", 'Int'>
   readonly name: Prisma.FieldRef<"StoryCharacter", 'String'>
-  readonly isMain: Prisma.FieldRef<"StoryCharacter", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"StoryCharacter", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"StoryCharacter", 'DateTime'>
 }
     
 
@@ -1576,25 +1494,6 @@ export type StoryCharacterDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many StoryCharacters to delete.
    */
   limit?: number
-}
-
-/**
- * StoryCharacter.character
- */
-export type StoryCharacter$characterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Character
-   */
-  select?: Prisma.CharacterSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Character
-   */
-  omit?: Prisma.CharacterOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CharacterInclude<ExtArgs> | null
-  where?: Prisma.CharacterWhereInput
 }
 
 /**

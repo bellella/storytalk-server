@@ -1,8 +1,7 @@
-
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
-  moduleFormat = "cjs" 
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
@@ -24,17 +23,15 @@ model User {
   email        String
   provider     AuthProvider
   providerId   String
-
-  @@unique([email, provider])
   profileImage String?
   level        Int          @default(1)
   exp          Int          @default(0)
   streakDays   Int          @default(0)
   lastLoginAt  DateTime     @default(now())
-  registeredAt   DateTime?     
+  registeredAt DateTime?
   createdAt    DateTime     @default(now())
 
-  isNew        Boolean      @default(true)
+  isNew Boolean @default(true)
 
   storyProgress     StoryProgress[]
   userEpisodes      UserEpisode[]
@@ -45,6 +42,8 @@ model User {
   characterMessages CharacterMessage[]
   sentMessages      Message[]          @relation("SentMessages")
   receivedMessages  Message[]          @relation("ReceivedMessages")
+
+  @@unique([email, provider])
 }
 
 //////////////////////////////////////////////////////
@@ -64,9 +63,9 @@ model Story {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  episodes   Episode[]
-  characters StoryCharacter[]
-  progress   StoryProgress[]
+  episodes        Episode[]
+  storyCharacters StoryCharacter[]
+  progress        StoryProgress[]
 }
 
 model Episode {
@@ -252,8 +251,15 @@ model UserEpisode {
 // CHARACTER SYSTEM
 //////////////////////////////////////////////////////
 
+enum CharacterScope {
+  GLOBAL
+  STORY
+}
+
 model Character {
-  id          Int      @id @default(autoincrement())
+  id   Int            @id @default(autoincrement())
+  scope CharacterScope @default(GLOBAL)
+
   name        String
   koreanName  String?
   avatarImage String?
@@ -266,9 +272,22 @@ model Character {
 
   images     CharacterImage[]
   dialogues  dialogue[]
-  storyLinks StoryCharacter[]
   friends    CharacterFriend[]
   messages   CharacterMessage[]
+  storyLinks StoryCharacter[]
+}
+
+model StoryCharacter {
+  id          Int      @id @default(autoincrement())
+  storyId     Int
+  characterId Int
+  name        String
+  createdAt   DateTime @default(now())
+
+  story     Story     @relation(fields: [storyId], references: [id])
+  character Character @relation(fields: [characterId], references: [id])
+
+  @@unique([storyId, characterId])
 }
 
 model CharacterImage {
@@ -281,21 +300,6 @@ model CharacterImage {
   updatedAt   DateTime @updatedAt
 
   character Character @relation(fields: [characterId], references: [id])
-}
-
-model StoryCharacter {
-  id          Int      @id @default(autoincrement())
-  storyId     Int
-  characterId Int?
-  name        String?
-  isMain      Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  story     Story      @relation(fields: [storyId], references: [id])
-  character Character? @relation(fields: [characterId], references: [id])
-
-  @@unique([storyId, characterId])
 }
 
 //////////////////////////////////////////////////////

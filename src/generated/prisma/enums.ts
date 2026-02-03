@@ -45,6 +45,14 @@ export const EpisodeStage = {
 export type EpisodeStage = (typeof EpisodeStage)[keyof typeof EpisodeStage]
 
 
+export const CharacterScope = {
+  GLOBAL: 'GLOBAL',
+  STORY: 'STORY'
+} as const
+
+export type CharacterScope = (typeof CharacterScope)[keyof typeof CharacterScope]
+
+
 export const RewardType = {
   EXP: 'EXP',
   CHARACTER_UNLOCK: 'CHARACTER_UNLOCK',

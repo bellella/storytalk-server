@@ -38,7 +38,7 @@ export class StoryService {
             // duration 등 추가 필드 필요 시 여기서 select
           },
         },
-        characters: {
+        storyCharacters: {
           include: {
             character: {
               select: {
@@ -101,7 +101,7 @@ export class StoryService {
         duration: '5 min', // TODO: Episode 모델에 duration 필드 추가
         userEpisode: userEpisodeMap[ep.id] ?? null, // 유저 진행 상태 포함
       })),
-      characters: story.characters.map((sc) => ({
+      characters: story.storyCharacters.map((sc) => ({
         id: sc.character?.id!,
         name: sc.character?.name!,
         description: sc.character?.description!,
@@ -176,7 +176,7 @@ export class StoryService {
         },
         story: {
           include: {
-            characters: {
+            storyCharacters: {
               include: {
                 character: {
                   include: {
@@ -196,7 +196,7 @@ export class StoryService {
 
     // StoryCharacter에 걸려있는 모든 CharacterImage 수집
     const characterImagesMap = new Map<number, CharacterImageDto[]>();
-    episode.story.characters.forEach((storyChar) => {
+    episode.story.storyCharacters.forEach((storyChar) => {
       if (storyChar.character) {
         const images = storyChar.character.images.map(
           (img): CharacterImageDto => ({
@@ -239,7 +239,8 @@ export class StoryService {
           order: dialogue.order,
           type: dialogue.type,
           characterId: dialogue.characterId ?? undefined,
-          characterName: dialogue.characterName ?? undefined,
+          characterName:
+            dialogue.character?.name ?? dialogue.characterName ?? undefined,
           englishText: dialogue.englishText,
           koreanText: dialogue.koreanText,
           charImageLabel: dialogue.charImageLabel ?? undefined,

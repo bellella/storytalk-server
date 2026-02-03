@@ -78,15 +78,15 @@ export type UserEpisode = Prisma.UserEpisodeModel
  */
 export type Character = Prisma.CharacterModel
 /**
- * Model CharacterImage
- * 
- */
-export type CharacterImage = Prisma.CharacterImageModel
-/**
  * Model StoryCharacter
  * 
  */
 export type StoryCharacter = Prisma.StoryCharacterModel
+/**
+ * Model CharacterImage
+ * 
+ */
+export type CharacterImage = Prisma.CharacterImageModel
 /**
  * Model CharacterFriend
  * 

@@ -348,6 +348,23 @@ export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
   _max?: Prisma.NestedJsonNullableFilter<$PrismaModel>
 }
 
+export type EnumCharacterScopeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CharacterScope | Prisma.EnumCharacterScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.CharacterScope[] | Prisma.ListEnumCharacterScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CharacterScope[] | Prisma.ListEnumCharacterScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCharacterScopeFilter<$PrismaModel> | $Enums.CharacterScope
+}
+
+export type EnumCharacterScopeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CharacterScope | Prisma.EnumCharacterScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.CharacterScope[] | Prisma.ListEnumCharacterScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CharacterScope[] | Prisma.ListEnumCharacterScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCharacterScopeWithAggregatesFilter<$PrismaModel> | $Enums.CharacterScope
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCharacterScopeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCharacterScopeFilter<$PrismaModel>
+}
+
 export type EnumRewardTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.RewardType | Prisma.EnumRewardTypeFieldRefInput<$PrismaModel>
   in?: $Enums.RewardType[] | Prisma.ListEnumRewardTypeFieldRefInput<$PrismaModel>
@@ -723,6 +740,23 @@ export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   gte?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
+}
+
+export type NestedEnumCharacterScopeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CharacterScope | Prisma.EnumCharacterScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.CharacterScope[] | Prisma.ListEnumCharacterScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CharacterScope[] | Prisma.ListEnumCharacterScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCharacterScopeFilter<$PrismaModel> | $Enums.CharacterScope
+}
+
+export type NestedEnumCharacterScopeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CharacterScope | Prisma.EnumCharacterScopeFieldRefInput<$PrismaModel>
+  in?: $Enums.CharacterScope[] | Prisma.ListEnumCharacterScopeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CharacterScope[] | Prisma.ListEnumCharacterScopeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCharacterScopeWithAggregatesFilter<$PrismaModel> | $Enums.CharacterScope
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCharacterScopeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCharacterScopeFilter<$PrismaModel>
 }
 
 export type NestedEnumRewardTypeFilter<$PrismaModel = never> = {

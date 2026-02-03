@@ -63,8 +63,8 @@ export const ModelName = {
   UserQuizAnswer: 'UserQuizAnswer',
   UserEpisode: 'UserEpisode',
   Character: 'Character',
-  CharacterImage: 'CharacterImage',
   StoryCharacter: 'StoryCharacter',
+  CharacterImage: 'CharacterImage',
   CharacterFriend: 'CharacterFriend',
   CharacterMessage: 'CharacterMessage',
   dialogueBookmark: 'dialogueBookmark',
@@ -258,6 +258,7 @@ export type UserEpisodeScalarFieldEnum = (typeof UserEpisodeScalarFieldEnum)[key
 
 export const CharacterScalarFieldEnum = {
   id: 'id',
+  scope: 'scope',
   name: 'name',
   koreanName: 'koreanName',
   avatarImage: 'avatarImage',
@@ -272,6 +273,17 @@ export const CharacterScalarFieldEnum = {
 export type CharacterScalarFieldEnum = (typeof CharacterScalarFieldEnum)[keyof typeof CharacterScalarFieldEnum]
 
 
+export const StoryCharacterScalarFieldEnum = {
+  id: 'id',
+  storyId: 'storyId',
+  characterId: 'characterId',
+  name: 'name',
+  createdAt: 'createdAt'
+} as const
+
+export type StoryCharacterScalarFieldEnum = (typeof StoryCharacterScalarFieldEnum)[keyof typeof StoryCharacterScalarFieldEnum]
+
+
 export const CharacterImageScalarFieldEnum = {
   id: 'id',
   characterId: 'characterId',
@@ -283,19 +295,6 @@ export const CharacterImageScalarFieldEnum = {
 } as const
 
 export type CharacterImageScalarFieldEnum = (typeof CharacterImageScalarFieldEnum)[keyof typeof CharacterImageScalarFieldEnum]
-
-
-export const StoryCharacterScalarFieldEnum = {
-  id: 'id',
-  storyId: 'storyId',
-  characterId: 'characterId',
-  name: 'name',
-  isMain: 'isMain',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type StoryCharacterScalarFieldEnum = (typeof StoryCharacterScalarFieldEnum)[keyof typeof StoryCharacterScalarFieldEnum]
 
 
 export const CharacterFriendScalarFieldEnum = {
