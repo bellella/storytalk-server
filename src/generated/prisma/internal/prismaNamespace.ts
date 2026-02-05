@@ -2286,6 +2286,7 @@ export const QuizScalarFieldEnum = {
   answerIndex: 'answerIndex',
   description: 'description',
   order: 'order',
+  data: 'data',
   isActive: 'isActive'
 } as const
 
@@ -2639,20 +2640,6 @@ export type ListEnumQuizTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
- * Reference to a field of type 'EpisodeStage'
- */
-export type EnumEpisodeStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EpisodeStage'>
-    
-
-
-/**
- * Reference to a field of type 'EpisodeStage[]'
- */
-export type ListEnumEpisodeStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EpisodeStage[]'>
-    
-
-
-/**
  * Reference to a field of type 'Json'
  */
 export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -2663,6 +2650,20 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'EpisodeStage'
+ */
+export type EnumEpisodeStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EpisodeStage'>
+    
+
+
+/**
+ * Reference to a field of type 'EpisodeStage[]'
+ */
+export type ListEnumEpisodeStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EpisodeStage[]'>
     
 
 

@@ -76,6 +76,7 @@ export type QuizCountAggregateOutputType = {
   answerIndex: number
   description: number
   order: number
+  data: number
   isActive: number
   _all: number
 }
@@ -131,6 +132,7 @@ export type QuizCountAggregateInputType = {
   answerIndex?: true
   description?: true
   order?: true
+  data?: true
   isActive?: true
   _all?: true
 }
@@ -228,9 +230,10 @@ export type QuizGroupByOutputType = {
   type: $Enums.QuizType
   questionEnglish: string
   questionKorean: string | null
-  answerIndex: number
+  answerIndex: number | null
   description: string | null
   order: number | null
+  data: runtime.JsonValue | null
   isActive: boolean
   _count: QuizCountAggregateOutputType | null
   _avg: QuizAvgAggregateOutputType | null
@@ -264,9 +267,10 @@ export type QuizWhereInput = {
   type?: Prisma.EnumQuizTypeFilter<"Quiz"> | $Enums.QuizType
   questionEnglish?: Prisma.StringFilter<"Quiz"> | string
   questionKorean?: Prisma.StringNullableFilter<"Quiz"> | string | null
-  answerIndex?: Prisma.IntFilter<"Quiz"> | number
+  answerIndex?: Prisma.IntNullableFilter<"Quiz"> | number | null
   description?: Prisma.StringNullableFilter<"Quiz"> | string | null
   order?: Prisma.IntNullableFilter<"Quiz"> | number | null
+  data?: Prisma.JsonNullableFilter<"Quiz">
   isActive?: Prisma.BoolFilter<"Quiz"> | boolean
   options?: Prisma.QuizOptionListRelationFilter
   userQuizAnswers?: Prisma.UserQuizAnswerListRelationFilter
@@ -279,9 +283,10 @@ export type QuizOrderByWithRelationInput = {
   type?: Prisma.SortOrder
   questionEnglish?: Prisma.SortOrder
   questionKorean?: Prisma.SortOrderInput | Prisma.SortOrder
-  answerIndex?: Prisma.SortOrder
+  answerIndex?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrderInput | Prisma.SortOrder
+  data?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   options?: Prisma.QuizOptionOrderByRelationAggregateInput
   userQuizAnswers?: Prisma.UserQuizAnswerOrderByRelationAggregateInput
@@ -297,9 +302,10 @@ export type QuizWhereUniqueInput = Prisma.AtLeast<{
   type?: Prisma.EnumQuizTypeFilter<"Quiz"> | $Enums.QuizType
   questionEnglish?: Prisma.StringFilter<"Quiz"> | string
   questionKorean?: Prisma.StringNullableFilter<"Quiz"> | string | null
-  answerIndex?: Prisma.IntFilter<"Quiz"> | number
+  answerIndex?: Prisma.IntNullableFilter<"Quiz"> | number | null
   description?: Prisma.StringNullableFilter<"Quiz"> | string | null
   order?: Prisma.IntNullableFilter<"Quiz"> | number | null
+  data?: Prisma.JsonNullableFilter<"Quiz">
   isActive?: Prisma.BoolFilter<"Quiz"> | boolean
   options?: Prisma.QuizOptionListRelationFilter
   userQuizAnswers?: Prisma.UserQuizAnswerListRelationFilter
@@ -312,9 +318,10 @@ export type QuizOrderByWithAggregationInput = {
   type?: Prisma.SortOrder
   questionEnglish?: Prisma.SortOrder
   questionKorean?: Prisma.SortOrderInput | Prisma.SortOrder
-  answerIndex?: Prisma.SortOrder
+  answerIndex?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrderInput | Prisma.SortOrder
+  data?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   _count?: Prisma.QuizCountOrderByAggregateInput
   _avg?: Prisma.QuizAvgOrderByAggregateInput
@@ -333,9 +340,10 @@ export type QuizScalarWhereWithAggregatesInput = {
   type?: Prisma.EnumQuizTypeWithAggregatesFilter<"Quiz"> | $Enums.QuizType
   questionEnglish?: Prisma.StringWithAggregatesFilter<"Quiz"> | string
   questionKorean?: Prisma.StringNullableWithAggregatesFilter<"Quiz"> | string | null
-  answerIndex?: Prisma.IntWithAggregatesFilter<"Quiz"> | number
+  answerIndex?: Prisma.IntNullableWithAggregatesFilter<"Quiz"> | number | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Quiz"> | string | null
   order?: Prisma.IntNullableWithAggregatesFilter<"Quiz"> | number | null
+  data?: Prisma.JsonNullableWithAggregatesFilter<"Quiz">
   isActive?: Prisma.BoolWithAggregatesFilter<"Quiz"> | boolean
 }
 
@@ -345,9 +353,10 @@ export type QuizCreateInput = {
   type: $Enums.QuizType
   questionEnglish: string
   questionKorean?: string | null
-  answerIndex: number
+  answerIndex?: number | null
   description?: string | null
   order?: number | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   options?: Prisma.QuizOptionCreateNestedManyWithoutQuizInput
   userQuizAnswers?: Prisma.UserQuizAnswerCreateNestedManyWithoutQuizInput
@@ -360,9 +369,10 @@ export type QuizUncheckedCreateInput = {
   type: $Enums.QuizType
   questionEnglish: string
   questionKorean?: string | null
-  answerIndex: number
+  answerIndex?: number | null
   description?: string | null
   order?: number | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   options?: Prisma.QuizOptionUncheckedCreateNestedManyWithoutQuizInput
   userQuizAnswers?: Prisma.UserQuizAnswerUncheckedCreateNestedManyWithoutQuizInput
@@ -374,9 +384,10 @@ export type QuizUpdateInput = {
   type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
   questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
   questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   options?: Prisma.QuizOptionUpdateManyWithoutQuizNestedInput
   userQuizAnswers?: Prisma.UserQuizAnswerUpdateManyWithoutQuizNestedInput
@@ -389,9 +400,10 @@ export type QuizUncheckedUpdateInput = {
   type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
   questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
   questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   options?: Prisma.QuizOptionUncheckedUpdateManyWithoutQuizNestedInput
   userQuizAnswers?: Prisma.UserQuizAnswerUncheckedUpdateManyWithoutQuizNestedInput
@@ -404,9 +416,10 @@ export type QuizCreateManyInput = {
   type: $Enums.QuizType
   questionEnglish: string
   questionKorean?: string | null
-  answerIndex: number
+  answerIndex?: number | null
   description?: string | null
   order?: number | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
 }
 
@@ -416,9 +429,10 @@ export type QuizUpdateManyMutationInput = {
   type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
   questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
   questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -429,9 +443,10 @@ export type QuizUncheckedUpdateManyInput = {
   type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
   questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
   questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -445,6 +460,7 @@ export type QuizCountOrderByAggregateInput = {
   answerIndex?: Prisma.SortOrder
   description?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  data?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
 }
 
@@ -535,9 +551,10 @@ export type QuizCreateWithoutOptionsInput = {
   type: $Enums.QuizType
   questionEnglish: string
   questionKorean?: string | null
-  answerIndex: number
+  answerIndex?: number | null
   description?: string | null
   order?: number | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   userQuizAnswers?: Prisma.UserQuizAnswerCreateNestedManyWithoutQuizInput
 }
@@ -549,9 +566,10 @@ export type QuizUncheckedCreateWithoutOptionsInput = {
   type: $Enums.QuizType
   questionEnglish: string
   questionKorean?: string | null
-  answerIndex: number
+  answerIndex?: number | null
   description?: string | null
   order?: number | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   userQuizAnswers?: Prisma.UserQuizAnswerUncheckedCreateNestedManyWithoutQuizInput
 }
@@ -578,9 +596,10 @@ export type QuizUpdateWithoutOptionsInput = {
   type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
   questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
   questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userQuizAnswers?: Prisma.UserQuizAnswerUpdateManyWithoutQuizNestedInput
 }
@@ -592,9 +611,10 @@ export type QuizUncheckedUpdateWithoutOptionsInput = {
   type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
   questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
   questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userQuizAnswers?: Prisma.UserQuizAnswerUncheckedUpdateManyWithoutQuizNestedInput
 }
@@ -605,9 +625,10 @@ export type QuizCreateWithoutUserQuizAnswersInput = {
   type: $Enums.QuizType
   questionEnglish: string
   questionKorean?: string | null
-  answerIndex: number
+  answerIndex?: number | null
   description?: string | null
   order?: number | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   options?: Prisma.QuizOptionCreateNestedManyWithoutQuizInput
 }
@@ -619,9 +640,10 @@ export type QuizUncheckedCreateWithoutUserQuizAnswersInput = {
   type: $Enums.QuizType
   questionEnglish: string
   questionKorean?: string | null
-  answerIndex: number
+  answerIndex?: number | null
   description?: string | null
   order?: number | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   options?: Prisma.QuizOptionUncheckedCreateNestedManyWithoutQuizInput
 }
@@ -648,9 +670,10 @@ export type QuizUpdateWithoutUserQuizAnswersInput = {
   type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
   questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
   questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   options?: Prisma.QuizOptionUpdateManyWithoutQuizNestedInput
 }
@@ -662,9 +685,10 @@ export type QuizUncheckedUpdateWithoutUserQuizAnswersInput = {
   type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
   questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
   questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   options?: Prisma.QuizOptionUncheckedUpdateManyWithoutQuizNestedInput
 }
@@ -719,6 +743,7 @@ export type QuizSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   answerIndex?: boolean
   description?: boolean
   order?: boolean
+  data?: boolean
   isActive?: boolean
   options?: boolean | Prisma.Quiz$optionsArgs<ExtArgs>
   userQuizAnswers?: boolean | Prisma.Quiz$userQuizAnswersArgs<ExtArgs>
@@ -735,6 +760,7 @@ export type QuizSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   answerIndex?: boolean
   description?: boolean
   order?: boolean
+  data?: boolean
   isActive?: boolean
 }, ExtArgs["result"]["quiz"]>
 
@@ -748,6 +774,7 @@ export type QuizSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   answerIndex?: boolean
   description?: boolean
   order?: boolean
+  data?: boolean
   isActive?: boolean
 }, ExtArgs["result"]["quiz"]>
 
@@ -761,10 +788,11 @@ export type QuizSelectScalar = {
   answerIndex?: boolean
   description?: boolean
   order?: boolean
+  data?: boolean
   isActive?: boolean
 }
 
-export type QuizOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sourceType" | "sourceId" | "type" | "questionEnglish" | "questionKorean" | "answerIndex" | "description" | "order" | "isActive", ExtArgs["result"]["quiz"]>
+export type QuizOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sourceType" | "sourceId" | "type" | "questionEnglish" | "questionKorean" | "answerIndex" | "description" | "order" | "data" | "isActive", ExtArgs["result"]["quiz"]>
 export type QuizInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   options?: boolean | Prisma.Quiz$optionsArgs<ExtArgs>
   userQuizAnswers?: boolean | Prisma.Quiz$userQuizAnswersArgs<ExtArgs>
@@ -786,9 +814,10 @@ export type $QuizPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     type: $Enums.QuizType
     questionEnglish: string
     questionKorean: string | null
-    answerIndex: number
+    answerIndex: number | null
     description: string | null
     order: number | null
+    data: runtime.JsonValue | null
     isActive: boolean
   }, ExtArgs["result"]["quiz"]>
   composites: {}
@@ -1224,6 +1253,7 @@ export interface QuizFieldRefs {
   readonly answerIndex: Prisma.FieldRef<"Quiz", 'Int'>
   readonly description: Prisma.FieldRef<"Quiz", 'String'>
   readonly order: Prisma.FieldRef<"Quiz", 'Int'>
+  readonly data: Prisma.FieldRef<"Quiz", 'Json'>
   readonly isActive: Prisma.FieldRef<"Quiz", 'Boolean'>
 }
     

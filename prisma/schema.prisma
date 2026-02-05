@@ -162,6 +162,8 @@ enum QuizType {
   STORY_COMPREHENSION
   NEXT_DIALOGUE_PREDICTION
   GRAMMAR
+  SENTENCE_BUILD          // 단어 카드로 문장 전체 조립
+  SENTENCE_CLOZE_BUILD    // 문장 중간 빈칸 채우기
 }
 
 enum QuizSourceType {
@@ -177,9 +179,11 @@ model Quiz {
 
   questionEnglish String
   questionKorean  String?
-  answerIndex     Int
+  answerIndex     Int?
   description     String?
   order           Int?
+
+  data            Json?
 
   isActive Boolean @default(true)
 

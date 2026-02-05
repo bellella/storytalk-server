@@ -260,33 +260,6 @@ export type EnumQuizTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumQuizTypeFilter<$PrismaModel> | $Enums.QuizType
 }
 
-export type EnumQuizSourceTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.QuizSourceType | Prisma.EnumQuizSourceTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.QuizSourceType[] | Prisma.ListEnumQuizSourceTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.QuizSourceType[] | Prisma.ListEnumQuizSourceTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumQuizSourceTypeWithAggregatesFilter<$PrismaModel> | $Enums.QuizSourceType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumQuizSourceTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumQuizSourceTypeFilter<$PrismaModel>
-}
-
-export type EnumQuizTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.QuizType | Prisma.EnumQuizTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.QuizType[] | Prisma.ListEnumQuizTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.QuizType[] | Prisma.ListEnumQuizTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumQuizTypeWithAggregatesFilter<$PrismaModel> | $Enums.QuizType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumQuizTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumQuizTypeFilter<$PrismaModel>
-}
-
-export type EnumEpisodeStageFilter<$PrismaModel = never> = {
-  equals?: $Enums.EpisodeStage | Prisma.EnumEpisodeStageFieldRefInput<$PrismaModel>
-  in?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
-  notIn?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumEpisodeStageFilter<$PrismaModel> | $Enums.EpisodeStage
-}
-
 export type JsonNullableFilter<$PrismaModel = never> =
 | Prisma.PatchUndefined<
     Prisma.Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
@@ -311,14 +284,24 @@ export type JsonNullableFilterBase<$PrismaModel = never> = {
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
 }
 
-export type EnumEpisodeStageWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.EpisodeStage | Prisma.EnumEpisodeStageFieldRefInput<$PrismaModel>
-  in?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
-  notIn?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumEpisodeStageWithAggregatesFilter<$PrismaModel> | $Enums.EpisodeStage
+export type EnumQuizSourceTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuizSourceType | Prisma.EnumQuizSourceTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.QuizSourceType[] | Prisma.ListEnumQuizSourceTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuizSourceType[] | Prisma.ListEnumQuizSourceTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuizSourceTypeWithAggregatesFilter<$PrismaModel> | $Enums.QuizSourceType
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumEpisodeStageFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumEpisodeStageFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuizSourceTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuizSourceTypeFilter<$PrismaModel>
+}
+
+export type EnumQuizTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuizType | Prisma.EnumQuizTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.QuizType[] | Prisma.ListEnumQuizTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuizType[] | Prisma.ListEnumQuizTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuizTypeWithAggregatesFilter<$PrismaModel> | $Enums.QuizType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuizTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuizTypeFilter<$PrismaModel>
 }
 
 export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
@@ -346,6 +329,23 @@ export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedJsonNullableFilter<$PrismaModel>
   _max?: Prisma.NestedJsonNullableFilter<$PrismaModel>
+}
+
+export type EnumEpisodeStageFilter<$PrismaModel = never> = {
+  equals?: $Enums.EpisodeStage | Prisma.EnumEpisodeStageFieldRefInput<$PrismaModel>
+  in?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEpisodeStageFilter<$PrismaModel> | $Enums.EpisodeStage
+}
+
+export type EnumEpisodeStageWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EpisodeStage | Prisma.EnumEpisodeStageFieldRefInput<$PrismaModel>
+  in?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEpisodeStageWithAggregatesFilter<$PrismaModel> | $Enums.EpisodeStage
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEpisodeStageFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEpisodeStageFilter<$PrismaModel>
 }
 
 export type EnumCharacterScopeFilter<$PrismaModel = never> = {
@@ -701,23 +701,6 @@ export type NestedEnumQuizTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumQuizTypeFilter<$PrismaModel>
 }
 
-export type NestedEnumEpisodeStageFilter<$PrismaModel = never> = {
-  equals?: $Enums.EpisodeStage | Prisma.EnumEpisodeStageFieldRefInput<$PrismaModel>
-  in?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
-  notIn?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumEpisodeStageFilter<$PrismaModel> | $Enums.EpisodeStage
-}
-
-export type NestedEnumEpisodeStageWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.EpisodeStage | Prisma.EnumEpisodeStageFieldRefInput<$PrismaModel>
-  in?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
-  notIn?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumEpisodeStageWithAggregatesFilter<$PrismaModel> | $Enums.EpisodeStage
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumEpisodeStageFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumEpisodeStageFilter<$PrismaModel>
-}
-
 export type NestedJsonNullableFilter<$PrismaModel = never> =
 | Prisma.PatchUndefined<
     Prisma.Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
@@ -740,6 +723,23 @@ export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   gte?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
+}
+
+export type NestedEnumEpisodeStageFilter<$PrismaModel = never> = {
+  equals?: $Enums.EpisodeStage | Prisma.EnumEpisodeStageFieldRefInput<$PrismaModel>
+  in?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEpisodeStageFilter<$PrismaModel> | $Enums.EpisodeStage
+}
+
+export type NestedEnumEpisodeStageWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EpisodeStage | Prisma.EnumEpisodeStageFieldRefInput<$PrismaModel>
+  in?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EpisodeStage[] | Prisma.ListEnumEpisodeStageFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEpisodeStageWithAggregatesFilter<$PrismaModel> | $Enums.EpisodeStage
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEpisodeStageFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEpisodeStageFilter<$PrismaModel>
 }
 
 export type NestedEnumCharacterScopeFilter<$PrismaModel = never> = {

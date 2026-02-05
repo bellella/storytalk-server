@@ -248,6 +248,7 @@ export class StoryService {
           audioUrl: dialogue.audioUrl ?? undefined,
         };
       });
+      console.log(scene, 'scenes');
 
       return {
         id: scene.id,
@@ -363,18 +364,12 @@ export class StoryService {
       type: quiz.type,
       questionEnglish: quiz.questionEnglish,
       questionKorean: quiz.questionKorean ?? undefined,
-      answerIndex: quiz.answerIndex,
+      answerIndex: quiz.answerIndex ?? undefined,
       description: quiz.description ?? undefined,
       order: quiz.order ?? undefined,
+      data: (quiz.data as Record<string, any>) ?? undefined,
       isActive: quiz.isActive,
-      options: quiz.options.map(
-        (option): QuizOptionDto => ({
-          id: option.id,
-          quizId: option.quizId,
-          text: option.text,
-          order: option.order,
-        })
-      ),
+      options: quiz.options,
     }));
   }
 }

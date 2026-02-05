@@ -211,6 +211,7 @@ export const QuizScalarFieldEnum = {
   answerIndex: 'answerIndex',
   description: 'description',
   order: 'order',
+  data: 'data',
   isActive: 'isActive'
 } as const
 
