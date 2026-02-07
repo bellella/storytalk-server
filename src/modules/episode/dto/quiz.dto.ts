@@ -29,5 +29,4 @@ export class QuizDto {
 
   order?: number;
   isActive: boolean;
-  options: QuizOptionDto[];
 }

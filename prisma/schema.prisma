@@ -8,6 +8,15 @@ datasource db {
   provider = "postgresql"
 }
 
+// GLOBAL
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+  HIDDEN
+  ARCHIVED
+  DELETED
+}
+
 //////////////////////////////////////////////////////
 // USER
 //////////////////////////////////////////////////////
@@ -36,12 +45,8 @@ model User {
   storyProgress     StoryProgress[]
   userEpisodes      UserEpisode[]
   dialogueBookmarks dialogueBookmark[]
-  masteryProgress   MasteryProgress[]
-  savedExpressions  SavedExpression[]
   characterFriends  CharacterFriend[]
   characterMessages CharacterMessage[]
-  sentMessages      Message[]          @relation("SentMessages")
-  receivedMessages  Message[]          @relation("ReceivedMessages")
 
   @@unique([email, provider])
 }
@@ -51,34 +56,47 @@ model User {
 //////////////////////////////////////////////////////
 
 model Story {
-  id          Int      @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   title       String
   koreanTitle String?
   category    String
   icon        String
-  difficulty  Int      @default(1)
+  difficulty  Int           @default(1)
   description String?
   coverImage  String?
-  isPublished Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  status      PublishStatus @default(DRAFT)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   episodes        Episode[]
   storyCharacters StoryCharacter[]
   progress        StoryProgress[]
+  units           Unit[]
+}
+
+model Unit {
+  id        Int           @id @default(autoincrement())
+  storyId   Int
+  order     Int
+  color     String?
+  status    PublishStatus @default(DRAFT)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  story Story @relation(fields: [storyId], references: [id], onDelete: SetNull)
 }
 
 model Episode {
-  id                Int      @id @default(autoincrement())
+  id                Int           @id @default(autoincrement())
   storyId           Int
   title             String
-  KoreanTitle       String?
+  koreanTitle       String?
   order             Int
   description       String?
   koreanDescription String?
-  isPublished       Boolean  @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  status            PublishStatus @default(DRAFT)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
 
   story        Story           @relation(fields: [storyId], references: [id])
   scenes       Scene[]
@@ -158,12 +176,8 @@ model ReviewItem {
 }
 
 enum QuizType {
-  INTERPRETATION
-  STORY_COMPREHENSION
-  NEXT_DIALOGUE_PREDICTION
-  GRAMMAR
-  SENTENCE_BUILD          // 단어 카드로 문장 전체 조립
-  SENTENCE_CLOZE_BUILD    // 문장 중간 빈칸 채우기
+  SENTENCE_BUILD // 단어 카드로 문장 전체 조립
+  SENTENCE_CLOZE_BUILD // 문장 중간 빈칸 채우기
 }
 
 enum QuizSourceType {
@@ -179,43 +193,31 @@ model Quiz {
 
   questionEnglish String
   questionKorean  String?
-  answerIndex     Int?
   description     String?
   order           Int?
 
-  data            Json?
+  data Json?
 
-  isActive Boolean @default(true)
-
-  options         QuizOption[]
+  isActive        Boolean          @default(true)
   userQuizAnswers UserQuizAnswer[]
 
   @@index([sourceType, sourceId])
 }
 
-model QuizOption {
-  id     Int    @id @default(autoincrement())
-  quizId Int
-  text   String
-  order  Int
-
-  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
-
-  @@index([quizId])
-}
-
 model UserQuizAnswer {
-  id            Int      @id @default(autoincrement())
-  userId        Int
-  quizId        Int
-  attemptCount  Int
-  selectedIndex Int
-  isCorrect     Boolean
-  createdAt     DateTime @default(now())
+  id     Int @id @default(autoincrement())
+  userId Int
+  quizId Int
+
+  isCorrect Boolean? // 정답/오답 개념이 있으면(선택)
+
+  // 핵심: 타입별 제출값(텍스트/음성평가 결과 등)
+  payload Json
+
+  createdAt DateTime @default(now())
 
   quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, quizId, attemptCount])
   @@index([userId])
   @@index([quizId])
   @@index([userId, quizId])
@@ -261,7 +263,7 @@ enum CharacterScope {
 }
 
 model Character {
-  id   Int            @id @default(autoincrement())
+  id    Int            @id @default(autoincrement())
   scope CharacterScope @default(GLOBAL)
 
   name        String
@@ -271,8 +273,9 @@ model Character {
   description String
   personality String?
   aiPrompt    String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  status      PublishStatus @default(DRAFT)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   images     CharacterImage[]
   dialogues  dialogue[]
@@ -311,14 +314,12 @@ model CharacterImage {
 //////////////////////////////////////////////////////
 
 model CharacterFriend {
-  id          Int       @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   userId      Int
   characterId Int
-  affinity    Int       @default(0)
-  isUnlocked  Boolean   @default(false)
-  unlockedAt  DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  affinity    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   user      User      @relation(fields: [userId], references: [id])
   character Character @relation(fields: [characterId], references: [id])
@@ -380,73 +381,4 @@ enum RewardType {
   EXP
   CHARACTER_UNLOCK
   ITEM
-}
-
-//////////////////////////////////////////////////////
-// MASTERY SYSTEM (REVIEW / SRS)
-//////////////////////////////////////////////////////
-
-model MasteryLevel {
-  id    Int    @id @default(autoincrement())
-  title String
-  color String
-
-  expressions Expression[]
-  progress    MasteryProgress[]
-}
-
-model Expression {
-  id             Int     @id @default(autoincrement())
-  masteryLevelId Int
-  english        String
-  korean         String
-  detail         String?
-
-  level   MasteryLevel      @relation(fields: [masteryLevelId], references: [id])
-  savedBy SavedExpression[]
-}
-
-model MasteryProgress {
-  id             Int      @id @default(autoincrement())
-  userId         Int
-  masteryLevelId Int
-  progressPct    Int      @default(0)
-  lastReviewedAt DateTime @default(now())
-  nextReviewAt   DateTime
-
-  user  User         @relation(fields: [userId], references: [id])
-  level MasteryLevel @relation(fields: [masteryLevelId], references: [id])
-
-  @@unique([userId, masteryLevelId])
-}
-
-model SavedExpression {
-  id           Int      @id @default(autoincrement())
-  userId       Int
-  expressionId Int
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  user       User       @relation(fields: [userId], references: [id])
-  expression Expression @relation(fields: [expressionId], references: [id])
-
-  @@unique([userId, expressionId])
-}
-
-//////////////////////////////////////////////////////
-// USER ↔ USER CHAT SYSTEM
-//////////////////////////////////////////////////////
-
-model Message {
-  id        Int      @id @default(autoincrement())
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  isRead    Boolean  @default(false)
-
-  senderId   Int
-  receiverId Int
-
-  sender   User @relation("SentMessages", fields: [senderId], references: [id])
-  receiver User @relation("ReceivedMessages", fields: [receiverId], references: [id])
 }

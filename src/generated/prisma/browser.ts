@@ -28,6 +28,11 @@ export type User = Prisma.UserModel
  */
 export type Story = Prisma.StoryModel
 /**
+ * Model Unit
+ * 
+ */
+export type Unit = Prisma.UnitModel
+/**
  * Model Episode
  * 
  */
@@ -57,11 +62,6 @@ export type ReviewItem = Prisma.ReviewItemModel
  * 
  */
 export type Quiz = Prisma.QuizModel
-/**
- * Model QuizOption
- * 
- */
-export type QuizOption = Prisma.QuizOptionModel
 /**
  * Model UserQuizAnswer
  * 
@@ -107,28 +107,3 @@ export type dialogueBookmark = Prisma.dialogueBookmarkModel
  * 
  */
 export type EpisodeReward = Prisma.EpisodeRewardModel
-/**
- * Model MasteryLevel
- * 
- */
-export type MasteryLevel = Prisma.MasteryLevelModel
-/**
- * Model Expression
- * 
- */
-export type Expression = Prisma.ExpressionModel
-/**
- * Model MasteryProgress
- * 
- */
-export type MasteryProgress = Prisma.MasteryProgressModel
-/**
- * Model SavedExpression
- * 
- */
-export type SavedExpression = Prisma.SavedExpressionModel
-/**
- * Model Message
- * 
- */
-export type Message = Prisma.MessageModel

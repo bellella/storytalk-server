@@ -30,24 +30,18 @@ export type UserQuizAnswerAvgAggregateOutputType = {
   id: number | null
   userId: number | null
   quizId: number | null
-  attemptCount: number | null
-  selectedIndex: number | null
 }
 
 export type UserQuizAnswerSumAggregateOutputType = {
   id: number | null
   userId: number | null
   quizId: number | null
-  attemptCount: number | null
-  selectedIndex: number | null
 }
 
 export type UserQuizAnswerMinAggregateOutputType = {
   id: number | null
   userId: number | null
   quizId: number | null
-  attemptCount: number | null
-  selectedIndex: number | null
   isCorrect: boolean | null
   createdAt: Date | null
 }
@@ -56,8 +50,6 @@ export type UserQuizAnswerMaxAggregateOutputType = {
   id: number | null
   userId: number | null
   quizId: number | null
-  attemptCount: number | null
-  selectedIndex: number | null
   isCorrect: boolean | null
   createdAt: Date | null
 }
@@ -66,9 +58,8 @@ export type UserQuizAnswerCountAggregateOutputType = {
   id: number
   userId: number
   quizId: number
-  attemptCount: number
-  selectedIndex: number
   isCorrect: number
+  payload: number
   createdAt: number
   _all: number
 }
@@ -78,24 +69,18 @@ export type UserQuizAnswerAvgAggregateInputType = {
   id?: true
   userId?: true
   quizId?: true
-  attemptCount?: true
-  selectedIndex?: true
 }
 
 export type UserQuizAnswerSumAggregateInputType = {
   id?: true
   userId?: true
   quizId?: true
-  attemptCount?: true
-  selectedIndex?: true
 }
 
 export type UserQuizAnswerMinAggregateInputType = {
   id?: true
   userId?: true
   quizId?: true
-  attemptCount?: true
-  selectedIndex?: true
   isCorrect?: true
   createdAt?: true
 }
@@ -104,8 +89,6 @@ export type UserQuizAnswerMaxAggregateInputType = {
   id?: true
   userId?: true
   quizId?: true
-  attemptCount?: true
-  selectedIndex?: true
   isCorrect?: true
   createdAt?: true
 }
@@ -114,9 +97,8 @@ export type UserQuizAnswerCountAggregateInputType = {
   id?: true
   userId?: true
   quizId?: true
-  attemptCount?: true
-  selectedIndex?: true
   isCorrect?: true
+  payload?: true
   createdAt?: true
   _all?: true
 }
@@ -211,9 +193,8 @@ export type UserQuizAnswerGroupByOutputType = {
   id: number
   userId: number
   quizId: number
-  attemptCount: number
-  selectedIndex: number
-  isCorrect: boolean
+  isCorrect: boolean | null
+  payload: runtime.JsonValue
   createdAt: Date
   _count: UserQuizAnswerCountAggregateOutputType | null
   _avg: UserQuizAnswerAvgAggregateOutputType | null
@@ -244,9 +225,8 @@ export type UserQuizAnswerWhereInput = {
   id?: Prisma.IntFilter<"UserQuizAnswer"> | number
   userId?: Prisma.IntFilter<"UserQuizAnswer"> | number
   quizId?: Prisma.IntFilter<"UserQuizAnswer"> | number
-  attemptCount?: Prisma.IntFilter<"UserQuizAnswer"> | number
-  selectedIndex?: Prisma.IntFilter<"UserQuizAnswer"> | number
-  isCorrect?: Prisma.BoolFilter<"UserQuizAnswer"> | boolean
+  isCorrect?: Prisma.BoolNullableFilter<"UserQuizAnswer"> | boolean | null
+  payload?: Prisma.JsonFilter<"UserQuizAnswer">
   createdAt?: Prisma.DateTimeFilter<"UserQuizAnswer"> | Date | string
   quiz?: Prisma.XOR<Prisma.QuizScalarRelationFilter, Prisma.QuizWhereInput>
 }
@@ -255,35 +235,31 @@ export type UserQuizAnswerOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quizId?: Prisma.SortOrder
-  attemptCount?: Prisma.SortOrder
-  selectedIndex?: Prisma.SortOrder
-  isCorrect?: Prisma.SortOrder
+  isCorrect?: Prisma.SortOrderInput | Prisma.SortOrder
+  payload?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   quiz?: Prisma.QuizOrderByWithRelationInput
 }
 
 export type UserQuizAnswerWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  userId_quizId_attemptCount?: Prisma.UserQuizAnswerUserIdQuizIdAttemptCountCompoundUniqueInput
   AND?: Prisma.UserQuizAnswerWhereInput | Prisma.UserQuizAnswerWhereInput[]
   OR?: Prisma.UserQuizAnswerWhereInput[]
   NOT?: Prisma.UserQuizAnswerWhereInput | Prisma.UserQuizAnswerWhereInput[]
   userId?: Prisma.IntFilter<"UserQuizAnswer"> | number
   quizId?: Prisma.IntFilter<"UserQuizAnswer"> | number
-  attemptCount?: Prisma.IntFilter<"UserQuizAnswer"> | number
-  selectedIndex?: Prisma.IntFilter<"UserQuizAnswer"> | number
-  isCorrect?: Prisma.BoolFilter<"UserQuizAnswer"> | boolean
+  isCorrect?: Prisma.BoolNullableFilter<"UserQuizAnswer"> | boolean | null
+  payload?: Prisma.JsonFilter<"UserQuizAnswer">
   createdAt?: Prisma.DateTimeFilter<"UserQuizAnswer"> | Date | string
   quiz?: Prisma.XOR<Prisma.QuizScalarRelationFilter, Prisma.QuizWhereInput>
-}, "id" | "userId_quizId_attemptCount">
+}, "id">
 
 export type UserQuizAnswerOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quizId?: Prisma.SortOrder
-  attemptCount?: Prisma.SortOrder
-  selectedIndex?: Prisma.SortOrder
-  isCorrect?: Prisma.SortOrder
+  isCorrect?: Prisma.SortOrderInput | Prisma.SortOrder
+  payload?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserQuizAnswerCountOrderByAggregateInput
   _avg?: Prisma.UserQuizAnswerAvgOrderByAggregateInput
@@ -299,17 +275,15 @@ export type UserQuizAnswerScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"UserQuizAnswer"> | number
   userId?: Prisma.IntWithAggregatesFilter<"UserQuizAnswer"> | number
   quizId?: Prisma.IntWithAggregatesFilter<"UserQuizAnswer"> | number
-  attemptCount?: Prisma.IntWithAggregatesFilter<"UserQuizAnswer"> | number
-  selectedIndex?: Prisma.IntWithAggregatesFilter<"UserQuizAnswer"> | number
-  isCorrect?: Prisma.BoolWithAggregatesFilter<"UserQuizAnswer"> | boolean
+  isCorrect?: Prisma.BoolNullableWithAggregatesFilter<"UserQuizAnswer"> | boolean | null
+  payload?: Prisma.JsonWithAggregatesFilter<"UserQuizAnswer">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserQuizAnswer"> | Date | string
 }
 
 export type UserQuizAnswerCreateInput = {
   userId: number
-  attemptCount: number
-  selectedIndex: number
-  isCorrect: boolean
+  isCorrect?: boolean | null
+  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   quiz: Prisma.QuizCreateNestedOneWithoutUserQuizAnswersInput
 }
@@ -318,17 +292,15 @@ export type UserQuizAnswerUncheckedCreateInput = {
   id?: number
   userId: number
   quizId: number
-  attemptCount: number
-  selectedIndex: number
-  isCorrect: boolean
+  isCorrect?: boolean | null
+  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
 export type UserQuizAnswerUpdateInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  attemptCount?: Prisma.IntFieldUpdateOperationsInput | number
-  selectedIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quiz?: Prisma.QuizUpdateOneRequiredWithoutUserQuizAnswersNestedInput
 }
@@ -337,9 +309,8 @@ export type UserQuizAnswerUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   quizId?: Prisma.IntFieldUpdateOperationsInput | number
-  attemptCount?: Prisma.IntFieldUpdateOperationsInput | number
-  selectedIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -347,17 +318,15 @@ export type UserQuizAnswerCreateManyInput = {
   id?: number
   userId: number
   quizId: number
-  attemptCount: number
-  selectedIndex: number
-  isCorrect: boolean
+  isCorrect?: boolean | null
+  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
 export type UserQuizAnswerUpdateManyMutationInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  attemptCount?: Prisma.IntFieldUpdateOperationsInput | number
-  selectedIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -365,9 +334,8 @@ export type UserQuizAnswerUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   quizId?: Prisma.IntFieldUpdateOperationsInput | number
-  attemptCount?: Prisma.IntFieldUpdateOperationsInput | number
-  selectedIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -381,19 +349,12 @@ export type UserQuizAnswerOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type UserQuizAnswerUserIdQuizIdAttemptCountCompoundUniqueInput = {
-  userId: number
-  quizId: number
-  attemptCount: number
-}
-
 export type UserQuizAnswerCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quizId?: Prisma.SortOrder
-  attemptCount?: Prisma.SortOrder
-  selectedIndex?: Prisma.SortOrder
   isCorrect?: Prisma.SortOrder
+  payload?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -401,16 +362,12 @@ export type UserQuizAnswerAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quizId?: Prisma.SortOrder
-  attemptCount?: Prisma.SortOrder
-  selectedIndex?: Prisma.SortOrder
 }
 
 export type UserQuizAnswerMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quizId?: Prisma.SortOrder
-  attemptCount?: Prisma.SortOrder
-  selectedIndex?: Prisma.SortOrder
   isCorrect?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -419,8 +376,6 @@ export type UserQuizAnswerMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quizId?: Prisma.SortOrder
-  attemptCount?: Prisma.SortOrder
-  selectedIndex?: Prisma.SortOrder
   isCorrect?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -429,8 +384,6 @@ export type UserQuizAnswerSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quizId?: Prisma.SortOrder
-  attemptCount?: Prisma.SortOrder
-  selectedIndex?: Prisma.SortOrder
 }
 
 export type UserQuizAnswerCreateNestedManyWithoutQuizInput = {
@@ -475,20 +428,22 @@ export type UserQuizAnswerUncheckedUpdateManyWithoutQuizNestedInput = {
   deleteMany?: Prisma.UserQuizAnswerScalarWhereInput | Prisma.UserQuizAnswerScalarWhereInput[]
 }
 
+export type NullableBoolFieldUpdateOperationsInput = {
+  set?: boolean | null
+}
+
 export type UserQuizAnswerCreateWithoutQuizInput = {
   userId: number
-  attemptCount: number
-  selectedIndex: number
-  isCorrect: boolean
+  isCorrect?: boolean | null
+  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
 export type UserQuizAnswerUncheckedCreateWithoutQuizInput = {
   id?: number
   userId: number
-  attemptCount: number
-  selectedIndex: number
-  isCorrect: boolean
+  isCorrect?: boolean | null
+  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
@@ -525,44 +480,39 @@ export type UserQuizAnswerScalarWhereInput = {
   id?: Prisma.IntFilter<"UserQuizAnswer"> | number
   userId?: Prisma.IntFilter<"UserQuizAnswer"> | number
   quizId?: Prisma.IntFilter<"UserQuizAnswer"> | number
-  attemptCount?: Prisma.IntFilter<"UserQuizAnswer"> | number
-  selectedIndex?: Prisma.IntFilter<"UserQuizAnswer"> | number
-  isCorrect?: Prisma.BoolFilter<"UserQuizAnswer"> | boolean
+  isCorrect?: Prisma.BoolNullableFilter<"UserQuizAnswer"> | boolean | null
+  payload?: Prisma.JsonFilter<"UserQuizAnswer">
   createdAt?: Prisma.DateTimeFilter<"UserQuizAnswer"> | Date | string
 }
 
 export type UserQuizAnswerCreateManyQuizInput = {
   id?: number
   userId: number
-  attemptCount: number
-  selectedIndex: number
-  isCorrect: boolean
+  isCorrect?: boolean | null
+  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
 export type UserQuizAnswerUpdateWithoutQuizInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  attemptCount?: Prisma.IntFieldUpdateOperationsInput | number
-  selectedIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserQuizAnswerUncheckedUpdateWithoutQuizInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  attemptCount?: Prisma.IntFieldUpdateOperationsInput | number
-  selectedIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserQuizAnswerUncheckedUpdateManyWithoutQuizInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  attemptCount?: Prisma.IntFieldUpdateOperationsInput | number
-  selectedIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -572,9 +522,8 @@ export type UserQuizAnswerSelect<ExtArgs extends runtime.Types.Extensions.Intern
   id?: boolean
   userId?: boolean
   quizId?: boolean
-  attemptCount?: boolean
-  selectedIndex?: boolean
   isCorrect?: boolean
+  payload?: boolean
   createdAt?: boolean
   quiz?: boolean | Prisma.QuizDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userQuizAnswer"]>
@@ -583,9 +532,8 @@ export type UserQuizAnswerSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   id?: boolean
   userId?: boolean
   quizId?: boolean
-  attemptCount?: boolean
-  selectedIndex?: boolean
   isCorrect?: boolean
+  payload?: boolean
   createdAt?: boolean
   quiz?: boolean | Prisma.QuizDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userQuizAnswer"]>
@@ -594,9 +542,8 @@ export type UserQuizAnswerSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   id?: boolean
   userId?: boolean
   quizId?: boolean
-  attemptCount?: boolean
-  selectedIndex?: boolean
   isCorrect?: boolean
+  payload?: boolean
   createdAt?: boolean
   quiz?: boolean | Prisma.QuizDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userQuizAnswer"]>
@@ -605,13 +552,12 @@ export type UserQuizAnswerSelectScalar = {
   id?: boolean
   userId?: boolean
   quizId?: boolean
-  attemptCount?: boolean
-  selectedIndex?: boolean
   isCorrect?: boolean
+  payload?: boolean
   createdAt?: boolean
 }
 
-export type UserQuizAnswerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "quizId" | "attemptCount" | "selectedIndex" | "isCorrect" | "createdAt", ExtArgs["result"]["userQuizAnswer"]>
+export type UserQuizAnswerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "quizId" | "isCorrect" | "payload" | "createdAt", ExtArgs["result"]["userQuizAnswer"]>
 export type UserQuizAnswerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quiz?: boolean | Prisma.QuizDefaultArgs<ExtArgs>
 }
@@ -631,9 +577,8 @@ export type $UserQuizAnswerPayload<ExtArgs extends runtime.Types.Extensions.Inte
     id: number
     userId: number
     quizId: number
-    attemptCount: number
-    selectedIndex: number
-    isCorrect: boolean
+    isCorrect: boolean | null
+    payload: runtime.JsonValue
     createdAt: Date
   }, ExtArgs["result"]["userQuizAnswer"]>
   composites: {}
@@ -1062,9 +1007,8 @@ export interface UserQuizAnswerFieldRefs {
   readonly id: Prisma.FieldRef<"UserQuizAnswer", 'Int'>
   readonly userId: Prisma.FieldRef<"UserQuizAnswer", 'Int'>
   readonly quizId: Prisma.FieldRef<"UserQuizAnswer", 'Int'>
-  readonly attemptCount: Prisma.FieldRef<"UserQuizAnswer", 'Int'>
-  readonly selectedIndex: Prisma.FieldRef<"UserQuizAnswer", 'Int'>
   readonly isCorrect: Prisma.FieldRef<"UserQuizAnswer", 'Boolean'>
+  readonly payload: Prisma.FieldRef<"UserQuizAnswer", 'Json'>
   readonly createdAt: Prisma.FieldRef<"UserQuizAnswer", 'DateTime'>
 }
     

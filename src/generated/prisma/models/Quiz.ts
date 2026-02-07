@@ -29,14 +29,12 @@ export type AggregateQuiz = {
 export type QuizAvgAggregateOutputType = {
   id: number | null
   sourceId: number | null
-  answerIndex: number | null
   order: number | null
 }
 
 export type QuizSumAggregateOutputType = {
   id: number | null
   sourceId: number | null
-  answerIndex: number | null
   order: number | null
 }
 
@@ -47,7 +45,6 @@ export type QuizMinAggregateOutputType = {
   type: $Enums.QuizType | null
   questionEnglish: string | null
   questionKorean: string | null
-  answerIndex: number | null
   description: string | null
   order: number | null
   isActive: boolean | null
@@ -60,7 +57,6 @@ export type QuizMaxAggregateOutputType = {
   type: $Enums.QuizType | null
   questionEnglish: string | null
   questionKorean: string | null
-  answerIndex: number | null
   description: string | null
   order: number | null
   isActive: boolean | null
@@ -73,7 +69,6 @@ export type QuizCountAggregateOutputType = {
   type: number
   questionEnglish: number
   questionKorean: number
-  answerIndex: number
   description: number
   order: number
   data: number
@@ -85,14 +80,12 @@ export type QuizCountAggregateOutputType = {
 export type QuizAvgAggregateInputType = {
   id?: true
   sourceId?: true
-  answerIndex?: true
   order?: true
 }
 
 export type QuizSumAggregateInputType = {
   id?: true
   sourceId?: true
-  answerIndex?: true
   order?: true
 }
 
@@ -103,7 +96,6 @@ export type QuizMinAggregateInputType = {
   type?: true
   questionEnglish?: true
   questionKorean?: true
-  answerIndex?: true
   description?: true
   order?: true
   isActive?: true
@@ -116,7 +108,6 @@ export type QuizMaxAggregateInputType = {
   type?: true
   questionEnglish?: true
   questionKorean?: true
-  answerIndex?: true
   description?: true
   order?: true
   isActive?: true
@@ -129,7 +120,6 @@ export type QuizCountAggregateInputType = {
   type?: true
   questionEnglish?: true
   questionKorean?: true
-  answerIndex?: true
   description?: true
   order?: true
   data?: true
@@ -230,7 +220,6 @@ export type QuizGroupByOutputType = {
   type: $Enums.QuizType
   questionEnglish: string
   questionKorean: string | null
-  answerIndex: number | null
   description: string | null
   order: number | null
   data: runtime.JsonValue | null
@@ -267,12 +256,10 @@ export type QuizWhereInput = {
   type?: Prisma.EnumQuizTypeFilter<"Quiz"> | $Enums.QuizType
   questionEnglish?: Prisma.StringFilter<"Quiz"> | string
   questionKorean?: Prisma.StringNullableFilter<"Quiz"> | string | null
-  answerIndex?: Prisma.IntNullableFilter<"Quiz"> | number | null
   description?: Prisma.StringNullableFilter<"Quiz"> | string | null
   order?: Prisma.IntNullableFilter<"Quiz"> | number | null
   data?: Prisma.JsonNullableFilter<"Quiz">
   isActive?: Prisma.BoolFilter<"Quiz"> | boolean
-  options?: Prisma.QuizOptionListRelationFilter
   userQuizAnswers?: Prisma.UserQuizAnswerListRelationFilter
 }
 
@@ -283,12 +270,10 @@ export type QuizOrderByWithRelationInput = {
   type?: Prisma.SortOrder
   questionEnglish?: Prisma.SortOrder
   questionKorean?: Prisma.SortOrderInput | Prisma.SortOrder
-  answerIndex?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrderInput | Prisma.SortOrder
   data?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  options?: Prisma.QuizOptionOrderByRelationAggregateInput
   userQuizAnswers?: Prisma.UserQuizAnswerOrderByRelationAggregateInput
 }
 
@@ -302,12 +287,10 @@ export type QuizWhereUniqueInput = Prisma.AtLeast<{
   type?: Prisma.EnumQuizTypeFilter<"Quiz"> | $Enums.QuizType
   questionEnglish?: Prisma.StringFilter<"Quiz"> | string
   questionKorean?: Prisma.StringNullableFilter<"Quiz"> | string | null
-  answerIndex?: Prisma.IntNullableFilter<"Quiz"> | number | null
   description?: Prisma.StringNullableFilter<"Quiz"> | string | null
   order?: Prisma.IntNullableFilter<"Quiz"> | number | null
   data?: Prisma.JsonNullableFilter<"Quiz">
   isActive?: Prisma.BoolFilter<"Quiz"> | boolean
-  options?: Prisma.QuizOptionListRelationFilter
   userQuizAnswers?: Prisma.UserQuizAnswerListRelationFilter
 }, "id">
 
@@ -318,7 +301,6 @@ export type QuizOrderByWithAggregationInput = {
   type?: Prisma.SortOrder
   questionEnglish?: Prisma.SortOrder
   questionKorean?: Prisma.SortOrderInput | Prisma.SortOrder
-  answerIndex?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrderInput | Prisma.SortOrder
   data?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -340,7 +322,6 @@ export type QuizScalarWhereWithAggregatesInput = {
   type?: Prisma.EnumQuizTypeWithAggregatesFilter<"Quiz"> | $Enums.QuizType
   questionEnglish?: Prisma.StringWithAggregatesFilter<"Quiz"> | string
   questionKorean?: Prisma.StringNullableWithAggregatesFilter<"Quiz"> | string | null
-  answerIndex?: Prisma.IntNullableWithAggregatesFilter<"Quiz"> | number | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Quiz"> | string | null
   order?: Prisma.IntNullableWithAggregatesFilter<"Quiz"> | number | null
   data?: Prisma.JsonNullableWithAggregatesFilter<"Quiz">
@@ -353,12 +334,10 @@ export type QuizCreateInput = {
   type: $Enums.QuizType
   questionEnglish: string
   questionKorean?: string | null
-  answerIndex?: number | null
   description?: string | null
   order?: number | null
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
-  options?: Prisma.QuizOptionCreateNestedManyWithoutQuizInput
   userQuizAnswers?: Prisma.UserQuizAnswerCreateNestedManyWithoutQuizInput
 }
 
@@ -369,12 +348,10 @@ export type QuizUncheckedCreateInput = {
   type: $Enums.QuizType
   questionEnglish: string
   questionKorean?: string | null
-  answerIndex?: number | null
   description?: string | null
   order?: number | null
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
-  options?: Prisma.QuizOptionUncheckedCreateNestedManyWithoutQuizInput
   userQuizAnswers?: Prisma.UserQuizAnswerUncheckedCreateNestedManyWithoutQuizInput
 }
 
@@ -384,12 +361,10 @@ export type QuizUpdateInput = {
   type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
   questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
   questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  options?: Prisma.QuizOptionUpdateManyWithoutQuizNestedInput
   userQuizAnswers?: Prisma.UserQuizAnswerUpdateManyWithoutQuizNestedInput
 }
 
@@ -400,12 +375,10 @@ export type QuizUncheckedUpdateInput = {
   type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
   questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
   questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  options?: Prisma.QuizOptionUncheckedUpdateManyWithoutQuizNestedInput
   userQuizAnswers?: Prisma.UserQuizAnswerUncheckedUpdateManyWithoutQuizNestedInput
 }
 
@@ -416,7 +389,6 @@ export type QuizCreateManyInput = {
   type: $Enums.QuizType
   questionEnglish: string
   questionKorean?: string | null
-  answerIndex?: number | null
   description?: string | null
   order?: number | null
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -429,7 +401,6 @@ export type QuizUpdateManyMutationInput = {
   type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
   questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
   questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -443,7 +414,6 @@ export type QuizUncheckedUpdateManyInput = {
   type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
   questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
   questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -457,7 +427,6 @@ export type QuizCountOrderByAggregateInput = {
   type?: Prisma.SortOrder
   questionEnglish?: Prisma.SortOrder
   questionKorean?: Prisma.SortOrder
-  answerIndex?: Prisma.SortOrder
   description?: Prisma.SortOrder
   order?: Prisma.SortOrder
   data?: Prisma.SortOrder
@@ -467,7 +436,6 @@ export type QuizCountOrderByAggregateInput = {
 export type QuizAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sourceId?: Prisma.SortOrder
-  answerIndex?: Prisma.SortOrder
   order?: Prisma.SortOrder
 }
 
@@ -478,7 +446,6 @@ export type QuizMaxOrderByAggregateInput = {
   type?: Prisma.SortOrder
   questionEnglish?: Prisma.SortOrder
   questionKorean?: Prisma.SortOrder
-  answerIndex?: Prisma.SortOrder
   description?: Prisma.SortOrder
   order?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
@@ -491,7 +458,6 @@ export type QuizMinOrderByAggregateInput = {
   type?: Prisma.SortOrder
   questionEnglish?: Prisma.SortOrder
   questionKorean?: Prisma.SortOrder
-  answerIndex?: Prisma.SortOrder
   description?: Prisma.SortOrder
   order?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
@@ -500,7 +466,6 @@ export type QuizMinOrderByAggregateInput = {
 export type QuizSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sourceId?: Prisma.SortOrder
-  answerIndex?: Prisma.SortOrder
   order?: Prisma.SortOrder
 }
 
@@ -517,20 +482,6 @@ export type EnumQuizTypeFieldUpdateOperationsInput = {
   set?: $Enums.QuizType
 }
 
-export type QuizCreateNestedOneWithoutOptionsInput = {
-  create?: Prisma.XOR<Prisma.QuizCreateWithoutOptionsInput, Prisma.QuizUncheckedCreateWithoutOptionsInput>
-  connectOrCreate?: Prisma.QuizCreateOrConnectWithoutOptionsInput
-  connect?: Prisma.QuizWhereUniqueInput
-}
-
-export type QuizUpdateOneRequiredWithoutOptionsNestedInput = {
-  create?: Prisma.XOR<Prisma.QuizCreateWithoutOptionsInput, Prisma.QuizUncheckedCreateWithoutOptionsInput>
-  connectOrCreate?: Prisma.QuizCreateOrConnectWithoutOptionsInput
-  upsert?: Prisma.QuizUpsertWithoutOptionsInput
-  connect?: Prisma.QuizWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.QuizUpdateToOneWithWhereWithoutOptionsInput, Prisma.QuizUpdateWithoutOptionsInput>, Prisma.QuizUncheckedUpdateWithoutOptionsInput>
-}
-
 export type QuizCreateNestedOneWithoutUserQuizAnswersInput = {
   create?: Prisma.XOR<Prisma.QuizCreateWithoutUserQuizAnswersInput, Prisma.QuizUncheckedCreateWithoutUserQuizAnswersInput>
   connectOrCreate?: Prisma.QuizCreateOrConnectWithoutUserQuizAnswersInput
@@ -545,92 +496,16 @@ export type QuizUpdateOneRequiredWithoutUserQuizAnswersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.QuizUpdateToOneWithWhereWithoutUserQuizAnswersInput, Prisma.QuizUpdateWithoutUserQuizAnswersInput>, Prisma.QuizUncheckedUpdateWithoutUserQuizAnswersInput>
 }
 
-export type QuizCreateWithoutOptionsInput = {
-  sourceType: $Enums.QuizSourceType
-  sourceId: number
-  type: $Enums.QuizType
-  questionEnglish: string
-  questionKorean?: string | null
-  answerIndex?: number | null
-  description?: string | null
-  order?: number | null
-  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isActive?: boolean
-  userQuizAnswers?: Prisma.UserQuizAnswerCreateNestedManyWithoutQuizInput
-}
-
-export type QuizUncheckedCreateWithoutOptionsInput = {
-  id?: number
-  sourceType: $Enums.QuizSourceType
-  sourceId: number
-  type: $Enums.QuizType
-  questionEnglish: string
-  questionKorean?: string | null
-  answerIndex?: number | null
-  description?: string | null
-  order?: number | null
-  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isActive?: boolean
-  userQuizAnswers?: Prisma.UserQuizAnswerUncheckedCreateNestedManyWithoutQuizInput
-}
-
-export type QuizCreateOrConnectWithoutOptionsInput = {
-  where: Prisma.QuizWhereUniqueInput
-  create: Prisma.XOR<Prisma.QuizCreateWithoutOptionsInput, Prisma.QuizUncheckedCreateWithoutOptionsInput>
-}
-
-export type QuizUpsertWithoutOptionsInput = {
-  update: Prisma.XOR<Prisma.QuizUpdateWithoutOptionsInput, Prisma.QuizUncheckedUpdateWithoutOptionsInput>
-  create: Prisma.XOR<Prisma.QuizCreateWithoutOptionsInput, Prisma.QuizUncheckedCreateWithoutOptionsInput>
-  where?: Prisma.QuizWhereInput
-}
-
-export type QuizUpdateToOneWithWhereWithoutOptionsInput = {
-  where?: Prisma.QuizWhereInput
-  data: Prisma.XOR<Prisma.QuizUpdateWithoutOptionsInput, Prisma.QuizUncheckedUpdateWithoutOptionsInput>
-}
-
-export type QuizUpdateWithoutOptionsInput = {
-  sourceType?: Prisma.EnumQuizSourceTypeFieldUpdateOperationsInput | $Enums.QuizSourceType
-  sourceId?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
-  questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
-  questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userQuizAnswers?: Prisma.UserQuizAnswerUpdateManyWithoutQuizNestedInput
-}
-
-export type QuizUncheckedUpdateWithoutOptionsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  sourceType?: Prisma.EnumQuizSourceTypeFieldUpdateOperationsInput | $Enums.QuizSourceType
-  sourceId?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
-  questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
-  questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userQuizAnswers?: Prisma.UserQuizAnswerUncheckedUpdateManyWithoutQuizNestedInput
-}
-
 export type QuizCreateWithoutUserQuizAnswersInput = {
   sourceType: $Enums.QuizSourceType
   sourceId: number
   type: $Enums.QuizType
   questionEnglish: string
   questionKorean?: string | null
-  answerIndex?: number | null
   description?: string | null
   order?: number | null
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
-  options?: Prisma.QuizOptionCreateNestedManyWithoutQuizInput
 }
 
 export type QuizUncheckedCreateWithoutUserQuizAnswersInput = {
@@ -640,12 +515,10 @@ export type QuizUncheckedCreateWithoutUserQuizAnswersInput = {
   type: $Enums.QuizType
   questionEnglish: string
   questionKorean?: string | null
-  answerIndex?: number | null
   description?: string | null
   order?: number | null
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
-  options?: Prisma.QuizOptionUncheckedCreateNestedManyWithoutQuizInput
 }
 
 export type QuizCreateOrConnectWithoutUserQuizAnswersInput = {
@@ -670,12 +543,10 @@ export type QuizUpdateWithoutUserQuizAnswersInput = {
   type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
   questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
   questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  options?: Prisma.QuizOptionUpdateManyWithoutQuizNestedInput
 }
 
 export type QuizUncheckedUpdateWithoutUserQuizAnswersInput = {
@@ -685,12 +556,10 @@ export type QuizUncheckedUpdateWithoutUserQuizAnswersInput = {
   type?: Prisma.EnumQuizTypeFieldUpdateOperationsInput | $Enums.QuizType
   questionEnglish?: Prisma.StringFieldUpdateOperationsInput | string
   questionKorean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  answerIndex?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  options?: Prisma.QuizOptionUncheckedUpdateManyWithoutQuizNestedInput
 }
 
 
@@ -699,12 +568,10 @@ export type QuizUncheckedUpdateWithoutUserQuizAnswersInput = {
  */
 
 export type QuizCountOutputType = {
-  options: number
   userQuizAnswers: number
 }
 
 export type QuizCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  options?: boolean | QuizCountOutputTypeCountOptionsArgs
   userQuizAnswers?: boolean | QuizCountOutputTypeCountUserQuizAnswersArgs
 }
 
@@ -716,13 +583,6 @@ export type QuizCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the QuizCountOutputType
    */
   select?: Prisma.QuizCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * QuizCountOutputType without action
- */
-export type QuizCountOutputTypeCountOptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.QuizOptionWhereInput
 }
 
 /**
@@ -740,12 +600,10 @@ export type QuizSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   type?: boolean
   questionEnglish?: boolean
   questionKorean?: boolean
-  answerIndex?: boolean
   description?: boolean
   order?: boolean
   data?: boolean
   isActive?: boolean
-  options?: boolean | Prisma.Quiz$optionsArgs<ExtArgs>
   userQuizAnswers?: boolean | Prisma.Quiz$userQuizAnswersArgs<ExtArgs>
   _count?: boolean | Prisma.QuizCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["quiz"]>
@@ -757,7 +615,6 @@ export type QuizSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   type?: boolean
   questionEnglish?: boolean
   questionKorean?: boolean
-  answerIndex?: boolean
   description?: boolean
   order?: boolean
   data?: boolean
@@ -771,7 +628,6 @@ export type QuizSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   type?: boolean
   questionEnglish?: boolean
   questionKorean?: boolean
-  answerIndex?: boolean
   description?: boolean
   order?: boolean
   data?: boolean
@@ -785,16 +641,14 @@ export type QuizSelectScalar = {
   type?: boolean
   questionEnglish?: boolean
   questionKorean?: boolean
-  answerIndex?: boolean
   description?: boolean
   order?: boolean
   data?: boolean
   isActive?: boolean
 }
 
-export type QuizOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sourceType" | "sourceId" | "type" | "questionEnglish" | "questionKorean" | "answerIndex" | "description" | "order" | "data" | "isActive", ExtArgs["result"]["quiz"]>
+export type QuizOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sourceType" | "sourceId" | "type" | "questionEnglish" | "questionKorean" | "description" | "order" | "data" | "isActive", ExtArgs["result"]["quiz"]>
 export type QuizInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  options?: boolean | Prisma.Quiz$optionsArgs<ExtArgs>
   userQuizAnswers?: boolean | Prisma.Quiz$userQuizAnswersArgs<ExtArgs>
   _count?: boolean | Prisma.QuizCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -804,7 +658,6 @@ export type QuizIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $QuizPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Quiz"
   objects: {
-    options: Prisma.$QuizOptionPayload<ExtArgs>[]
     userQuizAnswers: Prisma.$UserQuizAnswerPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -814,7 +667,6 @@ export type $QuizPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     type: $Enums.QuizType
     questionEnglish: string
     questionKorean: string | null
-    answerIndex: number | null
     description: string | null
     order: number | null
     data: runtime.JsonValue | null
@@ -1213,7 +1065,6 @@ readonly fields: QuizFieldRefs;
  */
 export interface Prisma__QuizClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  options<T extends Prisma.Quiz$optionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quiz$optionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuizOptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   userQuizAnswers<T extends Prisma.Quiz$userQuizAnswersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quiz$userQuizAnswersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserQuizAnswerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1250,7 +1101,6 @@ export interface QuizFieldRefs {
   readonly type: Prisma.FieldRef<"Quiz", 'QuizType'>
   readonly questionEnglish: Prisma.FieldRef<"Quiz", 'String'>
   readonly questionKorean: Prisma.FieldRef<"Quiz", 'String'>
-  readonly answerIndex: Prisma.FieldRef<"Quiz", 'Int'>
   readonly description: Prisma.FieldRef<"Quiz", 'String'>
   readonly order: Prisma.FieldRef<"Quiz", 'Int'>
   readonly data: Prisma.FieldRef<"Quiz", 'Json'>
@@ -1640,30 +1490,6 @@ export type QuizDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Quizzes to delete.
    */
   limit?: number
-}
-
-/**
- * Quiz.options
- */
-export type Quiz$optionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the QuizOption
-   */
-  select?: Prisma.QuizOptionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the QuizOption
-   */
-  omit?: Prisma.QuizOptionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.QuizOptionInclude<ExtArgs> | null
-  where?: Prisma.QuizOptionWhereInput
-  orderBy?: Prisma.QuizOptionOrderByWithRelationInput | Prisma.QuizOptionOrderByWithRelationInput[]
-  cursor?: Prisma.QuizOptionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.QuizOptionScalarFieldEnum | Prisma.QuizOptionScalarFieldEnum[]
 }
 
 /**

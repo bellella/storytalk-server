@@ -10,6 +10,7 @@ import { MailModule } from './modules/mail/mail.module';
 import { StoryModule } from './modules/story/story.module';
 import { EpisodeModule } from './modules/episode/episode.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { UnitModule } from './modules/unit/unit.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AuthModule } from './modules/auth/auth.module';
     MailModule,
     StoryModule,
     EpisodeModule,
+    UnitModule,
   ],
   controllers: [AppController],
   providers: [AppService],

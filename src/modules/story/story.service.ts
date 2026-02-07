@@ -1,7 +1,7 @@
 // src/story/story.service.ts
 import { CursorRequestDto } from '@/common/dtos/cursor-request.dto';
 import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
-import { EpisodeStage } from '@/generated/prisma/client';
+import { EpisodeStage, PublishStatus } from '@/generated/prisma/client';
 import { CurrentUser } from '@/types/auth.type';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { QuizDto, QuizOptionDto } from '../episode/dto/quiz.dto';
@@ -92,7 +92,7 @@ export class StoryService {
       category: story.category,
       difficulty: story.difficulty,
       totalEpisodes: story.episodes.length,
-      status: story.isPublished ? '연재중' : '준비중',
+      status: story.status === PublishStatus.PUBLISHED ? '연재중' : '준비중',
       likeCount: 123, // TODO: 실제 좋아요 카운트 로직으로 교체
       episodes: story.episodes.map((ep) => ({
         id: ep.id,
@@ -146,7 +146,7 @@ export class StoryService {
       coverImage: story.coverImage ?? undefined,
       category: story.category,
       difficulty: story.difficulty,
-      status: story.isPublished ? '연재중' : '준비중',
+      status: story.status === PublishStatus.PUBLISHED ? '연재중' : '준비중',
       totalEpisodes: story._count.episodes,
       likeCount: 123, // TODO: DB에 likeCount 필드 추가 필요
     }));
@@ -265,7 +265,7 @@ export class StoryService {
       id: episode.id,
       storyId: episode.storyId,
       title: episode.title,
-      koreanTitle: episode.KoreanTitle ?? undefined,
+      koreanTitle: episode.koreanTitle ?? undefined,
       order: episode.order,
       description: episode.description ?? undefined,
       koreanDescription: episode.koreanDescription ?? undefined,
@@ -347,11 +347,6 @@ export class StoryService {
         sourceId: episodeId,
         isActive: true,
       },
-      include: {
-        options: {
-          orderBy: { order: 'asc' },
-        },
-      },
       orderBy: {
         order: 'asc',
       },
@@ -364,12 +359,10 @@ export class StoryService {
       type: quiz.type,
       questionEnglish: quiz.questionEnglish,
       questionKorean: quiz.questionKorean ?? undefined,
-      answerIndex: quiz.answerIndex ?? undefined,
       description: quiz.description ?? undefined,
       order: quiz.order ?? undefined,
       data: (quiz.data as Record<string, any>) ?? undefined,
       isActive: quiz.isActive,
-      options: quiz.options,
     }));
   }
 }

@@ -9,6 +9,17 @@
 * 🟢 You can import this file directly.
 */
 
+export const PublishStatus = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+  HIDDEN: 'HIDDEN',
+  ARCHIVED: 'ARCHIVED',
+  DELETED: 'DELETED'
+} as const
+
+export type PublishStatus = (typeof PublishStatus)[keyof typeof PublishStatus]
+
+
 export const AuthProvider = {
   GOOGLE: 'GOOGLE',
   APPLE: 'APPLE'
@@ -18,10 +29,6 @@ export type AuthProvider = (typeof AuthProvider)[keyof typeof AuthProvider]
 
 
 export const QuizType = {
-  INTERPRETATION: 'INTERPRETATION',
-  STORY_COMPREHENSION: 'STORY_COMPREHENSION',
-  NEXT_DIALOGUE_PREDICTION: 'NEXT_DIALOGUE_PREDICTION',
-  GRAMMAR: 'GRAMMAR',
   SENTENCE_BUILD: 'SENTENCE_BUILD',
   SENTENCE_CLOZE_BUILD: 'SENTENCE_CLOZE_BUILD'
 } as const

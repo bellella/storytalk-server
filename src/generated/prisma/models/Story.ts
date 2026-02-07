@@ -45,7 +45,7 @@ export type StoryMinAggregateOutputType = {
   difficulty: number | null
   description: string | null
   coverImage: string | null
-  isPublished: boolean | null
+  status: $Enums.PublishStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,7 +59,7 @@ export type StoryMaxAggregateOutputType = {
   difficulty: number | null
   description: string | null
   coverImage: string | null
-  isPublished: boolean | null
+  status: $Enums.PublishStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -73,7 +73,7 @@ export type StoryCountAggregateOutputType = {
   difficulty: number
   description: number
   coverImage: number
-  isPublished: number
+  status: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -99,7 +99,7 @@ export type StoryMinAggregateInputType = {
   difficulty?: true
   description?: true
   coverImage?: true
-  isPublished?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -113,7 +113,7 @@ export type StoryMaxAggregateInputType = {
   difficulty?: true
   description?: true
   coverImage?: true
-  isPublished?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -127,7 +127,7 @@ export type StoryCountAggregateInputType = {
   difficulty?: true
   description?: true
   coverImage?: true
-  isPublished?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -228,7 +228,7 @@ export type StoryGroupByOutputType = {
   difficulty: number
   description: string | null
   coverImage: string | null
-  isPublished: boolean
+  status: $Enums.PublishStatus
   createdAt: Date
   updatedAt: Date
   _count: StoryCountAggregateOutputType | null
@@ -265,12 +265,13 @@ export type StoryWhereInput = {
   difficulty?: Prisma.IntFilter<"Story"> | number
   description?: Prisma.StringNullableFilter<"Story"> | string | null
   coverImage?: Prisma.StringNullableFilter<"Story"> | string | null
-  isPublished?: Prisma.BoolFilter<"Story"> | boolean
+  status?: Prisma.EnumPublishStatusFilter<"Story"> | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFilter<"Story"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Story"> | Date | string
   episodes?: Prisma.EpisodeListRelationFilter
   storyCharacters?: Prisma.StoryCharacterListRelationFilter
   progress?: Prisma.StoryProgressListRelationFilter
+  units?: Prisma.UnitListRelationFilter
 }
 
 export type StoryOrderByWithRelationInput = {
@@ -282,12 +283,13 @@ export type StoryOrderByWithRelationInput = {
   difficulty?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   coverImage?: Prisma.SortOrderInput | Prisma.SortOrder
-  isPublished?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   episodes?: Prisma.EpisodeOrderByRelationAggregateInput
   storyCharacters?: Prisma.StoryCharacterOrderByRelationAggregateInput
   progress?: Prisma.StoryProgressOrderByRelationAggregateInput
+  units?: Prisma.UnitOrderByRelationAggregateInput
 }
 
 export type StoryWhereUniqueInput = Prisma.AtLeast<{
@@ -302,12 +304,13 @@ export type StoryWhereUniqueInput = Prisma.AtLeast<{
   difficulty?: Prisma.IntFilter<"Story"> | number
   description?: Prisma.StringNullableFilter<"Story"> | string | null
   coverImage?: Prisma.StringNullableFilter<"Story"> | string | null
-  isPublished?: Prisma.BoolFilter<"Story"> | boolean
+  status?: Prisma.EnumPublishStatusFilter<"Story"> | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFilter<"Story"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Story"> | Date | string
   episodes?: Prisma.EpisodeListRelationFilter
   storyCharacters?: Prisma.StoryCharacterListRelationFilter
   progress?: Prisma.StoryProgressListRelationFilter
+  units?: Prisma.UnitListRelationFilter
 }, "id">
 
 export type StoryOrderByWithAggregationInput = {
@@ -319,7 +322,7 @@ export type StoryOrderByWithAggregationInput = {
   difficulty?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   coverImage?: Prisma.SortOrderInput | Prisma.SortOrder
-  isPublished?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.StoryCountOrderByAggregateInput
@@ -341,7 +344,7 @@ export type StoryScalarWhereWithAggregatesInput = {
   difficulty?: Prisma.IntWithAggregatesFilter<"Story"> | number
   description?: Prisma.StringNullableWithAggregatesFilter<"Story"> | string | null
   coverImage?: Prisma.StringNullableWithAggregatesFilter<"Story"> | string | null
-  isPublished?: Prisma.BoolWithAggregatesFilter<"Story"> | boolean
+  status?: Prisma.EnumPublishStatusWithAggregatesFilter<"Story"> | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Story"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Story"> | Date | string
 }
@@ -354,12 +357,13 @@ export type StoryCreateInput = {
   difficulty?: number
   description?: string | null
   coverImage?: string | null
-  isPublished?: boolean
+  status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   episodes?: Prisma.EpisodeCreateNestedManyWithoutStoryInput
   storyCharacters?: Prisma.StoryCharacterCreateNestedManyWithoutStoryInput
   progress?: Prisma.StoryProgressCreateNestedManyWithoutStoryInput
+  units?: Prisma.UnitCreateNestedManyWithoutStoryInput
 }
 
 export type StoryUncheckedCreateInput = {
@@ -371,12 +375,13 @@ export type StoryUncheckedCreateInput = {
   difficulty?: number
   description?: string | null
   coverImage?: string | null
-  isPublished?: boolean
+  status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   episodes?: Prisma.EpisodeUncheckedCreateNestedManyWithoutStoryInput
   storyCharacters?: Prisma.StoryCharacterUncheckedCreateNestedManyWithoutStoryInput
   progress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutStoryInput
+  units?: Prisma.UnitUncheckedCreateNestedManyWithoutStoryInput
 }
 
 export type StoryUpdateInput = {
@@ -387,12 +392,13 @@ export type StoryUpdateInput = {
   difficulty?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   episodes?: Prisma.EpisodeUpdateManyWithoutStoryNestedInput
   storyCharacters?: Prisma.StoryCharacterUpdateManyWithoutStoryNestedInput
   progress?: Prisma.StoryProgressUpdateManyWithoutStoryNestedInput
+  units?: Prisma.UnitUpdateManyWithoutStoryNestedInput
 }
 
 export type StoryUncheckedUpdateInput = {
@@ -404,12 +410,13 @@ export type StoryUncheckedUpdateInput = {
   difficulty?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   episodes?: Prisma.EpisodeUncheckedUpdateManyWithoutStoryNestedInput
   storyCharacters?: Prisma.StoryCharacterUncheckedUpdateManyWithoutStoryNestedInput
   progress?: Prisma.StoryProgressUncheckedUpdateManyWithoutStoryNestedInput
+  units?: Prisma.UnitUncheckedUpdateManyWithoutStoryNestedInput
 }
 
 export type StoryCreateManyInput = {
@@ -421,7 +428,7 @@ export type StoryCreateManyInput = {
   difficulty?: number
   description?: string | null
   coverImage?: string | null
-  isPublished?: boolean
+  status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -434,7 +441,7 @@ export type StoryUpdateManyMutationInput = {
   difficulty?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -448,7 +455,7 @@ export type StoryUncheckedUpdateManyInput = {
   difficulty?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -462,7 +469,7 @@ export type StoryCountOrderByAggregateInput = {
   difficulty?: Prisma.SortOrder
   description?: Prisma.SortOrder
   coverImage?: Prisma.SortOrder
-  isPublished?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -481,7 +488,7 @@ export type StoryMaxOrderByAggregateInput = {
   difficulty?: Prisma.SortOrder
   description?: Prisma.SortOrder
   coverImage?: Prisma.SortOrder
-  isPublished?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -495,7 +502,7 @@ export type StoryMinOrderByAggregateInput = {
   difficulty?: Prisma.SortOrder
   description?: Prisma.SortOrder
   coverImage?: Prisma.SortOrder
-  isPublished?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -508,6 +515,24 @@ export type StorySumOrderByAggregateInput = {
 export type StoryScalarRelationFilter = {
   is?: Prisma.StoryWhereInput
   isNot?: Prisma.StoryWhereInput
+}
+
+export type EnumPublishStatusFieldUpdateOperationsInput = {
+  set?: $Enums.PublishStatus
+}
+
+export type StoryCreateNestedOneWithoutUnitsInput = {
+  create?: Prisma.XOR<Prisma.StoryCreateWithoutUnitsInput, Prisma.StoryUncheckedCreateWithoutUnitsInput>
+  connectOrCreate?: Prisma.StoryCreateOrConnectWithoutUnitsInput
+  connect?: Prisma.StoryWhereUniqueInput
+}
+
+export type StoryUpdateOneRequiredWithoutUnitsNestedInput = {
+  create?: Prisma.XOR<Prisma.StoryCreateWithoutUnitsInput, Prisma.StoryUncheckedCreateWithoutUnitsInput>
+  connectOrCreate?: Prisma.StoryCreateOrConnectWithoutUnitsInput
+  upsert?: Prisma.StoryUpsertWithoutUnitsInput
+  connect?: Prisma.StoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoryUpdateToOneWithWhereWithoutUnitsInput, Prisma.StoryUpdateWithoutUnitsInput>, Prisma.StoryUncheckedUpdateWithoutUnitsInput>
 }
 
 export type StoryCreateNestedOneWithoutEpisodesInput = {
@@ -552,6 +577,88 @@ export type StoryUpdateOneRequiredWithoutStoryCharactersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StoryUpdateToOneWithWhereWithoutStoryCharactersInput, Prisma.StoryUpdateWithoutStoryCharactersInput>, Prisma.StoryUncheckedUpdateWithoutStoryCharactersInput>
 }
 
+export type StoryCreateWithoutUnitsInput = {
+  title: string
+  koreanTitle?: string | null
+  category: string
+  icon: string
+  difficulty?: number
+  description?: string | null
+  coverImage?: string | null
+  status?: $Enums.PublishStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  episodes?: Prisma.EpisodeCreateNestedManyWithoutStoryInput
+  storyCharacters?: Prisma.StoryCharacterCreateNestedManyWithoutStoryInput
+  progress?: Prisma.StoryProgressCreateNestedManyWithoutStoryInput
+}
+
+export type StoryUncheckedCreateWithoutUnitsInput = {
+  id?: number
+  title: string
+  koreanTitle?: string | null
+  category: string
+  icon: string
+  difficulty?: number
+  description?: string | null
+  coverImage?: string | null
+  status?: $Enums.PublishStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  episodes?: Prisma.EpisodeUncheckedCreateNestedManyWithoutStoryInput
+  storyCharacters?: Prisma.StoryCharacterUncheckedCreateNestedManyWithoutStoryInput
+  progress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutStoryInput
+}
+
+export type StoryCreateOrConnectWithoutUnitsInput = {
+  where: Prisma.StoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoryCreateWithoutUnitsInput, Prisma.StoryUncheckedCreateWithoutUnitsInput>
+}
+
+export type StoryUpsertWithoutUnitsInput = {
+  update: Prisma.XOR<Prisma.StoryUpdateWithoutUnitsInput, Prisma.StoryUncheckedUpdateWithoutUnitsInput>
+  create: Prisma.XOR<Prisma.StoryCreateWithoutUnitsInput, Prisma.StoryUncheckedCreateWithoutUnitsInput>
+  where?: Prisma.StoryWhereInput
+}
+
+export type StoryUpdateToOneWithWhereWithoutUnitsInput = {
+  where?: Prisma.StoryWhereInput
+  data: Prisma.XOR<Prisma.StoryUpdateWithoutUnitsInput, Prisma.StoryUncheckedUpdateWithoutUnitsInput>
+}
+
+export type StoryUpdateWithoutUnitsInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  episodes?: Prisma.EpisodeUpdateManyWithoutStoryNestedInput
+  storyCharacters?: Prisma.StoryCharacterUpdateManyWithoutStoryNestedInput
+  progress?: Prisma.StoryProgressUpdateManyWithoutStoryNestedInput
+}
+
+export type StoryUncheckedUpdateWithoutUnitsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  icon?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  episodes?: Prisma.EpisodeUncheckedUpdateManyWithoutStoryNestedInput
+  storyCharacters?: Prisma.StoryCharacterUncheckedUpdateManyWithoutStoryNestedInput
+  progress?: Prisma.StoryProgressUncheckedUpdateManyWithoutStoryNestedInput
+}
+
 export type StoryCreateWithoutEpisodesInput = {
   title: string
   koreanTitle?: string | null
@@ -560,11 +667,12 @@ export type StoryCreateWithoutEpisodesInput = {
   difficulty?: number
   description?: string | null
   coverImage?: string | null
-  isPublished?: boolean
+  status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   storyCharacters?: Prisma.StoryCharacterCreateNestedManyWithoutStoryInput
   progress?: Prisma.StoryProgressCreateNestedManyWithoutStoryInput
+  units?: Prisma.UnitCreateNestedManyWithoutStoryInput
 }
 
 export type StoryUncheckedCreateWithoutEpisodesInput = {
@@ -576,11 +684,12 @@ export type StoryUncheckedCreateWithoutEpisodesInput = {
   difficulty?: number
   description?: string | null
   coverImage?: string | null
-  isPublished?: boolean
+  status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   storyCharacters?: Prisma.StoryCharacterUncheckedCreateNestedManyWithoutStoryInput
   progress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutStoryInput
+  units?: Prisma.UnitUncheckedCreateNestedManyWithoutStoryInput
 }
 
 export type StoryCreateOrConnectWithoutEpisodesInput = {
@@ -607,11 +716,12 @@ export type StoryUpdateWithoutEpisodesInput = {
   difficulty?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   storyCharacters?: Prisma.StoryCharacterUpdateManyWithoutStoryNestedInput
   progress?: Prisma.StoryProgressUpdateManyWithoutStoryNestedInput
+  units?: Prisma.UnitUpdateManyWithoutStoryNestedInput
 }
 
 export type StoryUncheckedUpdateWithoutEpisodesInput = {
@@ -623,11 +733,12 @@ export type StoryUncheckedUpdateWithoutEpisodesInput = {
   difficulty?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   storyCharacters?: Prisma.StoryCharacterUncheckedUpdateManyWithoutStoryNestedInput
   progress?: Prisma.StoryProgressUncheckedUpdateManyWithoutStoryNestedInput
+  units?: Prisma.UnitUncheckedUpdateManyWithoutStoryNestedInput
 }
 
 export type StoryCreateWithoutProgressInput = {
@@ -638,11 +749,12 @@ export type StoryCreateWithoutProgressInput = {
   difficulty?: number
   description?: string | null
   coverImage?: string | null
-  isPublished?: boolean
+  status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   episodes?: Prisma.EpisodeCreateNestedManyWithoutStoryInput
   storyCharacters?: Prisma.StoryCharacterCreateNestedManyWithoutStoryInput
+  units?: Prisma.UnitCreateNestedManyWithoutStoryInput
 }
 
 export type StoryUncheckedCreateWithoutProgressInput = {
@@ -654,11 +766,12 @@ export type StoryUncheckedCreateWithoutProgressInput = {
   difficulty?: number
   description?: string | null
   coverImage?: string | null
-  isPublished?: boolean
+  status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   episodes?: Prisma.EpisodeUncheckedCreateNestedManyWithoutStoryInput
   storyCharacters?: Prisma.StoryCharacterUncheckedCreateNestedManyWithoutStoryInput
+  units?: Prisma.UnitUncheckedCreateNestedManyWithoutStoryInput
 }
 
 export type StoryCreateOrConnectWithoutProgressInput = {
@@ -685,11 +798,12 @@ export type StoryUpdateWithoutProgressInput = {
   difficulty?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   episodes?: Prisma.EpisodeUpdateManyWithoutStoryNestedInput
   storyCharacters?: Prisma.StoryCharacterUpdateManyWithoutStoryNestedInput
+  units?: Prisma.UnitUpdateManyWithoutStoryNestedInput
 }
 
 export type StoryUncheckedUpdateWithoutProgressInput = {
@@ -701,11 +815,12 @@ export type StoryUncheckedUpdateWithoutProgressInput = {
   difficulty?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   episodes?: Prisma.EpisodeUncheckedUpdateManyWithoutStoryNestedInput
   storyCharacters?: Prisma.StoryCharacterUncheckedUpdateManyWithoutStoryNestedInput
+  units?: Prisma.UnitUncheckedUpdateManyWithoutStoryNestedInput
 }
 
 export type StoryCreateWithoutStoryCharactersInput = {
@@ -716,11 +831,12 @@ export type StoryCreateWithoutStoryCharactersInput = {
   difficulty?: number
   description?: string | null
   coverImage?: string | null
-  isPublished?: boolean
+  status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   episodes?: Prisma.EpisodeCreateNestedManyWithoutStoryInput
   progress?: Prisma.StoryProgressCreateNestedManyWithoutStoryInput
+  units?: Prisma.UnitCreateNestedManyWithoutStoryInput
 }
 
 export type StoryUncheckedCreateWithoutStoryCharactersInput = {
@@ -732,11 +848,12 @@ export type StoryUncheckedCreateWithoutStoryCharactersInput = {
   difficulty?: number
   description?: string | null
   coverImage?: string | null
-  isPublished?: boolean
+  status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   episodes?: Prisma.EpisodeUncheckedCreateNestedManyWithoutStoryInput
   progress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutStoryInput
+  units?: Prisma.UnitUncheckedCreateNestedManyWithoutStoryInput
 }
 
 export type StoryCreateOrConnectWithoutStoryCharactersInput = {
@@ -763,11 +880,12 @@ export type StoryUpdateWithoutStoryCharactersInput = {
   difficulty?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   episodes?: Prisma.EpisodeUpdateManyWithoutStoryNestedInput
   progress?: Prisma.StoryProgressUpdateManyWithoutStoryNestedInput
+  units?: Prisma.UnitUpdateManyWithoutStoryNestedInput
 }
 
 export type StoryUncheckedUpdateWithoutStoryCharactersInput = {
@@ -779,11 +897,12 @@ export type StoryUncheckedUpdateWithoutStoryCharactersInput = {
   difficulty?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   episodes?: Prisma.EpisodeUncheckedUpdateManyWithoutStoryNestedInput
   progress?: Prisma.StoryProgressUncheckedUpdateManyWithoutStoryNestedInput
+  units?: Prisma.UnitUncheckedUpdateManyWithoutStoryNestedInput
 }
 
 
@@ -795,12 +914,14 @@ export type StoryCountOutputType = {
   episodes: number
   storyCharacters: number
   progress: number
+  units: number
 }
 
 export type StoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   episodes?: boolean | StoryCountOutputTypeCountEpisodesArgs
   storyCharacters?: boolean | StoryCountOutputTypeCountStoryCharactersArgs
   progress?: boolean | StoryCountOutputTypeCountProgressArgs
+  units?: boolean | StoryCountOutputTypeCountUnitsArgs
 }
 
 /**
@@ -834,6 +955,13 @@ export type StoryCountOutputTypeCountProgressArgs<ExtArgs extends runtime.Types.
   where?: Prisma.StoryProgressWhereInput
 }
 
+/**
+ * StoryCountOutputType without action
+ */
+export type StoryCountOutputTypeCountUnitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UnitWhereInput
+}
+
 
 export type StorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -844,12 +972,13 @@ export type StorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   difficulty?: boolean
   description?: boolean
   coverImage?: boolean
-  isPublished?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   episodes?: boolean | Prisma.Story$episodesArgs<ExtArgs>
   storyCharacters?: boolean | Prisma.Story$storyCharactersArgs<ExtArgs>
   progress?: boolean | Prisma.Story$progressArgs<ExtArgs>
+  units?: boolean | Prisma.Story$unitsArgs<ExtArgs>
   _count?: boolean | Prisma.StoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["story"]>
 
@@ -862,7 +991,7 @@ export type StorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   difficulty?: boolean
   description?: boolean
   coverImage?: boolean
-  isPublished?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["story"]>
@@ -876,7 +1005,7 @@ export type StorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   difficulty?: boolean
   description?: boolean
   coverImage?: boolean
-  isPublished?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["story"]>
@@ -890,16 +1019,17 @@ export type StorySelectScalar = {
   difficulty?: boolean
   description?: boolean
   coverImage?: boolean
-  isPublished?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type StoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "koreanTitle" | "category" | "icon" | "difficulty" | "description" | "coverImage" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["story"]>
+export type StoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "koreanTitle" | "category" | "icon" | "difficulty" | "description" | "coverImage" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["story"]>
 export type StoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   episodes?: boolean | Prisma.Story$episodesArgs<ExtArgs>
   storyCharacters?: boolean | Prisma.Story$storyCharactersArgs<ExtArgs>
   progress?: boolean | Prisma.Story$progressArgs<ExtArgs>
+  units?: boolean | Prisma.Story$unitsArgs<ExtArgs>
   _count?: boolean | Prisma.StoryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -911,6 +1041,7 @@ export type $StoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     episodes: Prisma.$EpisodePayload<ExtArgs>[]
     storyCharacters: Prisma.$StoryCharacterPayload<ExtArgs>[]
     progress: Prisma.$StoryProgressPayload<ExtArgs>[]
+    units: Prisma.$UnitPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -921,7 +1052,7 @@ export type $StoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     difficulty: number
     description: string | null
     coverImage: string | null
-    isPublished: boolean
+    status: $Enums.PublishStatus
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["story"]>
@@ -1321,6 +1452,7 @@ export interface Prisma__StoryClient<T, Null = never, ExtArgs extends runtime.Ty
   episodes<T extends Prisma.Story$episodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Story$episodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EpisodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   storyCharacters<T extends Prisma.Story$storyCharactersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Story$storyCharactersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StoryCharacterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   progress<T extends Prisma.Story$progressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Story$progressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StoryProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  units<T extends Prisma.Story$unitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Story$unitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UnitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1358,7 +1490,7 @@ export interface StoryFieldRefs {
   readonly difficulty: Prisma.FieldRef<"Story", 'Int'>
   readonly description: Prisma.FieldRef<"Story", 'String'>
   readonly coverImage: Prisma.FieldRef<"Story", 'String'>
-  readonly isPublished: Prisma.FieldRef<"Story", 'Boolean'>
+  readonly status: Prisma.FieldRef<"Story", 'PublishStatus'>
   readonly createdAt: Prisma.FieldRef<"Story", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Story", 'DateTime'>
 }
@@ -1818,6 +1950,30 @@ export type Story$progressArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.StoryProgressScalarFieldEnum | Prisma.StoryProgressScalarFieldEnum[]
+}
+
+/**
+ * Story.units
+ */
+export type Story$unitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Unit
+   */
+  select?: Prisma.UnitSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Unit
+   */
+  omit?: Prisma.UnitOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UnitInclude<ExtArgs> | null
+  where?: Prisma.UnitWhereInput
+  orderBy?: Prisma.UnitOrderByWithRelationInput | Prisma.UnitOrderByWithRelationInput[]
+  cursor?: Prisma.UnitWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UnitScalarFieldEnum | Prisma.UnitScalarFieldEnum[]
 }
 
 /**
