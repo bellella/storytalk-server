@@ -15,7 +15,7 @@ export class UnitService {
             id: true,
             title: true,
             description: true,
-            difficulty: true,
+            level: true,
           },
         },
       },
@@ -40,7 +40,7 @@ export class UnitService {
             id: true,
             title: true,
             description: true,
-            difficulty: true,
+            level: true,
             episodes: {
               select: {
                 id: true,
@@ -96,7 +96,7 @@ export class UnitService {
       id: story.id,
       title: story.title,
       description: story.description ?? '',
-      difficulty: story.difficulty,
+      level: story.level,
       episodes,
     };
   }

@@ -20,6 +20,17 @@ export const PublishStatus = {
 export type PublishStatus = (typeof PublishStatus)[keyof typeof PublishStatus]
 
 
+export const Level = {
+  BEGINNER: 'BEGINNER',
+  BASIC: 'BASIC',
+  INTERMEDIATE: 'INTERMEDIATE',
+  ADVANCED: 'ADVANCED',
+  MASTER: 'MASTER'
+} as const
+
+export type Level = (typeof Level)[keyof typeof Level]
+
+
 export const AuthProvider = {
   GOOGLE: 'GOOGLE',
   APPLE: 'APPLE'
@@ -42,6 +53,14 @@ export const QuizSourceType = {
 } as const
 
 export type QuizSourceType = (typeof QuizSourceType)[keyof typeof QuizSourceType]
+
+
+export const QuizSessionType = {
+  EPISODE: 'EPISODE',
+  PRACTICE: 'PRACTICE'
+} as const
+
+export type QuizSessionType = (typeof QuizSessionType)[keyof typeof QuizSessionType]
 
 
 export const EpisodeStage = {

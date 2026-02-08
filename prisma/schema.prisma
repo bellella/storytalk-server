@@ -17,6 +17,14 @@ enum PublishStatus {
   DELETED
 }
 
+enum Level {
+  BEGINNER
+  BASIC
+  INTERMEDIATE
+  ADVANCED
+  MASTER
+}
+
 //////////////////////////////////////////////////////
 // USER
 //////////////////////////////////////////////////////
@@ -33,7 +41,7 @@ model User {
   provider     AuthProvider
   providerId   String
   profileImage String?
-  level        Int          @default(1)
+  level        Level        @default(BEGINNER)
   exp          Int          @default(0)
   streakDays   Int          @default(0)
   lastLoginAt  DateTime     @default(now())
@@ -47,6 +55,7 @@ model User {
   dialogueBookmarks dialogueBookmark[]
   characterFriends  CharacterFriend[]
   characterMessages CharacterMessage[]
+  userQuizSessions  UserQuizSession[]
 
   @@unique([email, provider])
 }
@@ -61,7 +70,7 @@ model Story {
   koreanTitle String?
   category    String
   icon        String
-  difficulty  Int           @default(1)
+  level       Level         @default(BEGINNER)
   description String?
   coverImage  String?
   status      PublishStatus @default(DRAFT)
@@ -98,10 +107,11 @@ model Episode {
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
 
-  story        Story           @relation(fields: [storyId], references: [id])
-  scenes       Scene[]
-  rewards      EpisodeReward[]
-  userEpisodes UserEpisode[]
+  story            Story             @relation(fields: [storyId], references: [id])
+  scenes           Scene[]
+  rewards          EpisodeReward[]
+  userEpisodes     UserEpisode[]
+  userQuizSessions UserQuizSession[]
 
   @@unique([storyId, order])
 }
@@ -189,7 +199,9 @@ model Quiz {
   id         Int            @id @default(autoincrement())
   sourceType QuizSourceType
   sourceId   Int
+  dialogueId Int?
   type       QuizType
+  level      Level          @default(BEGINNER)
 
   questionEnglish String
   questionKorean  String?
@@ -204,23 +216,59 @@ model Quiz {
   @@index([sourceType, sourceId])
 }
 
-model UserQuizAnswer {
+enum QuizSessionType {
+  EPISODE // 에피소드 끝나고 푸는 퀴즈
+  PRACTICE // 모아풀기 / 자유 퀴즈
+}
+
+model UserQuizSession {
   id     Int @id @default(autoincrement())
   userId Int
-  quizId Int
 
-  isCorrect Boolean? // 정답/오답 개념이 있으면(선택)
+  type QuizSessionType
 
-  // 핵심: 타입별 제출값(텍스트/음성평가 결과 등)
-  payload Json
+  // 에피소드 퀴즈일 때만 연결
+  episodeId Int?
+  episode   Episode? @relation(fields: [episodeId], references: [id])
+
+  // 진행 상태
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+
+  // 결과 요약 (완료 시 집계해서 저장)
+  totalCount   Int?
+  correctCount Int?
+  score        Int?
+
+  meta Json?
+
+  // 관계
+  user    User             @relation(fields: [userId], references: [id])
+  answers UserQuizAnswer[]
+
+  @@index([userId])
+  @@index([episodeId])
+  @@index([type])
+}
+
+model UserQuizAnswer {
+  id            Int @id @default(autoincrement())
+  userId        Int
+  quizId        Int
+  quizSessionId Int
+
+  isCorrect Boolean?
+  payload   Json
 
   createdAt DateTime @default(now())
 
-  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  quiz              Quiz             @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  userQuizSession   UserQuizSession? @relation(fields: [userQuizSessionId], references: [id])
+  userQuizSessionId Int?
 
   @@index([userId])
   @@index([quizId])
-  @@index([userId, quizId])
+  @@index([quizSessionId])
 }
 
 enum EpisodeStage {

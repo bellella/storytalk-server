@@ -1,3 +1,4 @@
+import { Level } from '@/generated/prisma/client';
 import { UserEpisodeDto } from '@/modules/episode/dto/user-episode.dto';
 
 export class StoryDetailDto {
@@ -6,7 +7,7 @@ export class StoryDetailDto {
   description?: string;
   coverImage?: string;
   category: string;
-  difficulty: number; // 시안의 'Intermediate' 등에 매핑
+  level: Level; // 시안의 'Intermediate' 등에 매핑
   status: string; // '연재중' 등
   totalEpisodes: number;
   likeCount: number; // 임시 필드 (필요시 DB 추가)

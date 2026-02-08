@@ -28,14 +28,12 @@ export type AggregateUser = {
 
 export type UserAvgAggregateOutputType = {
   id: number | null
-  level: number | null
   exp: number | null
   streakDays: number | null
 }
 
 export type UserSumAggregateOutputType = {
   id: number | null
-  level: number | null
   exp: number | null
   streakDays: number | null
 }
@@ -47,7 +45,7 @@ export type UserMinAggregateOutputType = {
   provider: $Enums.AuthProvider | null
   providerId: string | null
   profileImage: string | null
-  level: number | null
+  level: $Enums.Level | null
   exp: number | null
   streakDays: number | null
   lastLoginAt: Date | null
@@ -63,7 +61,7 @@ export type UserMaxAggregateOutputType = {
   provider: $Enums.AuthProvider | null
   providerId: string | null
   profileImage: string | null
-  level: number | null
+  level: $Enums.Level | null
   exp: number | null
   streakDays: number | null
   lastLoginAt: Date | null
@@ -92,14 +90,12 @@ export type UserCountAggregateOutputType = {
 
 export type UserAvgAggregateInputType = {
   id?: true
-  level?: true
   exp?: true
   streakDays?: true
 }
 
 export type UserSumAggregateInputType = {
   id?: true
-  level?: true
   exp?: true
   streakDays?: true
 }
@@ -246,7 +242,7 @@ export type UserGroupByOutputType = {
   provider: $Enums.AuthProvider
   providerId: string
   profileImage: string | null
-  level: number
+  level: $Enums.Level
   exp: number
   streakDays: number
   lastLoginAt: Date
@@ -285,7 +281,7 @@ export type UserWhereInput = {
   provider?: Prisma.EnumAuthProviderFilter<"User"> | $Enums.AuthProvider
   providerId?: Prisma.StringFilter<"User"> | string
   profileImage?: Prisma.StringNullableFilter<"User"> | string | null
-  level?: Prisma.IntFilter<"User"> | number
+  level?: Prisma.EnumLevelFilter<"User"> | $Enums.Level
   exp?: Prisma.IntFilter<"User"> | number
   streakDays?: Prisma.IntFilter<"User"> | number
   lastLoginAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -297,6 +293,7 @@ export type UserWhereInput = {
   dialogueBookmarks?: Prisma.DialogueBookmarkListRelationFilter
   characterFriends?: Prisma.CharacterFriendListRelationFilter
   characterMessages?: Prisma.CharacterMessageListRelationFilter
+  userQuizSessions?: Prisma.UserQuizSessionListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -318,6 +315,7 @@ export type UserOrderByWithRelationInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkOrderByRelationAggregateInput
   characterFriends?: Prisma.CharacterFriendOrderByRelationAggregateInput
   characterMessages?: Prisma.CharacterMessageOrderByRelationAggregateInput
+  userQuizSessions?: Prisma.UserQuizSessionOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -331,7 +329,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   provider?: Prisma.EnumAuthProviderFilter<"User"> | $Enums.AuthProvider
   providerId?: Prisma.StringFilter<"User"> | string
   profileImage?: Prisma.StringNullableFilter<"User"> | string | null
-  level?: Prisma.IntFilter<"User"> | number
+  level?: Prisma.EnumLevelFilter<"User"> | $Enums.Level
   exp?: Prisma.IntFilter<"User"> | number
   streakDays?: Prisma.IntFilter<"User"> | number
   lastLoginAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -343,6 +341,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   dialogueBookmarks?: Prisma.DialogueBookmarkListRelationFilter
   characterFriends?: Prisma.CharacterFriendListRelationFilter
   characterMessages?: Prisma.CharacterMessageListRelationFilter
+  userQuizSessions?: Prisma.UserQuizSessionListRelationFilter
 }, "id" | "email_provider">
 
 export type UserOrderByWithAggregationInput = {
@@ -376,7 +375,7 @@ export type UserScalarWhereWithAggregatesInput = {
   provider?: Prisma.EnumAuthProviderWithAggregatesFilter<"User"> | $Enums.AuthProvider
   providerId?: Prisma.StringWithAggregatesFilter<"User"> | string
   profileImage?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  level?: Prisma.IntWithAggregatesFilter<"User"> | number
+  level?: Prisma.EnumLevelWithAggregatesFilter<"User"> | $Enums.Level
   exp?: Prisma.IntWithAggregatesFilter<"User"> | number
   streakDays?: Prisma.IntWithAggregatesFilter<"User"> | number
   lastLoginAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -391,7 +390,7 @@ export type UserCreateInput = {
   provider: $Enums.AuthProvider
   providerId: string
   profileImage?: string | null
-  level?: number
+  level?: $Enums.Level
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
@@ -403,6 +402,7 @@ export type UserCreateInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -412,7 +412,7 @@ export type UserUncheckedCreateInput = {
   provider: $Enums.AuthProvider
   providerId: string
   profileImage?: string | null
-  level?: number
+  level?: $Enums.Level
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
@@ -424,6 +424,7 @@ export type UserUncheckedCreateInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -432,7 +433,7 @@ export type UserUpdateInput = {
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -444,6 +445,7 @@ export type UserUpdateInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -453,7 +455,7 @@ export type UserUncheckedUpdateInput = {
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -465,6 +467,7 @@ export type UserUncheckedUpdateInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -474,7 +477,7 @@ export type UserCreateManyInput = {
   provider: $Enums.AuthProvider
   providerId: string
   profileImage?: string | null
-  level?: number
+  level?: $Enums.Level
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
@@ -489,7 +492,7 @@ export type UserUpdateManyMutationInput = {
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -505,7 +508,7 @@ export type UserUncheckedUpdateManyInput = {
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -537,7 +540,6 @@ export type UserCountOrderByAggregateInput = {
 
 export type UserAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  level?: Prisma.SortOrder
   exp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
 }
@@ -576,7 +578,6 @@ export type UserMinOrderByAggregateInput = {
 
 export type UserSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  level?: Prisma.SortOrder
   exp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
 }
@@ -596,6 +597,10 @@ export type StringFieldUpdateOperationsInput = {
 
 export type EnumAuthProviderFieldUpdateOperationsInput = {
   set?: $Enums.AuthProvider
+}
+
+export type EnumLevelFieldUpdateOperationsInput = {
+  set?: $Enums.Level
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -630,6 +635,20 @@ export type UserUpdateOneRequiredWithoutStoryProgressNestedInput = {
   upsert?: Prisma.UserUpsertWithoutStoryProgressInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStoryProgressInput, Prisma.UserUpdateWithoutStoryProgressInput>, Prisma.UserUncheckedUpdateWithoutStoryProgressInput>
+}
+
+export type UserCreateNestedOneWithoutUserQuizSessionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserQuizSessionsInput, Prisma.UserUncheckedCreateWithoutUserQuizSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserQuizSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutUserQuizSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserQuizSessionsInput, Prisma.UserUncheckedCreateWithoutUserQuizSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserQuizSessionsInput
+  upsert?: Prisma.UserUpsertWithoutUserQuizSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserQuizSessionsInput, Prisma.UserUpdateWithoutUserQuizSessionsInput>, Prisma.UserUncheckedUpdateWithoutUserQuizSessionsInput>
 }
 
 export type UserCreateNestedOneWithoutUserEpisodesInput = {
@@ -694,7 +713,7 @@ export type UserCreateWithoutStoryProgressInput = {
   provider: $Enums.AuthProvider
   providerId: string
   profileImage?: string | null
-  level?: number
+  level?: $Enums.Level
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
@@ -705,6 +724,7 @@ export type UserCreateWithoutStoryProgressInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStoryProgressInput = {
@@ -714,7 +734,7 @@ export type UserUncheckedCreateWithoutStoryProgressInput = {
   provider: $Enums.AuthProvider
   providerId: string
   profileImage?: string | null
-  level?: number
+  level?: $Enums.Level
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
@@ -725,6 +745,7 @@ export type UserUncheckedCreateWithoutStoryProgressInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStoryProgressInput = {
@@ -749,7 +770,7 @@ export type UserUpdateWithoutStoryProgressInput = {
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -760,6 +781,7 @@ export type UserUpdateWithoutStoryProgressInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStoryProgressInput = {
@@ -769,13 +791,112 @@ export type UserUncheckedUpdateWithoutStoryProgressInput = {
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
+  characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
+  characterMessages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutUserQuizSessionsInput = {
+  name?: string | null
+  email: string
+  provider: $Enums.AuthProvider
+  providerId: string
+  profileImage?: string | null
+  level?: $Enums.Level
+  exp?: number
+  streakDays?: number
+  lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
+  createdAt?: Date | string
+  isNew?: boolean
+  storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
+  characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
+  characterMessages?: Prisma.CharacterMessageCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutUserQuizSessionsInput = {
+  id?: number
+  name?: string | null
+  email: string
+  provider: $Enums.AuthProvider
+  providerId: string
+  profileImage?: string | null
+  level?: $Enums.Level
+  exp?: number
+  streakDays?: number
+  lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
+  createdAt?: Date | string
+  isNew?: boolean
+  storyProgress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
+  characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
+  characterMessages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutUserQuizSessionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserQuizSessionsInput, Prisma.UserUncheckedCreateWithoutUserQuizSessionsInput>
+}
+
+export type UserUpsertWithoutUserQuizSessionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUserQuizSessionsInput, Prisma.UserUncheckedUpdateWithoutUserQuizSessionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserQuizSessionsInput, Prisma.UserUncheckedCreateWithoutUserQuizSessionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUserQuizSessionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUserQuizSessionsInput, Prisma.UserUncheckedUpdateWithoutUserQuizSessionsInput>
+}
+
+export type UserUpdateWithoutUserQuizSessionsInput = {
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
+  exp?: Prisma.IntFieldUpdateOperationsInput | number
+  streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
+  characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
+  characterMessages?: Prisma.CharacterMessageUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUserQuizSessionsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
+  exp?: Prisma.IntFieldUpdateOperationsInput | number
+  streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  storyProgress?: Prisma.StoryProgressUncheckedUpdateManyWithoutUserNestedInput
   userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
@@ -788,7 +909,7 @@ export type UserCreateWithoutUserEpisodesInput = {
   provider: $Enums.AuthProvider
   providerId: string
   profileImage?: string | null
-  level?: number
+  level?: $Enums.Level
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
@@ -799,6 +920,7 @@ export type UserCreateWithoutUserEpisodesInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserEpisodesInput = {
@@ -808,7 +930,7 @@ export type UserUncheckedCreateWithoutUserEpisodesInput = {
   provider: $Enums.AuthProvider
   providerId: string
   profileImage?: string | null
-  level?: number
+  level?: $Enums.Level
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
@@ -819,6 +941,7 @@ export type UserUncheckedCreateWithoutUserEpisodesInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserEpisodesInput = {
@@ -843,7 +966,7 @@ export type UserUpdateWithoutUserEpisodesInput = {
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -854,6 +977,7 @@ export type UserUpdateWithoutUserEpisodesInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserEpisodesInput = {
@@ -863,7 +987,7 @@ export type UserUncheckedUpdateWithoutUserEpisodesInput = {
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -874,6 +998,7 @@ export type UserUncheckedUpdateWithoutUserEpisodesInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCharacterFriendsInput = {
@@ -882,7 +1007,7 @@ export type UserCreateWithoutCharacterFriendsInput = {
   provider: $Enums.AuthProvider
   providerId: string
   profileImage?: string | null
-  level?: number
+  level?: $Enums.Level
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
@@ -893,6 +1018,7 @@ export type UserCreateWithoutCharacterFriendsInput = {
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCharacterFriendsInput = {
@@ -902,7 +1028,7 @@ export type UserUncheckedCreateWithoutCharacterFriendsInput = {
   provider: $Enums.AuthProvider
   providerId: string
   profileImage?: string | null
-  level?: number
+  level?: $Enums.Level
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
@@ -913,6 +1039,7 @@ export type UserUncheckedCreateWithoutCharacterFriendsInput = {
   userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCharacterFriendsInput = {
@@ -937,7 +1064,7 @@ export type UserUpdateWithoutCharacterFriendsInput = {
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -948,6 +1075,7 @@ export type UserUpdateWithoutCharacterFriendsInput = {
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCharacterFriendsInput = {
@@ -957,7 +1085,7 @@ export type UserUncheckedUpdateWithoutCharacterFriendsInput = {
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -968,6 +1096,7 @@ export type UserUncheckedUpdateWithoutCharacterFriendsInput = {
   userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCharacterMessagesInput = {
@@ -976,7 +1105,7 @@ export type UserCreateWithoutCharacterMessagesInput = {
   provider: $Enums.AuthProvider
   providerId: string
   profileImage?: string | null
-  level?: number
+  level?: $Enums.Level
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
@@ -987,6 +1116,7 @@ export type UserCreateWithoutCharacterMessagesInput = {
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCharacterMessagesInput = {
@@ -996,7 +1126,7 @@ export type UserUncheckedCreateWithoutCharacterMessagesInput = {
   provider: $Enums.AuthProvider
   providerId: string
   profileImage?: string | null
-  level?: number
+  level?: $Enums.Level
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
@@ -1007,6 +1137,7 @@ export type UserUncheckedCreateWithoutCharacterMessagesInput = {
   userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCharacterMessagesInput = {
@@ -1031,7 +1162,7 @@ export type UserUpdateWithoutCharacterMessagesInput = {
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1042,6 +1173,7 @@ export type UserUpdateWithoutCharacterMessagesInput = {
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCharacterMessagesInput = {
@@ -1051,7 +1183,7 @@ export type UserUncheckedUpdateWithoutCharacterMessagesInput = {
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1062,6 +1194,7 @@ export type UserUncheckedUpdateWithoutCharacterMessagesInput = {
   userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDialogueBookmarksInput = {
@@ -1070,7 +1203,7 @@ export type UserCreateWithoutDialogueBookmarksInput = {
   provider: $Enums.AuthProvider
   providerId: string
   profileImage?: string | null
-  level?: number
+  level?: $Enums.Level
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
@@ -1081,6 +1214,7 @@ export type UserCreateWithoutDialogueBookmarksInput = {
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDialogueBookmarksInput = {
@@ -1090,7 +1224,7 @@ export type UserUncheckedCreateWithoutDialogueBookmarksInput = {
   provider: $Enums.AuthProvider
   providerId: string
   profileImage?: string | null
-  level?: number
+  level?: $Enums.Level
   exp?: number
   streakDays?: number
   lastLoginAt?: Date | string
@@ -1101,6 +1235,7 @@ export type UserUncheckedCreateWithoutDialogueBookmarksInput = {
   userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDialogueBookmarksInput = {
@@ -1125,7 +1260,7 @@ export type UserUpdateWithoutDialogueBookmarksInput = {
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1136,6 +1271,7 @@ export type UserUpdateWithoutDialogueBookmarksInput = {
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDialogueBookmarksInput = {
@@ -1145,7 +1281,7 @@ export type UserUncheckedUpdateWithoutDialogueBookmarksInput = {
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   exp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1156,6 +1292,7 @@ export type UserUncheckedUpdateWithoutDialogueBookmarksInput = {
   userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1169,6 +1306,7 @@ export type UserCountOutputType = {
   dialogueBookmarks: number
   characterFriends: number
   characterMessages: number
+  userQuizSessions: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1177,6 +1315,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   dialogueBookmarks?: boolean | UserCountOutputTypeCountDialogueBookmarksArgs
   characterFriends?: boolean | UserCountOutputTypeCountCharacterFriendsArgs
   characterMessages?: boolean | UserCountOutputTypeCountCharacterMessagesArgs
+  userQuizSessions?: boolean | UserCountOutputTypeCountUserQuizSessionsArgs
 }
 
 /**
@@ -1224,6 +1363,13 @@ export type UserCountOutputTypeCountCharacterMessagesArgs<ExtArgs extends runtim
   where?: Prisma.CharacterMessageWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUserQuizSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserQuizSessionWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1244,6 +1390,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   dialogueBookmarks?: boolean | Prisma.User$dialogueBookmarksArgs<ExtArgs>
   characterFriends?: boolean | Prisma.User$characterFriendsArgs<ExtArgs>
   characterMessages?: boolean | Prisma.User$characterMessagesArgs<ExtArgs>
+  userQuizSessions?: boolean | Prisma.User$userQuizSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1302,6 +1449,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   dialogueBookmarks?: boolean | Prisma.User$dialogueBookmarksArgs<ExtArgs>
   characterFriends?: boolean | Prisma.User$characterFriendsArgs<ExtArgs>
   characterMessages?: boolean | Prisma.User$characterMessagesArgs<ExtArgs>
+  userQuizSessions?: boolean | Prisma.User$userQuizSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1315,6 +1463,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     dialogueBookmarks: Prisma.$dialogueBookmarkPayload<ExtArgs>[]
     characterFriends: Prisma.$CharacterFriendPayload<ExtArgs>[]
     characterMessages: Prisma.$CharacterMessagePayload<ExtArgs>[]
+    userQuizSessions: Prisma.$UserQuizSessionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1323,7 +1472,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     provider: $Enums.AuthProvider
     providerId: string
     profileImage: string | null
-    level: number
+    level: $Enums.Level
     exp: number
     streakDays: number
     lastLoginAt: Date
@@ -1729,6 +1878,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   dialogueBookmarks<T extends Prisma.User$dialogueBookmarksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$dialogueBookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$dialogueBookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   characterFriends<T extends Prisma.User$characterFriendsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$characterFriendsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterFriendPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   characterMessages<T extends Prisma.User$characterMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$characterMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userQuizSessions<T extends Prisma.User$userQuizSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userQuizSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserQuizSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1764,7 +1914,7 @@ export interface UserFieldRefs {
   readonly provider: Prisma.FieldRef<"User", 'AuthProvider'>
   readonly providerId: Prisma.FieldRef<"User", 'String'>
   readonly profileImage: Prisma.FieldRef<"User", 'String'>
-  readonly level: Prisma.FieldRef<"User", 'Int'>
+  readonly level: Prisma.FieldRef<"User", 'Level'>
   readonly exp: Prisma.FieldRef<"User", 'Int'>
   readonly streakDays: Prisma.FieldRef<"User", 'Int'>
   readonly lastLoginAt: Prisma.FieldRef<"User", 'DateTime'>
@@ -2276,6 +2426,30 @@ export type User$characterMessagesArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.CharacterMessageScalarFieldEnum | Prisma.CharacterMessageScalarFieldEnum[]
+}
+
+/**
+ * User.userQuizSessions
+ */
+export type User$userQuizSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserQuizSession
+   */
+  select?: Prisma.UserQuizSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserQuizSession
+   */
+  omit?: Prisma.UserQuizSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserQuizSessionInclude<ExtArgs> | null
+  where?: Prisma.UserQuizSessionWhereInput
+  orderBy?: Prisma.UserQuizSessionOrderByWithRelationInput | Prisma.UserQuizSessionOrderByWithRelationInput[]
+  cursor?: Prisma.UserQuizSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserQuizSessionScalarFieldEnum | Prisma.UserQuizSessionScalarFieldEnum[]
 }
 
 /**

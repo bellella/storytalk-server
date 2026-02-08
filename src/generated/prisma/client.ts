@@ -83,6 +83,11 @@ export type ReviewItem = Prisma.ReviewItemModel
  */
 export type Quiz = Prisma.QuizModel
 /**
+ * Model UserQuizSession
+ * 
+ */
+export type UserQuizSession = Prisma.UserQuizSessionModel
+/**
  * Model UserQuizAnswer
  * 
  */

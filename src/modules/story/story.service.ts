@@ -90,7 +90,7 @@ export class StoryService {
       description: story.description ?? undefined,
       coverImage: story.coverImage ?? undefined,
       category: story.category,
-      difficulty: story.difficulty,
+      level: story.level,
       totalEpisodes: story.episodes.length,
       status: story.status === PublishStatus.PUBLISHED ? '연재중' : '준비중',
       likeCount: 123, // TODO: 실제 좋아요 카운트 로직으로 교체
@@ -145,7 +145,7 @@ export class StoryService {
       description: story.description ?? undefined,
       coverImage: story.coverImage ?? undefined,
       category: story.category,
-      difficulty: story.difficulty,
+      level: story.level,
       status: story.status === PublishStatus.PUBLISHED ? '연재중' : '준비중',
       totalEpisodes: story._count.episodes,
       likeCount: 123, // TODO: DB에 likeCount 필드 추가 필요

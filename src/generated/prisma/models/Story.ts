@@ -28,12 +28,10 @@ export type AggregateStory = {
 
 export type StoryAvgAggregateOutputType = {
   id: number | null
-  difficulty: number | null
 }
 
 export type StorySumAggregateOutputType = {
   id: number | null
-  difficulty: number | null
 }
 
 export type StoryMinAggregateOutputType = {
@@ -42,7 +40,7 @@ export type StoryMinAggregateOutputType = {
   koreanTitle: string | null
   category: string | null
   icon: string | null
-  difficulty: number | null
+  level: $Enums.Level | null
   description: string | null
   coverImage: string | null
   status: $Enums.PublishStatus | null
@@ -56,7 +54,7 @@ export type StoryMaxAggregateOutputType = {
   koreanTitle: string | null
   category: string | null
   icon: string | null
-  difficulty: number | null
+  level: $Enums.Level | null
   description: string | null
   coverImage: string | null
   status: $Enums.PublishStatus | null
@@ -70,7 +68,7 @@ export type StoryCountAggregateOutputType = {
   koreanTitle: number
   category: number
   icon: number
-  difficulty: number
+  level: number
   description: number
   coverImage: number
   status: number
@@ -82,12 +80,10 @@ export type StoryCountAggregateOutputType = {
 
 export type StoryAvgAggregateInputType = {
   id?: true
-  difficulty?: true
 }
 
 export type StorySumAggregateInputType = {
   id?: true
-  difficulty?: true
 }
 
 export type StoryMinAggregateInputType = {
@@ -96,7 +92,7 @@ export type StoryMinAggregateInputType = {
   koreanTitle?: true
   category?: true
   icon?: true
-  difficulty?: true
+  level?: true
   description?: true
   coverImage?: true
   status?: true
@@ -110,7 +106,7 @@ export type StoryMaxAggregateInputType = {
   koreanTitle?: true
   category?: true
   icon?: true
-  difficulty?: true
+  level?: true
   description?: true
   coverImage?: true
   status?: true
@@ -124,7 +120,7 @@ export type StoryCountAggregateInputType = {
   koreanTitle?: true
   category?: true
   icon?: true
-  difficulty?: true
+  level?: true
   description?: true
   coverImage?: true
   status?: true
@@ -225,7 +221,7 @@ export type StoryGroupByOutputType = {
   koreanTitle: string | null
   category: string
   icon: string
-  difficulty: number
+  level: $Enums.Level
   description: string | null
   coverImage: string | null
   status: $Enums.PublishStatus
@@ -262,7 +258,7 @@ export type StoryWhereInput = {
   koreanTitle?: Prisma.StringNullableFilter<"Story"> | string | null
   category?: Prisma.StringFilter<"Story"> | string
   icon?: Prisma.StringFilter<"Story"> | string
-  difficulty?: Prisma.IntFilter<"Story"> | number
+  level?: Prisma.EnumLevelFilter<"Story"> | $Enums.Level
   description?: Prisma.StringNullableFilter<"Story"> | string | null
   coverImage?: Prisma.StringNullableFilter<"Story"> | string | null
   status?: Prisma.EnumPublishStatusFilter<"Story"> | $Enums.PublishStatus
@@ -280,7 +276,7 @@ export type StoryOrderByWithRelationInput = {
   koreanTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   category?: Prisma.SortOrder
   icon?: Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   coverImage?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -301,7 +297,7 @@ export type StoryWhereUniqueInput = Prisma.AtLeast<{
   koreanTitle?: Prisma.StringNullableFilter<"Story"> | string | null
   category?: Prisma.StringFilter<"Story"> | string
   icon?: Prisma.StringFilter<"Story"> | string
-  difficulty?: Prisma.IntFilter<"Story"> | number
+  level?: Prisma.EnumLevelFilter<"Story"> | $Enums.Level
   description?: Prisma.StringNullableFilter<"Story"> | string | null
   coverImage?: Prisma.StringNullableFilter<"Story"> | string | null
   status?: Prisma.EnumPublishStatusFilter<"Story"> | $Enums.PublishStatus
@@ -319,7 +315,7 @@ export type StoryOrderByWithAggregationInput = {
   koreanTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   category?: Prisma.SortOrder
   icon?: Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   coverImage?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -341,7 +337,7 @@ export type StoryScalarWhereWithAggregatesInput = {
   koreanTitle?: Prisma.StringNullableWithAggregatesFilter<"Story"> | string | null
   category?: Prisma.StringWithAggregatesFilter<"Story"> | string
   icon?: Prisma.StringWithAggregatesFilter<"Story"> | string
-  difficulty?: Prisma.IntWithAggregatesFilter<"Story"> | number
+  level?: Prisma.EnumLevelWithAggregatesFilter<"Story"> | $Enums.Level
   description?: Prisma.StringNullableWithAggregatesFilter<"Story"> | string | null
   coverImage?: Prisma.StringNullableWithAggregatesFilter<"Story"> | string | null
   status?: Prisma.EnumPublishStatusWithAggregatesFilter<"Story"> | $Enums.PublishStatus
@@ -354,7 +350,7 @@ export type StoryCreateInput = {
   koreanTitle?: string | null
   category: string
   icon: string
-  difficulty?: number
+  level?: $Enums.Level
   description?: string | null
   coverImage?: string | null
   status?: $Enums.PublishStatus
@@ -372,7 +368,7 @@ export type StoryUncheckedCreateInput = {
   koreanTitle?: string | null
   category: string
   icon: string
-  difficulty?: number
+  level?: $Enums.Level
   description?: string | null
   coverImage?: string | null
   status?: $Enums.PublishStatus
@@ -389,7 +385,7 @@ export type StoryUpdateInput = {
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   icon?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -407,7 +403,7 @@ export type StoryUncheckedUpdateInput = {
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   icon?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -425,7 +421,7 @@ export type StoryCreateManyInput = {
   koreanTitle?: string | null
   category: string
   icon: string
-  difficulty?: number
+  level?: $Enums.Level
   description?: string | null
   coverImage?: string | null
   status?: $Enums.PublishStatus
@@ -438,7 +434,7 @@ export type StoryUpdateManyMutationInput = {
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   icon?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -452,7 +448,7 @@ export type StoryUncheckedUpdateManyInput = {
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   icon?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -466,7 +462,7 @@ export type StoryCountOrderByAggregateInput = {
   koreanTitle?: Prisma.SortOrder
   category?: Prisma.SortOrder
   icon?: Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   description?: Prisma.SortOrder
   coverImage?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -476,7 +472,6 @@ export type StoryCountOrderByAggregateInput = {
 
 export type StoryAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
 }
 
 export type StoryMaxOrderByAggregateInput = {
@@ -485,7 +480,7 @@ export type StoryMaxOrderByAggregateInput = {
   koreanTitle?: Prisma.SortOrder
   category?: Prisma.SortOrder
   icon?: Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   description?: Prisma.SortOrder
   coverImage?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -499,7 +494,7 @@ export type StoryMinOrderByAggregateInput = {
   koreanTitle?: Prisma.SortOrder
   category?: Prisma.SortOrder
   icon?: Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
+  level?: Prisma.SortOrder
   description?: Prisma.SortOrder
   coverImage?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -509,7 +504,6 @@ export type StoryMinOrderByAggregateInput = {
 
 export type StorySumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
 }
 
 export type StoryScalarRelationFilter = {
@@ -582,7 +576,7 @@ export type StoryCreateWithoutUnitsInput = {
   koreanTitle?: string | null
   category: string
   icon: string
-  difficulty?: number
+  level?: $Enums.Level
   description?: string | null
   coverImage?: string | null
   status?: $Enums.PublishStatus
@@ -599,7 +593,7 @@ export type StoryUncheckedCreateWithoutUnitsInput = {
   koreanTitle?: string | null
   category: string
   icon: string
-  difficulty?: number
+  level?: $Enums.Level
   description?: string | null
   coverImage?: string | null
   status?: $Enums.PublishStatus
@@ -631,7 +625,7 @@ export type StoryUpdateWithoutUnitsInput = {
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   icon?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -648,7 +642,7 @@ export type StoryUncheckedUpdateWithoutUnitsInput = {
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   icon?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -664,7 +658,7 @@ export type StoryCreateWithoutEpisodesInput = {
   koreanTitle?: string | null
   category: string
   icon: string
-  difficulty?: number
+  level?: $Enums.Level
   description?: string | null
   coverImage?: string | null
   status?: $Enums.PublishStatus
@@ -681,7 +675,7 @@ export type StoryUncheckedCreateWithoutEpisodesInput = {
   koreanTitle?: string | null
   category: string
   icon: string
-  difficulty?: number
+  level?: $Enums.Level
   description?: string | null
   coverImage?: string | null
   status?: $Enums.PublishStatus
@@ -713,7 +707,7 @@ export type StoryUpdateWithoutEpisodesInput = {
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   icon?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -730,7 +724,7 @@ export type StoryUncheckedUpdateWithoutEpisodesInput = {
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   icon?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -746,7 +740,7 @@ export type StoryCreateWithoutProgressInput = {
   koreanTitle?: string | null
   category: string
   icon: string
-  difficulty?: number
+  level?: $Enums.Level
   description?: string | null
   coverImage?: string | null
   status?: $Enums.PublishStatus
@@ -763,7 +757,7 @@ export type StoryUncheckedCreateWithoutProgressInput = {
   koreanTitle?: string | null
   category: string
   icon: string
-  difficulty?: number
+  level?: $Enums.Level
   description?: string | null
   coverImage?: string | null
   status?: $Enums.PublishStatus
@@ -795,7 +789,7 @@ export type StoryUpdateWithoutProgressInput = {
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   icon?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -812,7 +806,7 @@ export type StoryUncheckedUpdateWithoutProgressInput = {
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   icon?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -828,7 +822,7 @@ export type StoryCreateWithoutStoryCharactersInput = {
   koreanTitle?: string | null
   category: string
   icon: string
-  difficulty?: number
+  level?: $Enums.Level
   description?: string | null
   coverImage?: string | null
   status?: $Enums.PublishStatus
@@ -845,7 +839,7 @@ export type StoryUncheckedCreateWithoutStoryCharactersInput = {
   koreanTitle?: string | null
   category: string
   icon: string
-  difficulty?: number
+  level?: $Enums.Level
   description?: string | null
   coverImage?: string | null
   status?: $Enums.PublishStatus
@@ -877,7 +871,7 @@ export type StoryUpdateWithoutStoryCharactersInput = {
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   icon?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -894,7 +888,7 @@ export type StoryUncheckedUpdateWithoutStoryCharactersInput = {
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   icon?: Prisma.StringFieldUpdateOperationsInput | string
-  difficulty?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -969,7 +963,7 @@ export type StorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   koreanTitle?: boolean
   category?: boolean
   icon?: boolean
-  difficulty?: boolean
+  level?: boolean
   description?: boolean
   coverImage?: boolean
   status?: boolean
@@ -988,7 +982,7 @@ export type StorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   koreanTitle?: boolean
   category?: boolean
   icon?: boolean
-  difficulty?: boolean
+  level?: boolean
   description?: boolean
   coverImage?: boolean
   status?: boolean
@@ -1002,7 +996,7 @@ export type StorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   koreanTitle?: boolean
   category?: boolean
   icon?: boolean
-  difficulty?: boolean
+  level?: boolean
   description?: boolean
   coverImage?: boolean
   status?: boolean
@@ -1016,7 +1010,7 @@ export type StorySelectScalar = {
   koreanTitle?: boolean
   category?: boolean
   icon?: boolean
-  difficulty?: boolean
+  level?: boolean
   description?: boolean
   coverImage?: boolean
   status?: boolean
@@ -1024,7 +1018,7 @@ export type StorySelectScalar = {
   updatedAt?: boolean
 }
 
-export type StoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "koreanTitle" | "category" | "icon" | "difficulty" | "description" | "coverImage" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["story"]>
+export type StoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "koreanTitle" | "category" | "icon" | "level" | "description" | "coverImage" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["story"]>
 export type StoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   episodes?: boolean | Prisma.Story$episodesArgs<ExtArgs>
   storyCharacters?: boolean | Prisma.Story$storyCharactersArgs<ExtArgs>
@@ -1049,7 +1043,7 @@ export type $StoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     koreanTitle: string | null
     category: string
     icon: string
-    difficulty: number
+    level: $Enums.Level
     description: string | null
     coverImage: string | null
     status: $Enums.PublishStatus
@@ -1487,7 +1481,7 @@ export interface StoryFieldRefs {
   readonly koreanTitle: Prisma.FieldRef<"Story", 'String'>
   readonly category: Prisma.FieldRef<"Story", 'String'>
   readonly icon: Prisma.FieldRef<"Story", 'String'>
-  readonly difficulty: Prisma.FieldRef<"Story", 'Int'>
+  readonly level: Prisma.FieldRef<"Story", 'Level'>
   readonly description: Prisma.FieldRef<"Story", 'String'>
   readonly coverImage: Prisma.FieldRef<"Story", 'String'>
   readonly status: Prisma.FieldRef<"Story", 'PublishStatus'>

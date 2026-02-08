@@ -1,3 +1,5 @@
+import { Level } from '@/generated/prisma/enums';
+
 export class UserDto {
   id: number;
   email: string;
@@ -6,7 +8,7 @@ export class UserDto {
 }
 
 export class UserProfileDto extends UserDto {
-  level: number;
+  level: Level;
   exp: number;
   streakDays: number;
 }

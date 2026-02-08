@@ -1,3 +1,5 @@
+import { Level } from '@/generated/prisma/client';
+
 export class UnitListItemDto {
   id: number;
   title: string;
@@ -21,7 +23,7 @@ export class UnitDetailDto {
   id: number;
   title: string;
   description: string;
-  difficulty: number;
+  level: Level;
   episodes: {
     id: number;
     title: string;

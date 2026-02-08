@@ -30,37 +30,47 @@ export type UserQuizAnswerAvgAggregateOutputType = {
   id: number | null
   userId: number | null
   quizId: number | null
+  quizSessionId: number | null
+  userQuizSessionId: number | null
 }
 
 export type UserQuizAnswerSumAggregateOutputType = {
   id: number | null
   userId: number | null
   quizId: number | null
+  quizSessionId: number | null
+  userQuizSessionId: number | null
 }
 
 export type UserQuizAnswerMinAggregateOutputType = {
   id: number | null
   userId: number | null
   quizId: number | null
+  quizSessionId: number | null
   isCorrect: boolean | null
   createdAt: Date | null
+  userQuizSessionId: number | null
 }
 
 export type UserQuizAnswerMaxAggregateOutputType = {
   id: number | null
   userId: number | null
   quizId: number | null
+  quizSessionId: number | null
   isCorrect: boolean | null
   createdAt: Date | null
+  userQuizSessionId: number | null
 }
 
 export type UserQuizAnswerCountAggregateOutputType = {
   id: number
   userId: number
   quizId: number
+  quizSessionId: number
   isCorrect: number
   payload: number
   createdAt: number
+  userQuizSessionId: number
   _all: number
 }
 
@@ -69,37 +79,47 @@ export type UserQuizAnswerAvgAggregateInputType = {
   id?: true
   userId?: true
   quizId?: true
+  quizSessionId?: true
+  userQuizSessionId?: true
 }
 
 export type UserQuizAnswerSumAggregateInputType = {
   id?: true
   userId?: true
   quizId?: true
+  quizSessionId?: true
+  userQuizSessionId?: true
 }
 
 export type UserQuizAnswerMinAggregateInputType = {
   id?: true
   userId?: true
   quizId?: true
+  quizSessionId?: true
   isCorrect?: true
   createdAt?: true
+  userQuizSessionId?: true
 }
 
 export type UserQuizAnswerMaxAggregateInputType = {
   id?: true
   userId?: true
   quizId?: true
+  quizSessionId?: true
   isCorrect?: true
   createdAt?: true
+  userQuizSessionId?: true
 }
 
 export type UserQuizAnswerCountAggregateInputType = {
   id?: true
   userId?: true
   quizId?: true
+  quizSessionId?: true
   isCorrect?: true
   payload?: true
   createdAt?: true
+  userQuizSessionId?: true
   _all?: true
 }
 
@@ -193,9 +213,11 @@ export type UserQuizAnswerGroupByOutputType = {
   id: number
   userId: number
   quizId: number
+  quizSessionId: number
   isCorrect: boolean | null
   payload: runtime.JsonValue
   createdAt: Date
+  userQuizSessionId: number | null
   _count: UserQuizAnswerCountAggregateOutputType | null
   _avg: UserQuizAnswerAvgAggregateOutputType | null
   _sum: UserQuizAnswerSumAggregateOutputType | null
@@ -225,20 +247,26 @@ export type UserQuizAnswerWhereInput = {
   id?: Prisma.IntFilter<"UserQuizAnswer"> | number
   userId?: Prisma.IntFilter<"UserQuizAnswer"> | number
   quizId?: Prisma.IntFilter<"UserQuizAnswer"> | number
+  quizSessionId?: Prisma.IntFilter<"UserQuizAnswer"> | number
   isCorrect?: Prisma.BoolNullableFilter<"UserQuizAnswer"> | boolean | null
   payload?: Prisma.JsonFilter<"UserQuizAnswer">
   createdAt?: Prisma.DateTimeFilter<"UserQuizAnswer"> | Date | string
+  userQuizSessionId?: Prisma.IntNullableFilter<"UserQuizAnswer"> | number | null
   quiz?: Prisma.XOR<Prisma.QuizScalarRelationFilter, Prisma.QuizWhereInput>
+  userQuizSession?: Prisma.XOR<Prisma.UserQuizSessionNullableScalarRelationFilter, Prisma.UserQuizSessionWhereInput> | null
 }
 
 export type UserQuizAnswerOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quizId?: Prisma.SortOrder
+  quizSessionId?: Prisma.SortOrder
   isCorrect?: Prisma.SortOrderInput | Prisma.SortOrder
   payload?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  userQuizSessionId?: Prisma.SortOrderInput | Prisma.SortOrder
   quiz?: Prisma.QuizOrderByWithRelationInput
+  userQuizSession?: Prisma.UserQuizSessionOrderByWithRelationInput
 }
 
 export type UserQuizAnswerWhereUniqueInput = Prisma.AtLeast<{
@@ -248,19 +276,24 @@ export type UserQuizAnswerWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserQuizAnswerWhereInput | Prisma.UserQuizAnswerWhereInput[]
   userId?: Prisma.IntFilter<"UserQuizAnswer"> | number
   quizId?: Prisma.IntFilter<"UserQuizAnswer"> | number
+  quizSessionId?: Prisma.IntFilter<"UserQuizAnswer"> | number
   isCorrect?: Prisma.BoolNullableFilter<"UserQuizAnswer"> | boolean | null
   payload?: Prisma.JsonFilter<"UserQuizAnswer">
   createdAt?: Prisma.DateTimeFilter<"UserQuizAnswer"> | Date | string
+  userQuizSessionId?: Prisma.IntNullableFilter<"UserQuizAnswer"> | number | null
   quiz?: Prisma.XOR<Prisma.QuizScalarRelationFilter, Prisma.QuizWhereInput>
+  userQuizSession?: Prisma.XOR<Prisma.UserQuizSessionNullableScalarRelationFilter, Prisma.UserQuizSessionWhereInput> | null
 }, "id">
 
 export type UserQuizAnswerOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quizId?: Prisma.SortOrder
+  quizSessionId?: Prisma.SortOrder
   isCorrect?: Prisma.SortOrderInput | Prisma.SortOrder
   payload?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  userQuizSessionId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserQuizAnswerCountOrderByAggregateInput
   _avg?: Prisma.UserQuizAnswerAvgOrderByAggregateInput
   _max?: Prisma.UserQuizAnswerMaxOrderByAggregateInput
@@ -275,56 +308,69 @@ export type UserQuizAnswerScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"UserQuizAnswer"> | number
   userId?: Prisma.IntWithAggregatesFilter<"UserQuizAnswer"> | number
   quizId?: Prisma.IntWithAggregatesFilter<"UserQuizAnswer"> | number
+  quizSessionId?: Prisma.IntWithAggregatesFilter<"UserQuizAnswer"> | number
   isCorrect?: Prisma.BoolNullableWithAggregatesFilter<"UserQuizAnswer"> | boolean | null
   payload?: Prisma.JsonWithAggregatesFilter<"UserQuizAnswer">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserQuizAnswer"> | Date | string
+  userQuizSessionId?: Prisma.IntNullableWithAggregatesFilter<"UserQuizAnswer"> | number | null
 }
 
 export type UserQuizAnswerCreateInput = {
   userId: number
+  quizSessionId: number
   isCorrect?: boolean | null
   payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   quiz: Prisma.QuizCreateNestedOneWithoutUserQuizAnswersInput
+  userQuizSession?: Prisma.UserQuizSessionCreateNestedOneWithoutAnswersInput
 }
 
 export type UserQuizAnswerUncheckedCreateInput = {
   id?: number
   userId: number
   quizId: number
+  quizSessionId: number
   isCorrect?: boolean | null
   payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
+  userQuizSessionId?: number | null
 }
 
 export type UserQuizAnswerUpdateInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  quizSessionId?: Prisma.IntFieldUpdateOperationsInput | number
   isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quiz?: Prisma.QuizUpdateOneRequiredWithoutUserQuizAnswersNestedInput
+  userQuizSession?: Prisma.UserQuizSessionUpdateOneWithoutAnswersNestedInput
 }
 
 export type UserQuizAnswerUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   quizId?: Prisma.IntFieldUpdateOperationsInput | number
+  quizSessionId?: Prisma.IntFieldUpdateOperationsInput | number
   isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userQuizSessionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type UserQuizAnswerCreateManyInput = {
   id?: number
   userId: number
   quizId: number
+  quizSessionId: number
   isCorrect?: boolean | null
   payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
+  userQuizSessionId?: number | null
 }
 
 export type UserQuizAnswerUpdateManyMutationInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  quizSessionId?: Prisma.IntFieldUpdateOperationsInput | number
   isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -334,9 +380,11 @@ export type UserQuizAnswerUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   quizId?: Prisma.IntFieldUpdateOperationsInput | number
+  quizSessionId?: Prisma.IntFieldUpdateOperationsInput | number
   isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userQuizSessionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type UserQuizAnswerListRelationFilter = {
@@ -353,37 +401,47 @@ export type UserQuizAnswerCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quizId?: Prisma.SortOrder
+  quizSessionId?: Prisma.SortOrder
   isCorrect?: Prisma.SortOrder
   payload?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  userQuizSessionId?: Prisma.SortOrder
 }
 
 export type UserQuizAnswerAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quizId?: Prisma.SortOrder
+  quizSessionId?: Prisma.SortOrder
+  userQuizSessionId?: Prisma.SortOrder
 }
 
 export type UserQuizAnswerMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quizId?: Prisma.SortOrder
+  quizSessionId?: Prisma.SortOrder
   isCorrect?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  userQuizSessionId?: Prisma.SortOrder
 }
 
 export type UserQuizAnswerMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quizId?: Prisma.SortOrder
+  quizSessionId?: Prisma.SortOrder
   isCorrect?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  userQuizSessionId?: Prisma.SortOrder
 }
 
 export type UserQuizAnswerSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quizId?: Prisma.SortOrder
+  quizSessionId?: Prisma.SortOrder
+  userQuizSessionId?: Prisma.SortOrder
 }
 
 export type UserQuizAnswerCreateNestedManyWithoutQuizInput = {
@@ -428,23 +486,69 @@ export type UserQuizAnswerUncheckedUpdateManyWithoutQuizNestedInput = {
   deleteMany?: Prisma.UserQuizAnswerScalarWhereInput | Prisma.UserQuizAnswerScalarWhereInput[]
 }
 
+export type UserQuizAnswerCreateNestedManyWithoutUserQuizSessionInput = {
+  create?: Prisma.XOR<Prisma.UserQuizAnswerCreateWithoutUserQuizSessionInput, Prisma.UserQuizAnswerUncheckedCreateWithoutUserQuizSessionInput> | Prisma.UserQuizAnswerCreateWithoutUserQuizSessionInput[] | Prisma.UserQuizAnswerUncheckedCreateWithoutUserQuizSessionInput[]
+  connectOrCreate?: Prisma.UserQuizAnswerCreateOrConnectWithoutUserQuizSessionInput | Prisma.UserQuizAnswerCreateOrConnectWithoutUserQuizSessionInput[]
+  createMany?: Prisma.UserQuizAnswerCreateManyUserQuizSessionInputEnvelope
+  connect?: Prisma.UserQuizAnswerWhereUniqueInput | Prisma.UserQuizAnswerWhereUniqueInput[]
+}
+
+export type UserQuizAnswerUncheckedCreateNestedManyWithoutUserQuizSessionInput = {
+  create?: Prisma.XOR<Prisma.UserQuizAnswerCreateWithoutUserQuizSessionInput, Prisma.UserQuizAnswerUncheckedCreateWithoutUserQuizSessionInput> | Prisma.UserQuizAnswerCreateWithoutUserQuizSessionInput[] | Prisma.UserQuizAnswerUncheckedCreateWithoutUserQuizSessionInput[]
+  connectOrCreate?: Prisma.UserQuizAnswerCreateOrConnectWithoutUserQuizSessionInput | Prisma.UserQuizAnswerCreateOrConnectWithoutUserQuizSessionInput[]
+  createMany?: Prisma.UserQuizAnswerCreateManyUserQuizSessionInputEnvelope
+  connect?: Prisma.UserQuizAnswerWhereUniqueInput | Prisma.UserQuizAnswerWhereUniqueInput[]
+}
+
+export type UserQuizAnswerUpdateManyWithoutUserQuizSessionNestedInput = {
+  create?: Prisma.XOR<Prisma.UserQuizAnswerCreateWithoutUserQuizSessionInput, Prisma.UserQuizAnswerUncheckedCreateWithoutUserQuizSessionInput> | Prisma.UserQuizAnswerCreateWithoutUserQuizSessionInput[] | Prisma.UserQuizAnswerUncheckedCreateWithoutUserQuizSessionInput[]
+  connectOrCreate?: Prisma.UserQuizAnswerCreateOrConnectWithoutUserQuizSessionInput | Prisma.UserQuizAnswerCreateOrConnectWithoutUserQuizSessionInput[]
+  upsert?: Prisma.UserQuizAnswerUpsertWithWhereUniqueWithoutUserQuizSessionInput | Prisma.UserQuizAnswerUpsertWithWhereUniqueWithoutUserQuizSessionInput[]
+  createMany?: Prisma.UserQuizAnswerCreateManyUserQuizSessionInputEnvelope
+  set?: Prisma.UserQuizAnswerWhereUniqueInput | Prisma.UserQuizAnswerWhereUniqueInput[]
+  disconnect?: Prisma.UserQuizAnswerWhereUniqueInput | Prisma.UserQuizAnswerWhereUniqueInput[]
+  delete?: Prisma.UserQuizAnswerWhereUniqueInput | Prisma.UserQuizAnswerWhereUniqueInput[]
+  connect?: Prisma.UserQuizAnswerWhereUniqueInput | Prisma.UserQuizAnswerWhereUniqueInput[]
+  update?: Prisma.UserQuizAnswerUpdateWithWhereUniqueWithoutUserQuizSessionInput | Prisma.UserQuizAnswerUpdateWithWhereUniqueWithoutUserQuizSessionInput[]
+  updateMany?: Prisma.UserQuizAnswerUpdateManyWithWhereWithoutUserQuizSessionInput | Prisma.UserQuizAnswerUpdateManyWithWhereWithoutUserQuizSessionInput[]
+  deleteMany?: Prisma.UserQuizAnswerScalarWhereInput | Prisma.UserQuizAnswerScalarWhereInput[]
+}
+
+export type UserQuizAnswerUncheckedUpdateManyWithoutUserQuizSessionNestedInput = {
+  create?: Prisma.XOR<Prisma.UserQuizAnswerCreateWithoutUserQuizSessionInput, Prisma.UserQuizAnswerUncheckedCreateWithoutUserQuizSessionInput> | Prisma.UserQuizAnswerCreateWithoutUserQuizSessionInput[] | Prisma.UserQuizAnswerUncheckedCreateWithoutUserQuizSessionInput[]
+  connectOrCreate?: Prisma.UserQuizAnswerCreateOrConnectWithoutUserQuizSessionInput | Prisma.UserQuizAnswerCreateOrConnectWithoutUserQuizSessionInput[]
+  upsert?: Prisma.UserQuizAnswerUpsertWithWhereUniqueWithoutUserQuizSessionInput | Prisma.UserQuizAnswerUpsertWithWhereUniqueWithoutUserQuizSessionInput[]
+  createMany?: Prisma.UserQuizAnswerCreateManyUserQuizSessionInputEnvelope
+  set?: Prisma.UserQuizAnswerWhereUniqueInput | Prisma.UserQuizAnswerWhereUniqueInput[]
+  disconnect?: Prisma.UserQuizAnswerWhereUniqueInput | Prisma.UserQuizAnswerWhereUniqueInput[]
+  delete?: Prisma.UserQuizAnswerWhereUniqueInput | Prisma.UserQuizAnswerWhereUniqueInput[]
+  connect?: Prisma.UserQuizAnswerWhereUniqueInput | Prisma.UserQuizAnswerWhereUniqueInput[]
+  update?: Prisma.UserQuizAnswerUpdateWithWhereUniqueWithoutUserQuizSessionInput | Prisma.UserQuizAnswerUpdateWithWhereUniqueWithoutUserQuizSessionInput[]
+  updateMany?: Prisma.UserQuizAnswerUpdateManyWithWhereWithoutUserQuizSessionInput | Prisma.UserQuizAnswerUpdateManyWithWhereWithoutUserQuizSessionInput[]
+  deleteMany?: Prisma.UserQuizAnswerScalarWhereInput | Prisma.UserQuizAnswerScalarWhereInput[]
+}
+
 export type NullableBoolFieldUpdateOperationsInput = {
   set?: boolean | null
 }
 
 export type UserQuizAnswerCreateWithoutQuizInput = {
   userId: number
+  quizSessionId: number
   isCorrect?: boolean | null
   payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
+  userQuizSession?: Prisma.UserQuizSessionCreateNestedOneWithoutAnswersInput
 }
 
 export type UserQuizAnswerUncheckedCreateWithoutQuizInput = {
   id?: number
   userId: number
+  quizSessionId: number
   isCorrect?: boolean | null
   payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
+  userQuizSessionId?: number | null
 }
 
 export type UserQuizAnswerCreateOrConnectWithoutQuizInput = {
@@ -480,37 +584,131 @@ export type UserQuizAnswerScalarWhereInput = {
   id?: Prisma.IntFilter<"UserQuizAnswer"> | number
   userId?: Prisma.IntFilter<"UserQuizAnswer"> | number
   quizId?: Prisma.IntFilter<"UserQuizAnswer"> | number
+  quizSessionId?: Prisma.IntFilter<"UserQuizAnswer"> | number
   isCorrect?: Prisma.BoolNullableFilter<"UserQuizAnswer"> | boolean | null
   payload?: Prisma.JsonFilter<"UserQuizAnswer">
   createdAt?: Prisma.DateTimeFilter<"UserQuizAnswer"> | Date | string
+  userQuizSessionId?: Prisma.IntNullableFilter<"UserQuizAnswer"> | number | null
 }
 
-export type UserQuizAnswerCreateManyQuizInput = {
+export type UserQuizAnswerCreateWithoutUserQuizSessionInput = {
+  userId: number
+  quizSessionId: number
+  isCorrect?: boolean | null
+  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  quiz: Prisma.QuizCreateNestedOneWithoutUserQuizAnswersInput
+}
+
+export type UserQuizAnswerUncheckedCreateWithoutUserQuizSessionInput = {
   id?: number
   userId: number
+  quizId: number
+  quizSessionId: number
   isCorrect?: boolean | null
   payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
+export type UserQuizAnswerCreateOrConnectWithoutUserQuizSessionInput = {
+  where: Prisma.UserQuizAnswerWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserQuizAnswerCreateWithoutUserQuizSessionInput, Prisma.UserQuizAnswerUncheckedCreateWithoutUserQuizSessionInput>
+}
+
+export type UserQuizAnswerCreateManyUserQuizSessionInputEnvelope = {
+  data: Prisma.UserQuizAnswerCreateManyUserQuizSessionInput | Prisma.UserQuizAnswerCreateManyUserQuizSessionInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserQuizAnswerUpsertWithWhereUniqueWithoutUserQuizSessionInput = {
+  where: Prisma.UserQuizAnswerWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserQuizAnswerUpdateWithoutUserQuizSessionInput, Prisma.UserQuizAnswerUncheckedUpdateWithoutUserQuizSessionInput>
+  create: Prisma.XOR<Prisma.UserQuizAnswerCreateWithoutUserQuizSessionInput, Prisma.UserQuizAnswerUncheckedCreateWithoutUserQuizSessionInput>
+}
+
+export type UserQuizAnswerUpdateWithWhereUniqueWithoutUserQuizSessionInput = {
+  where: Prisma.UserQuizAnswerWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserQuizAnswerUpdateWithoutUserQuizSessionInput, Prisma.UserQuizAnswerUncheckedUpdateWithoutUserQuizSessionInput>
+}
+
+export type UserQuizAnswerUpdateManyWithWhereWithoutUserQuizSessionInput = {
+  where: Prisma.UserQuizAnswerScalarWhereInput
+  data: Prisma.XOR<Prisma.UserQuizAnswerUpdateManyMutationInput, Prisma.UserQuizAnswerUncheckedUpdateManyWithoutUserQuizSessionInput>
+}
+
+export type UserQuizAnswerCreateManyQuizInput = {
+  id?: number
+  userId: number
+  quizSessionId: number
+  isCorrect?: boolean | null
+  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  userQuizSessionId?: number | null
+}
+
 export type UserQuizAnswerUpdateWithoutQuizInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  quizSessionId?: Prisma.IntFieldUpdateOperationsInput | number
   isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userQuizSession?: Prisma.UserQuizSessionUpdateOneWithoutAnswersNestedInput
 }
 
 export type UserQuizAnswerUncheckedUpdateWithoutQuizInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  quizSessionId?: Prisma.IntFieldUpdateOperationsInput | number
   isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userQuizSessionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type UserQuizAnswerUncheckedUpdateManyWithoutQuizInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  quizSessionId?: Prisma.IntFieldUpdateOperationsInput | number
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userQuizSessionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+export type UserQuizAnswerCreateManyUserQuizSessionInput = {
+  id?: number
+  userId: number
+  quizId: number
+  quizSessionId: number
+  isCorrect?: boolean | null
+  payload: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+}
+
+export type UserQuizAnswerUpdateWithoutUserQuizSessionInput = {
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  quizSessionId?: Prisma.IntFieldUpdateOperationsInput | number
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quiz?: Prisma.QuizUpdateOneRequiredWithoutUserQuizAnswersNestedInput
+}
+
+export type UserQuizAnswerUncheckedUpdateWithoutUserQuizSessionInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  quizId?: Prisma.IntFieldUpdateOperationsInput | number
+  quizSessionId?: Prisma.IntFieldUpdateOperationsInput | number
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserQuizAnswerUncheckedUpdateManyWithoutUserQuizSessionInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  quizId?: Prisma.IntFieldUpdateOperationsInput | number
+  quizSessionId?: Prisma.IntFieldUpdateOperationsInput | number
   isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   payload?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -522,64 +720,81 @@ export type UserQuizAnswerSelect<ExtArgs extends runtime.Types.Extensions.Intern
   id?: boolean
   userId?: boolean
   quizId?: boolean
+  quizSessionId?: boolean
   isCorrect?: boolean
   payload?: boolean
   createdAt?: boolean
+  userQuizSessionId?: boolean
   quiz?: boolean | Prisma.QuizDefaultArgs<ExtArgs>
+  userQuizSession?: boolean | Prisma.UserQuizAnswer$userQuizSessionArgs<ExtArgs>
 }, ExtArgs["result"]["userQuizAnswer"]>
 
 export type UserQuizAnswerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
   quizId?: boolean
+  quizSessionId?: boolean
   isCorrect?: boolean
   payload?: boolean
   createdAt?: boolean
+  userQuizSessionId?: boolean
   quiz?: boolean | Prisma.QuizDefaultArgs<ExtArgs>
+  userQuizSession?: boolean | Prisma.UserQuizAnswer$userQuizSessionArgs<ExtArgs>
 }, ExtArgs["result"]["userQuizAnswer"]>
 
 export type UserQuizAnswerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
   quizId?: boolean
+  quizSessionId?: boolean
   isCorrect?: boolean
   payload?: boolean
   createdAt?: boolean
+  userQuizSessionId?: boolean
   quiz?: boolean | Prisma.QuizDefaultArgs<ExtArgs>
+  userQuizSession?: boolean | Prisma.UserQuizAnswer$userQuizSessionArgs<ExtArgs>
 }, ExtArgs["result"]["userQuizAnswer"]>
 
 export type UserQuizAnswerSelectScalar = {
   id?: boolean
   userId?: boolean
   quizId?: boolean
+  quizSessionId?: boolean
   isCorrect?: boolean
   payload?: boolean
   createdAt?: boolean
+  userQuizSessionId?: boolean
 }
 
-export type UserQuizAnswerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "quizId" | "isCorrect" | "payload" | "createdAt", ExtArgs["result"]["userQuizAnswer"]>
+export type UserQuizAnswerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "quizId" | "quizSessionId" | "isCorrect" | "payload" | "createdAt" | "userQuizSessionId", ExtArgs["result"]["userQuizAnswer"]>
 export type UserQuizAnswerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quiz?: boolean | Prisma.QuizDefaultArgs<ExtArgs>
+  userQuizSession?: boolean | Prisma.UserQuizAnswer$userQuizSessionArgs<ExtArgs>
 }
 export type UserQuizAnswerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quiz?: boolean | Prisma.QuizDefaultArgs<ExtArgs>
+  userQuizSession?: boolean | Prisma.UserQuizAnswer$userQuizSessionArgs<ExtArgs>
 }
 export type UserQuizAnswerIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quiz?: boolean | Prisma.QuizDefaultArgs<ExtArgs>
+  userQuizSession?: boolean | Prisma.UserQuizAnswer$userQuizSessionArgs<ExtArgs>
 }
 
 export type $UserQuizAnswerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "UserQuizAnswer"
   objects: {
     quiz: Prisma.$QuizPayload<ExtArgs>
+    userQuizSession: Prisma.$UserQuizSessionPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     userId: number
     quizId: number
+    quizSessionId: number
     isCorrect: boolean | null
     payload: runtime.JsonValue
     createdAt: Date
+    userQuizSessionId: number | null
   }, ExtArgs["result"]["userQuizAnswer"]>
   composites: {}
 }
@@ -975,6 +1190,7 @@ readonly fields: UserQuizAnswerFieldRefs;
 export interface Prisma__UserQuizAnswerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   quiz<T extends Prisma.QuizDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuizDefaultArgs<ExtArgs>>): Prisma.Prisma__QuizClient<runtime.Types.Result.GetResult<Prisma.$QuizPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  userQuizSession<T extends Prisma.UserQuizAnswer$userQuizSessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserQuizAnswer$userQuizSessionArgs<ExtArgs>>): Prisma.Prisma__UserQuizSessionClient<runtime.Types.Result.GetResult<Prisma.$UserQuizSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1007,9 +1223,11 @@ export interface UserQuizAnswerFieldRefs {
   readonly id: Prisma.FieldRef<"UserQuizAnswer", 'Int'>
   readonly userId: Prisma.FieldRef<"UserQuizAnswer", 'Int'>
   readonly quizId: Prisma.FieldRef<"UserQuizAnswer", 'Int'>
+  readonly quizSessionId: Prisma.FieldRef<"UserQuizAnswer", 'Int'>
   readonly isCorrect: Prisma.FieldRef<"UserQuizAnswer", 'Boolean'>
   readonly payload: Prisma.FieldRef<"UserQuizAnswer", 'Json'>
   readonly createdAt: Prisma.FieldRef<"UserQuizAnswer", 'DateTime'>
+  readonly userQuizSessionId: Prisma.FieldRef<"UserQuizAnswer", 'Int'>
 }
     
 
@@ -1403,6 +1621,25 @@ export type UserQuizAnswerDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many UserQuizAnswers to delete.
    */
   limit?: number
+}
+
+/**
+ * UserQuizAnswer.userQuizSession
+ */
+export type UserQuizAnswer$userQuizSessionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserQuizSession
+   */
+  select?: Prisma.UserQuizSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserQuizSession
+   */
+  omit?: Prisma.UserQuizSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserQuizSessionInclude<ExtArgs> | null
+  where?: Prisma.UserQuizSessionWhereInput
 }
 
 /**

@@ -11,6 +11,7 @@ import { StoryModule } from './modules/story/story.module';
 import { EpisodeModule } from './modules/episode/episode.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UnitModule } from './modules/unit/unit.module';
+import { QuizModule } from './modules/quiz/quiz.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UnitModule } from './modules/unit/unit.module';
     StoryModule,
     EpisodeModule,
     UnitModule,
+    QuizModule,
   ],
   controllers: [AppController],
   providers: [AppService],

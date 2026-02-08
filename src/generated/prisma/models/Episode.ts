@@ -268,6 +268,7 @@ export type EpisodeWhereInput = {
   scenes?: Prisma.SceneListRelationFilter
   rewards?: Prisma.EpisodeRewardListRelationFilter
   userEpisodes?: Prisma.UserEpisodeListRelationFilter
+  userQuizSessions?: Prisma.UserQuizSessionListRelationFilter
 }
 
 export type EpisodeOrderByWithRelationInput = {
@@ -285,6 +286,7 @@ export type EpisodeOrderByWithRelationInput = {
   scenes?: Prisma.SceneOrderByRelationAggregateInput
   rewards?: Prisma.EpisodeRewardOrderByRelationAggregateInput
   userEpisodes?: Prisma.UserEpisodeOrderByRelationAggregateInput
+  userQuizSessions?: Prisma.UserQuizSessionOrderByRelationAggregateInput
 }
 
 export type EpisodeWhereUniqueInput = Prisma.AtLeast<{
@@ -306,6 +308,7 @@ export type EpisodeWhereUniqueInput = Prisma.AtLeast<{
   scenes?: Prisma.SceneListRelationFilter
   rewards?: Prisma.EpisodeRewardListRelationFilter
   userEpisodes?: Prisma.UserEpisodeListRelationFilter
+  userQuizSessions?: Prisma.UserQuizSessionListRelationFilter
 }, "id" | "storyId_order">
 
 export type EpisodeOrderByWithAggregationInput = {
@@ -355,6 +358,7 @@ export type EpisodeCreateInput = {
   scenes?: Prisma.SceneCreateNestedManyWithoutEpisodeInput
   rewards?: Prisma.EpisodeRewardCreateNestedManyWithoutEpisodeInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutEpisodeInput
+  userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUncheckedCreateInput = {
@@ -371,6 +375,7 @@ export type EpisodeUncheckedCreateInput = {
   scenes?: Prisma.SceneUncheckedCreateNestedManyWithoutEpisodeInput
   rewards?: Prisma.EpisodeRewardUncheckedCreateNestedManyWithoutEpisodeInput
   userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutEpisodeInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUpdateInput = {
@@ -386,6 +391,7 @@ export type EpisodeUpdateInput = {
   scenes?: Prisma.SceneUpdateManyWithoutEpisodeNestedInput
   rewards?: Prisma.EpisodeRewardUpdateManyWithoutEpisodeNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutEpisodeNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateInput = {
@@ -402,6 +408,7 @@ export type EpisodeUncheckedUpdateInput = {
   scenes?: Prisma.SceneUncheckedUpdateManyWithoutEpisodeNestedInput
   rewards?: Prisma.EpisodeRewardUncheckedUpdateManyWithoutEpisodeNestedInput
   userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutEpisodeNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeCreateManyInput = {
@@ -512,6 +519,11 @@ export type EpisodeScalarRelationFilter = {
   isNot?: Prisma.EpisodeWhereInput
 }
 
+export type EpisodeNullableScalarRelationFilter = {
+  is?: Prisma.EpisodeWhereInput | null
+  isNot?: Prisma.EpisodeWhereInput | null
+}
+
 export type EpisodeCreateNestedManyWithoutStoryInput = {
   create?: Prisma.XOR<Prisma.EpisodeCreateWithoutStoryInput, Prisma.EpisodeUncheckedCreateWithoutStoryInput> | Prisma.EpisodeCreateWithoutStoryInput[] | Prisma.EpisodeUncheckedCreateWithoutStoryInput[]
   connectOrCreate?: Prisma.EpisodeCreateOrConnectWithoutStoryInput | Prisma.EpisodeCreateOrConnectWithoutStoryInput[]
@@ -568,6 +580,22 @@ export type EpisodeUpdateOneRequiredWithoutScenesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EpisodeUpdateToOneWithWhereWithoutScenesInput, Prisma.EpisodeUpdateWithoutScenesInput>, Prisma.EpisodeUncheckedUpdateWithoutScenesInput>
 }
 
+export type EpisodeCreateNestedOneWithoutUserQuizSessionsInput = {
+  create?: Prisma.XOR<Prisma.EpisodeCreateWithoutUserQuizSessionsInput, Prisma.EpisodeUncheckedCreateWithoutUserQuizSessionsInput>
+  connectOrCreate?: Prisma.EpisodeCreateOrConnectWithoutUserQuizSessionsInput
+  connect?: Prisma.EpisodeWhereUniqueInput
+}
+
+export type EpisodeUpdateOneWithoutUserQuizSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.EpisodeCreateWithoutUserQuizSessionsInput, Prisma.EpisodeUncheckedCreateWithoutUserQuizSessionsInput>
+  connectOrCreate?: Prisma.EpisodeCreateOrConnectWithoutUserQuizSessionsInput
+  upsert?: Prisma.EpisodeUpsertWithoutUserQuizSessionsInput
+  disconnect?: Prisma.EpisodeWhereInput | boolean
+  delete?: Prisma.EpisodeWhereInput | boolean
+  connect?: Prisma.EpisodeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EpisodeUpdateToOneWithWhereWithoutUserQuizSessionsInput, Prisma.EpisodeUpdateWithoutUserQuizSessionsInput>, Prisma.EpisodeUncheckedUpdateWithoutUserQuizSessionsInput>
+}
+
 export type EpisodeCreateNestedOneWithoutUserEpisodesInput = {
   create?: Prisma.XOR<Prisma.EpisodeCreateWithoutUserEpisodesInput, Prisma.EpisodeUncheckedCreateWithoutUserEpisodesInput>
   connectOrCreate?: Prisma.EpisodeCreateOrConnectWithoutUserEpisodesInput
@@ -608,6 +636,7 @@ export type EpisodeCreateWithoutStoryInput = {
   scenes?: Prisma.SceneCreateNestedManyWithoutEpisodeInput
   rewards?: Prisma.EpisodeRewardCreateNestedManyWithoutEpisodeInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutEpisodeInput
+  userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUncheckedCreateWithoutStoryInput = {
@@ -623,6 +652,7 @@ export type EpisodeUncheckedCreateWithoutStoryInput = {
   scenes?: Prisma.SceneUncheckedCreateNestedManyWithoutEpisodeInput
   rewards?: Prisma.EpisodeRewardUncheckedCreateNestedManyWithoutEpisodeInput
   userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutEpisodeInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeCreateOrConnectWithoutStoryInput = {
@@ -679,6 +709,7 @@ export type EpisodeCreateWithoutScenesInput = {
   story: Prisma.StoryCreateNestedOneWithoutEpisodesInput
   rewards?: Prisma.EpisodeRewardCreateNestedManyWithoutEpisodeInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutEpisodeInput
+  userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUncheckedCreateWithoutScenesInput = {
@@ -694,6 +725,7 @@ export type EpisodeUncheckedCreateWithoutScenesInput = {
   updatedAt?: Date | string
   rewards?: Prisma.EpisodeRewardUncheckedCreateNestedManyWithoutEpisodeInput
   userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutEpisodeInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeCreateOrConnectWithoutScenesInput = {
@@ -724,6 +756,7 @@ export type EpisodeUpdateWithoutScenesInput = {
   story?: Prisma.StoryUpdateOneRequiredWithoutEpisodesNestedInput
   rewards?: Prisma.EpisodeRewardUpdateManyWithoutEpisodeNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutEpisodeNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateWithoutScenesInput = {
@@ -737,6 +770,85 @@ export type EpisodeUncheckedUpdateWithoutScenesInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rewards?: Prisma.EpisodeRewardUncheckedUpdateManyWithoutEpisodeNestedInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutEpisodeNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutEpisodeNestedInput
+}
+
+export type EpisodeCreateWithoutUserQuizSessionsInput = {
+  title: string
+  koreanTitle?: string | null
+  order: number
+  description?: string | null
+  koreanDescription?: string | null
+  status?: $Enums.PublishStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  story: Prisma.StoryCreateNestedOneWithoutEpisodesInput
+  scenes?: Prisma.SceneCreateNestedManyWithoutEpisodeInput
+  rewards?: Prisma.EpisodeRewardCreateNestedManyWithoutEpisodeInput
+  userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutEpisodeInput
+}
+
+export type EpisodeUncheckedCreateWithoutUserQuizSessionsInput = {
+  id?: number
+  storyId: number
+  title: string
+  koreanTitle?: string | null
+  order: number
+  description?: string | null
+  koreanDescription?: string | null
+  status?: $Enums.PublishStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  scenes?: Prisma.SceneUncheckedCreateNestedManyWithoutEpisodeInput
+  rewards?: Prisma.EpisodeRewardUncheckedCreateNestedManyWithoutEpisodeInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutEpisodeInput
+}
+
+export type EpisodeCreateOrConnectWithoutUserQuizSessionsInput = {
+  where: Prisma.EpisodeWhereUniqueInput
+  create: Prisma.XOR<Prisma.EpisodeCreateWithoutUserQuizSessionsInput, Prisma.EpisodeUncheckedCreateWithoutUserQuizSessionsInput>
+}
+
+export type EpisodeUpsertWithoutUserQuizSessionsInput = {
+  update: Prisma.XOR<Prisma.EpisodeUpdateWithoutUserQuizSessionsInput, Prisma.EpisodeUncheckedUpdateWithoutUserQuizSessionsInput>
+  create: Prisma.XOR<Prisma.EpisodeCreateWithoutUserQuizSessionsInput, Prisma.EpisodeUncheckedCreateWithoutUserQuizSessionsInput>
+  where?: Prisma.EpisodeWhereInput
+}
+
+export type EpisodeUpdateToOneWithWhereWithoutUserQuizSessionsInput = {
+  where?: Prisma.EpisodeWhereInput
+  data: Prisma.XOR<Prisma.EpisodeUpdateWithoutUserQuizSessionsInput, Prisma.EpisodeUncheckedUpdateWithoutUserQuizSessionsInput>
+}
+
+export type EpisodeUpdateWithoutUserQuizSessionsInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  koreanDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  story?: Prisma.StoryUpdateOneRequiredWithoutEpisodesNestedInput
+  scenes?: Prisma.SceneUpdateManyWithoutEpisodeNestedInput
+  rewards?: Prisma.EpisodeRewardUpdateManyWithoutEpisodeNestedInput
+  userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutEpisodeNestedInput
+}
+
+export type EpisodeUncheckedUpdateWithoutUserQuizSessionsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  storyId?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  koreanDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  scenes?: Prisma.SceneUncheckedUpdateManyWithoutEpisodeNestedInput
   rewards?: Prisma.EpisodeRewardUncheckedUpdateManyWithoutEpisodeNestedInput
   userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutEpisodeNestedInput
 }
@@ -753,6 +865,7 @@ export type EpisodeCreateWithoutUserEpisodesInput = {
   story: Prisma.StoryCreateNestedOneWithoutEpisodesInput
   scenes?: Prisma.SceneCreateNestedManyWithoutEpisodeInput
   rewards?: Prisma.EpisodeRewardCreateNestedManyWithoutEpisodeInput
+  userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUncheckedCreateWithoutUserEpisodesInput = {
@@ -768,6 +881,7 @@ export type EpisodeUncheckedCreateWithoutUserEpisodesInput = {
   updatedAt?: Date | string
   scenes?: Prisma.SceneUncheckedCreateNestedManyWithoutEpisodeInput
   rewards?: Prisma.EpisodeRewardUncheckedCreateNestedManyWithoutEpisodeInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeCreateOrConnectWithoutUserEpisodesInput = {
@@ -798,6 +912,7 @@ export type EpisodeUpdateWithoutUserEpisodesInput = {
   story?: Prisma.StoryUpdateOneRequiredWithoutEpisodesNestedInput
   scenes?: Prisma.SceneUpdateManyWithoutEpisodeNestedInput
   rewards?: Prisma.EpisodeRewardUpdateManyWithoutEpisodeNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateWithoutUserEpisodesInput = {
@@ -813,6 +928,7 @@ export type EpisodeUncheckedUpdateWithoutUserEpisodesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scenes?: Prisma.SceneUncheckedUpdateManyWithoutEpisodeNestedInput
   rewards?: Prisma.EpisodeRewardUncheckedUpdateManyWithoutEpisodeNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeCreateWithoutRewardsInput = {
@@ -827,6 +943,7 @@ export type EpisodeCreateWithoutRewardsInput = {
   story: Prisma.StoryCreateNestedOneWithoutEpisodesInput
   scenes?: Prisma.SceneCreateNestedManyWithoutEpisodeInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutEpisodeInput
+  userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUncheckedCreateWithoutRewardsInput = {
@@ -842,6 +959,7 @@ export type EpisodeUncheckedCreateWithoutRewardsInput = {
   updatedAt?: Date | string
   scenes?: Prisma.SceneUncheckedCreateNestedManyWithoutEpisodeInput
   userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutEpisodeInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeCreateOrConnectWithoutRewardsInput = {
@@ -872,6 +990,7 @@ export type EpisodeUpdateWithoutRewardsInput = {
   story?: Prisma.StoryUpdateOneRequiredWithoutEpisodesNestedInput
   scenes?: Prisma.SceneUpdateManyWithoutEpisodeNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutEpisodeNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateWithoutRewardsInput = {
@@ -887,6 +1006,7 @@ export type EpisodeUncheckedUpdateWithoutRewardsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scenes?: Prisma.SceneUncheckedUpdateManyWithoutEpisodeNestedInput
   userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutEpisodeNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeCreateManyStoryInput = {
@@ -913,6 +1033,7 @@ export type EpisodeUpdateWithoutStoryInput = {
   scenes?: Prisma.SceneUpdateManyWithoutEpisodeNestedInput
   rewards?: Prisma.EpisodeRewardUpdateManyWithoutEpisodeNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutEpisodeNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateWithoutStoryInput = {
@@ -928,6 +1049,7 @@ export type EpisodeUncheckedUpdateWithoutStoryInput = {
   scenes?: Prisma.SceneUncheckedUpdateManyWithoutEpisodeNestedInput
   rewards?: Prisma.EpisodeRewardUncheckedUpdateManyWithoutEpisodeNestedInput
   userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutEpisodeNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateManyWithoutStoryInput = {
@@ -951,12 +1073,14 @@ export type EpisodeCountOutputType = {
   scenes: number
   rewards: number
   userEpisodes: number
+  userQuizSessions: number
 }
 
 export type EpisodeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   scenes?: boolean | EpisodeCountOutputTypeCountScenesArgs
   rewards?: boolean | EpisodeCountOutputTypeCountRewardsArgs
   userEpisodes?: boolean | EpisodeCountOutputTypeCountUserEpisodesArgs
+  userQuizSessions?: boolean | EpisodeCountOutputTypeCountUserQuizSessionsArgs
 }
 
 /**
@@ -990,6 +1114,13 @@ export type EpisodeCountOutputTypeCountUserEpisodesArgs<ExtArgs extends runtime.
   where?: Prisma.UserEpisodeWhereInput
 }
 
+/**
+ * EpisodeCountOutputType without action
+ */
+export type EpisodeCountOutputTypeCountUserQuizSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserQuizSessionWhereInput
+}
+
 
 export type EpisodeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1006,6 +1137,7 @@ export type EpisodeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   scenes?: boolean | Prisma.Episode$scenesArgs<ExtArgs>
   rewards?: boolean | Prisma.Episode$rewardsArgs<ExtArgs>
   userEpisodes?: boolean | Prisma.Episode$userEpisodesArgs<ExtArgs>
+  userQuizSessions?: boolean | Prisma.Episode$userQuizSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.EpisodeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["episode"]>
 
@@ -1056,6 +1188,7 @@ export type EpisodeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   scenes?: boolean | Prisma.Episode$scenesArgs<ExtArgs>
   rewards?: boolean | Prisma.Episode$rewardsArgs<ExtArgs>
   userEpisodes?: boolean | Prisma.Episode$userEpisodesArgs<ExtArgs>
+  userQuizSessions?: boolean | Prisma.Episode$userQuizSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.EpisodeCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type EpisodeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1072,6 +1205,7 @@ export type $EpisodePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     scenes: Prisma.$ScenePayload<ExtArgs>[]
     rewards: Prisma.$EpisodeRewardPayload<ExtArgs>[]
     userEpisodes: Prisma.$UserEpisodePayload<ExtArgs>[]
+    userQuizSessions: Prisma.$UserQuizSessionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1482,6 +1616,7 @@ export interface Prisma__EpisodeClient<T, Null = never, ExtArgs extends runtime.
   scenes<T extends Prisma.Episode$scenesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Episode$scenesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScenePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   rewards<T extends Prisma.Episode$rewardsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Episode$rewardsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EpisodeRewardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   userEpisodes<T extends Prisma.Episode$userEpisodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Episode$userEpisodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserEpisodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userQuizSessions<T extends Prisma.Episode$userQuizSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Episode$userQuizSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserQuizSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1986,6 +2121,30 @@ export type Episode$userEpisodesArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.UserEpisodeScalarFieldEnum | Prisma.UserEpisodeScalarFieldEnum[]
+}
+
+/**
+ * Episode.userQuizSessions
+ */
+export type Episode$userQuizSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserQuizSession
+   */
+  select?: Prisma.UserQuizSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserQuizSession
+   */
+  omit?: Prisma.UserQuizSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserQuizSessionInclude<ExtArgs> | null
+  where?: Prisma.UserQuizSessionWhereInput
+  orderBy?: Prisma.UserQuizSessionOrderByWithRelationInput | Prisma.UserQuizSessionOrderByWithRelationInput[]
+  cursor?: Prisma.UserQuizSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserQuizSessionScalarFieldEnum | Prisma.UserQuizSessionScalarFieldEnum[]
 }
 
 /**

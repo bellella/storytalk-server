@@ -393,6 +393,7 @@ export const ModelName = {
   StoryProgress: 'StoryProgress',
   ReviewItem: 'ReviewItem',
   Quiz: 'Quiz',
+  UserQuizSession: 'UserQuizSession',
   UserQuizAnswer: 'UserQuizAnswer',
   UserEpisode: 'UserEpisode',
   Character: 'Character',
@@ -417,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "story" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "quiz" | "userQuizAnswer" | "userEpisode" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterMessage" | "dialogueBookmark" | "episodeReward"
+    modelProps: "user" | "story" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "quiz" | "userQuizSession" | "userQuizAnswer" | "userEpisode" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterMessage" | "dialogueBookmark" | "episodeReward"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1084,6 +1085,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.QuizCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.QuizCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserQuizSession: {
+      payload: Prisma.$UserQuizSessionPayload<ExtArgs>
+      fields: Prisma.UserQuizSessionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserQuizSessionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserQuizSessionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserQuizSessionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserQuizSessionPayload>
+        }
+        findFirst: {
+          args: Prisma.UserQuizSessionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserQuizSessionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserQuizSessionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserQuizSessionPayload>
+        }
+        findMany: {
+          args: Prisma.UserQuizSessionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserQuizSessionPayload>[]
+        }
+        create: {
+          args: Prisma.UserQuizSessionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserQuizSessionPayload>
+        }
+        createMany: {
+          args: Prisma.UserQuizSessionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserQuizSessionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserQuizSessionPayload>[]
+        }
+        delete: {
+          args: Prisma.UserQuizSessionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserQuizSessionPayload>
+        }
+        update: {
+          args: Prisma.UserQuizSessionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserQuizSessionPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserQuizSessionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserQuizSessionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserQuizSessionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserQuizSessionPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserQuizSessionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserQuizSessionPayload>
+        }
+        aggregate: {
+          args: Prisma.UserQuizSessionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserQuizSession>
+        }
+        groupBy: {
+          args: Prisma.UserQuizSessionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserQuizSessionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserQuizSessionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserQuizSessionCountAggregateOutputType> | number
         }
       }
     }
@@ -1817,7 +1892,7 @@ export const StoryScalarFieldEnum = {
   koreanTitle: 'koreanTitle',
   category: 'category',
   icon: 'icon',
-  difficulty: 'difficulty',
+  level: 'level',
   description: 'description',
   coverImage: 'coverImage',
   status: 'status',
@@ -1918,7 +1993,9 @@ export const QuizScalarFieldEnum = {
   id: 'id',
   sourceType: 'sourceType',
   sourceId: 'sourceId',
+  dialogueId: 'dialogueId',
   type: 'type',
+  level: 'level',
   questionEnglish: 'questionEnglish',
   questionKorean: 'questionKorean',
   description: 'description',
@@ -1930,13 +2007,31 @@ export const QuizScalarFieldEnum = {
 export type QuizScalarFieldEnum = (typeof QuizScalarFieldEnum)[keyof typeof QuizScalarFieldEnum]
 
 
+export const UserQuizSessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  episodeId: 'episodeId',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  totalCount: 'totalCount',
+  correctCount: 'correctCount',
+  score: 'score',
+  meta: 'meta'
+} as const
+
+export type UserQuizSessionScalarFieldEnum = (typeof UserQuizSessionScalarFieldEnum)[keyof typeof UserQuizSessionScalarFieldEnum]
+
+
 export const UserQuizAnswerScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   quizId: 'quizId',
+  quizSessionId: 'quizSessionId',
   isCorrect: 'isCorrect',
   payload: 'payload',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  userQuizSessionId: 'userQuizSessionId'
 } as const
 
 export type UserQuizAnswerScalarFieldEnum = (typeof UserQuizAnswerScalarFieldEnum)[keyof typeof UserQuizAnswerScalarFieldEnum]
@@ -2146,6 +2241,20 @@ export type ListEnumAuthProviderFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
+ * Reference to a field of type 'Level'
+ */
+export type EnumLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Level'>
+    
+
+
+/**
+ * Reference to a field of type 'Level[]'
+ */
+export type ListEnumLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Level[]'>
+    
+
+
+/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -2233,6 +2342,20 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'QuizSessionType'
+ */
+export type EnumQuizSessionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuizSessionType'>
+    
+
+
+/**
+ * Reference to a field of type 'QuizSessionType[]'
+ */
+export type ListEnumQuizSessionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuizSessionType[]'>
     
 
 
@@ -2365,6 +2488,7 @@ export type GlobalOmitConfig = {
   storyProgress?: Prisma.StoryProgressOmit
   reviewItem?: Prisma.ReviewItemOmit
   quiz?: Prisma.QuizOmit
+  userQuizSession?: Prisma.UserQuizSessionOmit
   userQuizAnswer?: Prisma.UserQuizAnswerOmit
   userEpisode?: Prisma.UserEpisodeOmit
   character?: Prisma.CharacterOmit

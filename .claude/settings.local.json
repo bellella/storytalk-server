@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(yarn add:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [],
     "ask": []

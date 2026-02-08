@@ -60,6 +60,7 @@ export const ModelName = {
   StoryProgress: 'StoryProgress',
   ReviewItem: 'ReviewItem',
   Quiz: 'Quiz',
+  UserQuizSession: 'UserQuizSession',
   UserQuizAnswer: 'UserQuizAnswer',
   UserEpisode: 'UserEpisode',
   Character: 'Character',
@@ -112,7 +113,7 @@ export const StoryScalarFieldEnum = {
   koreanTitle: 'koreanTitle',
   category: 'category',
   icon: 'icon',
-  difficulty: 'difficulty',
+  level: 'level',
   description: 'description',
   coverImage: 'coverImage',
   status: 'status',
@@ -213,7 +214,9 @@ export const QuizScalarFieldEnum = {
   id: 'id',
   sourceType: 'sourceType',
   sourceId: 'sourceId',
+  dialogueId: 'dialogueId',
   type: 'type',
+  level: 'level',
   questionEnglish: 'questionEnglish',
   questionKorean: 'questionKorean',
   description: 'description',
@@ -225,13 +228,31 @@ export const QuizScalarFieldEnum = {
 export type QuizScalarFieldEnum = (typeof QuizScalarFieldEnum)[keyof typeof QuizScalarFieldEnum]
 
 
+export const UserQuizSessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  episodeId: 'episodeId',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  totalCount: 'totalCount',
+  correctCount: 'correctCount',
+  score: 'score',
+  meta: 'meta'
+} as const
+
+export type UserQuizSessionScalarFieldEnum = (typeof UserQuizSessionScalarFieldEnum)[keyof typeof UserQuizSessionScalarFieldEnum]
+
+
 export const UserQuizAnswerScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   quizId: 'quizId',
+  quizSessionId: 'quizSessionId',
   isCorrect: 'isCorrect',
   payload: 'payload',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  userQuizSessionId: 'userQuizSessionId'
 } as const
 
 export type UserQuizAnswerScalarFieldEnum = (typeof UserQuizAnswerScalarFieldEnum)[keyof typeof UserQuizAnswerScalarFieldEnum]

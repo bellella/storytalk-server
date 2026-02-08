@@ -62,6 +62,13 @@ export type EnumAuthProviderFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumAuthProviderFilter<$PrismaModel> | $Enums.AuthProvider
 }
 
+export type EnumLevelFilter<$PrismaModel = never> = {
+  equals?: $Enums.Level | Prisma.EnumLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.Level[] | Prisma.ListEnumLevelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Level[] | Prisma.ListEnumLevelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLevelFilter<$PrismaModel> | $Enums.Level
+}
+
 export type DateTimeFilter<$PrismaModel = never> = {
   equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
   in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel>
@@ -154,6 +161,16 @@ export type EnumAuthProviderWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAuthProviderFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAuthProviderFilter<$PrismaModel>
+}
+
+export type EnumLevelWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.Level | Prisma.EnumLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.Level[] | Prisma.ListEnumLevelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Level[] | Prisma.ListEnumLevelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLevelWithAggregatesFilter<$PrismaModel> | $Enums.Level
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLevelFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLevelFilter<$PrismaModel>
 }
 
 export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -348,6 +365,23 @@ export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
   _max?: Prisma.NestedJsonNullableFilter<$PrismaModel>
 }
 
+export type EnumQuizSessionTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuizSessionType | Prisma.EnumQuizSessionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.QuizSessionType[] | Prisma.ListEnumQuizSessionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuizSessionType[] | Prisma.ListEnumQuizSessionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuizSessionTypeFilter<$PrismaModel> | $Enums.QuizSessionType
+}
+
+export type EnumQuizSessionTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuizSessionType | Prisma.EnumQuizSessionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.QuizSessionType[] | Prisma.ListEnumQuizSessionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuizSessionType[] | Prisma.ListEnumQuizSessionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuizSessionTypeWithAggregatesFilter<$PrismaModel> | $Enums.QuizSessionType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuizSessionTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuizSessionTypeFilter<$PrismaModel>
+}
+
 export type BoolNullableFilter<$PrismaModel = never> = {
   equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel> | null
   not?: Prisma.NestedBoolNullableFilter<$PrismaModel> | boolean | null
@@ -509,6 +543,13 @@ export type NestedEnumAuthProviderFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumAuthProviderFilter<$PrismaModel> | $Enums.AuthProvider
 }
 
+export type NestedEnumLevelFilter<$PrismaModel = never> = {
+  equals?: $Enums.Level | Prisma.EnumLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.Level[] | Prisma.ListEnumLevelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Level[] | Prisma.ListEnumLevelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLevelFilter<$PrismaModel> | $Enums.Level
+}
+
 export type NestedDateTimeFilter<$PrismaModel = never> = {
   equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
   in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel>
@@ -616,6 +657,16 @@ export type NestedEnumAuthProviderWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAuthProviderFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAuthProviderFilter<$PrismaModel>
+}
+
+export type NestedEnumLevelWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.Level | Prisma.EnumLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.Level[] | Prisma.ListEnumLevelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.Level[] | Prisma.ListEnumLevelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLevelWithAggregatesFilter<$PrismaModel> | $Enums.Level
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLevelFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLevelFilter<$PrismaModel>
 }
 
 export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -770,6 +821,23 @@ export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   gte?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
+}
+
+export type NestedEnumQuizSessionTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuizSessionType | Prisma.EnumQuizSessionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.QuizSessionType[] | Prisma.ListEnumQuizSessionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuizSessionType[] | Prisma.ListEnumQuizSessionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuizSessionTypeFilter<$PrismaModel> | $Enums.QuizSessionType
+}
+
+export type NestedEnumQuizSessionTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuizSessionType | Prisma.EnumQuizSessionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.QuizSessionType[] | Prisma.ListEnumQuizSessionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuizSessionType[] | Prisma.ListEnumQuizSessionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuizSessionTypeWithAggregatesFilter<$PrismaModel> | $Enums.QuizSessionType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuizSessionTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuizSessionTypeFilter<$PrismaModel>
 }
 
 export type NestedBoolNullableFilter<$PrismaModel = never> = {
