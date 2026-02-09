@@ -12,15 +12,18 @@ import { SocialLoginResponseDto } from './dto/social-login.dto';
 @Injectable()
 export class AuthService {
   private googleClient: OAuth2Client;
+  private googleAudiences: string[];
 
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService
   ) {
-    this.googleClient = new OAuth2Client(
-      this.configService.get<string>('GOOGLE_CLIENT_ID')
-    );
+    this.googleClient = new OAuth2Client();
+    this.googleAudiences = [
+      this.configService.get<string>('GOOGLE_CLIENT_ID'),
+      this.configService.get<string>('GOOGLE_APP_CLIENT_ID'),
+    ].filter(Boolean) as string[];
   }
 
   /**
@@ -32,7 +35,7 @@ export class AuthService {
     try {
       const ticket = await this.googleClient.verifyIdToken({
         idToken,
-        audience: this.configService.get<string>('GOOGLE_CLIENT_ID'),
+        audience: this.googleAudiences,
       });
 
       const payload = ticket.getPayload();
