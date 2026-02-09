@@ -57,7 +57,7 @@ export type QuizSourceType = (typeof QuizSourceType)[keyof typeof QuizSourceType
 
 export const QuizSessionType = {
   EPISODE: 'EPISODE',
-  PRACTICE: 'PRACTICE'
+  DAILY_QUIZ: 'DAILY_QUIZ'
 } as const
 
 export type QuizSessionType = (typeof QuizSessionType)[keyof typeof QuizSessionType]
@@ -82,9 +82,25 @@ export type CharacterScope = (typeof CharacterScope)[keyof typeof CharacterScope
 
 
 export const RewardType = {
-  EXP: 'EXP',
   CHARACTER_UNLOCK: 'CHARACTER_UNLOCK',
   ITEM: 'ITEM'
 } as const
 
 export type RewardType = (typeof RewardType)[keyof typeof RewardType]
+
+
+export const XpTriggerType = {
+  EPISODE_COMPLETE: 'EPISODE_COMPLETE',
+  DAILY_QUIZ_COMPLETE: 'DAILY_QUIZ_COMPLETE'
+} as const
+
+export type XpTriggerType = (typeof XpTriggerType)[keyof typeof XpTriggerType]
+
+
+export const XpSourceType = {
+  EPISODE: 'EPISODE',
+  DAILY_QUIZ_SESSION: 'DAILY_QUIZ_SESSION',
+  PRACTICE_SESSION: 'PRACTICE_SESSION'
+} as const
+
+export type XpSourceType = (typeof XpSourceType)[keyof typeof XpSourceType]

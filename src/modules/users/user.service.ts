@@ -48,7 +48,7 @@ export class UserService {
       name: user.name,
       profileImage: user.profileImage,
       level: user.level,
-      exp: user.exp,
+      xp: user.xp,
       streakDays: user.streakDays,
     };
   }

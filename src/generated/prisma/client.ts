@@ -88,6 +88,11 @@ export type Quiz = Prisma.QuizModel
  */
 export type UserQuizSession = Prisma.UserQuizSessionModel
 /**
+ * Model QuizSessionItem
+ * 
+ */
+export type QuizSessionItem = Prisma.QuizSessionItemModel
+/**
  * Model UserQuizAnswer
  * 
  */
@@ -132,3 +137,18 @@ export type dialogueBookmark = Prisma.dialogueBookmarkModel
  * 
  */
 export type EpisodeReward = Prisma.EpisodeRewardModel
+/**
+ * Model XpLevel
+ * 
+ */
+export type XpLevel = Prisma.XpLevelModel
+/**
+ * Model XpRule
+ * 
+ */
+export type XpRule = Prisma.XpRuleModel
+/**
+ * Model UserXpHistory
+ * 
+ */
+export type UserXpHistory = Prisma.UserXpHistoryModel

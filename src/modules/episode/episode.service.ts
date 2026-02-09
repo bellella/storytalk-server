@@ -1,16 +1,26 @@
-import { EpisodeStage } from '@/generated/prisma/client';
+import {
+  EpisodeStage,
+  XpSourceType,
+  XpTriggerType,
+} from '@/generated/prisma/client';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { EpisodeProgressResponseDto } from './dto/episode-progress-response.dto';
+import { EpisodeProgressDto } from './dto/episode-progress-response.dto';
+import { XpService } from '../xp/xp.service';
+import { EpisodeCompleteResponseDto } from './dto/episode-complete-response.dto';
 
 @Injectable()
 export class EpisodeService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private xpService: XpService
+  ) {}
 
   async startEpisode(
     userId: number,
-    episodeId: number,
-  ): Promise<EpisodeProgressResponseDto> {
+    episodeId: number
+  ): Promise<EpisodeProgressDto> {
     // 에피소드 존재 확인
     const episode = await this.prisma.episode.findUnique({
       where: { id: episodeId },
@@ -32,36 +42,98 @@ export class EpisodeService {
       update: {},
     });
 
-    return this.toResponseDto(userEpisode);
+    return {
+      id: userEpisode.id,
+      userId: userEpisode.userId,
+      episodeId: userEpisode.episodeId,
+      startedAt: userEpisode.startedAt,
+      completedAt: userEpisode.completedAt,
+      lastSceneId: userEpisode.lastSceneId,
+      currentStage: userEpisode.currentStage,
+      score: userEpisode.score,
+      isCompleted: userEpisode.isCompleted,
+    };
   }
 
-  async completeScene(
+  async updateEpisodeProgress(
     userId: number,
     episodeId: number,
-    sceneId: number,
-  ): Promise<EpisodeProgressResponseDto> {
+    sceneId: number
+  ): Promise<SuccessResponseDto> {
     const userEpisode = await this.findUserEpisodeOrThrow(userId, episodeId);
 
-    const updated = await this.prisma.userEpisode.update({
+    await this.prisma.userEpisode.update({
       where: { id: userEpisode.id },
       data: { lastSceneId: sceneId },
     });
 
-    return this.toResponseDto(updated);
+    return { success: true };
   }
 
   async completeEpisode(
     userId: number,
-    episodeId: number,
-  ): Promise<EpisodeProgressResponseDto> {
+    episodeId: number
+  ): Promise<EpisodeCompleteResponseDto> {
     const userEpisode = await this.findUserEpisodeOrThrow(userId, episodeId);
+    const episode = await this.prisma.episode.findUnique({
+      where: { id: episodeId },
+      include: {
+        story: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+      },
+    });
+    if (!episode) {
+      throw new NotFoundException('에피소드를 찾을 수 없습니다.');
+    }
 
-    const updated = await this.prisma.userEpisode.update({
+    const rewards = await this.prisma.episodeReward.findMany({
+      where: { episodeId },
+    });
+
+    for (const reward of rewards) {
+      // TODO: 보상 지급
+    }
+
+    await this.prisma.userEpisode.update({
       where: { id: userEpisode.id },
       data: { currentStage: EpisodeStage.STORY_COMPLETED },
     });
 
-    return this.toResponseDto(updated);
+    const xpResult = await this.xpService.grantXp({
+      userId,
+      triggerType: XpTriggerType.EPISODE_COMPLETE,
+      sourceType: XpSourceType.EPISODE,
+      sourceId: episodeId,
+    });
+
+    return {
+      xp: {
+        xpGranted: xpResult.xpGranted,
+        totalXp: xpResult.totalXp,
+        previousLevel: xpResult.previousLevel,
+        currentLevel: xpResult.currentLevel,
+        leveledUp: xpResult.leveledUp,
+        nextLevel: xpResult.nextLevel,
+        xpToNextLevel: xpResult.xpToNextLevel,
+        requiredTotalXp: xpResult.requiredTotalXp,
+      },
+      episode: {
+        episodeId: episode.id,
+        episodeTitle: episode.title,
+        episodeOrder: episode.order,
+        storyId: episode.story.id,
+        storyTitle: episode.story.title,
+      },
+      rewards: rewards.map((r) => ({
+        id: r.id,
+        type: r.type,
+        payload: r.payload as Record<string, any>,
+      })),
+    };
   }
 
   async findUserEpisodeOrThrow(userId: number, episodeId: number) {
@@ -74,19 +146,5 @@ export class EpisodeService {
       throw new NotFoundException('에피소드 진행 정보를 찾을 수 없습니다.');
     }
     return userEpisode;
-  }
-
-  private toResponseDto(userEpisode: any): EpisodeProgressResponseDto {
-    return {
-      id: userEpisode.id,
-      userId: userEpisode.userId,
-      episodeId: userEpisode.episodeId,
-      startedAt: userEpisode.startedAt,
-      completedAt: userEpisode.completedAt,
-      lastSceneId: userEpisode.lastSceneId,
-      currentStage: userEpisode.currentStage,
-      score: userEpisode.score,
-      isCompleted: userEpisode.isCompleted,
-    };
   }
 }

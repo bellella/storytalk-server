@@ -4,23 +4,33 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { XpSourceType, XpTriggerType } from '@/generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { XpService } from '../xp/xp.service';
 import { StartQuizSessionDto } from './dto/start-quiz-session.dto';
 import { SubmitQuizAnswerDto } from './dto/submit-quiz-answer.dto';
 import { QuizSessionResponseDto } from './dto/quiz-session-response.dto';
 import { QuizAnswerResponseDto } from './dto/quiz-answer-response.dto';
+import { DailyQuizResponseDto } from './dto/daily-quiz-response.dto';
+import { SubmitDailyQuizDto } from './dto/submit-daily-quiz.dto';
+import { QuizDto } from '../episode/dto/quiz.dto';
+import { DailyQuizCompleteResponseDto } from './dto/daily-quiz-complete-response.dto';
+import { QuizScoreDto } from './dto/quiz-score.dto';
 
 @Injectable()
 export class QuizService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private xpService: XpService
+  ) {}
 
   async startSession(
     userId: number,
-    dto: StartQuizSessionDto,
+    dto: StartQuizSessionDto
   ): Promise<QuizSessionResponseDto> {
     if (dto.type === QuizSessionType.EPISODE && !dto.episodeId) {
       throw new BadRequestException(
-        'EPISODE 타입일 때 episodeId는 필수입니다.',
+        'EPISODE 타입일 때 episodeId는 필수입니다.'
       );
     }
 
@@ -46,15 +56,13 @@ export class QuizService {
   async submitAnswer(
     userId: number,
     sessionId: number,
-    dto: SubmitQuizAnswerDto,
+    dto: SubmitQuizAnswerDto
   ): Promise<QuizAnswerResponseDto> {
-    const session = await this.findSessionOrThrow(sessionId, userId);
-
     const answer = await this.prisma.userQuizAnswer.create({
       data: {
         userId,
         quizId: dto.quizId,
-        quizSessionId: session.id,
+        quizSessionId: sessionId,
         isCorrect: dto.isCorrect ?? null,
         payload: dto.payload,
       },
@@ -64,17 +72,17 @@ export class QuizService {
       id: answer.id,
       userId: answer.userId,
       quizId: answer.quizId,
-      quizSessionId: session.id,
+      quizSessionId: sessionId,
       isCorrect: answer.isCorrect,
       payload: answer.payload as Record<string, any>,
       createdAt: answer.createdAt,
     };
   }
 
-  async completeSession(
+  async completeQuizSession(
     userId: number,
-    sessionId: number,
-  ): Promise<QuizSessionResponseDto> {
+    sessionId: number
+  ): Promise<QuizScoreDto> {
     const session = await this.findSessionOrThrow(sessionId, userId);
 
     // 답변 집계
@@ -97,19 +105,139 @@ export class QuizService {
       },
     });
 
-    // EPISODE 타입이면 UserEpisode 완료 처리
-    if (session.type === QuizSessionType.EPISODE && session.episodeId) {
-      await this.prisma.userEpisode.updateMany({
-        where: { userId, episodeId: session.episodeId },
+    return {
+      totalCount,
+      correctCount,
+      score,
+    };
+  }
+
+  async getDailyQuiz(userId: number): Promise<DailyQuizResponseDto> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user) {
+      throw new NotFoundException('유저를 찾을 수 없습니다.');
+    }
+
+    // 오늘 날짜 범위 (KST 기준)
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999);
+
+    // 오늘 DAILY_QUIZ 세션이 이미 있는지 확인
+    let session = await this.prisma.userQuizSession.findFirst({
+      where: {
+        userId,
+        type: QuizSessionType.DAILY_QUIZ,
+        startedAt: { gte: todayStart, lte: todayEnd },
+      },
+      include: {
+        quizSessionItems: {
+          include: { quiz: true },
+          orderBy: { order: 'asc' },
+        },
+        answers: true,
+      },
+    });
+
+    if (!session) {
+      // 유저 레벨에 맞는 퀴즈 10개 랜덤 추출
+      const quizzes = await this.prisma.quiz.findMany({
+        where: {
+          isActive: true,
+          level: user.level,
+        },
+      });
+
+      // 랜덤 셔플 후 10개 선택
+      const shuffled = quizzes.sort(() => Math.random() - 0.5);
+      const selected = shuffled.slice(0, 10);
+
+      if (selected.length === 0) {
+        throw new NotFoundException('해당 레벨에 맞는 퀴즈가 없습니다.');
+      }
+
+      // 세션 생성 + QuizSessionItem 생성
+      session = await this.prisma.userQuizSession.create({
         data: {
-          currentStage: EpisodeStage.QUIZ_COMPLETED,
-          isCompleted: true,
-          completedAt: new Date(),
+          userId,
+          type: QuizSessionType.DAILY_QUIZ,
+          quizSessionItems: {
+            create: selected.map((quiz, index) => ({
+              quizId: quiz.id,
+              order: index + 1,
+            })),
+          },
+        },
+        include: {
+          quizSessionItems: {
+            include: { quiz: true },
+            orderBy: { order: 'asc' },
+          },
+          answers: true,
         },
       });
     }
 
-    return this.toSessionDto(updated);
+    const isCompleted = !!session.completedAt;
+
+    // 이미 답한 quizId 목록
+    const answeredQuizIds = new Set(session.answers.map((a) => a.quizId));
+    console.log(session, 'answeredQuizIds');
+    // 완료됐으면 전체 반환, 아니면 미답변 퀴즈만 반환
+    const targetItems = isCompleted
+      ? session.quizSessionItems
+      : session.quizSessionItems.filter(
+          (item) => !answeredQuizIds.has(item.quizId)
+        );
+
+    const quizzes: QuizDto[] = targetItems.map((item) => ({
+      id: item.quiz.id,
+      sourceType: item.quiz.sourceType,
+      sourceId: item.quiz.sourceId,
+      type: item.quiz.type,
+      questionEnglish: item.quiz.questionEnglish,
+      questionKorean: item.quiz.questionKorean ?? undefined,
+      description: item.quiz.description ?? undefined,
+      order: item.order ?? undefined,
+      data: (item.quiz.data as Record<string, any>) ?? undefined,
+      isActive: item.quiz.isActive,
+    }));
+
+    return {
+      session: this.toSessionDto(session),
+      quizzes,
+      isCompleted,
+    };
+  }
+
+  async completeDailyQuiz(
+    userId: number,
+    sessionId: number
+  ): Promise<DailyQuizCompleteResponseDto> {
+    const scoreResult = await this.completeQuizSession(userId, sessionId);
+    const xpResult = await this.xpService.grantXp({
+      userId,
+      triggerType: XpTriggerType.DAILY_QUIZ_COMPLETE,
+      sourceType: XpSourceType.DAILY_QUIZ_SESSION,
+      sourceId: sessionId,
+    });
+
+    return {
+      xp: {
+        xpGranted: xpResult.xpGranted,
+        totalXp: xpResult.totalXp,
+        previousLevel: xpResult.previousLevel,
+        currentLevel: xpResult.currentLevel,
+        leveledUp: xpResult.leveledUp,
+        nextLevel: xpResult.nextLevel,
+        xpToNextLevel: xpResult.xpToNextLevel,
+        requiredTotalXp: xpResult.requiredTotalXp,
+      },
+      result: scoreResult,
+    };
   }
 
   private async findSessionOrThrow(sessionId: number, userId: number) {

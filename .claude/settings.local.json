@@ -3,7 +3,8 @@
     "allow": [
       "Bash(yarn add:*)",
       "Bash(npm install:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npx prisma generate:*)"
     ],
     "deny": [],
     "ask": []

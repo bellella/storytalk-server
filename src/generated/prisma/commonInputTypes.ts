@@ -497,6 +497,40 @@ export type EnumRewardTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumRewardTypeFilter<$PrismaModel>
 }
 
+export type EnumXpTriggerTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.XpTriggerType | Prisma.EnumXpTriggerTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.XpTriggerType[] | Prisma.ListEnumXpTriggerTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.XpTriggerType[] | Prisma.ListEnumXpTriggerTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumXpTriggerTypeFilter<$PrismaModel> | $Enums.XpTriggerType
+}
+
+export type EnumXpTriggerTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.XpTriggerType | Prisma.EnumXpTriggerTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.XpTriggerType[] | Prisma.ListEnumXpTriggerTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.XpTriggerType[] | Prisma.ListEnumXpTriggerTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumXpTriggerTypeWithAggregatesFilter<$PrismaModel> | $Enums.XpTriggerType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumXpTriggerTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumXpTriggerTypeFilter<$PrismaModel>
+}
+
+export type EnumXpSourceTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.XpSourceType | Prisma.EnumXpSourceTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.XpSourceType[] | Prisma.ListEnumXpSourceTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.XpSourceType[] | Prisma.ListEnumXpSourceTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumXpSourceTypeFilter<$PrismaModel> | $Enums.XpSourceType
+}
+
+export type EnumXpSourceTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.XpSourceType | Prisma.EnumXpSourceTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.XpSourceType[] | Prisma.ListEnumXpSourceTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.XpSourceType[] | Prisma.ListEnumXpSourceTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumXpSourceTypeWithAggregatesFilter<$PrismaModel> | $Enums.XpSourceType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumXpSourceTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumXpSourceTypeFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -926,6 +960,40 @@ export type NestedEnumRewardTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumRewardTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumRewardTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumXpTriggerTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.XpTriggerType | Prisma.EnumXpTriggerTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.XpTriggerType[] | Prisma.ListEnumXpTriggerTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.XpTriggerType[] | Prisma.ListEnumXpTriggerTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumXpTriggerTypeFilter<$PrismaModel> | $Enums.XpTriggerType
+}
+
+export type NestedEnumXpTriggerTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.XpTriggerType | Prisma.EnumXpTriggerTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.XpTriggerType[] | Prisma.ListEnumXpTriggerTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.XpTriggerType[] | Prisma.ListEnumXpTriggerTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumXpTriggerTypeWithAggregatesFilter<$PrismaModel> | $Enums.XpTriggerType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumXpTriggerTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumXpTriggerTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumXpSourceTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.XpSourceType | Prisma.EnumXpSourceTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.XpSourceType[] | Prisma.ListEnumXpSourceTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.XpSourceType[] | Prisma.ListEnumXpSourceTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumXpSourceTypeFilter<$PrismaModel> | $Enums.XpSourceType
+}
+
+export type NestedEnumXpSourceTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.XpSourceType | Prisma.EnumXpSourceTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.XpSourceType[] | Prisma.ListEnumXpSourceTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.XpSourceType[] | Prisma.ListEnumXpSourceTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumXpSourceTypeWithAggregatesFilter<$PrismaModel> | $Enums.XpSourceType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumXpSourceTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumXpSourceTypeFilter<$PrismaModel>
 }
 
 

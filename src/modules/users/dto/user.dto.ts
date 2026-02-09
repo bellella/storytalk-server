@@ -9,7 +9,7 @@ export class UserDto {
 
 export class UserProfileDto extends UserDto {
   level: Level;
-  exp: number;
+  xp: number;
   streakDays: number;
 }
 

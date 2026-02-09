@@ -248,8 +248,6 @@ export class StoryService {
           audioUrl: dialogue.audioUrl ?? undefined,
         };
       });
-      console.log(scene, 'scenes');
-
       return {
         id: scene.id,
         title: scene.title,

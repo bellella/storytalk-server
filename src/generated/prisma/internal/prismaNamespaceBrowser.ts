@@ -61,6 +61,7 @@ export const ModelName = {
   ReviewItem: 'ReviewItem',
   Quiz: 'Quiz',
   UserQuizSession: 'UserQuizSession',
+  QuizSessionItem: 'QuizSessionItem',
   UserQuizAnswer: 'UserQuizAnswer',
   UserEpisode: 'UserEpisode',
   Character: 'Character',
@@ -69,7 +70,10 @@ export const ModelName = {
   CharacterFriend: 'CharacterFriend',
   CharacterMessage: 'CharacterMessage',
   dialogueBookmark: 'dialogueBookmark',
-  EpisodeReward: 'EpisodeReward'
+  EpisodeReward: 'EpisodeReward',
+  XpLevel: 'XpLevel',
+  XpRule: 'XpRule',
+  UserXpHistory: 'UserXpHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -96,7 +100,8 @@ export const UserScalarFieldEnum = {
   providerId: 'providerId',
   profileImage: 'profileImage',
   level: 'level',
-  exp: 'exp',
+  XpLevel: 'XpLevel',
+  xp: 'xp',
   streakDays: 'streakDays',
   lastLoginAt: 'lastLoginAt',
   registeredAt: 'registeredAt',
@@ -244,6 +249,17 @@ export const UserQuizSessionScalarFieldEnum = {
 export type UserQuizSessionScalarFieldEnum = (typeof UserQuizSessionScalarFieldEnum)[keyof typeof UserQuizSessionScalarFieldEnum]
 
 
+export const QuizSessionItemScalarFieldEnum = {
+  id: 'id',
+  userQuizSessionId: 'userQuizSessionId',
+  quizId: 'quizId',
+  order: 'order',
+  createdAt: 'createdAt'
+} as const
+
+export type QuizSessionItemScalarFieldEnum = (typeof QuizSessionItemScalarFieldEnum)[keyof typeof QuizSessionItemScalarFieldEnum]
+
+
 export const UserQuizAnswerScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -251,8 +267,7 @@ export const UserQuizAnswerScalarFieldEnum = {
   quizSessionId: 'quizSessionId',
   isCorrect: 'isCorrect',
   payload: 'payload',
-  createdAt: 'createdAt',
-  userQuizSessionId: 'userQuizSessionId'
+  createdAt: 'createdAt'
 } as const
 
 export type UserQuizAnswerScalarFieldEnum = (typeof UserQuizAnswerScalarFieldEnum)[keyof typeof UserQuizAnswerScalarFieldEnum]
@@ -363,6 +378,48 @@ export const EpisodeRewardScalarFieldEnum = {
 } as const
 
 export type EpisodeRewardScalarFieldEnum = (typeof EpisodeRewardScalarFieldEnum)[keyof typeof EpisodeRewardScalarFieldEnum]
+
+
+export const XpLevelScalarFieldEnum = {
+  level: 'level',
+  requiredTotalXp: 'requiredTotalXp',
+  title: 'title',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type XpLevelScalarFieldEnum = (typeof XpLevelScalarFieldEnum)[keyof typeof XpLevelScalarFieldEnum]
+
+
+export const XpRuleScalarFieldEnum = {
+  id: 'id',
+  triggerType: 'triggerType',
+  xpAmount: 'xpAmount',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  priority: 'priority',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type XpRuleScalarFieldEnum = (typeof XpRuleScalarFieldEnum)[keyof typeof XpRuleScalarFieldEnum]
+
+
+export const UserXpHistoryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  xpRuleId: 'xpRuleId',
+  triggerType: 'triggerType',
+  sourceType: 'sourceType',
+  sourceId: 'sourceId',
+  optionCount: 'optionCount',
+  xpAmount: 'xpAmount',
+  grantedAt: 'grantedAt'
+} as const
+
+export type UserXpHistoryScalarFieldEnum = (typeof UserXpHistoryScalarFieldEnum)[keyof typeof UserXpHistoryScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -394,6 +394,7 @@ export const ModelName = {
   ReviewItem: 'ReviewItem',
   Quiz: 'Quiz',
   UserQuizSession: 'UserQuizSession',
+  QuizSessionItem: 'QuizSessionItem',
   UserQuizAnswer: 'UserQuizAnswer',
   UserEpisode: 'UserEpisode',
   Character: 'Character',
@@ -402,7 +403,10 @@ export const ModelName = {
   CharacterFriend: 'CharacterFriend',
   CharacterMessage: 'CharacterMessage',
   dialogueBookmark: 'dialogueBookmark',
-  EpisodeReward: 'EpisodeReward'
+  EpisodeReward: 'EpisodeReward',
+  XpLevel: 'XpLevel',
+  XpRule: 'XpRule',
+  UserXpHistory: 'UserXpHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -418,7 +422,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "story" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "quiz" | "userQuizSession" | "userQuizAnswer" | "userEpisode" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterMessage" | "dialogueBookmark" | "episodeReward"
+    modelProps: "user" | "story" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "userEpisode" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterMessage" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1162,6 +1166,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    QuizSessionItem: {
+      payload: Prisma.$QuizSessionItemPayload<ExtArgs>
+      fields: Prisma.QuizSessionItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QuizSessionItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizSessionItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QuizSessionItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizSessionItemPayload>
+        }
+        findFirst: {
+          args: Prisma.QuizSessionItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizSessionItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QuizSessionItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizSessionItemPayload>
+        }
+        findMany: {
+          args: Prisma.QuizSessionItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizSessionItemPayload>[]
+        }
+        create: {
+          args: Prisma.QuizSessionItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizSessionItemPayload>
+        }
+        createMany: {
+          args: Prisma.QuizSessionItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QuizSessionItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizSessionItemPayload>[]
+        }
+        delete: {
+          args: Prisma.QuizSessionItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizSessionItemPayload>
+        }
+        update: {
+          args: Prisma.QuizSessionItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizSessionItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.QuizSessionItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QuizSessionItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QuizSessionItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizSessionItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.QuizSessionItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuizSessionItemPayload>
+        }
+        aggregate: {
+          args: Prisma.QuizSessionItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuizSessionItem>
+        }
+        groupBy: {
+          args: Prisma.QuizSessionItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuizSessionItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QuizSessionItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuizSessionItemCountAggregateOutputType> | number
+        }
+      }
+    }
     UserQuizAnswer: {
       payload: Prisma.$UserQuizAnswerPayload<ExtArgs>
       fields: Prisma.UserQuizAnswerFieldRefs
@@ -1828,6 +1906,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    XpLevel: {
+      payload: Prisma.$XpLevelPayload<ExtArgs>
+      fields: Prisma.XpLevelFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.XpLevelFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLevelPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.XpLevelFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLevelPayload>
+        }
+        findFirst: {
+          args: Prisma.XpLevelFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLevelPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.XpLevelFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLevelPayload>
+        }
+        findMany: {
+          args: Prisma.XpLevelFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLevelPayload>[]
+        }
+        create: {
+          args: Prisma.XpLevelCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLevelPayload>
+        }
+        createMany: {
+          args: Prisma.XpLevelCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.XpLevelCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLevelPayload>[]
+        }
+        delete: {
+          args: Prisma.XpLevelDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLevelPayload>
+        }
+        update: {
+          args: Prisma.XpLevelUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLevelPayload>
+        }
+        deleteMany: {
+          args: Prisma.XpLevelDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.XpLevelUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.XpLevelUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLevelPayload>[]
+        }
+        upsert: {
+          args: Prisma.XpLevelUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLevelPayload>
+        }
+        aggregate: {
+          args: Prisma.XpLevelAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateXpLevel>
+        }
+        groupBy: {
+          args: Prisma.XpLevelGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.XpLevelGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.XpLevelCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.XpLevelCountAggregateOutputType> | number
+        }
+      }
+    }
+    XpRule: {
+      payload: Prisma.$XpRulePayload<ExtArgs>
+      fields: Prisma.XpRuleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.XpRuleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpRulePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.XpRuleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpRulePayload>
+        }
+        findFirst: {
+          args: Prisma.XpRuleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpRulePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.XpRuleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpRulePayload>
+        }
+        findMany: {
+          args: Prisma.XpRuleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpRulePayload>[]
+        }
+        create: {
+          args: Prisma.XpRuleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpRulePayload>
+        }
+        createMany: {
+          args: Prisma.XpRuleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.XpRuleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpRulePayload>[]
+        }
+        delete: {
+          args: Prisma.XpRuleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpRulePayload>
+        }
+        update: {
+          args: Prisma.XpRuleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpRulePayload>
+        }
+        deleteMany: {
+          args: Prisma.XpRuleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.XpRuleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.XpRuleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpRulePayload>[]
+        }
+        upsert: {
+          args: Prisma.XpRuleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpRulePayload>
+        }
+        aggregate: {
+          args: Prisma.XpRuleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateXpRule>
+        }
+        groupBy: {
+          args: Prisma.XpRuleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.XpRuleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.XpRuleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.XpRuleCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserXpHistory: {
+      payload: Prisma.$UserXpHistoryPayload<ExtArgs>
+      fields: Prisma.UserXpHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserXpHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserXpHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserXpHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserXpHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.UserXpHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserXpHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserXpHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserXpHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.UserXpHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserXpHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.UserXpHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserXpHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.UserXpHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserXpHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserXpHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.UserXpHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserXpHistoryPayload>
+        }
+        update: {
+          args: Prisma.UserXpHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserXpHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserXpHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserXpHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserXpHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserXpHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserXpHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserXpHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.UserXpHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserXpHistory>
+        }
+        groupBy: {
+          args: Prisma.UserXpHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserXpHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserXpHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserXpHistoryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1875,7 +2175,8 @@ export const UserScalarFieldEnum = {
   providerId: 'providerId',
   profileImage: 'profileImage',
   level: 'level',
-  exp: 'exp',
+  XpLevel: 'XpLevel',
+  xp: 'xp',
   streakDays: 'streakDays',
   lastLoginAt: 'lastLoginAt',
   registeredAt: 'registeredAt',
@@ -2023,6 +2324,17 @@ export const UserQuizSessionScalarFieldEnum = {
 export type UserQuizSessionScalarFieldEnum = (typeof UserQuizSessionScalarFieldEnum)[keyof typeof UserQuizSessionScalarFieldEnum]
 
 
+export const QuizSessionItemScalarFieldEnum = {
+  id: 'id',
+  userQuizSessionId: 'userQuizSessionId',
+  quizId: 'quizId',
+  order: 'order',
+  createdAt: 'createdAt'
+} as const
+
+export type QuizSessionItemScalarFieldEnum = (typeof QuizSessionItemScalarFieldEnum)[keyof typeof QuizSessionItemScalarFieldEnum]
+
+
 export const UserQuizAnswerScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -2030,8 +2342,7 @@ export const UserQuizAnswerScalarFieldEnum = {
   quizSessionId: 'quizSessionId',
   isCorrect: 'isCorrect',
   payload: 'payload',
-  createdAt: 'createdAt',
-  userQuizSessionId: 'userQuizSessionId'
+  createdAt: 'createdAt'
 } as const
 
 export type UserQuizAnswerScalarFieldEnum = (typeof UserQuizAnswerScalarFieldEnum)[keyof typeof UserQuizAnswerScalarFieldEnum]
@@ -2142,6 +2453,48 @@ export const EpisodeRewardScalarFieldEnum = {
 } as const
 
 export type EpisodeRewardScalarFieldEnum = (typeof EpisodeRewardScalarFieldEnum)[keyof typeof EpisodeRewardScalarFieldEnum]
+
+
+export const XpLevelScalarFieldEnum = {
+  level: 'level',
+  requiredTotalXp: 'requiredTotalXp',
+  title: 'title',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type XpLevelScalarFieldEnum = (typeof XpLevelScalarFieldEnum)[keyof typeof XpLevelScalarFieldEnum]
+
+
+export const XpRuleScalarFieldEnum = {
+  id: 'id',
+  triggerType: 'triggerType',
+  xpAmount: 'xpAmount',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  priority: 'priority',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type XpRuleScalarFieldEnum = (typeof XpRuleScalarFieldEnum)[keyof typeof XpRuleScalarFieldEnum]
+
+
+export const UserXpHistoryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  xpRuleId: 'xpRuleId',
+  triggerType: 'triggerType',
+  sourceType: 'sourceType',
+  sourceId: 'sourceId',
+  optionCount: 'optionCount',
+  xpAmount: 'xpAmount',
+  grantedAt: 'grantedAt'
+} as const
+
+export type UserXpHistoryScalarFieldEnum = (typeof UserXpHistoryScalarFieldEnum)[keyof typeof UserXpHistoryScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2400,6 +2753,34 @@ export type EnumRewardTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
 export type ListEnumRewardTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RewardType[]'>
     
 
+
+/**
+ * Reference to a field of type 'XpTriggerType'
+ */
+export type EnumXpTriggerTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'XpTriggerType'>
+    
+
+
+/**
+ * Reference to a field of type 'XpTriggerType[]'
+ */
+export type ListEnumXpTriggerTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'XpTriggerType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'XpSourceType'
+ */
+export type EnumXpSourceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'XpSourceType'>
+    
+
+
+/**
+ * Reference to a field of type 'XpSourceType[]'
+ */
+export type ListEnumXpSourceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'XpSourceType[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -2489,6 +2870,7 @@ export type GlobalOmitConfig = {
   reviewItem?: Prisma.ReviewItemOmit
   quiz?: Prisma.QuizOmit
   userQuizSession?: Prisma.UserQuizSessionOmit
+  quizSessionItem?: Prisma.QuizSessionItemOmit
   userQuizAnswer?: Prisma.UserQuizAnswerOmit
   userEpisode?: Prisma.UserEpisodeOmit
   character?: Prisma.CharacterOmit
@@ -2498,6 +2880,9 @@ export type GlobalOmitConfig = {
   characterMessage?: Prisma.CharacterMessageOmit
   dialogueBookmark?: Prisma.dialogueBookmarkOmit
   episodeReward?: Prisma.EpisodeRewardOmit
+  xpLevel?: Prisma.XpLevelOmit
+  xpRule?: Prisma.XpRuleOmit
+  userXpHistory?: Prisma.UserXpHistoryOmit
 }
 
 /* Types for Logging */

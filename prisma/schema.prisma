@@ -42,7 +42,8 @@ model User {
   providerId   String
   profileImage String?
   level        Level        @default(BEGINNER)
-  exp          Int          @default(0)
+  XpLevel      Int          @default(1)
+  xp           Int          @default(0)
   streakDays   Int          @default(0)
   lastLoginAt  DateTime     @default(now())
   registeredAt DateTime?
@@ -210,15 +211,16 @@ model Quiz {
 
   data Json?
 
-  isActive        Boolean          @default(true)
-  userQuizAnswers UserQuizAnswer[]
+  isActive         Boolean           @default(true)
+  userQuizAnswers  UserQuizAnswer[]
+  quizSessionItems QuizSessionItem[]
 
   @@index([sourceType, sourceId])
 }
 
 enum QuizSessionType {
   EPISODE // 에피소드 끝나고 푸는 퀴즈
-  PRACTICE // 모아풀기 / 자유 퀴즈
+  DAILY_QUIZ // 오늘의 학습
 }
 
 model UserQuizSession {
@@ -243,12 +245,28 @@ model UserQuizSession {
   meta Json?
 
   // 관계
-  user    User             @relation(fields: [userId], references: [id])
-  answers UserQuizAnswer[]
+  user             User              @relation(fields: [userId], references: [id])
+  answers          UserQuizAnswer[]
+  quizSessionItems QuizSessionItem[]
 
   @@index([userId])
   @@index([episodeId])
   @@index([type])
+}
+
+model QuizSessionItem {
+  id                Int  @id @default(autoincrement())
+  userQuizSessionId Int
+  quizId            Int
+  order             Int?
+
+  createdAt DateTime @default(now())
+
+  userQuizSession UserQuizSession @relation(fields: [userQuizSessionId], references: [id], onDelete: Cascade)
+  quiz            Quiz            @relation(fields: [quizId], references: [id], onDelete: Restrict)
+
+  @@unique([userQuizSessionId, quizId])
+  @@index([userQuizSessionId, order])
 }
 
 model UserQuizAnswer {
@@ -262,9 +280,8 @@ model UserQuizAnswer {
 
   createdAt DateTime @default(now())
 
-  quiz              Quiz             @relation(fields: [quizId], references: [id], onDelete: Cascade)
-  userQuizSession   UserQuizSession? @relation(fields: [userQuizSessionId], references: [id])
-  userQuizSessionId Int?
+  quiz            Quiz             @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  userQuizSession UserQuizSession? @relation(fields: [quizSessionId], references: [id])
 
   @@index([userId])
   @@index([quizId])
@@ -426,7 +443,77 @@ model EpisodeReward {
 }
 
 enum RewardType {
-  EXP
   CHARACTER_UNLOCK
   ITEM
+}
+
+/////////////
+// XP
+
+model XpLevel {
+  level           Int      @id // 1,2,3...
+  requiredTotalXp Int // 이 레벨이 되려면 필요한 누적 XP (min)
+  title           String? // 선택: "Beginner", "Explorer" 같은 라벨
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([requiredTotalXp])
+}
+
+enum XpTriggerType {
+  EPISODE_COMPLETE // 에피소드 완료 시 XP
+  DAILY_QUIZ_COMPLETE // 오늘의 학습 목표 완료 시 XP
+}
+
+model XpRule {
+  id          Int           @id @default(autoincrement())
+  triggerType XpTriggerType
+
+  /// 지급 XP (이 룰이 선택되면 이 값으로 지급)
+  xpAmount Int
+
+  /// 이벤트/룰 유효기간 (기본 룰은 null/null로 두면 됨)
+  startsAt DateTime?
+  endsAt   DateTime?
+
+  /// 겹치는 룰이 있을 때 우선순위 (큰 값 우선)
+  priority Int @default(0)
+
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([triggerType, isActive])
+  @@index([startsAt, endsAt])
+}
+
+// =====================
+// XP GRANT LOG (중복 지급 방지 + 감사로그)
+// - "이미 줬는지" 체크용
+// - 세션/에피소드 등 source를 같이 저장
+// =====================
+
+enum XpSourceType {
+  EPISODE
+  DAILY_QUIZ_SESSION
+  PRACTICE_SESSION
+}
+
+model UserXpHistory {
+  id       Int  @id @default(autoincrement())
+  userId   Int
+  xpRuleId Int?
+
+  triggerType XpTriggerType
+  sourceType  XpSourceType
+  sourceId    Int? // episodeId or quizSessionId 등
+  optionCount Int? // daily 10/20/30일 때 저장해두면 좋음
+
+  xpAmount  Int
+  grantedAt DateTime @default(now())
+
+  /// 같은 source에 대해 중복 지급 방지
+  @@unique([userId, sourceType, sourceId, triggerType])
+  @@index([userId, grantedAt])
 }
