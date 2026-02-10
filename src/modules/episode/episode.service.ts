@@ -100,7 +100,7 @@ export class EpisodeService {
 
     await this.prisma.userEpisode.update({
       where: { id: userEpisode.id },
-      data: { currentStage: EpisodeStage.STORY_COMPLETED },
+      data: { currentStage: EpisodeStage.STORY_COMPLETED, isCompleted: true },
     });
 
     const xpResult = await this.xpService.grantXp({
