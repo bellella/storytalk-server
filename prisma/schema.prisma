@@ -57,6 +57,7 @@ model User {
   characterFriends  CharacterFriend[]
   characterMessages CharacterMessage[]
   userQuizSessions  UserQuizSession[]
+  characterChats    CharacterChat[]
 
   @@unique([email, provider])
 }
@@ -342,11 +343,12 @@ model Character {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
 
-  images     CharacterImage[]
-  dialogues  dialogue[]
-  friends    CharacterFriend[]
-  messages   CharacterMessage[]
-  storyLinks StoryCharacter[]
+  images         CharacterImage[]
+  dialogues      dialogue[]
+  friends        CharacterFriend[]
+  messages       CharacterMessage[]
+  storyLinks     StoryCharacter[]
+  characterChats CharacterChat[]
 }
 
 model StoryCharacter {
@@ -396,17 +398,72 @@ model CharacterFriend {
 // CHARACTER CHAT SYSTEM
 //////////////////////////////////////////////////////
 
-model CharacterMessage {
-  id          Int      @id @default(autoincrement())
+// 채팅방
+model CharacterChat {
+  id          Int @id @default(autoincrement())
   userId      Int
   characterId Int
-  content     String
-  isFromUser  Boolean
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+
+  lastMessageId Int?
+  lastMessageAt DateTime?
+  unreadCount   Int       @default(0)
+
+  lastReadMessageId Int?
+  lastReadAt        DateTime?
+
+  isPinned Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   user      User      @relation(fields: [userId], references: [id])
   character Character @relation(fields: [characterId], references: [id])
+
+  // ✅ 추가 1) 일반 메시지 목록 관계(반대편)
+  messages CharacterMessage[] @relation("CharacterChatMessages")
+
+  // ✅ 추가 2) lastMessageId 관계(반대편)
+  lastMessage CharacterMessage? @relation("CharacterChatLastMessage", fields: [lastMessageId], references: [id])
+
+  @@unique([userId, characterId])
+  @@index([userId, lastMessageAt])
+}
+
+enum MessageType {
+  TEXT
+  SYSTEM
+  ADVICE
+  IMAGE
+}
+
+model CharacterMessage {
+  id Int @id @default(autoincrement())
+
+  chatId      Int
+  userId      Int
+  characterId Int
+
+  isFromUser Boolean
+  type       MessageType @default(TEXT)
+
+  content String
+  payload Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // ✅ 일반 messages 관계 이름 지정
+  chat CharacterChat @relation("CharacterChatMessages", fields: [chatId], references: [id])
+
+  user      User      @relation(fields: [userId], references: [id])
+  character Character @relation(fields: [characterId], references: [id])
+
+  // ✅ lastMessage 역관계
+  asLastMessageOf CharacterChat[] @relation("CharacterChatLastMessage")
+
+  @@index([chatId, createdAt])
+  @@index([userId, characterId, createdAt])
+  @@index([characterId, createdAt])
 }
 
 //////////////////////////////////////////////////////

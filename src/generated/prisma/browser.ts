@@ -103,6 +103,11 @@ export type CharacterImage = Prisma.CharacterImageModel
  */
 export type CharacterFriend = Prisma.CharacterFriendModel
 /**
+ * Model CharacterChat
+ * 
+ */
+export type CharacterChat = Prisma.CharacterChatModel
+/**
  * Model CharacterMessage
  * 
  */

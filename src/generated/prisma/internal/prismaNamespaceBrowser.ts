@@ -68,6 +68,7 @@ export const ModelName = {
   StoryCharacter: 'StoryCharacter',
   CharacterImage: 'CharacterImage',
   CharacterFriend: 'CharacterFriend',
+  CharacterChat: 'CharacterChat',
   CharacterMessage: 'CharacterMessage',
   dialogueBookmark: 'dialogueBookmark',
   EpisodeReward: 'EpisodeReward',
@@ -343,12 +344,32 @@ export const CharacterFriendScalarFieldEnum = {
 export type CharacterFriendScalarFieldEnum = (typeof CharacterFriendScalarFieldEnum)[keyof typeof CharacterFriendScalarFieldEnum]
 
 
-export const CharacterMessageScalarFieldEnum = {
+export const CharacterChatScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   characterId: 'characterId',
-  content: 'content',
+  lastMessageId: 'lastMessageId',
+  lastMessageAt: 'lastMessageAt',
+  unreadCount: 'unreadCount',
+  lastReadMessageId: 'lastReadMessageId',
+  lastReadAt: 'lastReadAt',
+  isPinned: 'isPinned',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CharacterChatScalarFieldEnum = (typeof CharacterChatScalarFieldEnum)[keyof typeof CharacterChatScalarFieldEnum]
+
+
+export const CharacterMessageScalarFieldEnum = {
+  id: 'id',
+  chatId: 'chatId',
+  userId: 'userId',
+  characterId: 'characterId',
   isFromUser: 'isFromUser',
+  type: 'type',
+  content: 'content',
+  payload: 'payload',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

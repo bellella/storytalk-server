@@ -57,6 +57,13 @@ export class AuthService {
         profileImage: picture || null,
       });
     } catch (error) {
+      // 토큰의 실제 aud 확인용 (디버깅 후 삭제)
+      try {
+        const [, b64Payload] = idToken.split('.');
+        const decoded = JSON.parse(
+          Buffer.from(b64Payload, 'base64').toString()
+        );
+      } catch {}
       throw new UnauthorizedException('Failed to verify Google token');
     }
   }

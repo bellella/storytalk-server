@@ -306,6 +306,7 @@ export type UserWhereInput = {
   characterFriends?: Prisma.CharacterFriendListRelationFilter
   characterMessages?: Prisma.CharacterMessageListRelationFilter
   userQuizSessions?: Prisma.UserQuizSessionListRelationFilter
+  characterChats?: Prisma.CharacterChatListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -329,6 +330,7 @@ export type UserOrderByWithRelationInput = {
   characterFriends?: Prisma.CharacterFriendOrderByRelationAggregateInput
   characterMessages?: Prisma.CharacterMessageOrderByRelationAggregateInput
   userQuizSessions?: Prisma.UserQuizSessionOrderByRelationAggregateInput
+  characterChats?: Prisma.CharacterChatOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -356,6 +358,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   characterFriends?: Prisma.CharacterFriendListRelationFilter
   characterMessages?: Prisma.CharacterMessageListRelationFilter
   userQuizSessions?: Prisma.UserQuizSessionListRelationFilter
+  characterChats?: Prisma.CharacterChatListRelationFilter
 }, "id" | "email_provider">
 
 export type UserOrderByWithAggregationInput = {
@@ -420,6 +423,7 @@ export type UserCreateInput = {
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageCreateNestedManyWithoutUserInput
   userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -443,6 +447,7 @@ export type UserUncheckedCreateInput = {
   characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutUserInput
   userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -465,6 +470,7 @@ export type UserUpdateInput = {
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUpdateManyWithoutUserNestedInput
   userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -488,6 +494,7 @@ export type UserUncheckedUpdateInput = {
   characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutUserNestedInput
   userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -707,6 +714,20 @@ export type UserUpdateOneRequiredWithoutCharacterFriendsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCharacterFriendsInput, Prisma.UserUpdateWithoutCharacterFriendsInput>, Prisma.UserUncheckedUpdateWithoutCharacterFriendsInput>
 }
 
+export type UserCreateNestedOneWithoutCharacterChatsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCharacterChatsInput, Prisma.UserUncheckedCreateWithoutCharacterChatsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCharacterChatsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCharacterChatsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCharacterChatsInput, Prisma.UserUncheckedCreateWithoutCharacterChatsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCharacterChatsInput
+  upsert?: Prisma.UserUpsertWithoutCharacterChatsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCharacterChatsInput, Prisma.UserUpdateWithoutCharacterChatsInput>, Prisma.UserUncheckedUpdateWithoutCharacterChatsInput>
+}
+
 export type UserCreateNestedOneWithoutCharacterMessagesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCharacterMessagesInput, Prisma.UserUncheckedCreateWithoutCharacterMessagesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCharacterMessagesInput
@@ -754,6 +775,7 @@ export type UserCreateWithoutStoryProgressInput = {
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageCreateNestedManyWithoutUserInput
   userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStoryProgressInput = {
@@ -776,6 +798,7 @@ export type UserUncheckedCreateWithoutStoryProgressInput = {
   characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutUserInput
   userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStoryProgressInput = {
@@ -813,6 +836,7 @@ export type UserUpdateWithoutStoryProgressInput = {
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUpdateManyWithoutUserNestedInput
   userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStoryProgressInput = {
@@ -835,6 +859,7 @@ export type UserUncheckedUpdateWithoutStoryProgressInput = {
   characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutUserNestedInput
   userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUserQuizSessionsInput = {
@@ -856,6 +881,7 @@ export type UserCreateWithoutUserQuizSessionsInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserQuizSessionsInput = {
@@ -878,6 +904,7 @@ export type UserUncheckedCreateWithoutUserQuizSessionsInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserQuizSessionsInput = {
@@ -915,6 +942,7 @@ export type UserUpdateWithoutUserQuizSessionsInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserQuizSessionsInput = {
@@ -937,6 +965,7 @@ export type UserUncheckedUpdateWithoutUserQuizSessionsInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUserEpisodesInput = {
@@ -958,6 +987,7 @@ export type UserCreateWithoutUserEpisodesInput = {
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageCreateNestedManyWithoutUserInput
   userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserEpisodesInput = {
@@ -980,6 +1010,7 @@ export type UserUncheckedCreateWithoutUserEpisodesInput = {
   characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutUserInput
   userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserEpisodesInput = {
@@ -1017,6 +1048,7 @@ export type UserUpdateWithoutUserEpisodesInput = {
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUpdateManyWithoutUserNestedInput
   userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserEpisodesInput = {
@@ -1039,6 +1071,7 @@ export type UserUncheckedUpdateWithoutUserEpisodesInput = {
   characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutUserNestedInput
   userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCharacterFriendsInput = {
@@ -1060,6 +1093,7 @@ export type UserCreateWithoutCharacterFriendsInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageCreateNestedManyWithoutUserInput
   userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCharacterFriendsInput = {
@@ -1082,6 +1116,7 @@ export type UserUncheckedCreateWithoutCharacterFriendsInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutUserInput
   userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCharacterFriendsInput = {
@@ -1119,6 +1154,7 @@ export type UserUpdateWithoutCharacterFriendsInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUpdateManyWithoutUserNestedInput
   userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCharacterFriendsInput = {
@@ -1139,6 +1175,113 @@ export type UserUncheckedUpdateWithoutCharacterFriendsInput = {
   storyProgress?: Prisma.StoryProgressUncheckedUpdateManyWithoutUserNestedInput
   userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
+  characterMessages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutCharacterChatsInput = {
+  name?: string | null
+  email: string
+  provider: $Enums.AuthProvider
+  providerId: string
+  profileImage?: string | null
+  level?: $Enums.Level
+  XpLevel?: number
+  xp?: number
+  streakDays?: number
+  lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
+  createdAt?: Date | string
+  isNew?: boolean
+  storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
+  characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
+  characterMessages?: Prisma.CharacterMessageCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutCharacterChatsInput = {
+  id?: number
+  name?: string | null
+  email: string
+  provider: $Enums.AuthProvider
+  providerId: string
+  profileImage?: string | null
+  level?: $Enums.Level
+  XpLevel?: number
+  xp?: number
+  streakDays?: number
+  lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
+  createdAt?: Date | string
+  isNew?: boolean
+  storyProgress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
+  characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
+  characterMessages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCharacterChatsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCharacterChatsInput, Prisma.UserUncheckedCreateWithoutCharacterChatsInput>
+}
+
+export type UserUpsertWithoutCharacterChatsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCharacterChatsInput, Prisma.UserUncheckedUpdateWithoutCharacterChatsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCharacterChatsInput, Prisma.UserUncheckedCreateWithoutCharacterChatsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCharacterChatsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCharacterChatsInput, Prisma.UserUncheckedUpdateWithoutCharacterChatsInput>
+}
+
+export type UserUpdateWithoutCharacterChatsInput = {
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
+  XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
+  characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
+  characterMessages?: Prisma.CharacterMessageUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCharacterChatsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
+  XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  storyProgress?: Prisma.StoryProgressUncheckedUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
+  characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutUserNestedInput
   userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1162,6 +1305,7 @@ export type UserCreateWithoutCharacterMessagesInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
   userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCharacterMessagesInput = {
@@ -1184,6 +1328,7 @@ export type UserUncheckedCreateWithoutCharacterMessagesInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
   userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCharacterMessagesInput = {
@@ -1221,6 +1366,7 @@ export type UserUpdateWithoutCharacterMessagesInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
   userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCharacterMessagesInput = {
@@ -1243,6 +1389,7 @@ export type UserUncheckedUpdateWithoutCharacterMessagesInput = {
   dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
   userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDialogueBookmarksInput = {
@@ -1264,6 +1411,7 @@ export type UserCreateWithoutDialogueBookmarksInput = {
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageCreateNestedManyWithoutUserInput
   userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDialogueBookmarksInput = {
@@ -1286,6 +1434,7 @@ export type UserUncheckedCreateWithoutDialogueBookmarksInput = {
   characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
   characterMessages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutUserInput
   userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDialogueBookmarksInput = {
@@ -1323,6 +1472,7 @@ export type UserUpdateWithoutDialogueBookmarksInput = {
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUpdateManyWithoutUserNestedInput
   userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDialogueBookmarksInput = {
@@ -1345,6 +1495,7 @@ export type UserUncheckedUpdateWithoutDialogueBookmarksInput = {
   characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
   characterMessages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutUserNestedInput
   userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1359,6 +1510,7 @@ export type UserCountOutputType = {
   characterFriends: number
   characterMessages: number
   userQuizSessions: number
+  characterChats: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1368,6 +1520,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   characterFriends?: boolean | UserCountOutputTypeCountCharacterFriendsArgs
   characterMessages?: boolean | UserCountOutputTypeCountCharacterMessagesArgs
   userQuizSessions?: boolean | UserCountOutputTypeCountUserQuizSessionsArgs
+  characterChats?: boolean | UserCountOutputTypeCountCharacterChatsArgs
 }
 
 /**
@@ -1422,6 +1575,13 @@ export type UserCountOutputTypeCountUserQuizSessionsArgs<ExtArgs extends runtime
   where?: Prisma.UserQuizSessionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCharacterChatsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CharacterChatWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1444,6 +1604,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   characterFriends?: boolean | Prisma.User$characterFriendsArgs<ExtArgs>
   characterMessages?: boolean | Prisma.User$characterMessagesArgs<ExtArgs>
   userQuizSessions?: boolean | Prisma.User$userQuizSessionsArgs<ExtArgs>
+  characterChats?: boolean | Prisma.User$characterChatsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1506,6 +1667,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   characterFriends?: boolean | Prisma.User$characterFriendsArgs<ExtArgs>
   characterMessages?: boolean | Prisma.User$characterMessagesArgs<ExtArgs>
   userQuizSessions?: boolean | Prisma.User$userQuizSessionsArgs<ExtArgs>
+  characterChats?: boolean | Prisma.User$characterChatsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1520,6 +1682,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     characterFriends: Prisma.$CharacterFriendPayload<ExtArgs>[]
     characterMessages: Prisma.$CharacterMessagePayload<ExtArgs>[]
     userQuizSessions: Prisma.$UserQuizSessionPayload<ExtArgs>[]
+    characterChats: Prisma.$CharacterChatPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1936,6 +2099,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   characterFriends<T extends Prisma.User$characterFriendsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$characterFriendsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterFriendPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   characterMessages<T extends Prisma.User$characterMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$characterMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   userQuizSessions<T extends Prisma.User$userQuizSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userQuizSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserQuizSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  characterChats<T extends Prisma.User$characterChatsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$characterChatsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2508,6 +2672,30 @@ export type User$userQuizSessionsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.UserQuizSessionScalarFieldEnum | Prisma.UserQuizSessionScalarFieldEnum[]
+}
+
+/**
+ * User.characterChats
+ */
+export type User$characterChatsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CharacterChat
+   */
+  select?: Prisma.CharacterChatSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CharacterChat
+   */
+  omit?: Prisma.CharacterChatOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CharacterChatInclude<ExtArgs> | null
+  where?: Prisma.CharacterChatWhereInput
+  orderBy?: Prisma.CharacterChatOrderByWithRelationInput | Prisma.CharacterChatOrderByWithRelationInput[]
+  cursor?: Prisma.CharacterChatWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CharacterChatScalarFieldEnum | Prisma.CharacterChatScalarFieldEnum[]
 }
 
 /**

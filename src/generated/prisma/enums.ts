@@ -81,6 +81,16 @@ export const CharacterScope = {
 export type CharacterScope = (typeof CharacterScope)[keyof typeof CharacterScope]
 
 
+export const MessageType = {
+  TEXT: 'TEXT',
+  SYSTEM: 'SYSTEM',
+  ADVICE: 'ADVICE',
+  IMAGE: 'IMAGE'
+} as const
+
+export type MessageType = (typeof MessageType)[keyof typeof MessageType]
+
+
 export const RewardType = {
   CHARACTER_UNLOCK: 'CHARACTER_UNLOCK',
   ITEM: 'ITEM'

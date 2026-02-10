@@ -185,7 +185,6 @@ export class QuizService {
 
     // 이미 답한 quizId 목록
     const answeredQuizIds = new Set(session.answers.map((a) => a.quizId));
-    console.log(session, 'answeredQuizIds');
     // 완료됐으면 전체 반환, 아니면 미답변 퀴즈만 반환
     const targetItems = isCompleted
       ? session.quizSessionItems

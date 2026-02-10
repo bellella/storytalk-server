@@ -13,6 +13,9 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UnitModule } from './modules/unit/unit.module';
 import { QuizModule } from './modules/quiz/quiz.module';
 import { XpModule } from './modules/xp/xp.module';
+import { AiModule } from './modules/ai/ai.module';
+import { FriendModule } from './modules/friend/friend.module';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
   imports: [
@@ -31,6 +34,9 @@ import { XpModule } from './modules/xp/xp.module';
     UnitModule,
     QuizModule,
     XpModule,
+    AiModule,
+    FriendModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],

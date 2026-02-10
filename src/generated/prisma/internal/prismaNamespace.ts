@@ -401,6 +401,7 @@ export const ModelName = {
   StoryCharacter: 'StoryCharacter',
   CharacterImage: 'CharacterImage',
   CharacterFriend: 'CharacterFriend',
+  CharacterChat: 'CharacterChat',
   CharacterMessage: 'CharacterMessage',
   dialogueBookmark: 'dialogueBookmark',
   EpisodeReward: 'EpisodeReward',
@@ -422,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "story" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "userEpisode" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterMessage" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory"
+    modelProps: "user" | "story" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "userEpisode" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterChat" | "characterMessage" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1684,6 +1685,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CharacterChat: {
+      payload: Prisma.$CharacterChatPayload<ExtArgs>
+      fields: Prisma.CharacterChatFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CharacterChatFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterChatPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CharacterChatFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterChatPayload>
+        }
+        findFirst: {
+          args: Prisma.CharacterChatFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterChatPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CharacterChatFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterChatPayload>
+        }
+        findMany: {
+          args: Prisma.CharacterChatFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterChatPayload>[]
+        }
+        create: {
+          args: Prisma.CharacterChatCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterChatPayload>
+        }
+        createMany: {
+          args: Prisma.CharacterChatCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CharacterChatCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterChatPayload>[]
+        }
+        delete: {
+          args: Prisma.CharacterChatDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterChatPayload>
+        }
+        update: {
+          args: Prisma.CharacterChatUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterChatPayload>
+        }
+        deleteMany: {
+          args: Prisma.CharacterChatDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CharacterChatUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CharacterChatUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterChatPayload>[]
+        }
+        upsert: {
+          args: Prisma.CharacterChatUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterChatPayload>
+        }
+        aggregate: {
+          args: Prisma.CharacterChatAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCharacterChat>
+        }
+        groupBy: {
+          args: Prisma.CharacterChatGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharacterChatGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CharacterChatCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharacterChatCountAggregateOutputType> | number
+        }
+      }
+    }
     CharacterMessage: {
       payload: Prisma.$CharacterMessagePayload<ExtArgs>
       fields: Prisma.CharacterMessageFieldRefs
@@ -2418,12 +2493,32 @@ export const CharacterFriendScalarFieldEnum = {
 export type CharacterFriendScalarFieldEnum = (typeof CharacterFriendScalarFieldEnum)[keyof typeof CharacterFriendScalarFieldEnum]
 
 
-export const CharacterMessageScalarFieldEnum = {
+export const CharacterChatScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   characterId: 'characterId',
-  content: 'content',
+  lastMessageId: 'lastMessageId',
+  lastMessageAt: 'lastMessageAt',
+  unreadCount: 'unreadCount',
+  lastReadMessageId: 'lastReadMessageId',
+  lastReadAt: 'lastReadAt',
+  isPinned: 'isPinned',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CharacterChatScalarFieldEnum = (typeof CharacterChatScalarFieldEnum)[keyof typeof CharacterChatScalarFieldEnum]
+
+
+export const CharacterMessageScalarFieldEnum = {
+  id: 'id',
+  chatId: 'chatId',
+  userId: 'userId',
+  characterId: 'characterId',
   isFromUser: 'isFromUser',
+  type: 'type',
+  content: 'content',
+  payload: 'payload',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2741,6 +2836,20 @@ export type ListEnumCharacterScopeFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
+ * Reference to a field of type 'MessageType'
+ */
+export type EnumMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MessageType'>
+    
+
+
+/**
+ * Reference to a field of type 'MessageType[]'
+ */
+export type ListEnumMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MessageType[]'>
+    
+
+
+/**
  * Reference to a field of type 'RewardType'
  */
 export type EnumRewardTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RewardType'>
@@ -2877,6 +2986,7 @@ export type GlobalOmitConfig = {
   storyCharacter?: Prisma.StoryCharacterOmit
   characterImage?: Prisma.CharacterImageOmit
   characterFriend?: Prisma.CharacterFriendOmit
+  characterChat?: Prisma.CharacterChatOmit
   characterMessage?: Prisma.CharacterMessageOmit
   dialogueBookmark?: Prisma.dialogueBookmarkOmit
   episodeReward?: Prisma.EpisodeRewardOmit
