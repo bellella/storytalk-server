@@ -55,7 +55,7 @@ model User {
   userEpisodes      UserEpisode[]
   dialogueBookmarks dialogueBookmark[]
   characterFriends  CharacterFriend[]
-  characterMessages CharacterMessage[]
+  Messages Message[]
   userQuizSessions  UserQuizSession[]
   characterChats    CharacterChat[]
 
@@ -346,7 +346,7 @@ model Character {
   images         CharacterImage[]
   dialogues      dialogue[]
   friends        CharacterFriend[]
-  messages       CharacterMessage[]
+  messages       Message[]
   storyLinks     StoryCharacter[]
   characterChats CharacterChat[]
 }
@@ -420,10 +420,10 @@ model CharacterChat {
   character Character @relation(fields: [characterId], references: [id])
 
   // ✅ 추가 1) 일반 메시지 목록 관계(반대편)
-  messages CharacterMessage[] @relation("CharacterChatMessages")
+  messages Message[] @relation("CharacterChatMessages")
 
   // ✅ 추가 2) lastMessageId 관계(반대편)
-  lastMessage CharacterMessage? @relation("CharacterChatLastMessage", fields: [lastMessageId], references: [id])
+  lastMessage Message? @relation("CharacterChatLastMessage", fields: [lastMessageId], references: [id])
 
   @@unique([userId, characterId])
   @@index([userId, lastMessageAt])
@@ -432,11 +432,10 @@ model CharacterChat {
 enum MessageType {
   TEXT
   SYSTEM
-  ADVICE
-  IMAGE
+  STICKER
 }
 
-model CharacterMessage {
+model Message {
   id Int @id @default(autoincrement())
 
   chatId      Int

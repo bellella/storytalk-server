@@ -1,20 +1,14 @@
+import {
+  BuildSystemPromptData,
+  GenerateCharacterResponseOptions,
+  MessageContext,
+} from '@/types/ai.type';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import OpenAI from 'openai';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
+import { SendMessageOptionType } from '../chat/dto/send-message.dto';
 import { AiResponse, AiResponseSchema } from './ai-response.schema';
-
-interface CharacterContext {
-  name: string;
-  description: string;
-  personality?: string | null;
-  aiPrompt?: string | null;
-}
-
-interface MessageContext {
-  isFromUser: boolean;
-  content: string;
-}
 
 @Injectable()
 export class OpenAiService {
@@ -28,50 +22,56 @@ export class OpenAiService {
   }
 
   async generateCharacterResponse(
-    character: CharacterContext,
-    affinity: number,
-    recentMessages: MessageContext[],
-    userMessage: string,
+    options: GenerateCharacterResponseOptions
   ): Promise<AiResponse> {
-    const systemPrompt = this.buildSystemPrompt(character, affinity);
-    const messages = this.buildMessageHistory(recentMessages, userMessage);
+    const systemPrompt = this.buildSystemPrompt({
+      type: options.type,
+      aiPrompt: options.aiPrompt,
+      affinity: options.affinity,
+      options: options.options,
+    });
+    console.log(systemPrompt, '보내는시스템프롬프트');
+    const messages = this.buildMessageHistory(
+      options.recentMessages,
+      options.userMessage
+    );
     const rawText = await this.callApi(systemPrompt, messages);
+    console.log(rawText, '챗지피티가 한것');
     return this.parseResponse(rawText);
   }
 
-  buildSystemPrompt(character: CharacterContext, affinity: number): string {
+  buildSystemPrompt(data: BuildSystemPromptData): string {
+    const { aiPrompt = '', affinity, options } = data;
+
     const parts = [
-      `You are ${character.name}, a character in a language learning app.`,
-      `\nCharacter Description: ${character.description}`,
-      `Personality: ${character.personality || 'friendly and helpful'}`,
+      `Instructions: ${aiPrompt}`,
       `Friendship Level (0-100): ${affinity}`,
     ];
 
-    if (character.aiPrompt) {
-      parts.push(`\nAdditional Instructions:\n${character.aiPrompt}`);
-    }
-
     parts.push(`
-Your goal is to help users practice English while staying in character.
-Adjust your tone based on the friendship level (higher = more casual and warm).
-
-You MUST respond in the following JSON format:
-{
-  "type": "CHAT" | "GRAMMAR_CORRECTION" | "TRANSLATION",
-  "message": "your response message",
-  "data": {}
-}
-
-- If the user makes a grammar mistake, respond with type "GRAMMAR_CORRECTION" and include { "original": "...", "corrected": "..." } in data.
-- If the user asks for translation, respond with type "TRANSLATION" and include { "original": "...", "translated": "..." } in data.
-- Otherwise, respond with type "CHAT".`);
+      Your goal is to have a real conversation with the user.
+      Adjust your tone based on the friendship level (higher = more casual and warm).
+      You MUST respond in the following JSON format:
+      {
+        "type": "BATCH"
+        "messages": [
+        {"type": "TEXT", "content": "Response message to the user's message", 
+        "translated": "translate your message to Korean"}, 
+        {"type": "STICKER", "content": "cat-happy | cat-sad"}],
+        "payload": {
+          ${options?.includes(SendMessageOptionType.NEED_TRANSLATION) ? `"translated": "translate user's message to English",` : ''}
+          ${options?.includes(SendMessageOptionType.NEED_GRAMMAR_CORRECTION) ? `"corrected": "correct the grammar of the user's message",` : ''}
+        }
+      }
+        `);
 
     return parts.join('\n');
   }
 
+  // 메시지 히스토리 생성
   buildMessageHistory(
     recentMessages: MessageContext[],
-    userMessage: string,
+    userMessage: string
   ): ChatCompletionMessageParam[] {
     const history: ChatCompletionMessageParam[] = recentMessages
       .slice(-20)
@@ -84,9 +84,10 @@ You MUST respond in the following JSON format:
     return history;
   }
 
+  // OpenAI API 호출
   async callApi(
     systemPrompt: string,
-    messages: ChatCompletionMessageParam[],
+    messages: ChatCompletionMessageParam[]
   ): Promise<string> {
     const completion = await this.openai.chat.completions.create({
       model: 'gpt-4o-mini',
@@ -106,9 +107,15 @@ You MUST respond in the following JSON format:
     } catch (error) {
       this.logger.warn(`Failed to parse AI response as JSON: ${rawText}`);
       return {
-        type: 'CHAT',
-        message: rawText,
-        data: {},
+        type: 'BATCH',
+        messages: [
+          {
+            type: 'TEXT',
+            content: rawText,
+            translated: rawText,
+          },
+        ],
+        payload: {},
       };
     }
   }

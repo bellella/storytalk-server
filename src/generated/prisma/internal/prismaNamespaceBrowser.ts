@@ -69,7 +69,7 @@ export const ModelName = {
   CharacterImage: 'CharacterImage',
   CharacterFriend: 'CharacterFriend',
   CharacterChat: 'CharacterChat',
-  CharacterMessage: 'CharacterMessage',
+  Message: 'Message',
   dialogueBookmark: 'dialogueBookmark',
   EpisodeReward: 'EpisodeReward',
   XpLevel: 'XpLevel',
@@ -361,7 +361,7 @@ export const CharacterChatScalarFieldEnum = {
 export type CharacterChatScalarFieldEnum = (typeof CharacterChatScalarFieldEnum)[keyof typeof CharacterChatScalarFieldEnum]
 
 
-export const CharacterMessageScalarFieldEnum = {
+export const MessageScalarFieldEnum = {
   id: 'id',
   chatId: 'chatId',
   userId: 'userId',
@@ -374,7 +374,7 @@ export const CharacterMessageScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type CharacterMessageScalarFieldEnum = (typeof CharacterMessageScalarFieldEnum)[keyof typeof CharacterMessageScalarFieldEnum]
+export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
 
 
 export const DialogueBookmarkScalarFieldEnum = {

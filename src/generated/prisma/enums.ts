@@ -84,8 +84,7 @@ export type CharacterScope = (typeof CharacterScope)[keyof typeof CharacterScope
 export const MessageType = {
   TEXT: 'TEXT',
   SYSTEM: 'SYSTEM',
-  ADVICE: 'ADVICE',
-  IMAGE: 'IMAGE'
+  STICKER: 'STICKER'
 } as const
 
 export type MessageType = (typeof MessageType)[keyof typeof MessageType]

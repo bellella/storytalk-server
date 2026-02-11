@@ -5,6 +5,6 @@ export class SendMessageResponseDto {
   @ApiProperty({ type: ChatMessageDto })
   userMessage: ChatMessageDto;
 
-  @ApiProperty({ type: ChatMessageDto })
-  aiMessage: ChatMessageDto;
+  @ApiProperty({ type: [ChatMessageDto] })
+  aiMessages: ChatMessageDto[];
 }

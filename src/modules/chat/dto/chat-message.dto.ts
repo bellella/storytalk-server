@@ -1,5 +1,13 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
+export class MessagePayloadDto {
+  original: string;
+
+  corrected: string;
+
+  translated: string;
+}
+
 export class ChatMessageDto {
   @ApiProperty()
   id: number;
@@ -11,7 +19,7 @@ export class ChatMessageDto {
   content: string;
 
   @ApiPropertyOptional()
-  payload?: Record<string, any> | null;
+  payload?: MessagePayloadDto;
 
   @ApiProperty()
   isFromUser: boolean;

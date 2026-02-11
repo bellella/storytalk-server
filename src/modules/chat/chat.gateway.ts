@@ -14,9 +14,7 @@ import { Server, Socket } from 'socket.io';
 import { ChatMessageDto } from './dto/chat-message.dto';
 
 @WebSocketGateway({ namespace: '/chat', cors: true })
-export class ChatGateway
-  implements OnGatewayConnection, OnGatewayDisconnect
-{
+export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
@@ -24,7 +22,7 @@ export class ChatGateway
 
   constructor(
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService,
+    private readonly configService: ConfigService
   ) {}
 
   async handleConnection(client: Socket) {
@@ -62,7 +60,7 @@ export class ChatGateway
   @SubscribeMessage('typing:start')
   handleTypingStart(
     @ConnectedSocket() client: Socket,
-    @MessageBody() data: { chatId: number },
+    @MessageBody() data: { chatId: number }
   ) {
     const userId = client.data.userId;
     if (userId) {
@@ -75,7 +73,7 @@ export class ChatGateway
   @SubscribeMessage('typing:stop')
   handleTypingStop(
     @ConnectedSocket() client: Socket,
-    @MessageBody() data: { chatId: number },
+    @MessageBody() data: { chatId: number }
   ) {
     const userId = client.data.userId;
     if (userId) {
@@ -85,8 +83,8 @@ export class ChatGateway
     }
   }
 
-  emitNewMessage(userId: number, message: ChatMessageDto) {
-    this.server.to(`user:${userId}`).emit('message:new', message);
+  emitNewMessages(userId: number, messages: ChatMessageDto[]) {
+    this.server.to(`user:${userId}`).emit('messages:new', messages);
   }
 
   emitReadReceipt(userId: number, chatId: number) {

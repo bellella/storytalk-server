@@ -45,7 +45,7 @@ export class ChatController {
     @ReqUser('id') userId: number,
     @Param('chatId', ParseIntPipe) chatId: number,
     @Query() query: CursorRequestDto
-  ): Promise<CursorResponseDto<ChatMessageDto>> {
+  ): Promise<ChatMessagesResponseDto> {
     return this.chatService.getMessages(chatId, userId, query);
   }
 
@@ -56,7 +56,7 @@ export class ChatController {
     @Param('characterId', ParseIntPipe) characterId: number,
     @Body() dto: SendMessageDto
   ): Promise<SendMessageResponseDto> {
-    return this.chatService.sendMessage(userId, characterId, dto.content);
+    return this.chatService.sendMessage(userId, characterId, dto);
   }
 
   @Post(':chatId/read')

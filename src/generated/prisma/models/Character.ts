@@ -275,7 +275,7 @@ export type CharacterWhereInput = {
   images?: Prisma.CharacterImageListRelationFilter
   dialogues?: Prisma.DialogueListRelationFilter
   friends?: Prisma.CharacterFriendListRelationFilter
-  messages?: Prisma.CharacterMessageListRelationFilter
+  messages?: Prisma.MessageListRelationFilter
   storyLinks?: Prisma.StoryCharacterListRelationFilter
   characterChats?: Prisma.CharacterChatListRelationFilter
 }
@@ -296,7 +296,7 @@ export type CharacterOrderByWithRelationInput = {
   images?: Prisma.CharacterImageOrderByRelationAggregateInput
   dialogues?: Prisma.dialogueOrderByRelationAggregateInput
   friends?: Prisma.CharacterFriendOrderByRelationAggregateInput
-  messages?: Prisma.CharacterMessageOrderByRelationAggregateInput
+  messages?: Prisma.MessageOrderByRelationAggregateInput
   storyLinks?: Prisma.StoryCharacterOrderByRelationAggregateInput
   characterChats?: Prisma.CharacterChatOrderByRelationAggregateInput
 }
@@ -320,7 +320,7 @@ export type CharacterWhereUniqueInput = Prisma.AtLeast<{
   images?: Prisma.CharacterImageListRelationFilter
   dialogues?: Prisma.DialogueListRelationFilter
   friends?: Prisma.CharacterFriendListRelationFilter
-  messages?: Prisma.CharacterMessageListRelationFilter
+  messages?: Prisma.MessageListRelationFilter
   storyLinks?: Prisma.StoryCharacterListRelationFilter
   characterChats?: Prisma.CharacterChatListRelationFilter
 }, "id">
@@ -378,7 +378,7 @@ export type CharacterCreateInput = {
   images?: Prisma.CharacterImageCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.dialogueCreateNestedManyWithoutCharacterInput
   friends?: Prisma.CharacterFriendCreateNestedManyWithoutCharacterInput
-  messages?: Prisma.CharacterMessageCreateNestedManyWithoutCharacterInput
+  messages?: Prisma.MessageCreateNestedManyWithoutCharacterInput
   storyLinks?: Prisma.StoryCharacterCreateNestedManyWithoutCharacterInput
   characterChats?: Prisma.CharacterChatCreateNestedManyWithoutCharacterInput
 }
@@ -399,7 +399,7 @@ export type CharacterUncheckedCreateInput = {
   images?: Prisma.CharacterImageUncheckedCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.dialogueUncheckedCreateNestedManyWithoutCharacterInput
   friends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutCharacterInput
-  messages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutCharacterInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCharacterInput
   storyLinks?: Prisma.StoryCharacterUncheckedCreateNestedManyWithoutCharacterInput
   characterChats?: Prisma.CharacterChatUncheckedCreateNestedManyWithoutCharacterInput
 }
@@ -419,7 +419,7 @@ export type CharacterUpdateInput = {
   images?: Prisma.CharacterImageUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.dialogueUpdateManyWithoutCharacterNestedInput
   friends?: Prisma.CharacterFriendUpdateManyWithoutCharacterNestedInput
-  messages?: Prisma.CharacterMessageUpdateManyWithoutCharacterNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutCharacterNestedInput
   storyLinks?: Prisma.StoryCharacterUpdateManyWithoutCharacterNestedInput
   characterChats?: Prisma.CharacterChatUpdateManyWithoutCharacterNestedInput
 }
@@ -440,7 +440,7 @@ export type CharacterUncheckedUpdateInput = {
   images?: Prisma.CharacterImageUncheckedUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.dialogueUncheckedUpdateManyWithoutCharacterNestedInput
   friends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutCharacterNestedInput
-  messages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutCharacterNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutCharacterNestedInput
   storyLinks?: Prisma.StoryCharacterUncheckedUpdateManyWithoutCharacterNestedInput
   characterChats?: Prisma.CharacterChatUncheckedUpdateManyWithoutCharacterNestedInput
 }
@@ -656,7 +656,7 @@ export type CharacterCreateWithoutDialoguesInput = {
   updatedAt?: Date | string
   images?: Prisma.CharacterImageCreateNestedManyWithoutCharacterInput
   friends?: Prisma.CharacterFriendCreateNestedManyWithoutCharacterInput
-  messages?: Prisma.CharacterMessageCreateNestedManyWithoutCharacterInput
+  messages?: Prisma.MessageCreateNestedManyWithoutCharacterInput
   storyLinks?: Prisma.StoryCharacterCreateNestedManyWithoutCharacterInput
   characterChats?: Prisma.CharacterChatCreateNestedManyWithoutCharacterInput
 }
@@ -676,7 +676,7 @@ export type CharacterUncheckedCreateWithoutDialoguesInput = {
   updatedAt?: Date | string
   images?: Prisma.CharacterImageUncheckedCreateNestedManyWithoutCharacterInput
   friends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutCharacterInput
-  messages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutCharacterInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCharacterInput
   storyLinks?: Prisma.StoryCharacterUncheckedCreateNestedManyWithoutCharacterInput
   characterChats?: Prisma.CharacterChatUncheckedCreateNestedManyWithoutCharacterInput
 }
@@ -711,7 +711,7 @@ export type CharacterUpdateWithoutDialoguesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.CharacterImageUpdateManyWithoutCharacterNestedInput
   friends?: Prisma.CharacterFriendUpdateManyWithoutCharacterNestedInput
-  messages?: Prisma.CharacterMessageUpdateManyWithoutCharacterNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutCharacterNestedInput
   storyLinks?: Prisma.StoryCharacterUpdateManyWithoutCharacterNestedInput
   characterChats?: Prisma.CharacterChatUpdateManyWithoutCharacterNestedInput
 }
@@ -731,7 +731,7 @@ export type CharacterUncheckedUpdateWithoutDialoguesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.CharacterImageUncheckedUpdateManyWithoutCharacterNestedInput
   friends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutCharacterNestedInput
-  messages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutCharacterNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutCharacterNestedInput
   storyLinks?: Prisma.StoryCharacterUncheckedUpdateManyWithoutCharacterNestedInput
   characterChats?: Prisma.CharacterChatUncheckedUpdateManyWithoutCharacterNestedInput
 }
@@ -751,7 +751,7 @@ export type CharacterCreateWithoutStoryLinksInput = {
   images?: Prisma.CharacterImageCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.dialogueCreateNestedManyWithoutCharacterInput
   friends?: Prisma.CharacterFriendCreateNestedManyWithoutCharacterInput
-  messages?: Prisma.CharacterMessageCreateNestedManyWithoutCharacterInput
+  messages?: Prisma.MessageCreateNestedManyWithoutCharacterInput
   characterChats?: Prisma.CharacterChatCreateNestedManyWithoutCharacterInput
 }
 
@@ -771,7 +771,7 @@ export type CharacterUncheckedCreateWithoutStoryLinksInput = {
   images?: Prisma.CharacterImageUncheckedCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.dialogueUncheckedCreateNestedManyWithoutCharacterInput
   friends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutCharacterInput
-  messages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutCharacterInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCharacterInput
   characterChats?: Prisma.CharacterChatUncheckedCreateNestedManyWithoutCharacterInput
 }
 
@@ -806,7 +806,7 @@ export type CharacterUpdateWithoutStoryLinksInput = {
   images?: Prisma.CharacterImageUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.dialogueUpdateManyWithoutCharacterNestedInput
   friends?: Prisma.CharacterFriendUpdateManyWithoutCharacterNestedInput
-  messages?: Prisma.CharacterMessageUpdateManyWithoutCharacterNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutCharacterNestedInput
   characterChats?: Prisma.CharacterChatUpdateManyWithoutCharacterNestedInput
 }
 
@@ -826,7 +826,7 @@ export type CharacterUncheckedUpdateWithoutStoryLinksInput = {
   images?: Prisma.CharacterImageUncheckedUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.dialogueUncheckedUpdateManyWithoutCharacterNestedInput
   friends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutCharacterNestedInput
-  messages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutCharacterNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutCharacterNestedInput
   characterChats?: Prisma.CharacterChatUncheckedUpdateManyWithoutCharacterNestedInput
 }
 
@@ -844,7 +844,7 @@ export type CharacterCreateWithoutImagesInput = {
   updatedAt?: Date | string
   dialogues?: Prisma.dialogueCreateNestedManyWithoutCharacterInput
   friends?: Prisma.CharacterFriendCreateNestedManyWithoutCharacterInput
-  messages?: Prisma.CharacterMessageCreateNestedManyWithoutCharacterInput
+  messages?: Prisma.MessageCreateNestedManyWithoutCharacterInput
   storyLinks?: Prisma.StoryCharacterCreateNestedManyWithoutCharacterInput
   characterChats?: Prisma.CharacterChatCreateNestedManyWithoutCharacterInput
 }
@@ -864,7 +864,7 @@ export type CharacterUncheckedCreateWithoutImagesInput = {
   updatedAt?: Date | string
   dialogues?: Prisma.dialogueUncheckedCreateNestedManyWithoutCharacterInput
   friends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutCharacterInput
-  messages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutCharacterInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCharacterInput
   storyLinks?: Prisma.StoryCharacterUncheckedCreateNestedManyWithoutCharacterInput
   characterChats?: Prisma.CharacterChatUncheckedCreateNestedManyWithoutCharacterInput
 }
@@ -899,7 +899,7 @@ export type CharacterUpdateWithoutImagesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dialogues?: Prisma.dialogueUpdateManyWithoutCharacterNestedInput
   friends?: Prisma.CharacterFriendUpdateManyWithoutCharacterNestedInput
-  messages?: Prisma.CharacterMessageUpdateManyWithoutCharacterNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutCharacterNestedInput
   storyLinks?: Prisma.StoryCharacterUpdateManyWithoutCharacterNestedInput
   characterChats?: Prisma.CharacterChatUpdateManyWithoutCharacterNestedInput
 }
@@ -919,7 +919,7 @@ export type CharacterUncheckedUpdateWithoutImagesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dialogues?: Prisma.dialogueUncheckedUpdateManyWithoutCharacterNestedInput
   friends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutCharacterNestedInput
-  messages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutCharacterNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutCharacterNestedInput
   storyLinks?: Prisma.StoryCharacterUncheckedUpdateManyWithoutCharacterNestedInput
   characterChats?: Prisma.CharacterChatUncheckedUpdateManyWithoutCharacterNestedInput
 }
@@ -938,7 +938,7 @@ export type CharacterCreateWithoutFriendsInput = {
   updatedAt?: Date | string
   images?: Prisma.CharacterImageCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.dialogueCreateNestedManyWithoutCharacterInput
-  messages?: Prisma.CharacterMessageCreateNestedManyWithoutCharacterInput
+  messages?: Prisma.MessageCreateNestedManyWithoutCharacterInput
   storyLinks?: Prisma.StoryCharacterCreateNestedManyWithoutCharacterInput
   characterChats?: Prisma.CharacterChatCreateNestedManyWithoutCharacterInput
 }
@@ -958,7 +958,7 @@ export type CharacterUncheckedCreateWithoutFriendsInput = {
   updatedAt?: Date | string
   images?: Prisma.CharacterImageUncheckedCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.dialogueUncheckedCreateNestedManyWithoutCharacterInput
-  messages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutCharacterInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCharacterInput
   storyLinks?: Prisma.StoryCharacterUncheckedCreateNestedManyWithoutCharacterInput
   characterChats?: Prisma.CharacterChatUncheckedCreateNestedManyWithoutCharacterInput
 }
@@ -993,7 +993,7 @@ export type CharacterUpdateWithoutFriendsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.CharacterImageUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.dialogueUpdateManyWithoutCharacterNestedInput
-  messages?: Prisma.CharacterMessageUpdateManyWithoutCharacterNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutCharacterNestedInput
   storyLinks?: Prisma.StoryCharacterUpdateManyWithoutCharacterNestedInput
   characterChats?: Prisma.CharacterChatUpdateManyWithoutCharacterNestedInput
 }
@@ -1013,7 +1013,7 @@ export type CharacterUncheckedUpdateWithoutFriendsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.CharacterImageUncheckedUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.dialogueUncheckedUpdateManyWithoutCharacterNestedInput
-  messages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutCharacterNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutCharacterNestedInput
   storyLinks?: Prisma.StoryCharacterUncheckedUpdateManyWithoutCharacterNestedInput
   characterChats?: Prisma.CharacterChatUncheckedUpdateManyWithoutCharacterNestedInput
 }
@@ -1033,7 +1033,7 @@ export type CharacterCreateWithoutCharacterChatsInput = {
   images?: Prisma.CharacterImageCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.dialogueCreateNestedManyWithoutCharacterInput
   friends?: Prisma.CharacterFriendCreateNestedManyWithoutCharacterInput
-  messages?: Prisma.CharacterMessageCreateNestedManyWithoutCharacterInput
+  messages?: Prisma.MessageCreateNestedManyWithoutCharacterInput
   storyLinks?: Prisma.StoryCharacterCreateNestedManyWithoutCharacterInput
 }
 
@@ -1053,7 +1053,7 @@ export type CharacterUncheckedCreateWithoutCharacterChatsInput = {
   images?: Prisma.CharacterImageUncheckedCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.dialogueUncheckedCreateNestedManyWithoutCharacterInput
   friends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutCharacterInput
-  messages?: Prisma.CharacterMessageUncheckedCreateNestedManyWithoutCharacterInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCharacterInput
   storyLinks?: Prisma.StoryCharacterUncheckedCreateNestedManyWithoutCharacterInput
 }
 
@@ -1088,7 +1088,7 @@ export type CharacterUpdateWithoutCharacterChatsInput = {
   images?: Prisma.CharacterImageUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.dialogueUpdateManyWithoutCharacterNestedInput
   friends?: Prisma.CharacterFriendUpdateManyWithoutCharacterNestedInput
-  messages?: Prisma.CharacterMessageUpdateManyWithoutCharacterNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutCharacterNestedInput
   storyLinks?: Prisma.StoryCharacterUpdateManyWithoutCharacterNestedInput
 }
 
@@ -1108,7 +1108,7 @@ export type CharacterUncheckedUpdateWithoutCharacterChatsInput = {
   images?: Prisma.CharacterImageUncheckedUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.dialogueUncheckedUpdateManyWithoutCharacterNestedInput
   friends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutCharacterNestedInput
-  messages?: Prisma.CharacterMessageUncheckedUpdateManyWithoutCharacterNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutCharacterNestedInput
   storyLinks?: Prisma.StoryCharacterUncheckedUpdateManyWithoutCharacterNestedInput
 }
 
@@ -1264,7 +1264,7 @@ export type CharacterCountOutputTypeCountFriendsArgs<ExtArgs extends runtime.Typ
  * CharacterCountOutputType without action
  */
 export type CharacterCountOutputTypeCountMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CharacterMessageWhereInput
+  where?: Prisma.MessageWhereInput
 }
 
 /**
@@ -1368,7 +1368,7 @@ export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     images: Prisma.$CharacterImagePayload<ExtArgs>[]
     dialogues: Prisma.$dialoguePayload<ExtArgs>[]
     friends: Prisma.$CharacterFriendPayload<ExtArgs>[]
-    messages: Prisma.$CharacterMessagePayload<ExtArgs>[]
+    messages: Prisma.$MessagePayload<ExtArgs>[]
     storyLinks: Prisma.$StoryCharacterPayload<ExtArgs>[]
     characterChats: Prisma.$CharacterChatPayload<ExtArgs>[]
   }
@@ -1782,7 +1782,7 @@ export interface Prisma__CharacterClient<T, Null = never, ExtArgs extends runtim
   images<T extends Prisma.Character$imagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dialogues<T extends Prisma.Character$dialoguesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$dialoguesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$dialoguePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   friends<T extends Prisma.Character$friendsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$friendsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterFriendPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  messages<T extends Prisma.Character$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  messages<T extends Prisma.Character$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   storyLinks<T extends Prisma.Character$storyLinksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$storyLinksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StoryCharacterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   characterChats<T extends Prisma.Character$characterChatsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$characterChatsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -2290,23 +2290,23 @@ export type Character$friendsArgs<ExtArgs extends runtime.Types.Extensions.Inter
  */
 export type Character$messagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the CharacterMessage
+   * Select specific fields to fetch from the Message
    */
-  select?: Prisma.CharacterMessageSelect<ExtArgs> | null
+  select?: Prisma.MessageSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the CharacterMessage
+   * Omit specific fields from the Message
    */
-  omit?: Prisma.CharacterMessageOmit<ExtArgs> | null
+  omit?: Prisma.MessageOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.CharacterMessageInclude<ExtArgs> | null
-  where?: Prisma.CharacterMessageWhereInput
-  orderBy?: Prisma.CharacterMessageOrderByWithRelationInput | Prisma.CharacterMessageOrderByWithRelationInput[]
-  cursor?: Prisma.CharacterMessageWhereUniqueInput
+  include?: Prisma.MessageInclude<ExtArgs> | null
+  where?: Prisma.MessageWhereInput
+  orderBy?: Prisma.MessageOrderByWithRelationInput | Prisma.MessageOrderByWithRelationInput[]
+  cursor?: Prisma.MessageWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.CharacterMessageScalarFieldEnum | Prisma.CharacterMessageScalarFieldEnum[]
+  distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[]
 }
 
 /**

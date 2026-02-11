@@ -1,10 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { FriendListItemDto } from './dto/friend-list-item.dto';
+import { FriendListItemDto } from './dto/friend.dto';
+import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
 
 @Injectable()
 export class FriendService {
   constructor(private readonly prisma: PrismaService) {}
+
+  async addFriend(
+    userId: number,
+    characterId: number
+  ): Promise<SuccessResponseDto> {
+    const friend = await this.prisma.characterFriend
+      .create({
+        data: { userId, characterId, affinity: 1 },
+      })
+      .catch((error) => {
+        if (error.code === 'P2002') {
+          return {
+            success: false,
+            message: 'Friend already exists',
+          };
+        }
+        throw error;
+      });
+    return {
+      success: true,
+      message: 'Friend added successfully',
+    };
+  }
 
   async getFriends(userId: number): Promise<FriendListItemDto[]> {
     const friends = await this.findFriendsByUserId(userId);
@@ -24,7 +48,7 @@ export class FriendService {
         lastMessageAt: chat?.lastMessageAt ?? null,
         lastMessagePreview: this.truncate(
           chat?.lastMessage?.content ?? null,
-          60,
+          60
         ),
         unreadCount: chat?.unreadCount ?? 0,
       };
@@ -70,8 +94,6 @@ export class FriendService {
 
   private truncate(text: string | null, maxLength: number): string | null {
     if (!text) return null;
-    return text.length > maxLength
-      ? text.substring(0, maxLength) + '…'
-      : text;
+    return text.length > maxLength ? text.substring(0, maxLength) + '…' : text;
   }
 }

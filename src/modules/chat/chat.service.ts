@@ -8,11 +8,13 @@ import { PrismaService } from '../prisma/prisma.service';
 import { OpenAiService } from '../ai/openai.service';
 import { ChatGateway } from './chat.gateway';
 import { ChatRoomListItemDto } from './dto/chat-room-list-item.dto';
-import { ChatMessageDto } from './dto/chat-message.dto';
+import { ChatMessageDto, MessagePayloadDto } from './dto/chat-message.dto';
 import { SendMessageResponseDto } from './dto/send-message-response.dto';
 import { CursorRequestDto } from '@/common/dtos/cursor-request.dto';
 import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
 import { MessageType } from '@/generated/prisma/client';
+import { SendMessageDto, SendMessageOptionType } from './dto/send-message.dto';
+import { SaveMessageData } from '@/types/ai.type';
 
 @Injectable()
 export class ChatService {
@@ -73,7 +75,7 @@ export class ChatService {
     await this.verifyChatOwnership(chatId, userId);
 
     const take = query.limit + 1;
-    const messages = await this.prisma.characterMessage.findMany({
+    const messages = await this.prisma.message.findMany({
       where: { chatId },
       ...(query.cursor ? { cursor: { id: query.cursor }, skip: 1 } : {}),
       take,
@@ -97,7 +99,7 @@ export class ChatService {
         id: m.id,
         type: m.type,
         content: m.content,
-        payload: m.payload as Record<string, any> | null,
+        payload: m.payload as unknown as MessagePayloadDto,
         isFromUser: m.isFromUser,
         createdAt: m.createdAt,
       })),
@@ -112,69 +114,89 @@ export class ChatService {
   async sendMessage(
     userId: number,
     characterId: number,
-    content: string
+    dto: SendMessageDto
   ): Promise<SendMessageResponseDto> {
     const chat = await this.getOrCreateChat(userId, characterId);
 
     // 1) 유저 메시지 저장
-    const userMsg = await this.saveMessage(
-      chat.id,
+    const userMsg = await this.saveMessage({
+      chatId: chat.id,
       userId,
       characterId,
-      true,
-      MessageType.TEXT,
-      content
-    );
+      isFromUser: true,
+      type: dto.type,
+      content: dto.content,
+      options: dto.options,
+    });
     await this.updateChatAfterMessage(chat.id, userMsg.id, false);
 
     // 2) AI 응답 생성
     const recentMessages = await this.getRecentMessages(chat.id);
-    const character = await this.prisma.character.findUniqueOrThrow({
+    const { aiPrompt } = await this.prisma.character.findUniqueOrThrow({
       where: { id: characterId },
       select: {
-        name: true,
-        description: true,
-        personality: true,
         aiPrompt: true,
       },
     });
 
     const affinity = await this.getAffinity(userId, characterId);
 
-    const aiResponse = await this.openAiService.generateCharacterResponse(
-      character,
+    // AI 응답 생성
+    const aiResponse = await this.openAiService.generateCharacterResponse({
+      type: dto.type,
+      userId,
+      aiPrompt: aiPrompt || '',
       affinity,
-      recentMessages.map((m) => ({
+      recentMessages: recentMessages.map((m) => ({
         isFromUser: m.isFromUser,
         content: m.content,
       })),
-      content
-    );
-
-    // 3) AI 메시지 저장
-    const aiMsgType = this.mapAiTypeToMessageType(aiResponse.type);
-    const aiMsg = await this.saveMessage(
-      chat.id,
+      userMessage: dto.content,
+      options: dto.options,
+    });
+    console.log(aiResponse, '조드새끼가 한거 ');
+    const messages = aiResponse.messages.map((m) => ({
+      chatId: chat.id,
       userId,
       characterId,
-      false,
-      aiMsgType,
-      aiResponse.message,
-      Object.keys(aiResponse.data).length > 0 ? aiResponse.data : undefined
+      isFromUser: false,
+      type: m.type as MessageType,
+      content: m.content,
+      payload: {
+        translated: m.translated,
+      },
+    }));
+    console.log(messages, '저장할 메시지');
+    const aiMsgs = await this.saveMessages(messages);
+    // payload 에서 original, corrected, translated 를 추출하여 저장
+    if (aiResponse.payload) {
+      await this.prisma.message.update({
+        where: { id: userMsg.id },
+        data: {
+          payload: {
+            translated: aiResponse.payload.translated,
+            corrected: aiResponse.payload.corrected,
+          },
+        },
+      });
+    }
+    // 채팅방 업데이트
+    await this.updateChatAfterMessage(
+      chat.id,
+      aiMsgs[aiMsgs.length - 1].id,
+      true
     );
-    await this.updateChatAfterMessage(chat.id, aiMsg.id, true);
 
     // 4) 친구 관계 upsert
-    await this.upsertFriend(userId, characterId);
+    //await this.upsertFriend(userId, characterId);
 
-    const aiMessageDto = this.toMessageDto(aiMsg);
-
+    const aiMessages = aiMsgs.map((m) => this.toMessageDto(m));
     // 5) WebSocket으로 AI 메시지 전송
-    this.chatGateway.emitNewMessage(userId, aiMessageDto);
+    this.chatGateway.emitNewMessages(userId, aiMessages);
 
     return {
       userMessage: this.toMessageDto(userMsg),
-      aiMessage: aiMessageDto,
+      aiMessages,
     };
   }
 
@@ -214,16 +236,22 @@ export class ChatService {
     });
   }
 
-  private async saveMessage(
-    chatId: number,
-    userId: number,
-    characterId: number,
-    isFromUser: boolean,
-    type: MessageType,
-    content: string,
-    payload?: Record<string, any>
-  ) {
-    return this.prisma.characterMessage.create({
+  private async saveMessage(data: SaveMessageData) {
+    const {
+      chatId,
+      userId,
+      characterId,
+      isFromUser,
+      type,
+      content,
+      options,
+      payload,
+    } = data;
+    const combinedPayload = {
+      ...(options ? { options } : {}),
+      ...(payload ? { payload } : {}),
+    };
+    return this.prisma.message.create({
       data: {
         chatId,
         userId,
@@ -231,13 +259,19 @@ export class ChatService {
         isFromUser,
         type,
         content,
-        ...(payload ? { payload } : {}),
+        payload: combinedPayload,
       },
     });
   }
 
+  private async saveMessages(data: SaveMessageData[]) {
+    return this.prisma.message.createManyAndReturn({
+      data,
+    });
+  }
+
   private async getRecentMessages(chatId: number, limit = 20) {
-    const messages = await this.prisma.characterMessage.findMany({
+    const messages = await this.prisma.message.findMany({
       where: { chatId },
       orderBy: { createdAt: 'desc' },
       take: limit,
@@ -278,17 +312,6 @@ export class ChatService {
       select: { affinity: true },
     });
     return friend?.affinity ?? 0;
-  }
-
-  private mapAiTypeToMessageType(aiType: string): MessageType {
-    switch (aiType) {
-      case 'GRAMMAR_CORRECTION':
-        return MessageType.ADVICE;
-      case 'TRANSLATION':
-        return MessageType.ADVICE;
-      default:
-        return MessageType.TEXT;
-    }
   }
 
   private toMessageDto(msg: {

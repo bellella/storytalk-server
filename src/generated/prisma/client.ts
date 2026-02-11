@@ -128,10 +128,10 @@ export type CharacterFriend = Prisma.CharacterFriendModel
  */
 export type CharacterChat = Prisma.CharacterChatModel
 /**
- * Model CharacterMessage
+ * Model Message
  * 
  */
-export type CharacterMessage = Prisma.CharacterMessageModel
+export type Message = Prisma.MessageModel
 /**
  * Model dialogueBookmark
  * 
