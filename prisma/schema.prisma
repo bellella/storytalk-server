@@ -55,7 +55,7 @@ model User {
   userEpisodes      UserEpisode[]
   dialogueBookmarks dialogueBookmark[]
   characterFriends  CharacterFriend[]
-  Messages Message[]
+  Messages          Message[]
   userQuizSessions  UserQuizSession[]
   characterChats    CharacterChat[]
 
@@ -66,11 +66,17 @@ model User {
 // STORY SYSTEM
 //////////////////////////////////////////////////////
 
+enum StoryType {
+  UNIT // 학습 중심 (상황회화/유닛 기반)
+  NOVEL // 줄거리/노벨 중심 (스토리 감상 + 대화)
+}
+
 model Story {
   id          Int           @id @default(autoincrement())
   title       String
   koreanTitle String?
-  category    String
+  type        StoryType     @default(NOVEL)
+  category    String?
   icon        String
   level       Level         @default(BEGINNER)
   description String?
@@ -83,6 +89,32 @@ model Story {
   storyCharacters StoryCharacter[]
   progress        StoryProgress[]
   units           Unit[]
+  storyTags       StoryTag[]
+}
+
+model Tag {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique // e.g. "healing", "cafe", "romance"
+  color     String? // UI 배지 색 (옵션)
+  icon      String? // 이모지 or 아이콘 키 (옵션)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  stories StoryTag[]
+}
+
+model StoryTag {
+  storyId Int
+  tagId   Int
+
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  tag   Tag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@id([storyId, tagId])
+  @@index([tagId])
+  @@index([storyId])
 }
 
 model Unit {
@@ -190,6 +222,7 @@ model ReviewItem {
 enum QuizType {
   SENTENCE_BUILD // 단어 카드로 문장 전체 조립
   SENTENCE_CLOZE_BUILD // 문장 중간 빈칸 채우기
+  SPEAK_REPEAT // 따라하기
 }
 
 enum QuizSourceType {

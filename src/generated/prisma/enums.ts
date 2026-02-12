@@ -39,9 +39,18 @@ export const AuthProvider = {
 export type AuthProvider = (typeof AuthProvider)[keyof typeof AuthProvider]
 
 
+export const StoryType = {
+  UNIT: 'UNIT',
+  NOVEL: 'NOVEL'
+} as const
+
+export type StoryType = (typeof StoryType)[keyof typeof StoryType]
+
+
 export const QuizType = {
   SENTENCE_BUILD: 'SENTENCE_BUILD',
-  SENTENCE_CLOZE_BUILD: 'SENTENCE_CLOZE_BUILD'
+  SENTENCE_CLOZE_BUILD: 'SENTENCE_CLOZE_BUILD',
+  SPEAK_REPEAT: 'SPEAK_REPEAT'
 } as const
 
 export type QuizType = (typeof QuizType)[keyof typeof QuizType]

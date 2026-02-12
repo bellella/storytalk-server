@@ -53,6 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Story: 'Story',
+  Tag: 'Tag',
+  StoryTag: 'StoryTag',
   Unit: 'Unit',
   Episode: 'Episode',
   Scene: 'Scene',
@@ -117,6 +119,7 @@ export const StoryScalarFieldEnum = {
   id: 'id',
   title: 'title',
   koreanTitle: 'koreanTitle',
+  type: 'type',
   category: 'category',
   icon: 'icon',
   level: 'level',
@@ -128,6 +131,27 @@ export const StoryScalarFieldEnum = {
 } as const
 
 export type StoryScalarFieldEnum = (typeof StoryScalarFieldEnum)[keyof typeof StoryScalarFieldEnum]
+
+
+export const TagScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  color: 'color',
+  icon: 'icon',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
+
+
+export const StoryTagScalarFieldEnum = {
+  storyId: 'storyId',
+  tagId: 'tagId',
+  createdAt: 'createdAt'
+} as const
+
+export type StoryTagScalarFieldEnum = (typeof StoryTagScalarFieldEnum)[keyof typeof StoryTagScalarFieldEnum]
 
 
 export const UnitScalarFieldEnum = {

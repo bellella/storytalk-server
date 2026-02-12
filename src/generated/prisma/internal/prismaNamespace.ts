@@ -386,6 +386,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Story: 'Story',
+  Tag: 'Tag',
+  StoryTag: 'StoryTag',
   Unit: 'Unit',
   Episode: 'Episode',
   Scene: 'Scene',
@@ -423,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "story" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "userEpisode" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterChat" | "message" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory"
+    modelProps: "user" | "story" | "tag" | "storyTag" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "userEpisode" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterChat" | "message" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -572,6 +574,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.StoryCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.StoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    Tag: {
+      payload: Prisma.$TagPayload<ExtArgs>
+      fields: Prisma.TagFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TagFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TagFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>
+        }
+        findFirst: {
+          args: Prisma.TagFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TagFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>
+        }
+        findMany: {
+          args: Prisma.TagFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>[]
+        }
+        create: {
+          args: Prisma.TagCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>
+        }
+        createMany: {
+          args: Prisma.TagCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TagCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>[]
+        }
+        delete: {
+          args: Prisma.TagDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>
+        }
+        update: {
+          args: Prisma.TagUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>
+        }
+        deleteMany: {
+          args: Prisma.TagDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TagUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TagUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>[]
+        }
+        upsert: {
+          args: Prisma.TagUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>
+        }
+        aggregate: {
+          args: Prisma.TagAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTag>
+        }
+        groupBy: {
+          args: Prisma.TagGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TagGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TagCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TagCountAggregateOutputType> | number
+        }
+      }
+    }
+    StoryTag: {
+      payload: Prisma.$StoryTagPayload<ExtArgs>
+      fields: Prisma.StoryTagFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StoryTagFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoryTagPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StoryTagFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoryTagPayload>
+        }
+        findFirst: {
+          args: Prisma.StoryTagFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoryTagPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StoryTagFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoryTagPayload>
+        }
+        findMany: {
+          args: Prisma.StoryTagFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoryTagPayload>[]
+        }
+        create: {
+          args: Prisma.StoryTagCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoryTagPayload>
+        }
+        createMany: {
+          args: Prisma.StoryTagCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StoryTagCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoryTagPayload>[]
+        }
+        delete: {
+          args: Prisma.StoryTagDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoryTagPayload>
+        }
+        update: {
+          args: Prisma.StoryTagUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoryTagPayload>
+        }
+        deleteMany: {
+          args: Prisma.StoryTagDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StoryTagUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StoryTagUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoryTagPayload>[]
+        }
+        upsert: {
+          args: Prisma.StoryTagUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoryTagPayload>
+        }
+        aggregate: {
+          args: Prisma.StoryTagAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStoryTag>
+        }
+        groupBy: {
+          args: Prisma.StoryTagGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoryTagGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StoryTagCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoryTagCountAggregateOutputType> | number
         }
       }
     }
@@ -2266,6 +2416,7 @@ export const StoryScalarFieldEnum = {
   id: 'id',
   title: 'title',
   koreanTitle: 'koreanTitle',
+  type: 'type',
   category: 'category',
   icon: 'icon',
   level: 'level',
@@ -2277,6 +2428,27 @@ export const StoryScalarFieldEnum = {
 } as const
 
 export type StoryScalarFieldEnum = (typeof StoryScalarFieldEnum)[keyof typeof StoryScalarFieldEnum]
+
+
+export const TagScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  color: 'color',
+  icon: 'icon',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
+
+
+export const StoryTagScalarFieldEnum = {
+  storyId: 'storyId',
+  tagId: 'tagId',
+  createdAt: 'createdAt'
+} as const
+
+export type StoryTagScalarFieldEnum = (typeof StoryTagScalarFieldEnum)[keyof typeof StoryTagScalarFieldEnum]
 
 
 export const UnitScalarFieldEnum = {
@@ -2724,6 +2896,20 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'StoryType'
+ */
+export type EnumStoryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StoryType'>
+    
+
+
+/**
+ * Reference to a field of type 'StoryType[]'
+ */
+export type ListEnumStoryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StoryType[]'>
+    
+
+
+/**
  * Reference to a field of type 'PublishStatus'
  */
 export type EnumPublishStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PublishStatus'>
@@ -2971,6 +3157,8 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   story?: Prisma.StoryOmit
+  tag?: Prisma.TagOmit
+  storyTag?: Prisma.StoryTagOmit
   unit?: Prisma.UnitOmit
   episode?: Prisma.EpisodeOmit
   scene?: Prisma.SceneOmit

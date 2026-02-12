@@ -1,10 +1,15 @@
 // src/story/story.service.ts
 import { CursorRequestDto } from '@/common/dtos/cursor-request.dto';
 import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
-import { EpisodeStage, PublishStatus } from '@/generated/prisma/client';
+import {
+  EpisodeStage,
+  PublishStatus,
+  StoryType,
+} from '@/generated/prisma/client';
 import { CurrentUser } from '@/types/auth.type';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { QuizDto, QuizOptionDto } from '../episode/dto/quiz.dto';
+import { QuizDto } from '../episode/dto/quiz.dto';
+import { QuizService } from '../quiz/quiz.service';
 import { ReviewItemDto } from '../episode/dto/review-item.dto';
 import { UserEpisodeDto } from '../episode/dto/user-episode.dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -16,10 +21,14 @@ import {
 } from './dto/episode-detail.dto';
 import { StoryDetailDto } from './dto/story-detail.dto';
 import { StoryListItemDto } from './dto/story-list-item.dto';
+import { TagItemDto } from './dto/tag-item.dto';
 
 @Injectable()
 export class StoryService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private quizService: QuizService
+  ) {}
 
   async getStoryDetail(
     storyId: number,
@@ -27,7 +36,7 @@ export class StoryService {
   ): Promise<StoryDetailDto> {
     // 1️⃣ 스토리 기본 조회 (에피소드, 캐릭터 포함)
     const story = await this.prisma.story.findUnique({
-      where: { id: storyId },
+      where: { id: storyId, type: StoryType.NOVEL },
       include: {
         episodes: {
           orderBy: { order: 'asc' },
@@ -89,7 +98,6 @@ export class StoryService {
       title: story.title,
       description: story.description ?? undefined,
       coverImage: story.coverImage ?? undefined,
-      category: story.category,
       level: story.level,
       totalEpisodes: story.episodes.length,
       status: story.status === PublishStatus.PUBLISHED ? '연재중' : '준비중',
@@ -111,18 +119,33 @@ export class StoryService {
   }
 
   async getStories(
-    cursorRequest: CursorRequestDto
+    cursorRequest: CursorRequestDto,
+    tag?: string
   ): Promise<CursorResponseDto<StoryListItemDto>> {
     const { cursorString, limit } = cursorRequest;
 
     const stories = await this.prisma.story.findMany({
-      where: cursorString
-        ? {
-            id: {
-              gt: parseInt(cursorString, 10),
-            },
-          }
-        : undefined,
+      where: {
+        type: StoryType.NOVEL,
+        ...(cursorString
+          ? {
+              id: {
+                gt: parseInt(cursorString, 10),
+              },
+            }
+          : {}),
+        ...(tag
+          ? {
+              storyTags: {
+                some: {
+                  tag: {
+                    slug: tag,
+                  },
+                },
+              },
+            }
+          : {}),
+      },
       take: limit + 1, // 한 개 더 가져와서 다음 페이지 여부 확인
       orderBy: {
         createdAt: 'desc',
@@ -144,7 +167,6 @@ export class StoryService {
       title: story.title,
       description: story.description ?? undefined,
       coverImage: story.coverImage ?? undefined,
-      category: story.category,
       level: story.level,
       status: story.status === PublishStatus.PUBLISHED ? '연재중' : '준비중',
       totalEpisodes: story._count.episodes,
@@ -350,17 +372,16 @@ export class StoryService {
       },
     });
 
-    return quizzes.map((quiz) => ({
-      id: quiz.id,
-      sourceType: quiz.sourceType,
-      sourceId: quiz.sourceId,
-      type: quiz.type,
-      questionEnglish: quiz.questionEnglish,
-      questionKorean: quiz.questionKorean ?? undefined,
-      description: quiz.description ?? undefined,
-      order: quiz.order ?? undefined,
-      data: (quiz.data as Record<string, any>) ?? undefined,
-      isActive: quiz.isActive,
+    return quizzes.map((quiz) => this.quizService.toQuizDto(quiz));
+  }
+
+  async getTags(): Promise<TagItemDto[]> {
+    const tags = await this.prisma.tag.findMany();
+    return tags.map((tag) => ({
+      id: tag.id,
+      slug: tag.slug,
+      color: tag.color ?? undefined,
+      icon: tag.icon ?? undefined,
     }));
   }
 }

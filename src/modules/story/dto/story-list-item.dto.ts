@@ -5,7 +5,6 @@ export class StoryListItemDto {
   title: string;
   description?: string;
   coverImage?: string;
-  category: string;
   level: Level;
   status: string; // '연재중' 등
   totalEpisodes: number;

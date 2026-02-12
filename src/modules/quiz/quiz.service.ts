@@ -1,21 +1,31 @@
-import { EpisodeStage, QuizSessionType } from '@/generated/prisma/client';
+import {
+  EpisodeStage,
+  QuizSessionType,
+  QuizType,
+  XpSourceType,
+  XpTriggerType,
+} from '@/generated/prisma/client';
 import {
   BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { XpSourceType, XpTriggerType } from '@/generated/prisma/client';
+import { getTodayRange } from '@/common/utils/date.util';
+import {
+  parseSentenceBuildData,
+  parseSentenceClozeData,
+} from '@/utils/quiz-helpers';
+import { Quiz } from '@/generated/prisma/client';
+import { QuizDto } from '../episode/dto/quiz.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { XpService } from '../xp/xp.service';
+import { DailyQuizCompleteResponseDto } from './dto/daily-quiz-complete-response.dto';
+import { DailyQuizResponseDto } from './dto/daily-quiz-response.dto';
+import { QuizAnswerResponseDto } from './dto/quiz-answer-response.dto';
+import { QuizScoreDto } from './dto/quiz-score.dto';
+import { QuizSessionResponseDto } from './dto/quiz-session-response.dto';
 import { StartQuizSessionDto } from './dto/start-quiz-session.dto';
 import { SubmitQuizAnswerDto } from './dto/submit-quiz-answer.dto';
-import { QuizSessionResponseDto } from './dto/quiz-session-response.dto';
-import { QuizAnswerResponseDto } from './dto/quiz-answer-response.dto';
-import { DailyQuizResponseDto } from './dto/daily-quiz-response.dto';
-import { SubmitDailyQuizDto } from './dto/submit-daily-quiz.dto';
-import { QuizDto } from '../episode/dto/quiz.dto';
-import { DailyQuizCompleteResponseDto } from './dto/daily-quiz-complete-response.dto';
-import { QuizScoreDto } from './dto/quiz-score.dto';
 
 @Injectable()
 export class QuizService {
@@ -113,18 +123,7 @@ export class QuizService {
   }
 
   async getDailyQuiz(userId: number): Promise<DailyQuizResponseDto> {
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-    });
-    if (!user) {
-      throw new NotFoundException('유저를 찾을 수 없습니다.');
-    }
-
-    // 오늘 날짜 범위 (KST 기준)
-    const todayStart = new Date();
-    todayStart.setHours(0, 0, 0, 0);
-    const todayEnd = new Date();
-    todayEnd.setHours(23, 59, 59, 999);
+    const { start: todayStart, end: todayEnd } = getTodayRange();
 
     // 오늘 DAILY_QUIZ 세션이 이미 있는지 확인
     let session = await this.prisma.userQuizSession.findFirst({
@@ -143,6 +142,12 @@ export class QuizService {
     });
 
     if (!session) {
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+      });
+      if (!user) {
+        throw new NotFoundException('유저를 찾을 수 없습니다.');
+      }
       // 유저 레벨에 맞는 퀴즈 10개 랜덤 추출
       const quizzes = await this.prisma.quiz.findMany({
         where: {
@@ -182,28 +187,19 @@ export class QuizService {
     }
 
     const isCompleted = !!session.completedAt;
+    let targetItems = session.quizSessionItems;
+    if (!isCompleted) {
+      // 이미 답한 quizId 목록
+      const answeredQuizIds = new Set(session.answers.map((a) => a.quizId));
+      // 완료됐으면 전체 반환, 아니면 미답변 퀴즈만 반환
+      targetItems = session.quizSessionItems.filter(
+        (item) => !answeredQuizIds.has(item.quizId)
+      );
+    }
 
-    // 이미 답한 quizId 목록
-    const answeredQuizIds = new Set(session.answers.map((a) => a.quizId));
-    // 완료됐으면 전체 반환, 아니면 미답변 퀴즈만 반환
-    const targetItems = isCompleted
-      ? session.quizSessionItems
-      : session.quizSessionItems.filter(
-          (item) => !answeredQuizIds.has(item.quizId)
-        );
-
-    const quizzes: QuizDto[] = targetItems.map((item) => ({
-      id: item.quiz.id,
-      sourceType: item.quiz.sourceType,
-      sourceId: item.quiz.sourceId,
-      type: item.quiz.type,
-      questionEnglish: item.quiz.questionEnglish,
-      questionKorean: item.quiz.questionKorean ?? undefined,
-      description: item.quiz.description ?? undefined,
-      order: item.order ?? undefined,
-      data: (item.quiz.data as Record<string, any>) ?? undefined,
-      isActive: item.quiz.isActive,
-    }));
+    const quizzes: QuizDto[] = targetItems.map((item) =>
+      this.toQuizDto(item.quiz, item.order ?? undefined)
+    );
 
     return {
       session: this.toSessionDto(session),
@@ -247,6 +243,35 @@ export class QuizService {
       throw new NotFoundException('퀴즈 세션을 찾을 수 없습니다.');
     }
     return session;
+  }
+
+  toQuizDto(quiz: Quiz, orderOverride?: number): QuizDto {
+    return {
+      id: quiz.id,
+      sourceType: quiz.sourceType,
+      sourceId: quiz.sourceId,
+      type: quiz.type,
+      questionEnglish: quiz.questionEnglish,
+      questionKorean: quiz.questionKorean ?? undefined,
+      description: quiz.description ?? undefined,
+      order: orderOverride ?? quiz.order ?? undefined,
+      data: this.parseQuizData(quiz),
+      isActive: quiz.isActive,
+    };
+  }
+
+  private parseQuizData(quiz: Quiz): QuizDto['data'] {
+    const raw = quiz.data as Record<string, any> | undefined;
+    if (!raw) return undefined;
+
+    switch (quiz.type) {
+      case QuizType.SENTENCE_BUILD:
+        return parseSentenceBuildData(raw) ?? raw;
+      case QuizType.SENTENCE_CLOZE_BUILD:
+        return parseSentenceClozeData(raw) ?? raw;
+      default:
+        return raw;
+    }
   }
 
   private toSessionDto(session: any): QuizSessionResponseDto {

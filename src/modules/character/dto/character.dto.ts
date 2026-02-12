@@ -11,4 +11,6 @@ export class CharacterDetailDto {
   mainImage: string;
   description: string;
   personality: string;
+  affinity?: number;
+  followers?: number;
 }

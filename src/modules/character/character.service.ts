@@ -7,25 +7,36 @@ import { CharacterScope } from '@/generated/prisma/client';
 export class CharacterService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getCharacters(userId: number): Promise<CharacterListItemDto[]> {
+  async getCharacters(): Promise<CharacterListItemDto[]> {
     const characters = await this.prisma.character.findMany({
       where: { scope: CharacterScope.GLOBAL },
       select: {
         id: true,
         name: true,
         avatarImage: true,
+        friends: {
+          select: {
+            userId: true,
+          },
+        },
+      },
+      orderBy: {
+        friends: {
+          _count: 'desc',
+        },
       },
     });
     return characters.map((character) => ({
       id: character.id,
       name: character.name,
       avatarImage: character.avatarImage ?? '',
+      followers: character.friends.length,
     }));
   }
 
   async getCharacter(
-    userId: number,
-    characterId: number
+    characterId: number,
+    userId: number | undefined
   ): Promise<CharacterDetailDto> {
     const character = await this.prisma.character.findUniqueOrThrow({
       where: { id: characterId },
@@ -38,6 +49,14 @@ export class CharacterService {
         personality: true,
       },
     });
+    let affinity = 0;
+    if (userId) {
+      const friend = await this.prisma.characterFriend.findFirst({
+        where: { userId, characterId },
+        select: { affinity: true },
+      });
+      affinity = friend?.affinity ?? 0;
+    }
     return {
       id: character.id,
       name: character.name,
@@ -45,6 +64,7 @@ export class CharacterService {
       mainImage: character.mainImage ?? '',
       description: character.description,
       personality: character.personality ?? '',
+      affinity,
     };
   }
 }

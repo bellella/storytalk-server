@@ -209,11 +209,28 @@ export type BoolWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedBoolFilter<$PrismaModel>
 }
 
+export type EnumStoryTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.StoryType | Prisma.EnumStoryTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.StoryType[] | Prisma.ListEnumStoryTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.StoryType[] | Prisma.ListEnumStoryTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumStoryTypeFilter<$PrismaModel> | $Enums.StoryType
+}
+
 export type EnumPublishStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.PublishStatus | Prisma.EnumPublishStatusFieldRefInput<$PrismaModel>
   in?: $Enums.PublishStatus[] | Prisma.ListEnumPublishStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.PublishStatus[] | Prisma.ListEnumPublishStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumPublishStatusFilter<$PrismaModel> | $Enums.PublishStatus
+}
+
+export type EnumStoryTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.StoryType | Prisma.EnumStoryTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.StoryType[] | Prisma.ListEnumStoryTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.StoryType[] | Prisma.ListEnumStoryTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumStoryTypeWithAggregatesFilter<$PrismaModel> | $Enums.StoryType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumStoryTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumStoryTypeFilter<$PrismaModel>
 }
 
 export type EnumPublishStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -756,11 +773,28 @@ export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedBoolFilter<$PrismaModel>
 }
 
+export type NestedEnumStoryTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.StoryType | Prisma.EnumStoryTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.StoryType[] | Prisma.ListEnumStoryTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.StoryType[] | Prisma.ListEnumStoryTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumStoryTypeFilter<$PrismaModel> | $Enums.StoryType
+}
+
 export type NestedEnumPublishStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.PublishStatus | Prisma.EnumPublishStatusFieldRefInput<$PrismaModel>
   in?: $Enums.PublishStatus[] | Prisma.ListEnumPublishStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.PublishStatus[] | Prisma.ListEnumPublishStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumPublishStatusFilter<$PrismaModel> | $Enums.PublishStatus
+}
+
+export type NestedEnumStoryTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.StoryType | Prisma.EnumStoryTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.StoryType[] | Prisma.ListEnumStoryTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.StoryType[] | Prisma.ListEnumStoryTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumStoryTypeWithAggregatesFilter<$PrismaModel> | $Enums.StoryType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumStoryTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumStoryTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumPublishStatusWithAggregatesFilter<$PrismaModel = never> = {

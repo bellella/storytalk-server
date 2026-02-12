@@ -6,7 +6,6 @@ export class StoryDetailDto {
   title: string;
   description?: string;
   coverImage?: string;
-  category: string;
   level: Level; // 시안의 'Intermediate' 등에 매핑
   status: string; // '연재중' 등
   totalEpisodes: number;

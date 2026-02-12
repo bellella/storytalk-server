@@ -25,3 +25,8 @@ export class FriendListItemDto {
   @ApiProperty({ default: 0 })
   unreadCount: number;
 }
+
+export class FriendDetailDto {
+  characterId: number;
+  affinity: number;
+}

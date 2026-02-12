@@ -28,6 +28,16 @@ export type User = Prisma.UserModel
  */
 export type Story = Prisma.StoryModel
 /**
+ * Model Tag
+ * 
+ */
+export type Tag = Prisma.TagModel
+/**
+ * Model StoryTag
+ * 
+ */
+export type StoryTag = Prisma.StoryTagModel
+/**
  * Model Unit
  * 
  */

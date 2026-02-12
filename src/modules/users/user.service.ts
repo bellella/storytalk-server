@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { AuthProvider, User } from '@/generated/prisma/client';
+import { AuthProvider, QuizSessionType, User } from '@/generated/prisma/client';
 import { UserCreateInput } from '@/generated/prisma/models';
 import { UpdatePersonalInfoDto } from './dto/update-personal-info.dto';
 import { RegisterProfileDto, UserDto, UserProfileDto } from './dto/user.dto';
+import { getTodayRange } from '@/common/utils/date.util';
 
 @Injectable()
 export class UserService {
@@ -36,8 +37,20 @@ export class UserService {
    * Finds a user by id.
    */
   async findOne(id: number): Promise<UserProfileDto> {
+    const { start: todayStart, end: todayEnd } = getTodayRange();
     const user = await this.prisma.user.findUnique({
       where: { id },
+    });
+    // 오늘의 퀴즈 완료 여부
+    const dailySession = await this.prisma.userQuizSession.findFirst({
+      select: {
+        completedAt: true,
+      },
+      where: {
+        userId: id,
+        type: QuizSessionType.DAILY_QUIZ,
+        startedAt: { gte: todayStart, lte: todayEnd },
+      },
     });
     if (!user) {
       throw new NotFoundException('User not found');
@@ -50,6 +63,9 @@ export class UserService {
       level: user.level,
       xp: user.xp,
       streakDays: user.streakDays,
+      dailyStatus: {
+        quizCompleted: !!dailySession?.completedAt,
+      },
     };
   }
 

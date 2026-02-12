@@ -10,16 +10,16 @@ import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ReqUser } from '@/common/decorators/user.decorator';
 import { FriendService } from './friend.service';
-import { FriendListItemDto } from './dto/friend.dto';
+import { FriendDetailDto, FriendListItemDto } from './dto/friend.dto';
 import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
 
-@Controller('v1/characters/friends')
+@Controller('friends')
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth('access-token')
 export class FriendController {
   constructor(private readonly friendService: FriendService) {}
 
-  @Post(':characterId/friends')
+  @Post('characters/:characterId')
   @ApiOkResponse({ type: SuccessResponseDto })
   async addFriend(
     @ReqUser('id') userId: number,
@@ -35,4 +35,13 @@ export class FriendController {
   ): Promise<FriendListItemDto[]> {
     return this.friendService.getFriends(userId);
   }
+
+  // @Get('characters/:characterId')
+  // @ApiOkResponse({ type: FriendDetailDto })
+  // async getFriend(
+  //   @ReqUser('id') userId: number,
+  //   @Param('characterId', ParseIntPipe) characterId: number
+  // ): Promise<FriendDetailDto> {
+  //   return this.friendService.getFriend(userId, characterId);
+  // }
 }

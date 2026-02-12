@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { FriendListItemDto } from './dto/friend.dto';
+import { FriendDetailDto, FriendListItemDto } from './dto/friend.dto';
 import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
 
 @Injectable()
@@ -96,4 +96,15 @@ export class FriendService {
     if (!text) return null;
     return text.length > maxLength ? text.substring(0, maxLength) + '…' : text;
   }
+
+  // async getFriend(userId: number, characterId: number): Promise<FriendDetailDto> {
+  //   const friend = await this.prisma.characterFriend.findFirst({
+  //     select: { affinity: true },
+  //     where: { userId, characterId },
+  //   });
+  //   return {
+  //     characterId,
+  //     affinity: friend.affinity,
+  //   };
+  // }
 }

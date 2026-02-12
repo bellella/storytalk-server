@@ -11,8 +11,13 @@ export class UserProfileDto extends UserDto {
   level: Level;
   xp: number;
   streakDays: number;
+  dailyStatus: DailyStatusDto;
 }
 
 export class RegisterProfileDto {
   name: string;
+}
+
+export class DailyStatusDto {
+  quizCompleted: boolean;
 }

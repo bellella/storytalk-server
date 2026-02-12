@@ -1,3 +1,7 @@
+import { ReqUser } from '@/common/decorators/user.decorator';
+import { CursorRequestDto } from '@/common/dtos/cursor-request.dto';
+import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
+import { CurrentUser } from '@/types/auth.type';
 import {
   Controller,
   Get,
@@ -6,17 +10,13 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { StoryService } from './story.service';
+import { ApiOkResponse, ApiQuery } from '@nestjs/swagger';
+import { OptionalJwtAuthGuard } from '../auth/guards/optional-auth.guard';
 import { StoryDetailDto } from './dto/story-detail.dto';
 import { StoryListItemDto } from './dto/story-list-item.dto';
-import { EpisodeDetailDto } from './dto/episode-detail.dto';
-import { ApiOkResponse } from '@nestjs/swagger';
-import { CursorRequestDto } from '@/common/dtos/cursor-request.dto';
-import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
 import { StoriesResponseDto } from './dto/story.dto';
-import { OptionalJwtAuthGuard } from '../auth/guards/optional-auth.guard';
-import { ReqUser } from '@/common/decorators/user.decorator';
-import { CurrentUser } from '@/types/auth.type';
+import { TagItemDto } from './dto/tag-item.dto';
+import { StoryService } from './story.service';
 
 @Controller('stories')
 export class StoryController {
@@ -24,10 +24,23 @@ export class StoryController {
 
   @Get()
   @ApiOkResponse({ type: StoriesResponseDto })
+  @ApiQuery({
+    name: 'tag',
+    required: false,
+    type: String,
+    description: '필터링할 태그 slug (옵셔널)',
+  })
   async getStories(
-    @Query() cursorRequest: CursorRequestDto
+    @Query() cursorRequest: CursorRequestDto,
+    @Query('tag') tag?: string
   ): Promise<CursorResponseDto<StoryListItemDto>> {
-    return await this.storyService.getStories(cursorRequest);
+    return await this.storyService.getStories(cursorRequest, tag);
+  }
+
+  @Get('tags')
+  @ApiOkResponse({ type: [TagItemDto] })
+  async getTags(): Promise<TagItemDto[]> {
+    return await this.storyService.getTags();
   }
 
   @Get(':id')

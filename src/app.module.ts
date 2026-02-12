@@ -16,6 +16,7 @@ import { XpModule } from './modules/xp/xp.module';
 import { AiModule } from './modules/ai/ai.module';
 import { FriendModule } from './modules/friend/friend.module';
 import { ChatModule } from './modules/chat/chat.module';
+import { CharacterModule } from './modules/character/character.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { ChatModule } from './modules/chat/chat.module';
     AiModule,
     FriendModule,
     ChatModule,
+    CharacterModule,
   ],
   controllers: [AppController],
   providers: [AppService],

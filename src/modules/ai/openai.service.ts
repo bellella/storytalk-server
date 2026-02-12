@@ -30,13 +30,11 @@ export class OpenAiService {
       affinity: options.affinity,
       options: options.options,
     });
-    console.log(systemPrompt, '보내는시스템프롬프트');
     const messages = this.buildMessageHistory(
       options.recentMessages,
       options.userMessage
     );
     const rawText = await this.callApi(systemPrompt, messages);
-    console.log(rawText, '챗지피티가 한것');
     return this.parseResponse(rawText);
   }
 
