@@ -2483,6 +2483,7 @@ export type EpisodeScalarFieldEnum = (typeof EpisodeScalarFieldEnum)[keyof typeo
 export const SceneScalarFieldEnum = {
   id: 'id',
   episodeId: 'episodeId',
+  type: 'type',
   title: 'title',
   koreanTitle: 'koreanTitle',
   order: 'order',
@@ -2920,6 +2921,20 @@ export type EnumPublishStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'PublishStatus[]'
  */
 export type ListEnumPublishStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PublishStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SceneType'
+ */
+export type EnumSceneTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SceneType'>
+    
+
+
+/**
+ * Reference to a field of type 'SceneType[]'
+ */
+export type ListEnumSceneTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SceneType[]'>
     
 
 

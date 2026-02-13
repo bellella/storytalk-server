@@ -243,6 +243,23 @@ export type EnumPublishStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumPublishStatusFilter<$PrismaModel>
 }
 
+export type EnumSceneTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SceneType | Prisma.EnumSceneTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SceneType[] | Prisma.ListEnumSceneTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SceneType[] | Prisma.ListEnumSceneTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSceneTypeFilter<$PrismaModel> | $Enums.SceneType
+}
+
+export type EnumSceneTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SceneType | Prisma.EnumSceneTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SceneType[] | Prisma.ListEnumSceneTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SceneType[] | Prisma.ListEnumSceneTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSceneTypeWithAggregatesFilter<$PrismaModel> | $Enums.SceneType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSceneTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSceneTypeFilter<$PrismaModel>
+}
+
 export type IntNullableFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
@@ -805,6 +822,23 @@ export type NestedEnumPublishStatusWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPublishStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPublishStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumSceneTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SceneType | Prisma.EnumSceneTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SceneType[] | Prisma.ListEnumSceneTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SceneType[] | Prisma.ListEnumSceneTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSceneTypeFilter<$PrismaModel> | $Enums.SceneType
+}
+
+export type NestedEnumSceneTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SceneType | Prisma.EnumSceneTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SceneType[] | Prisma.ListEnumSceneTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SceneType[] | Prisma.ListEnumSceneTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSceneTypeWithAggregatesFilter<$PrismaModel> | $Enums.SceneType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSceneTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSceneTypeFilter<$PrismaModel>
 }
 
 export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {

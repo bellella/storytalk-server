@@ -47,6 +47,14 @@ export const StoryType = {
 export type StoryType = (typeof StoryType)[keyof typeof StoryType]
 
 
+export const SceneType = {
+  VISUAL: 'VISUAL',
+  CHAT: 'CHAT'
+} as const
+
+export type SceneType = (typeof SceneType)[keyof typeof SceneType]
+
+
 export const QuizType = {
   SENTENCE_BUILD: 'SENTENCE_BUILD',
   SENTENCE_CLOZE_BUILD: 'SENTENCE_CLOZE_BUILD',

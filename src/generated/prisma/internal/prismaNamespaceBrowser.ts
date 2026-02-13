@@ -186,6 +186,7 @@ export type EpisodeScalarFieldEnum = (typeof EpisodeScalarFieldEnum)[keyof typeo
 export const SceneScalarFieldEnum = {
   id: 'id',
   episodeId: 'episodeId',
+  type: 'type',
   title: 'title',
   koreanTitle: 'koreanTitle',
   order: 'order',

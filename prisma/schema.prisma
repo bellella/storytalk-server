@@ -150,9 +150,16 @@ model Episode {
   @@unique([storyId, order])
 }
 
+enum SceneType {
+  VISUAL
+  CHAT
+}
+
 model Scene {
   id          Int      @id @default(autoincrement())
   episodeId   Int
+
+  type        SceneType @default(VISUAL)
   title       String
   koreanTitle String?
   order       Int

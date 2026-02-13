@@ -273,6 +273,7 @@ export class StoryService {
       return {
         id: scene.id,
         title: scene.title,
+        type: scene.type,
         koreanTitle: scene.koreanTitle ?? undefined,
         order: scene.order,
         bgImageUrl: scene.bgImageUrl ?? undefined,

@@ -1,3 +1,6 @@
+import { SceneType } from '@/generated/prisma/enums';
+import { ApiProperty } from '@nestjs/swagger';
+
 export class DialogueDto {
   id: number;
   order: number;
@@ -14,6 +17,8 @@ export class DialogueDto {
 export class SceneDto {
   id: number;
   title: string;
+  @ApiProperty({ enum: SceneType })
+  type: SceneType;
   koreanTitle?: string;
   order: number;
   bgImageUrl?: string;
