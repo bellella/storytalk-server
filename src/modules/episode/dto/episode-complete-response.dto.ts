@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { RewardType } from '@/generated/prisma/client';
 import { XpProgressDto } from '@/modules/xp/dto/xp-progress.dto';
 
@@ -24,10 +24,12 @@ export class EpisodeMetaDto {
   episodeOrder: number;
 
   @ApiProperty()
-  storyId: number;
+  @ApiPropertyOptional()
+  storyId?: number;
 
   @ApiProperty({ description: '스토리 제목' })
-  storyTitle: string;
+  @ApiPropertyOptional()
+  storyTitle?: string;
 }
 
 export class EpisodeCompleteResponseDto {
@@ -40,4 +42,3 @@ export class EpisodeCompleteResponseDto {
   @ApiProperty({ type: [EpisodeRewardDto] })
   rewards: EpisodeRewardDto[];
 }
-

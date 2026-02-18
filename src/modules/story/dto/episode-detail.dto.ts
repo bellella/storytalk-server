@@ -1,10 +1,11 @@
-import { SceneType } from '@/generated/prisma/enums';
+import { DialogueType, SceneType } from '@/generated/prisma/enums';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class DialogueDto {
   id: number;
   order: number;
-  type: string;
+  @ApiProperty({ enum: DialogueType })
+  type: DialogueType;
   characterName?: string;
   characterId?: number;
   englishText: string;
@@ -36,7 +37,7 @@ export class CharacterImageDto {
 
 export class EpisodeDetailDto {
   id: number;
-  storyId: number;
+  storyId?: number;
   title: string;
   koreanTitle?: string;
   order: number;

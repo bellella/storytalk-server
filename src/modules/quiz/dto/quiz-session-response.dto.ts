@@ -12,7 +12,7 @@ export class QuizSessionResponseDto {
   type: QuizSessionType;
 
   @ApiPropertyOptional()
-  episodeId?: number | null;
+  sourceId?: number | null;
 
   @ApiProperty()
   startedAt: Date;

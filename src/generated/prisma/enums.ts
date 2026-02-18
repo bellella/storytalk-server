@@ -41,10 +41,20 @@ export type AuthProvider = (typeof AuthProvider)[keyof typeof AuthProvider]
 
 export const StoryType = {
   UNIT: 'UNIT',
-  NOVEL: 'NOVEL'
+  NOVEL: 'NOVEL',
+  PREMIUM: 'PREMIUM'
 } as const
 
 export type StoryType = (typeof StoryType)[keyof typeof StoryType]
+
+
+export const EpisodeType = {
+  STORY: 'STORY',
+  PREMIUM: 'PREMIUM',
+  EVENT: 'EVENT'
+} as const
+
+export type EpisodeType = (typeof EpisodeType)[keyof typeof EpisodeType]
 
 
 export const SceneType = {
@@ -53,6 +63,20 @@ export const SceneType = {
 } as const
 
 export type SceneType = (typeof SceneType)[keyof typeof SceneType]
+
+
+export const DialogueType = {
+  NARRATION: 'NARRATION',
+  DIALOGUE: 'DIALOGUE',
+  IMAGE: 'IMAGE',
+  HEADING: 'HEADING',
+  CHOICE: 'CHOICE',
+  AI_INPUT_SLOT: 'AI_INPUT_SLOT',
+  AI_SLOT: 'AI_SLOT',
+  SPEAKING_MISSION: 'SPEAKING_MISSION'
+} as const
+
+export type DialogueType = (typeof DialogueType)[keyof typeof DialogueType]
 
 
 export const QuizType = {
@@ -66,7 +90,8 @@ export type QuizType = (typeof QuizType)[keyof typeof QuizType]
 
 export const QuizSourceType = {
   EPISODE: 'EPISODE',
-  LESSON: 'LESSON'
+  LESSON: 'LESSON',
+  PLAY: 'PLAY'
 } as const
 
 export type QuizSourceType = (typeof QuizSourceType)[keyof typeof QuizSourceType]
@@ -74,20 +99,11 @@ export type QuizSourceType = (typeof QuizSourceType)[keyof typeof QuizSourceType
 
 export const QuizSessionType = {
   EPISODE: 'EPISODE',
-  DAILY_QUIZ: 'DAILY_QUIZ'
+  DAILY_QUIZ: 'DAILY_QUIZ',
+  PLAY: 'PLAY'
 } as const
 
 export type QuizSessionType = (typeof QuizSessionType)[keyof typeof QuizSessionType]
-
-
-export const EpisodeStage = {
-  STORY_IN_PROGRESS: 'STORY_IN_PROGRESS',
-  STORY_COMPLETED: 'STORY_COMPLETED',
-  QUIZ_IN_PROGRESS: 'QUIZ_IN_PROGRESS',
-  QUIZ_COMPLETED: 'QUIZ_COMPLETED'
-} as const
-
-export type EpisodeStage = (typeof EpisodeStage)[keyof typeof EpisodeStage]
 
 
 export const CharacterScope = {
@@ -130,3 +146,57 @@ export const XpSourceType = {
 } as const
 
 export type XpSourceType = (typeof XpSourceType)[keyof typeof XpSourceType]
+
+
+export const EpisodeStage = {
+  STORY_IN_PROGRESS: 'STORY_IN_PROGRESS',
+  STORY_COMPLETED: 'STORY_COMPLETED',
+  QUIZ_IN_PROGRESS: 'QUIZ_IN_PROGRESS',
+  QUIZ_COMPLETED: 'QUIZ_COMPLETED'
+} as const
+
+export type EpisodeStage = (typeof EpisodeStage)[keyof typeof EpisodeStage]
+
+
+export const AccessStatus = {
+  ACTIVE: 'ACTIVE',
+  REFUNDED: 'REFUNDED',
+  CANCELED: 'CANCELED',
+  EXPIRED: 'EXPIRED'
+} as const
+
+export type AccessStatus = (typeof AccessStatus)[keyof typeof AccessStatus]
+
+
+export const PlayEpisodeMode = {
+  FREE_CHAT: 'FREE_CHAT',
+  CHAT_WITH_EVAL: 'CHAT_WITH_EVAL',
+  CHAT_WITH_QUIZ: 'CHAT_WITH_QUIZ'
+} as const
+
+export type PlayEpisodeMode = (typeof PlayEpisodeMode)[keyof typeof PlayEpisodeMode]
+
+
+export const SlotStatus = {
+  ACTIVE: 'ACTIVE',
+  ENDED: 'ENDED'
+} as const
+
+export type SlotStatus = (typeof SlotStatus)[keyof typeof SlotStatus]
+
+
+export const SlotMessageType = {
+  USER: 'USER',
+  NPC: 'NPC',
+  SYSTEM: 'SYSTEM'
+} as const
+
+export type SlotMessageType = (typeof SlotMessageType)[keyof typeof SlotMessageType]
+
+
+export const SlotDialogueType = {
+  DIALOGUE: 'DIALOGUE',
+  NARRATION: 'NARRATION'
+} as const
+
+export type SlotDialogueType = (typeof SlotDialogueType)[keyof typeof SlotDialogueType]

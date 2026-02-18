@@ -53,10 +53,10 @@ export type Episode = Prisma.EpisodeModel
  */
 export type Scene = Prisma.SceneModel
 /**
- * Model dialogue
+ * Model Dialogue
  * 
  */
-export type dialogue = Prisma.dialogueModel
+export type Dialogue = Prisma.DialogueModel
 /**
  * Model StoryProgress
  * 
@@ -87,11 +87,6 @@ export type QuizSessionItem = Prisma.QuizSessionItemModel
  * 
  */
 export type UserQuizAnswer = Prisma.UserQuizAnswerModel
-/**
- * Model UserEpisode
- * 
- */
-export type UserEpisode = Prisma.UserEpisodeModel
 /**
  * Model Character
  * 
@@ -147,3 +142,23 @@ export type XpRule = Prisma.XpRuleModel
  * 
  */
 export type UserXpHistory = Prisma.UserXpHistoryModel
+/**
+ * Model UserEpisode
+ * 
+ */
+export type UserEpisode = Prisma.UserEpisodeModel
+/**
+ * Model UserPlayEpisode
+ * 
+ */
+export type UserPlayEpisode = Prisma.UserPlayEpisodeModel
+/**
+ * Model PlayEpisodeSlot
+ * 
+ */
+export type PlayEpisodeSlot = Prisma.PlayEpisodeSlotModel
+/**
+ * Model SlotDialogue
+ * 
+ */
+export type SlotDialogue = Prisma.SlotDialogueModel

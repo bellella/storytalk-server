@@ -4,7 +4,7 @@
 // biome-ignore-all lint: generated file
 // @ts-nocheck 
 /*
- * This file exports the `dialogue` model and its related types.
+ * This file exports the `Dialogue` model and its related types.
  *
  * 🟢 You can import this file directly.
  */
@@ -13,10 +13,10 @@ import type * as $Enums from "../enums.js"
 import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
- * Model dialogue
+ * Model Dialogue
  * 
  */
-export type dialogueModel = runtime.Types.Result.DefaultSelection<Prisma.$dialoguePayload>
+export type DialogueModel = runtime.Types.Result.DefaultSelection<Prisma.$DialoguePayload>
 
 export type AggregateDialogue = {
   _count: DialogueCountAggregateOutputType | null
@@ -44,7 +44,7 @@ export type DialogueMinAggregateOutputType = {
   id: number | null
   sceneId: number | null
   order: number | null
-  type: string | null
+  type: $Enums.DialogueType | null
   characterName: string | null
   characterId: number | null
   englishText: string | null
@@ -60,7 +60,7 @@ export type DialogueMaxAggregateOutputType = {
   id: number | null
   sceneId: number | null
   order: number | null
-  type: string | null
+  type: $Enums.DialogueType | null
   characterName: string | null
   characterId: number | null
   englishText: string | null
@@ -84,6 +84,7 @@ export type DialogueCountAggregateOutputType = {
   charImageLabel: number
   imageUrl: number
   audioUrl: number
+  data: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -148,6 +149,7 @@ export type DialogueCountAggregateInputType = {
   charImageLabel?: true
   imageUrl?: true
   audioUrl?: true
+  data?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -155,37 +157,37 @@ export type DialogueCountAggregateInputType = {
 
 export type DialogueAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Filter which dialogue to aggregate.
+   * Filter which Dialogue to aggregate.
    */
-  where?: Prisma.dialogueWhereInput
+  where?: Prisma.DialogueWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of dialogues to fetch.
+   * Determine the order of Dialogues to fetch.
    */
-  orderBy?: Prisma.dialogueOrderByWithRelationInput | Prisma.dialogueOrderByWithRelationInput[]
+  orderBy?: Prisma.DialogueOrderByWithRelationInput | Prisma.DialogueOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
    * Sets the start position
    */
-  cursor?: Prisma.dialogueWhereUniqueInput
+  cursor?: Prisma.DialogueWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` dialogues from the position of the cursor.
+   * Take `±n` Dialogues from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` dialogues.
+   * Skip the first `n` Dialogues.
    */
   skip?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Count returned dialogues
+   * Count returned Dialogues
   **/
   _count?: true | DialogueCountAggregateInputType
   /**
@@ -225,11 +227,11 @@ export type GetDialogueAggregateType<T extends DialogueAggregateArgs> = {
 
 
 
-export type dialogueGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.dialogueWhereInput
-  orderBy?: Prisma.dialogueOrderByWithAggregationInput | Prisma.dialogueOrderByWithAggregationInput[]
+export type DialogueGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DialogueWhereInput
+  orderBy?: Prisma.DialogueOrderByWithAggregationInput | Prisma.DialogueOrderByWithAggregationInput[]
   by: Prisma.DialogueScalarFieldEnum[] | Prisma.DialogueScalarFieldEnum
-  having?: Prisma.dialogueScalarWhereWithAggregatesInput
+  having?: Prisma.DialogueScalarWhereWithAggregatesInput
   take?: number
   skip?: number
   _count?: DialogueCountAggregateInputType | true
@@ -243,7 +245,7 @@ export type DialogueGroupByOutputType = {
   id: number
   sceneId: number
   order: number
-  type: string
+  type: $Enums.DialogueType
   characterName: string | null
   characterId: number | null
   englishText: string
@@ -251,6 +253,7 @@ export type DialogueGroupByOutputType = {
   charImageLabel: string | null
   imageUrl: string | null
   audioUrl: string | null
+  data: runtime.JsonValue | null
   createdAt: Date
   updatedAt: Date
   _count: DialogueCountAggregateOutputType | null
@@ -260,7 +263,7 @@ export type DialogueGroupByOutputType = {
   _max: DialogueMaxAggregateOutputType | null
 }
 
-type GetDialogueGroupByPayload<T extends dialogueGroupByArgs> = Prisma.PrismaPromise<
+type GetDialogueGroupByPayload<T extends DialogueGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<DialogueGroupByOutputType, T['by']> &
       {
@@ -275,29 +278,31 @@ type GetDialogueGroupByPayload<T extends dialogueGroupByArgs> = Prisma.PrismaPro
 
 
 
-export type dialogueWhereInput = {
-  AND?: Prisma.dialogueWhereInput | Prisma.dialogueWhereInput[]
-  OR?: Prisma.dialogueWhereInput[]
-  NOT?: Prisma.dialogueWhereInput | Prisma.dialogueWhereInput[]
-  id?: Prisma.IntFilter<"dialogue"> | number
-  sceneId?: Prisma.IntFilter<"dialogue"> | number
-  order?: Prisma.IntFilter<"dialogue"> | number
-  type?: Prisma.StringFilter<"dialogue"> | string
-  characterName?: Prisma.StringNullableFilter<"dialogue"> | string | null
-  characterId?: Prisma.IntNullableFilter<"dialogue"> | number | null
-  englishText?: Prisma.StringFilter<"dialogue"> | string
-  koreanText?: Prisma.StringFilter<"dialogue"> | string
-  charImageLabel?: Prisma.StringNullableFilter<"dialogue"> | string | null
-  imageUrl?: Prisma.StringNullableFilter<"dialogue"> | string | null
-  audioUrl?: Prisma.StringNullableFilter<"dialogue"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"dialogue"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"dialogue"> | Date | string
+export type DialogueWhereInput = {
+  AND?: Prisma.DialogueWhereInput | Prisma.DialogueWhereInput[]
+  OR?: Prisma.DialogueWhereInput[]
+  NOT?: Prisma.DialogueWhereInput | Prisma.DialogueWhereInput[]
+  id?: Prisma.IntFilter<"Dialogue"> | number
+  sceneId?: Prisma.IntFilter<"Dialogue"> | number
+  order?: Prisma.IntFilter<"Dialogue"> | number
+  type?: Prisma.EnumDialogueTypeFilter<"Dialogue"> | $Enums.DialogueType
+  characterName?: Prisma.StringNullableFilter<"Dialogue"> | string | null
+  characterId?: Prisma.IntNullableFilter<"Dialogue"> | number | null
+  englishText?: Prisma.StringFilter<"Dialogue"> | string
+  koreanText?: Prisma.StringFilter<"Dialogue"> | string
+  charImageLabel?: Prisma.StringNullableFilter<"Dialogue"> | string | null
+  imageUrl?: Prisma.StringNullableFilter<"Dialogue"> | string | null
+  audioUrl?: Prisma.StringNullableFilter<"Dialogue"> | string | null
+  data?: Prisma.JsonNullableFilter<"Dialogue">
+  createdAt?: Prisma.DateTimeFilter<"Dialogue"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Dialogue"> | Date | string
   scene?: Prisma.XOR<Prisma.SceneScalarRelationFilter, Prisma.SceneWhereInput>
   character?: Prisma.XOR<Prisma.CharacterNullableScalarRelationFilter, Prisma.CharacterWhereInput> | null
   bookmarks?: Prisma.DialogueBookmarkListRelationFilter
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotListRelationFilter
 }
 
-export type dialogueOrderByWithRelationInput = {
+export type DialogueOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   sceneId?: Prisma.SortOrder
   order?: Prisma.SortOrder
@@ -309,37 +314,41 @@ export type dialogueOrderByWithRelationInput = {
   charImageLabel?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   audioUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  data?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   scene?: Prisma.SceneOrderByWithRelationInput
   character?: Prisma.CharacterOrderByWithRelationInput
   bookmarks?: Prisma.dialogueBookmarkOrderByRelationAggregateInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotOrderByRelationAggregateInput
 }
 
-export type dialogueWhereUniqueInput = Prisma.AtLeast<{
+export type DialogueWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  sceneId_order?: Prisma.dialogueSceneIdOrderCompoundUniqueInput
-  AND?: Prisma.dialogueWhereInput | Prisma.dialogueWhereInput[]
-  OR?: Prisma.dialogueWhereInput[]
-  NOT?: Prisma.dialogueWhereInput | Prisma.dialogueWhereInput[]
-  sceneId?: Prisma.IntFilter<"dialogue"> | number
-  order?: Prisma.IntFilter<"dialogue"> | number
-  type?: Prisma.StringFilter<"dialogue"> | string
-  characterName?: Prisma.StringNullableFilter<"dialogue"> | string | null
-  characterId?: Prisma.IntNullableFilter<"dialogue"> | number | null
-  englishText?: Prisma.StringFilter<"dialogue"> | string
-  koreanText?: Prisma.StringFilter<"dialogue"> | string
-  charImageLabel?: Prisma.StringNullableFilter<"dialogue"> | string | null
-  imageUrl?: Prisma.StringNullableFilter<"dialogue"> | string | null
-  audioUrl?: Prisma.StringNullableFilter<"dialogue"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"dialogue"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"dialogue"> | Date | string
+  sceneId_order?: Prisma.DialogueSceneIdOrderCompoundUniqueInput
+  AND?: Prisma.DialogueWhereInput | Prisma.DialogueWhereInput[]
+  OR?: Prisma.DialogueWhereInput[]
+  NOT?: Prisma.DialogueWhereInput | Prisma.DialogueWhereInput[]
+  sceneId?: Prisma.IntFilter<"Dialogue"> | number
+  order?: Prisma.IntFilter<"Dialogue"> | number
+  type?: Prisma.EnumDialogueTypeFilter<"Dialogue"> | $Enums.DialogueType
+  characterName?: Prisma.StringNullableFilter<"Dialogue"> | string | null
+  characterId?: Prisma.IntNullableFilter<"Dialogue"> | number | null
+  englishText?: Prisma.StringFilter<"Dialogue"> | string
+  koreanText?: Prisma.StringFilter<"Dialogue"> | string
+  charImageLabel?: Prisma.StringNullableFilter<"Dialogue"> | string | null
+  imageUrl?: Prisma.StringNullableFilter<"Dialogue"> | string | null
+  audioUrl?: Prisma.StringNullableFilter<"Dialogue"> | string | null
+  data?: Prisma.JsonNullableFilter<"Dialogue">
+  createdAt?: Prisma.DateTimeFilter<"Dialogue"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Dialogue"> | Date | string
   scene?: Prisma.XOR<Prisma.SceneScalarRelationFilter, Prisma.SceneWhereInput>
   character?: Prisma.XOR<Prisma.CharacterNullableScalarRelationFilter, Prisma.CharacterWhereInput> | null
   bookmarks?: Prisma.DialogueBookmarkListRelationFilter
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotListRelationFilter
 }, "id" | "sceneId_order">
 
-export type dialogueOrderByWithAggregationInput = {
+export type DialogueOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   sceneId?: Prisma.SortOrder
   order?: Prisma.SortOrder
@@ -351,55 +360,59 @@ export type dialogueOrderByWithAggregationInput = {
   charImageLabel?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   audioUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  data?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  _count?: Prisma.dialogueCountOrderByAggregateInput
-  _avg?: Prisma.dialogueAvgOrderByAggregateInput
-  _max?: Prisma.dialogueMaxOrderByAggregateInput
-  _min?: Prisma.dialogueMinOrderByAggregateInput
-  _sum?: Prisma.dialogueSumOrderByAggregateInput
+  _count?: Prisma.DialogueCountOrderByAggregateInput
+  _avg?: Prisma.DialogueAvgOrderByAggregateInput
+  _max?: Prisma.DialogueMaxOrderByAggregateInput
+  _min?: Prisma.DialogueMinOrderByAggregateInput
+  _sum?: Prisma.DialogueSumOrderByAggregateInput
 }
 
-export type dialogueScalarWhereWithAggregatesInput = {
-  AND?: Prisma.dialogueScalarWhereWithAggregatesInput | Prisma.dialogueScalarWhereWithAggregatesInput[]
-  OR?: Prisma.dialogueScalarWhereWithAggregatesInput[]
-  NOT?: Prisma.dialogueScalarWhereWithAggregatesInput | Prisma.dialogueScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"dialogue"> | number
-  sceneId?: Prisma.IntWithAggregatesFilter<"dialogue"> | number
-  order?: Prisma.IntWithAggregatesFilter<"dialogue"> | number
-  type?: Prisma.StringWithAggregatesFilter<"dialogue"> | string
-  characterName?: Prisma.StringNullableWithAggregatesFilter<"dialogue"> | string | null
-  characterId?: Prisma.IntNullableWithAggregatesFilter<"dialogue"> | number | null
-  englishText?: Prisma.StringWithAggregatesFilter<"dialogue"> | string
-  koreanText?: Prisma.StringWithAggregatesFilter<"dialogue"> | string
-  charImageLabel?: Prisma.StringNullableWithAggregatesFilter<"dialogue"> | string | null
-  imageUrl?: Prisma.StringNullableWithAggregatesFilter<"dialogue"> | string | null
-  audioUrl?: Prisma.StringNullableWithAggregatesFilter<"dialogue"> | string | null
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"dialogue"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"dialogue"> | Date | string
+export type DialogueScalarWhereWithAggregatesInput = {
+  AND?: Prisma.DialogueScalarWhereWithAggregatesInput | Prisma.DialogueScalarWhereWithAggregatesInput[]
+  OR?: Prisma.DialogueScalarWhereWithAggregatesInput[]
+  NOT?: Prisma.DialogueScalarWhereWithAggregatesInput | Prisma.DialogueScalarWhereWithAggregatesInput[]
+  id?: Prisma.IntWithAggregatesFilter<"Dialogue"> | number
+  sceneId?: Prisma.IntWithAggregatesFilter<"Dialogue"> | number
+  order?: Prisma.IntWithAggregatesFilter<"Dialogue"> | number
+  type?: Prisma.EnumDialogueTypeWithAggregatesFilter<"Dialogue"> | $Enums.DialogueType
+  characterName?: Prisma.StringNullableWithAggregatesFilter<"Dialogue"> | string | null
+  characterId?: Prisma.IntNullableWithAggregatesFilter<"Dialogue"> | number | null
+  englishText?: Prisma.StringWithAggregatesFilter<"Dialogue"> | string
+  koreanText?: Prisma.StringWithAggregatesFilter<"Dialogue"> | string
+  charImageLabel?: Prisma.StringNullableWithAggregatesFilter<"Dialogue"> | string | null
+  imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Dialogue"> | string | null
+  audioUrl?: Prisma.StringNullableWithAggregatesFilter<"Dialogue"> | string | null
+  data?: Prisma.JsonNullableWithAggregatesFilter<"Dialogue">
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Dialogue"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Dialogue"> | Date | string
 }
 
-export type dialogueCreateInput = {
+export type DialogueCreateInput = {
   order: number
-  type?: string
+  type?: $Enums.DialogueType
   characterName?: string | null
   englishText: string
   koreanText: string
   charImageLabel?: string | null
   imageUrl?: string | null
   audioUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   scene: Prisma.SceneCreateNestedOneWithoutDialoguesInput
   character?: Prisma.CharacterCreateNestedOneWithoutDialoguesInput
   bookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutDialogueInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotCreateNestedManyWithoutDialogueInput
 }
 
-export type dialogueUncheckedCreateInput = {
+export type DialogueUncheckedCreateInput = {
   id?: number
   sceneId: number
   order: number
-  type?: string
+  type?: $Enums.DialogueType
   characterName?: string | null
   characterId?: number | null
   englishText: string
@@ -407,32 +420,36 @@ export type dialogueUncheckedCreateInput = {
   charImageLabel?: string | null
   imageUrl?: string | null
   audioUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   bookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutDialogueInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedCreateNestedManyWithoutDialogueInput
 }
 
-export type dialogueUpdateInput = {
+export type DialogueUpdateInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   englishText?: Prisma.StringFieldUpdateOperationsInput | string
   koreanText?: Prisma.StringFieldUpdateOperationsInput | string
   charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scene?: Prisma.SceneUpdateOneRequiredWithoutDialoguesNestedInput
   character?: Prisma.CharacterUpdateOneWithoutDialoguesNestedInput
   bookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutDialogueNestedInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotUpdateManyWithoutDialogueNestedInput
 }
 
-export type dialogueUncheckedUpdateInput = {
+export type DialogueUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sceneId?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   englishText?: Prisma.StringFieldUpdateOperationsInput | string
@@ -440,16 +457,18 @@ export type dialogueUncheckedUpdateInput = {
   charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutDialogueNestedInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedUpdateManyWithoutDialogueNestedInput
 }
 
-export type dialogueCreateManyInput = {
+export type DialogueCreateManyInput = {
   id?: number
   sceneId: number
   order: number
-  type?: string
+  type?: $Enums.DialogueType
   characterName?: string | null
   characterId?: number | null
   englishText: string
@@ -457,28 +476,30 @@ export type dialogueCreateManyInput = {
   charImageLabel?: string | null
   imageUrl?: string | null
   audioUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type dialogueUpdateManyMutationInput = {
+export type DialogueUpdateManyMutationInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   englishText?: Prisma.StringFieldUpdateOperationsInput | string
   koreanText?: Prisma.StringFieldUpdateOperationsInput | string
   charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type dialogueUncheckedUpdateManyInput = {
+export type DialogueUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sceneId?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   englishText?: Prisma.StringFieldUpdateOperationsInput | string
@@ -486,26 +507,51 @@ export type dialogueUncheckedUpdateManyInput = {
   charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DialogueListRelationFilter = {
-  every?: Prisma.dialogueWhereInput
-  some?: Prisma.dialogueWhereInput
-  none?: Prisma.dialogueWhereInput
+  every?: Prisma.DialogueWhereInput
+  some?: Prisma.DialogueWhereInput
+  none?: Prisma.DialogueWhereInput
 }
 
-export type dialogueOrderByRelationAggregateInput = {
+export type DialogueOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type dialogueSceneIdOrderCompoundUniqueInput = {
+export type DialogueSceneIdOrderCompoundUniqueInput = {
   sceneId: number
   order: number
 }
 
-export type dialogueCountOrderByAggregateInput = {
+export type DialogueCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  sceneId?: Prisma.SortOrder
+  order?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  characterName?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
+  englishText?: Prisma.SortOrder
+  koreanText?: Prisma.SortOrder
+  charImageLabel?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
+  audioUrl?: Prisma.SortOrder
+  data?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+}
+
+export type DialogueAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  sceneId?: Prisma.SortOrder
+  order?: Prisma.SortOrder
+  characterId?: Prisma.SortOrder
+}
+
+export type DialogueMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sceneId?: Prisma.SortOrder
   order?: Prisma.SortOrder
@@ -521,14 +567,7 @@ export type dialogueCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type dialogueAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  sceneId?: Prisma.SortOrder
-  order?: Prisma.SortOrder
-  characterId?: Prisma.SortOrder
-}
-
-export type dialogueMaxOrderByAggregateInput = {
+export type DialogueMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sceneId?: Prisma.SortOrder
   order?: Prisma.SortOrder
@@ -544,23 +583,7 @@ export type dialogueMaxOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type dialogueMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  sceneId?: Prisma.SortOrder
-  order?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  characterName?: Prisma.SortOrder
-  characterId?: Prisma.SortOrder
-  englishText?: Prisma.SortOrder
-  koreanText?: Prisma.SortOrder
-  charImageLabel?: Prisma.SortOrder
-  imageUrl?: Prisma.SortOrder
-  audioUrl?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-}
-
-export type dialogueSumOrderByAggregateInput = {
+export type DialogueSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sceneId?: Prisma.SortOrder
   order?: Prisma.SortOrder
@@ -568,135 +591,147 @@ export type dialogueSumOrderByAggregateInput = {
 }
 
 export type DialogueScalarRelationFilter = {
-  is?: Prisma.dialogueWhereInput
-  isNot?: Prisma.dialogueWhereInput
+  is?: Prisma.DialogueWhereInput
+  isNot?: Prisma.DialogueWhereInput
 }
 
-export type dialogueCreateNestedManyWithoutSceneInput = {
-  create?: Prisma.XOR<Prisma.dialogueCreateWithoutSceneInput, Prisma.dialogueUncheckedCreateWithoutSceneInput> | Prisma.dialogueCreateWithoutSceneInput[] | Prisma.dialogueUncheckedCreateWithoutSceneInput[]
-  connectOrCreate?: Prisma.dialogueCreateOrConnectWithoutSceneInput | Prisma.dialogueCreateOrConnectWithoutSceneInput[]
-  createMany?: Prisma.dialogueCreateManySceneInputEnvelope
-  connect?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
+export type DialogueCreateNestedManyWithoutSceneInput = {
+  create?: Prisma.XOR<Prisma.DialogueCreateWithoutSceneInput, Prisma.DialogueUncheckedCreateWithoutSceneInput> | Prisma.DialogueCreateWithoutSceneInput[] | Prisma.DialogueUncheckedCreateWithoutSceneInput[]
+  connectOrCreate?: Prisma.DialogueCreateOrConnectWithoutSceneInput | Prisma.DialogueCreateOrConnectWithoutSceneInput[]
+  createMany?: Prisma.DialogueCreateManySceneInputEnvelope
+  connect?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
 }
 
-export type dialogueUncheckedCreateNestedManyWithoutSceneInput = {
-  create?: Prisma.XOR<Prisma.dialogueCreateWithoutSceneInput, Prisma.dialogueUncheckedCreateWithoutSceneInput> | Prisma.dialogueCreateWithoutSceneInput[] | Prisma.dialogueUncheckedCreateWithoutSceneInput[]
-  connectOrCreate?: Prisma.dialogueCreateOrConnectWithoutSceneInput | Prisma.dialogueCreateOrConnectWithoutSceneInput[]
-  createMany?: Prisma.dialogueCreateManySceneInputEnvelope
-  connect?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
+export type DialogueUncheckedCreateNestedManyWithoutSceneInput = {
+  create?: Prisma.XOR<Prisma.DialogueCreateWithoutSceneInput, Prisma.DialogueUncheckedCreateWithoutSceneInput> | Prisma.DialogueCreateWithoutSceneInput[] | Prisma.DialogueUncheckedCreateWithoutSceneInput[]
+  connectOrCreate?: Prisma.DialogueCreateOrConnectWithoutSceneInput | Prisma.DialogueCreateOrConnectWithoutSceneInput[]
+  createMany?: Prisma.DialogueCreateManySceneInputEnvelope
+  connect?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
 }
 
-export type dialogueUpdateManyWithoutSceneNestedInput = {
-  create?: Prisma.XOR<Prisma.dialogueCreateWithoutSceneInput, Prisma.dialogueUncheckedCreateWithoutSceneInput> | Prisma.dialogueCreateWithoutSceneInput[] | Prisma.dialogueUncheckedCreateWithoutSceneInput[]
-  connectOrCreate?: Prisma.dialogueCreateOrConnectWithoutSceneInput | Prisma.dialogueCreateOrConnectWithoutSceneInput[]
-  upsert?: Prisma.dialogueUpsertWithWhereUniqueWithoutSceneInput | Prisma.dialogueUpsertWithWhereUniqueWithoutSceneInput[]
-  createMany?: Prisma.dialogueCreateManySceneInputEnvelope
-  set?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  disconnect?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  delete?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  connect?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  update?: Prisma.dialogueUpdateWithWhereUniqueWithoutSceneInput | Prisma.dialogueUpdateWithWhereUniqueWithoutSceneInput[]
-  updateMany?: Prisma.dialogueUpdateManyWithWhereWithoutSceneInput | Prisma.dialogueUpdateManyWithWhereWithoutSceneInput[]
-  deleteMany?: Prisma.dialogueScalarWhereInput | Prisma.dialogueScalarWhereInput[]
+export type DialogueUpdateManyWithoutSceneNestedInput = {
+  create?: Prisma.XOR<Prisma.DialogueCreateWithoutSceneInput, Prisma.DialogueUncheckedCreateWithoutSceneInput> | Prisma.DialogueCreateWithoutSceneInput[] | Prisma.DialogueUncheckedCreateWithoutSceneInput[]
+  connectOrCreate?: Prisma.DialogueCreateOrConnectWithoutSceneInput | Prisma.DialogueCreateOrConnectWithoutSceneInput[]
+  upsert?: Prisma.DialogueUpsertWithWhereUniqueWithoutSceneInput | Prisma.DialogueUpsertWithWhereUniqueWithoutSceneInput[]
+  createMany?: Prisma.DialogueCreateManySceneInputEnvelope
+  set?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  disconnect?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  delete?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  connect?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  update?: Prisma.DialogueUpdateWithWhereUniqueWithoutSceneInput | Prisma.DialogueUpdateWithWhereUniqueWithoutSceneInput[]
+  updateMany?: Prisma.DialogueUpdateManyWithWhereWithoutSceneInput | Prisma.DialogueUpdateManyWithWhereWithoutSceneInput[]
+  deleteMany?: Prisma.DialogueScalarWhereInput | Prisma.DialogueScalarWhereInput[]
 }
 
-export type dialogueUncheckedUpdateManyWithoutSceneNestedInput = {
-  create?: Prisma.XOR<Prisma.dialogueCreateWithoutSceneInput, Prisma.dialogueUncheckedCreateWithoutSceneInput> | Prisma.dialogueCreateWithoutSceneInput[] | Prisma.dialogueUncheckedCreateWithoutSceneInput[]
-  connectOrCreate?: Prisma.dialogueCreateOrConnectWithoutSceneInput | Prisma.dialogueCreateOrConnectWithoutSceneInput[]
-  upsert?: Prisma.dialogueUpsertWithWhereUniqueWithoutSceneInput | Prisma.dialogueUpsertWithWhereUniqueWithoutSceneInput[]
-  createMany?: Prisma.dialogueCreateManySceneInputEnvelope
-  set?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  disconnect?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  delete?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  connect?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  update?: Prisma.dialogueUpdateWithWhereUniqueWithoutSceneInput | Prisma.dialogueUpdateWithWhereUniqueWithoutSceneInput[]
-  updateMany?: Prisma.dialogueUpdateManyWithWhereWithoutSceneInput | Prisma.dialogueUpdateManyWithWhereWithoutSceneInput[]
-  deleteMany?: Prisma.dialogueScalarWhereInput | Prisma.dialogueScalarWhereInput[]
+export type DialogueUncheckedUpdateManyWithoutSceneNestedInput = {
+  create?: Prisma.XOR<Prisma.DialogueCreateWithoutSceneInput, Prisma.DialogueUncheckedCreateWithoutSceneInput> | Prisma.DialogueCreateWithoutSceneInput[] | Prisma.DialogueUncheckedCreateWithoutSceneInput[]
+  connectOrCreate?: Prisma.DialogueCreateOrConnectWithoutSceneInput | Prisma.DialogueCreateOrConnectWithoutSceneInput[]
+  upsert?: Prisma.DialogueUpsertWithWhereUniqueWithoutSceneInput | Prisma.DialogueUpsertWithWhereUniqueWithoutSceneInput[]
+  createMany?: Prisma.DialogueCreateManySceneInputEnvelope
+  set?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  disconnect?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  delete?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  connect?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  update?: Prisma.DialogueUpdateWithWhereUniqueWithoutSceneInput | Prisma.DialogueUpdateWithWhereUniqueWithoutSceneInput[]
+  updateMany?: Prisma.DialogueUpdateManyWithWhereWithoutSceneInput | Prisma.DialogueUpdateManyWithWhereWithoutSceneInput[]
+  deleteMany?: Prisma.DialogueScalarWhereInput | Prisma.DialogueScalarWhereInput[]
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
+export type EnumDialogueTypeFieldUpdateOperationsInput = {
+  set?: $Enums.DialogueType
 }
 
-export type dialogueCreateNestedManyWithoutCharacterInput = {
-  create?: Prisma.XOR<Prisma.dialogueCreateWithoutCharacterInput, Prisma.dialogueUncheckedCreateWithoutCharacterInput> | Prisma.dialogueCreateWithoutCharacterInput[] | Prisma.dialogueUncheckedCreateWithoutCharacterInput[]
-  connectOrCreate?: Prisma.dialogueCreateOrConnectWithoutCharacterInput | Prisma.dialogueCreateOrConnectWithoutCharacterInput[]
-  createMany?: Prisma.dialogueCreateManyCharacterInputEnvelope
-  connect?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
+export type DialogueCreateNestedManyWithoutCharacterInput = {
+  create?: Prisma.XOR<Prisma.DialogueCreateWithoutCharacterInput, Prisma.DialogueUncheckedCreateWithoutCharacterInput> | Prisma.DialogueCreateWithoutCharacterInput[] | Prisma.DialogueUncheckedCreateWithoutCharacterInput[]
+  connectOrCreate?: Prisma.DialogueCreateOrConnectWithoutCharacterInput | Prisma.DialogueCreateOrConnectWithoutCharacterInput[]
+  createMany?: Prisma.DialogueCreateManyCharacterInputEnvelope
+  connect?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
 }
 
-export type dialogueUncheckedCreateNestedManyWithoutCharacterInput = {
-  create?: Prisma.XOR<Prisma.dialogueCreateWithoutCharacterInput, Prisma.dialogueUncheckedCreateWithoutCharacterInput> | Prisma.dialogueCreateWithoutCharacterInput[] | Prisma.dialogueUncheckedCreateWithoutCharacterInput[]
-  connectOrCreate?: Prisma.dialogueCreateOrConnectWithoutCharacterInput | Prisma.dialogueCreateOrConnectWithoutCharacterInput[]
-  createMany?: Prisma.dialogueCreateManyCharacterInputEnvelope
-  connect?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
+export type DialogueUncheckedCreateNestedManyWithoutCharacterInput = {
+  create?: Prisma.XOR<Prisma.DialogueCreateWithoutCharacterInput, Prisma.DialogueUncheckedCreateWithoutCharacterInput> | Prisma.DialogueCreateWithoutCharacterInput[] | Prisma.DialogueUncheckedCreateWithoutCharacterInput[]
+  connectOrCreate?: Prisma.DialogueCreateOrConnectWithoutCharacterInput | Prisma.DialogueCreateOrConnectWithoutCharacterInput[]
+  createMany?: Prisma.DialogueCreateManyCharacterInputEnvelope
+  connect?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
 }
 
-export type dialogueUpdateManyWithoutCharacterNestedInput = {
-  create?: Prisma.XOR<Prisma.dialogueCreateWithoutCharacterInput, Prisma.dialogueUncheckedCreateWithoutCharacterInput> | Prisma.dialogueCreateWithoutCharacterInput[] | Prisma.dialogueUncheckedCreateWithoutCharacterInput[]
-  connectOrCreate?: Prisma.dialogueCreateOrConnectWithoutCharacterInput | Prisma.dialogueCreateOrConnectWithoutCharacterInput[]
-  upsert?: Prisma.dialogueUpsertWithWhereUniqueWithoutCharacterInput | Prisma.dialogueUpsertWithWhereUniqueWithoutCharacterInput[]
-  createMany?: Prisma.dialogueCreateManyCharacterInputEnvelope
-  set?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  disconnect?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  delete?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  connect?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  update?: Prisma.dialogueUpdateWithWhereUniqueWithoutCharacterInput | Prisma.dialogueUpdateWithWhereUniqueWithoutCharacterInput[]
-  updateMany?: Prisma.dialogueUpdateManyWithWhereWithoutCharacterInput | Prisma.dialogueUpdateManyWithWhereWithoutCharacterInput[]
-  deleteMany?: Prisma.dialogueScalarWhereInput | Prisma.dialogueScalarWhereInput[]
+export type DialogueUpdateManyWithoutCharacterNestedInput = {
+  create?: Prisma.XOR<Prisma.DialogueCreateWithoutCharacterInput, Prisma.DialogueUncheckedCreateWithoutCharacterInput> | Prisma.DialogueCreateWithoutCharacterInput[] | Prisma.DialogueUncheckedCreateWithoutCharacterInput[]
+  connectOrCreate?: Prisma.DialogueCreateOrConnectWithoutCharacterInput | Prisma.DialogueCreateOrConnectWithoutCharacterInput[]
+  upsert?: Prisma.DialogueUpsertWithWhereUniqueWithoutCharacterInput | Prisma.DialogueUpsertWithWhereUniqueWithoutCharacterInput[]
+  createMany?: Prisma.DialogueCreateManyCharacterInputEnvelope
+  set?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  disconnect?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  delete?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  connect?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  update?: Prisma.DialogueUpdateWithWhereUniqueWithoutCharacterInput | Prisma.DialogueUpdateWithWhereUniqueWithoutCharacterInput[]
+  updateMany?: Prisma.DialogueUpdateManyWithWhereWithoutCharacterInput | Prisma.DialogueUpdateManyWithWhereWithoutCharacterInput[]
+  deleteMany?: Prisma.DialogueScalarWhereInput | Prisma.DialogueScalarWhereInput[]
 }
 
-export type dialogueUncheckedUpdateManyWithoutCharacterNestedInput = {
-  create?: Prisma.XOR<Prisma.dialogueCreateWithoutCharacterInput, Prisma.dialogueUncheckedCreateWithoutCharacterInput> | Prisma.dialogueCreateWithoutCharacterInput[] | Prisma.dialogueUncheckedCreateWithoutCharacterInput[]
-  connectOrCreate?: Prisma.dialogueCreateOrConnectWithoutCharacterInput | Prisma.dialogueCreateOrConnectWithoutCharacterInput[]
-  upsert?: Prisma.dialogueUpsertWithWhereUniqueWithoutCharacterInput | Prisma.dialogueUpsertWithWhereUniqueWithoutCharacterInput[]
-  createMany?: Prisma.dialogueCreateManyCharacterInputEnvelope
-  set?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  disconnect?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  delete?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  connect?: Prisma.dialogueWhereUniqueInput | Prisma.dialogueWhereUniqueInput[]
-  update?: Prisma.dialogueUpdateWithWhereUniqueWithoutCharacterInput | Prisma.dialogueUpdateWithWhereUniqueWithoutCharacterInput[]
-  updateMany?: Prisma.dialogueUpdateManyWithWhereWithoutCharacterInput | Prisma.dialogueUpdateManyWithWhereWithoutCharacterInput[]
-  deleteMany?: Prisma.dialogueScalarWhereInput | Prisma.dialogueScalarWhereInput[]
+export type DialogueUncheckedUpdateManyWithoutCharacterNestedInput = {
+  create?: Prisma.XOR<Prisma.DialogueCreateWithoutCharacterInput, Prisma.DialogueUncheckedCreateWithoutCharacterInput> | Prisma.DialogueCreateWithoutCharacterInput[] | Prisma.DialogueUncheckedCreateWithoutCharacterInput[]
+  connectOrCreate?: Prisma.DialogueCreateOrConnectWithoutCharacterInput | Prisma.DialogueCreateOrConnectWithoutCharacterInput[]
+  upsert?: Prisma.DialogueUpsertWithWhereUniqueWithoutCharacterInput | Prisma.DialogueUpsertWithWhereUniqueWithoutCharacterInput[]
+  createMany?: Prisma.DialogueCreateManyCharacterInputEnvelope
+  set?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  disconnect?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  delete?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  connect?: Prisma.DialogueWhereUniqueInput | Prisma.DialogueWhereUniqueInput[]
+  update?: Prisma.DialogueUpdateWithWhereUniqueWithoutCharacterInput | Prisma.DialogueUpdateWithWhereUniqueWithoutCharacterInput[]
+  updateMany?: Prisma.DialogueUpdateManyWithWhereWithoutCharacterInput | Prisma.DialogueUpdateManyWithWhereWithoutCharacterInput[]
+  deleteMany?: Prisma.DialogueScalarWhereInput | Prisma.DialogueScalarWhereInput[]
 }
 
-export type dialogueCreateNestedOneWithoutBookmarksInput = {
-  create?: Prisma.XOR<Prisma.dialogueCreateWithoutBookmarksInput, Prisma.dialogueUncheckedCreateWithoutBookmarksInput>
-  connectOrCreate?: Prisma.dialogueCreateOrConnectWithoutBookmarksInput
-  connect?: Prisma.dialogueWhereUniqueInput
+export type DialogueCreateNestedOneWithoutBookmarksInput = {
+  create?: Prisma.XOR<Prisma.DialogueCreateWithoutBookmarksInput, Prisma.DialogueUncheckedCreateWithoutBookmarksInput>
+  connectOrCreate?: Prisma.DialogueCreateOrConnectWithoutBookmarksInput
+  connect?: Prisma.DialogueWhereUniqueInput
 }
 
-export type dialogueUpdateOneRequiredWithoutBookmarksNestedInput = {
-  create?: Prisma.XOR<Prisma.dialogueCreateWithoutBookmarksInput, Prisma.dialogueUncheckedCreateWithoutBookmarksInput>
-  connectOrCreate?: Prisma.dialogueCreateOrConnectWithoutBookmarksInput
-  upsert?: Prisma.dialogueUpsertWithoutBookmarksInput
-  connect?: Prisma.dialogueWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.dialogueUpdateToOneWithWhereWithoutBookmarksInput, Prisma.dialogueUpdateWithoutBookmarksInput>, Prisma.dialogueUncheckedUpdateWithoutBookmarksInput>
+export type DialogueUpdateOneRequiredWithoutBookmarksNestedInput = {
+  create?: Prisma.XOR<Prisma.DialogueCreateWithoutBookmarksInput, Prisma.DialogueUncheckedCreateWithoutBookmarksInput>
+  connectOrCreate?: Prisma.DialogueCreateOrConnectWithoutBookmarksInput
+  upsert?: Prisma.DialogueUpsertWithoutBookmarksInput
+  connect?: Prisma.DialogueWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DialogueUpdateToOneWithWhereWithoutBookmarksInput, Prisma.DialogueUpdateWithoutBookmarksInput>, Prisma.DialogueUncheckedUpdateWithoutBookmarksInput>
 }
 
-export type dialogueCreateWithoutSceneInput = {
+export type DialogueCreateNestedOneWithoutPlayEpisodeSlotsInput = {
+  create?: Prisma.XOR<Prisma.DialogueCreateWithoutPlayEpisodeSlotsInput, Prisma.DialogueUncheckedCreateWithoutPlayEpisodeSlotsInput>
+  connectOrCreate?: Prisma.DialogueCreateOrConnectWithoutPlayEpisodeSlotsInput
+  connect?: Prisma.DialogueWhereUniqueInput
+}
+
+export type DialogueUpdateOneRequiredWithoutPlayEpisodeSlotsNestedInput = {
+  create?: Prisma.XOR<Prisma.DialogueCreateWithoutPlayEpisodeSlotsInput, Prisma.DialogueUncheckedCreateWithoutPlayEpisodeSlotsInput>
+  connectOrCreate?: Prisma.DialogueCreateOrConnectWithoutPlayEpisodeSlotsInput
+  upsert?: Prisma.DialogueUpsertWithoutPlayEpisodeSlotsInput
+  connect?: Prisma.DialogueWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DialogueUpdateToOneWithWhereWithoutPlayEpisodeSlotsInput, Prisma.DialogueUpdateWithoutPlayEpisodeSlotsInput>, Prisma.DialogueUncheckedUpdateWithoutPlayEpisodeSlotsInput>
+}
+
+export type DialogueCreateWithoutSceneInput = {
   order: number
-  type?: string
+  type?: $Enums.DialogueType
   characterName?: string | null
   englishText: string
   koreanText: string
   charImageLabel?: string | null
   imageUrl?: string | null
   audioUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   character?: Prisma.CharacterCreateNestedOneWithoutDialoguesInput
   bookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutDialogueInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotCreateNestedManyWithoutDialogueInput
 }
 
-export type dialogueUncheckedCreateWithoutSceneInput = {
+export type DialogueUncheckedCreateWithoutSceneInput = {
   id?: number
   order: number
-  type?: string
+  type?: $Enums.DialogueType
   characterName?: string | null
   characterId?: number | null
   englishText: string
@@ -704,133 +739,296 @@ export type dialogueUncheckedCreateWithoutSceneInput = {
   charImageLabel?: string | null
   imageUrl?: string | null
   audioUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  bookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutDialogueInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedCreateNestedManyWithoutDialogueInput
+}
+
+export type DialogueCreateOrConnectWithoutSceneInput = {
+  where: Prisma.DialogueWhereUniqueInput
+  create: Prisma.XOR<Prisma.DialogueCreateWithoutSceneInput, Prisma.DialogueUncheckedCreateWithoutSceneInput>
+}
+
+export type DialogueCreateManySceneInputEnvelope = {
+  data: Prisma.DialogueCreateManySceneInput | Prisma.DialogueCreateManySceneInput[]
+  skipDuplicates?: boolean
+}
+
+export type DialogueUpsertWithWhereUniqueWithoutSceneInput = {
+  where: Prisma.DialogueWhereUniqueInput
+  update: Prisma.XOR<Prisma.DialogueUpdateWithoutSceneInput, Prisma.DialogueUncheckedUpdateWithoutSceneInput>
+  create: Prisma.XOR<Prisma.DialogueCreateWithoutSceneInput, Prisma.DialogueUncheckedCreateWithoutSceneInput>
+}
+
+export type DialogueUpdateWithWhereUniqueWithoutSceneInput = {
+  where: Prisma.DialogueWhereUniqueInput
+  data: Prisma.XOR<Prisma.DialogueUpdateWithoutSceneInput, Prisma.DialogueUncheckedUpdateWithoutSceneInput>
+}
+
+export type DialogueUpdateManyWithWhereWithoutSceneInput = {
+  where: Prisma.DialogueScalarWhereInput
+  data: Prisma.XOR<Prisma.DialogueUpdateManyMutationInput, Prisma.DialogueUncheckedUpdateManyWithoutSceneInput>
+}
+
+export type DialogueScalarWhereInput = {
+  AND?: Prisma.DialogueScalarWhereInput | Prisma.DialogueScalarWhereInput[]
+  OR?: Prisma.DialogueScalarWhereInput[]
+  NOT?: Prisma.DialogueScalarWhereInput | Prisma.DialogueScalarWhereInput[]
+  id?: Prisma.IntFilter<"Dialogue"> | number
+  sceneId?: Prisma.IntFilter<"Dialogue"> | number
+  order?: Prisma.IntFilter<"Dialogue"> | number
+  type?: Prisma.EnumDialogueTypeFilter<"Dialogue"> | $Enums.DialogueType
+  characterName?: Prisma.StringNullableFilter<"Dialogue"> | string | null
+  characterId?: Prisma.IntNullableFilter<"Dialogue"> | number | null
+  englishText?: Prisma.StringFilter<"Dialogue"> | string
+  koreanText?: Prisma.StringFilter<"Dialogue"> | string
+  charImageLabel?: Prisma.StringNullableFilter<"Dialogue"> | string | null
+  imageUrl?: Prisma.StringNullableFilter<"Dialogue"> | string | null
+  audioUrl?: Prisma.StringNullableFilter<"Dialogue"> | string | null
+  data?: Prisma.JsonNullableFilter<"Dialogue">
+  createdAt?: Prisma.DateTimeFilter<"Dialogue"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Dialogue"> | Date | string
+}
+
+export type DialogueCreateWithoutCharacterInput = {
+  order: number
+  type?: $Enums.DialogueType
+  characterName?: string | null
+  englishText: string
+  koreanText: string
+  charImageLabel?: string | null
+  imageUrl?: string | null
+  audioUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  scene: Prisma.SceneCreateNestedOneWithoutDialoguesInput
+  bookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutDialogueInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotCreateNestedManyWithoutDialogueInput
+}
+
+export type DialogueUncheckedCreateWithoutCharacterInput = {
+  id?: number
+  sceneId: number
+  order: number
+  type?: $Enums.DialogueType
+  characterName?: string | null
+  englishText: string
+  koreanText: string
+  charImageLabel?: string | null
+  imageUrl?: string | null
+  audioUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  bookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutDialogueInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedCreateNestedManyWithoutDialogueInput
+}
+
+export type DialogueCreateOrConnectWithoutCharacterInput = {
+  where: Prisma.DialogueWhereUniqueInput
+  create: Prisma.XOR<Prisma.DialogueCreateWithoutCharacterInput, Prisma.DialogueUncheckedCreateWithoutCharacterInput>
+}
+
+export type DialogueCreateManyCharacterInputEnvelope = {
+  data: Prisma.DialogueCreateManyCharacterInput | Prisma.DialogueCreateManyCharacterInput[]
+  skipDuplicates?: boolean
+}
+
+export type DialogueUpsertWithWhereUniqueWithoutCharacterInput = {
+  where: Prisma.DialogueWhereUniqueInput
+  update: Prisma.XOR<Prisma.DialogueUpdateWithoutCharacterInput, Prisma.DialogueUncheckedUpdateWithoutCharacterInput>
+  create: Prisma.XOR<Prisma.DialogueCreateWithoutCharacterInput, Prisma.DialogueUncheckedCreateWithoutCharacterInput>
+}
+
+export type DialogueUpdateWithWhereUniqueWithoutCharacterInput = {
+  where: Prisma.DialogueWhereUniqueInput
+  data: Prisma.XOR<Prisma.DialogueUpdateWithoutCharacterInput, Prisma.DialogueUncheckedUpdateWithoutCharacterInput>
+}
+
+export type DialogueUpdateManyWithWhereWithoutCharacterInput = {
+  where: Prisma.DialogueScalarWhereInput
+  data: Prisma.XOR<Prisma.DialogueUpdateManyMutationInput, Prisma.DialogueUncheckedUpdateManyWithoutCharacterInput>
+}
+
+export type DialogueCreateWithoutBookmarksInput = {
+  order: number
+  type?: $Enums.DialogueType
+  characterName?: string | null
+  englishText: string
+  koreanText: string
+  charImageLabel?: string | null
+  imageUrl?: string | null
+  audioUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  scene: Prisma.SceneCreateNestedOneWithoutDialoguesInput
+  character?: Prisma.CharacterCreateNestedOneWithoutDialoguesInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotCreateNestedManyWithoutDialogueInput
+}
+
+export type DialogueUncheckedCreateWithoutBookmarksInput = {
+  id?: number
+  sceneId: number
+  order: number
+  type?: $Enums.DialogueType
+  characterName?: string | null
+  characterId?: number | null
+  englishText: string
+  koreanText: string
+  charImageLabel?: string | null
+  imageUrl?: string | null
+  audioUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedCreateNestedManyWithoutDialogueInput
+}
+
+export type DialogueCreateOrConnectWithoutBookmarksInput = {
+  where: Prisma.DialogueWhereUniqueInput
+  create: Prisma.XOR<Prisma.DialogueCreateWithoutBookmarksInput, Prisma.DialogueUncheckedCreateWithoutBookmarksInput>
+}
+
+export type DialogueUpsertWithoutBookmarksInput = {
+  update: Prisma.XOR<Prisma.DialogueUpdateWithoutBookmarksInput, Prisma.DialogueUncheckedUpdateWithoutBookmarksInput>
+  create: Prisma.XOR<Prisma.DialogueCreateWithoutBookmarksInput, Prisma.DialogueUncheckedCreateWithoutBookmarksInput>
+  where?: Prisma.DialogueWhereInput
+}
+
+export type DialogueUpdateToOneWithWhereWithoutBookmarksInput = {
+  where?: Prisma.DialogueWhereInput
+  data: Prisma.XOR<Prisma.DialogueUpdateWithoutBookmarksInput, Prisma.DialogueUncheckedUpdateWithoutBookmarksInput>
+}
+
+export type DialogueUpdateWithoutBookmarksInput = {
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
+  characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  englishText?: Prisma.StringFieldUpdateOperationsInput | string
+  koreanText?: Prisma.StringFieldUpdateOperationsInput | string
+  charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  scene?: Prisma.SceneUpdateOneRequiredWithoutDialoguesNestedInput
+  character?: Prisma.CharacterUpdateOneWithoutDialoguesNestedInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotUpdateManyWithoutDialogueNestedInput
+}
+
+export type DialogueUncheckedUpdateWithoutBookmarksInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  sceneId?: Prisma.IntFieldUpdateOperationsInput | number
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
+  characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  englishText?: Prisma.StringFieldUpdateOperationsInput | string
+  koreanText?: Prisma.StringFieldUpdateOperationsInput | string
+  charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedUpdateManyWithoutDialogueNestedInput
+}
+
+export type DialogueCreateWithoutPlayEpisodeSlotsInput = {
+  order: number
+  type?: $Enums.DialogueType
+  characterName?: string | null
+  englishText: string
+  koreanText: string
+  charImageLabel?: string | null
+  imageUrl?: string | null
+  audioUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  scene: Prisma.SceneCreateNestedOneWithoutDialoguesInput
+  character?: Prisma.CharacterCreateNestedOneWithoutDialoguesInput
+  bookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutDialogueInput
+}
+
+export type DialogueUncheckedCreateWithoutPlayEpisodeSlotsInput = {
+  id?: number
+  sceneId: number
+  order: number
+  type?: $Enums.DialogueType
+  characterName?: string | null
+  characterId?: number | null
+  englishText: string
+  koreanText: string
+  charImageLabel?: string | null
+  imageUrl?: string | null
+  audioUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   bookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutDialogueInput
 }
 
-export type dialogueCreateOrConnectWithoutSceneInput = {
-  where: Prisma.dialogueWhereUniqueInput
-  create: Prisma.XOR<Prisma.dialogueCreateWithoutSceneInput, Prisma.dialogueUncheckedCreateWithoutSceneInput>
+export type DialogueCreateOrConnectWithoutPlayEpisodeSlotsInput = {
+  where: Prisma.DialogueWhereUniqueInput
+  create: Prisma.XOR<Prisma.DialogueCreateWithoutPlayEpisodeSlotsInput, Prisma.DialogueUncheckedCreateWithoutPlayEpisodeSlotsInput>
 }
 
-export type dialogueCreateManySceneInputEnvelope = {
-  data: Prisma.dialogueCreateManySceneInput | Prisma.dialogueCreateManySceneInput[]
-  skipDuplicates?: boolean
+export type DialogueUpsertWithoutPlayEpisodeSlotsInput = {
+  update: Prisma.XOR<Prisma.DialogueUpdateWithoutPlayEpisodeSlotsInput, Prisma.DialogueUncheckedUpdateWithoutPlayEpisodeSlotsInput>
+  create: Prisma.XOR<Prisma.DialogueCreateWithoutPlayEpisodeSlotsInput, Prisma.DialogueUncheckedCreateWithoutPlayEpisodeSlotsInput>
+  where?: Prisma.DialogueWhereInput
 }
 
-export type dialogueUpsertWithWhereUniqueWithoutSceneInput = {
-  where: Prisma.dialogueWhereUniqueInput
-  update: Prisma.XOR<Prisma.dialogueUpdateWithoutSceneInput, Prisma.dialogueUncheckedUpdateWithoutSceneInput>
-  create: Prisma.XOR<Prisma.dialogueCreateWithoutSceneInput, Prisma.dialogueUncheckedCreateWithoutSceneInput>
+export type DialogueUpdateToOneWithWhereWithoutPlayEpisodeSlotsInput = {
+  where?: Prisma.DialogueWhereInput
+  data: Prisma.XOR<Prisma.DialogueUpdateWithoutPlayEpisodeSlotsInput, Prisma.DialogueUncheckedUpdateWithoutPlayEpisodeSlotsInput>
 }
 
-export type dialogueUpdateWithWhereUniqueWithoutSceneInput = {
-  where: Prisma.dialogueWhereUniqueInput
-  data: Prisma.XOR<Prisma.dialogueUpdateWithoutSceneInput, Prisma.dialogueUncheckedUpdateWithoutSceneInput>
+export type DialogueUpdateWithoutPlayEpisodeSlotsInput = {
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
+  characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  englishText?: Prisma.StringFieldUpdateOperationsInput | string
+  koreanText?: Prisma.StringFieldUpdateOperationsInput | string
+  charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  scene?: Prisma.SceneUpdateOneRequiredWithoutDialoguesNestedInput
+  character?: Prisma.CharacterUpdateOneWithoutDialoguesNestedInput
+  bookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutDialogueNestedInput
 }
 
-export type dialogueUpdateManyWithWhereWithoutSceneInput = {
-  where: Prisma.dialogueScalarWhereInput
-  data: Prisma.XOR<Prisma.dialogueUpdateManyMutationInput, Prisma.dialogueUncheckedUpdateManyWithoutSceneInput>
+export type DialogueUncheckedUpdateWithoutPlayEpisodeSlotsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  sceneId?: Prisma.IntFieldUpdateOperationsInput | number
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
+  characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  englishText?: Prisma.StringFieldUpdateOperationsInput | string
+  koreanText?: Prisma.StringFieldUpdateOperationsInput | string
+  charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutDialogueNestedInput
 }
 
-export type dialogueScalarWhereInput = {
-  AND?: Prisma.dialogueScalarWhereInput | Prisma.dialogueScalarWhereInput[]
-  OR?: Prisma.dialogueScalarWhereInput[]
-  NOT?: Prisma.dialogueScalarWhereInput | Prisma.dialogueScalarWhereInput[]
-  id?: Prisma.IntFilter<"dialogue"> | number
-  sceneId?: Prisma.IntFilter<"dialogue"> | number
-  order?: Prisma.IntFilter<"dialogue"> | number
-  type?: Prisma.StringFilter<"dialogue"> | string
-  characterName?: Prisma.StringNullableFilter<"dialogue"> | string | null
-  characterId?: Prisma.IntNullableFilter<"dialogue"> | number | null
-  englishText?: Prisma.StringFilter<"dialogue"> | string
-  koreanText?: Prisma.StringFilter<"dialogue"> | string
-  charImageLabel?: Prisma.StringNullableFilter<"dialogue"> | string | null
-  imageUrl?: Prisma.StringNullableFilter<"dialogue"> | string | null
-  audioUrl?: Prisma.StringNullableFilter<"dialogue"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"dialogue"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"dialogue"> | Date | string
-}
-
-export type dialogueCreateWithoutCharacterInput = {
-  order: number
-  type?: string
-  characterName?: string | null
-  englishText: string
-  koreanText: string
-  charImageLabel?: string | null
-  imageUrl?: string | null
-  audioUrl?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  scene: Prisma.SceneCreateNestedOneWithoutDialoguesInput
-  bookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutDialogueInput
-}
-
-export type dialogueUncheckedCreateWithoutCharacterInput = {
+export type DialogueCreateManySceneInput = {
   id?: number
-  sceneId: number
   order: number
-  type?: string
-  characterName?: string | null
-  englishText: string
-  koreanText: string
-  charImageLabel?: string | null
-  imageUrl?: string | null
-  audioUrl?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  bookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutDialogueInput
-}
-
-export type dialogueCreateOrConnectWithoutCharacterInput = {
-  where: Prisma.dialogueWhereUniqueInput
-  create: Prisma.XOR<Prisma.dialogueCreateWithoutCharacterInput, Prisma.dialogueUncheckedCreateWithoutCharacterInput>
-}
-
-export type dialogueCreateManyCharacterInputEnvelope = {
-  data: Prisma.dialogueCreateManyCharacterInput | Prisma.dialogueCreateManyCharacterInput[]
-  skipDuplicates?: boolean
-}
-
-export type dialogueUpsertWithWhereUniqueWithoutCharacterInput = {
-  where: Prisma.dialogueWhereUniqueInput
-  update: Prisma.XOR<Prisma.dialogueUpdateWithoutCharacterInput, Prisma.dialogueUncheckedUpdateWithoutCharacterInput>
-  create: Prisma.XOR<Prisma.dialogueCreateWithoutCharacterInput, Prisma.dialogueUncheckedCreateWithoutCharacterInput>
-}
-
-export type dialogueUpdateWithWhereUniqueWithoutCharacterInput = {
-  where: Prisma.dialogueWhereUniqueInput
-  data: Prisma.XOR<Prisma.dialogueUpdateWithoutCharacterInput, Prisma.dialogueUncheckedUpdateWithoutCharacterInput>
-}
-
-export type dialogueUpdateManyWithWhereWithoutCharacterInput = {
-  where: Prisma.dialogueScalarWhereInput
-  data: Prisma.XOR<Prisma.dialogueUpdateManyMutationInput, Prisma.dialogueUncheckedUpdateManyWithoutCharacterInput>
-}
-
-export type dialogueCreateWithoutBookmarksInput = {
-  order: number
-  type?: string
-  characterName?: string | null
-  englishText: string
-  koreanText: string
-  charImageLabel?: string | null
-  imageUrl?: string | null
-  audioUrl?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  scene: Prisma.SceneCreateNestedOneWithoutDialoguesInput
-  character?: Prisma.CharacterCreateNestedOneWithoutDialoguesInput
-}
-
-export type dialogueUncheckedCreateWithoutBookmarksInput = {
-  id?: number
-  sceneId: number
-  order: number
-  type?: string
+  type?: $Enums.DialogueType
   characterName?: string | null
   characterId?: number | null
   englishText: string
@@ -838,91 +1036,32 @@ export type dialogueUncheckedCreateWithoutBookmarksInput = {
   charImageLabel?: string | null
   imageUrl?: string | null
   audioUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type dialogueCreateOrConnectWithoutBookmarksInput = {
-  where: Prisma.dialogueWhereUniqueInput
-  create: Prisma.XOR<Prisma.dialogueCreateWithoutBookmarksInput, Prisma.dialogueUncheckedCreateWithoutBookmarksInput>
-}
-
-export type dialogueUpsertWithoutBookmarksInput = {
-  update: Prisma.XOR<Prisma.dialogueUpdateWithoutBookmarksInput, Prisma.dialogueUncheckedUpdateWithoutBookmarksInput>
-  create: Prisma.XOR<Prisma.dialogueCreateWithoutBookmarksInput, Prisma.dialogueUncheckedCreateWithoutBookmarksInput>
-  where?: Prisma.dialogueWhereInput
-}
-
-export type dialogueUpdateToOneWithWhereWithoutBookmarksInput = {
-  where?: Prisma.dialogueWhereInput
-  data: Prisma.XOR<Prisma.dialogueUpdateWithoutBookmarksInput, Prisma.dialogueUncheckedUpdateWithoutBookmarksInput>
-}
-
-export type dialogueUpdateWithoutBookmarksInput = {
+export type DialogueUpdateWithoutSceneInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   englishText?: Prisma.StringFieldUpdateOperationsInput | string
   koreanText?: Prisma.StringFieldUpdateOperationsInput | string
   charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  scene?: Prisma.SceneUpdateOneRequiredWithoutDialoguesNestedInput
-  character?: Prisma.CharacterUpdateOneWithoutDialoguesNestedInput
-}
-
-export type dialogueUncheckedUpdateWithoutBookmarksInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  sceneId?: Prisma.IntFieldUpdateOperationsInput | number
-  order?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  englishText?: Prisma.StringFieldUpdateOperationsInput | string
-  koreanText?: Prisma.StringFieldUpdateOperationsInput | string
-  charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type dialogueCreateManySceneInput = {
-  id?: number
-  order: number
-  type?: string
-  characterName?: string | null
-  characterId?: number | null
-  englishText: string
-  koreanText: string
-  charImageLabel?: string | null
-  imageUrl?: string | null
-  audioUrl?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type dialogueUpdateWithoutSceneInput = {
-  order?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  englishText?: Prisma.StringFieldUpdateOperationsInput | string
-  koreanText?: Prisma.StringFieldUpdateOperationsInput | string
-  charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   character?: Prisma.CharacterUpdateOneWithoutDialoguesNestedInput
   bookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutDialogueNestedInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotUpdateManyWithoutDialogueNestedInput
 }
 
-export type dialogueUncheckedUpdateWithoutSceneInput = {
+export type DialogueUncheckedUpdateWithoutSceneInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   englishText?: Prisma.StringFieldUpdateOperationsInput | string
@@ -930,15 +1069,17 @@ export type dialogueUncheckedUpdateWithoutSceneInput = {
   charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutDialogueNestedInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedUpdateManyWithoutDialogueNestedInput
 }
 
-export type dialogueUncheckedUpdateManyWithoutSceneInput = {
+export type DialogueUncheckedUpdateManyWithoutSceneInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   englishText?: Prisma.StringFieldUpdateOperationsInput | string
@@ -946,67 +1087,74 @@ export type dialogueUncheckedUpdateManyWithoutSceneInput = {
   charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type dialogueCreateManyCharacterInput = {
+export type DialogueCreateManyCharacterInput = {
   id?: number
   sceneId: number
   order: number
-  type?: string
+  type?: $Enums.DialogueType
   characterName?: string | null
   englishText: string
   koreanText: string
   charImageLabel?: string | null
   imageUrl?: string | null
   audioUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type dialogueUpdateWithoutCharacterInput = {
+export type DialogueUpdateWithoutCharacterInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   englishText?: Prisma.StringFieldUpdateOperationsInput | string
   koreanText?: Prisma.StringFieldUpdateOperationsInput | string
   charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scene?: Prisma.SceneUpdateOneRequiredWithoutDialoguesNestedInput
   bookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutDialogueNestedInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotUpdateManyWithoutDialogueNestedInput
 }
 
-export type dialogueUncheckedUpdateWithoutCharacterInput = {
+export type DialogueUncheckedUpdateWithoutCharacterInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sceneId?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   englishText?: Prisma.StringFieldUpdateOperationsInput | string
   koreanText?: Prisma.StringFieldUpdateOperationsInput | string
   charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutDialogueNestedInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedUpdateManyWithoutDialogueNestedInput
 }
 
-export type dialogueUncheckedUpdateManyWithoutCharacterInput = {
+export type DialogueUncheckedUpdateManyWithoutCharacterInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sceneId?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   englishText?: Prisma.StringFieldUpdateOperationsInput | string
   koreanText?: Prisma.StringFieldUpdateOperationsInput | string
   charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1018,10 +1166,12 @@ export type dialogueUncheckedUpdateManyWithoutCharacterInput = {
 
 export type DialogueCountOutputType = {
   bookmarks: number
+  playEpisodeSlots: number
 }
 
 export type DialogueCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bookmarks?: boolean | DialogueCountOutputTypeCountBookmarksArgs
+  playEpisodeSlots?: boolean | DialogueCountOutputTypeCountPlayEpisodeSlotsArgs
 }
 
 /**
@@ -1041,8 +1191,15 @@ export type DialogueCountOutputTypeCountBookmarksArgs<ExtArgs extends runtime.Ty
   where?: Prisma.dialogueBookmarkWhereInput
 }
 
+/**
+ * DialogueCountOutputType without action
+ */
+export type DialogueCountOutputTypeCountPlayEpisodeSlotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PlayEpisodeSlotWhereInput
+}
 
-export type dialogueSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+
+export type DialogueSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   sceneId?: boolean
   order?: boolean
@@ -1054,15 +1211,17 @@ export type dialogueSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   charImageLabel?: boolean
   imageUrl?: boolean
   audioUrl?: boolean
+  data?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   scene?: boolean | Prisma.SceneDefaultArgs<ExtArgs>
-  character?: boolean | Prisma.dialogue$characterArgs<ExtArgs>
-  bookmarks?: boolean | Prisma.dialogue$bookmarksArgs<ExtArgs>
+  character?: boolean | Prisma.Dialogue$characterArgs<ExtArgs>
+  bookmarks?: boolean | Prisma.Dialogue$bookmarksArgs<ExtArgs>
+  playEpisodeSlots?: boolean | Prisma.Dialogue$playEpisodeSlotsArgs<ExtArgs>
   _count?: boolean | Prisma.DialogueCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dialogue"]>
 
-export type dialogueSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+export type DialogueSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   sceneId?: boolean
   order?: boolean
@@ -1074,13 +1233,14 @@ export type dialogueSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   charImageLabel?: boolean
   imageUrl?: boolean
   audioUrl?: boolean
+  data?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   scene?: boolean | Prisma.SceneDefaultArgs<ExtArgs>
-  character?: boolean | Prisma.dialogue$characterArgs<ExtArgs>
+  character?: boolean | Prisma.Dialogue$characterArgs<ExtArgs>
 }, ExtArgs["result"]["dialogue"]>
 
-export type dialogueSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+export type DialogueSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   sceneId?: boolean
   order?: boolean
@@ -1092,13 +1252,14 @@ export type dialogueSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   charImageLabel?: boolean
   imageUrl?: boolean
   audioUrl?: boolean
+  data?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   scene?: boolean | Prisma.SceneDefaultArgs<ExtArgs>
-  character?: boolean | Prisma.dialogue$characterArgs<ExtArgs>
+  character?: boolean | Prisma.Dialogue$characterArgs<ExtArgs>
 }, ExtArgs["result"]["dialogue"]>
 
-export type dialogueSelectScalar = {
+export type DialogueSelectScalar = {
   id?: boolean
   sceneId?: boolean
   order?: boolean
@@ -1110,38 +1271,41 @@ export type dialogueSelectScalar = {
   charImageLabel?: boolean
   imageUrl?: boolean
   audioUrl?: boolean
+  data?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type dialogueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sceneId" | "order" | "type" | "characterName" | "characterId" | "englishText" | "koreanText" | "charImageLabel" | "imageUrl" | "audioUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["dialogue"]>
-export type dialogueInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sceneId" | "order" | "type" | "characterName" | "characterId" | "englishText" | "koreanText" | "charImageLabel" | "imageUrl" | "audioUrl" | "data" | "createdAt" | "updatedAt", ExtArgs["result"]["dialogue"]>
+export type DialogueInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   scene?: boolean | Prisma.SceneDefaultArgs<ExtArgs>
-  character?: boolean | Prisma.dialogue$characterArgs<ExtArgs>
-  bookmarks?: boolean | Prisma.dialogue$bookmarksArgs<ExtArgs>
+  character?: boolean | Prisma.Dialogue$characterArgs<ExtArgs>
+  bookmarks?: boolean | Prisma.Dialogue$bookmarksArgs<ExtArgs>
+  playEpisodeSlots?: boolean | Prisma.Dialogue$playEpisodeSlotsArgs<ExtArgs>
   _count?: boolean | Prisma.DialogueCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type dialogueIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   scene?: boolean | Prisma.SceneDefaultArgs<ExtArgs>
-  character?: boolean | Prisma.dialogue$characterArgs<ExtArgs>
+  character?: boolean | Prisma.Dialogue$characterArgs<ExtArgs>
 }
-export type dialogueIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   scene?: boolean | Prisma.SceneDefaultArgs<ExtArgs>
-  character?: boolean | Prisma.dialogue$characterArgs<ExtArgs>
+  character?: boolean | Prisma.Dialogue$characterArgs<ExtArgs>
 }
 
-export type $dialoguePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  name: "dialogue"
+export type $DialoguePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  name: "Dialogue"
   objects: {
     scene: Prisma.$ScenePayload<ExtArgs>
     character: Prisma.$CharacterPayload<ExtArgs> | null
     bookmarks: Prisma.$dialogueBookmarkPayload<ExtArgs>[]
+    playEpisodeSlots: Prisma.$PlayEpisodeSlotPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     sceneId: number
     order: number
-    type: string
+    type: $Enums.DialogueType
     characterName: string | null
     characterId: number | null
     englishText: string
@@ -1149,24 +1313,25 @@ export type $dialoguePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     charImageLabel: string | null
     imageUrl: string | null
     audioUrl: string | null
+    data: runtime.JsonValue | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["dialogue"]>
   composites: {}
 }
 
-export type dialogueGetPayload<S extends boolean | null | undefined | dialogueDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$dialoguePayload, S>
+export type DialogueGetPayload<S extends boolean | null | undefined | DialogueDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$DialoguePayload, S>
 
-export type dialogueCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> =
-  Omit<dialogueFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+export type DialogueCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> =
+  Omit<DialogueFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
     select?: DialogueCountAggregateInputType | true
   }
 
-export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['dialogue'], meta: { name: 'dialogue' } }
+export interface DialogueDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Dialogue'], meta: { name: 'Dialogue' } }
   /**
    * Find zero or one Dialogue that matches the filter.
-   * @param {dialogueFindUniqueArgs} args - Arguments to find a Dialogue
+   * @param {DialogueFindUniqueArgs} args - Arguments to find a Dialogue
    * @example
    * // Get one Dialogue
    * const dialogue = await prisma.dialogue.findUnique({
@@ -1175,12 +1340,12 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    *   }
    * })
    */
-  findUnique<T extends dialogueFindUniqueArgs>(args: Prisma.SelectSubset<T, dialogueFindUniqueArgs<ExtArgs>>): Prisma.Prisma__dialogueClient<runtime.Types.Result.GetResult<Prisma.$dialoguePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  findUnique<T extends DialogueFindUniqueArgs>(args: Prisma.SelectSubset<T, DialogueFindUniqueArgs<ExtArgs>>): Prisma.Prisma__DialogueClient<runtime.Types.Result.GetResult<Prisma.$DialoguePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
   /**
    * Find one Dialogue that matches the filter or throw an error with `error.code='P2025'`
    * if no matches were found.
-   * @param {dialogueFindUniqueOrThrowArgs} args - Arguments to find a Dialogue
+   * @param {DialogueFindUniqueOrThrowArgs} args - Arguments to find a Dialogue
    * @example
    * // Get one Dialogue
    * const dialogue = await prisma.dialogue.findUniqueOrThrow({
@@ -1189,13 +1354,13 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    *   }
    * })
    */
-  findUniqueOrThrow<T extends dialogueFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, dialogueFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__dialogueClient<runtime.Types.Result.GetResult<Prisma.$dialoguePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  findUniqueOrThrow<T extends DialogueFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, DialogueFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__DialogueClient<runtime.Types.Result.GetResult<Prisma.$DialoguePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
    * Find the first Dialogue that matches the filter.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {dialogueFindFirstArgs} args - Arguments to find a Dialogue
+   * @param {DialogueFindFirstArgs} args - Arguments to find a Dialogue
    * @example
    * // Get one Dialogue
    * const dialogue = await prisma.dialogue.findFirst({
@@ -1204,14 +1369,14 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    *   }
    * })
    */
-  findFirst<T extends dialogueFindFirstArgs>(args?: Prisma.SelectSubset<T, dialogueFindFirstArgs<ExtArgs>>): Prisma.Prisma__dialogueClient<runtime.Types.Result.GetResult<Prisma.$dialoguePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  findFirst<T extends DialogueFindFirstArgs>(args?: Prisma.SelectSubset<T, DialogueFindFirstArgs<ExtArgs>>): Prisma.Prisma__DialogueClient<runtime.Types.Result.GetResult<Prisma.$DialoguePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
   /**
    * Find the first Dialogue that matches the filter or
    * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {dialogueFindFirstOrThrowArgs} args - Arguments to find a Dialogue
+   * @param {DialogueFindFirstOrThrowArgs} args - Arguments to find a Dialogue
    * @example
    * // Get one Dialogue
    * const dialogue = await prisma.dialogue.findFirstOrThrow({
@@ -1220,13 +1385,13 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    *   }
    * })
    */
-  findFirstOrThrow<T extends dialogueFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, dialogueFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__dialogueClient<runtime.Types.Result.GetResult<Prisma.$dialoguePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  findFirstOrThrow<T extends DialogueFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, DialogueFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__DialogueClient<runtime.Types.Result.GetResult<Prisma.$DialoguePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
    * Find zero or more Dialogues that matches the filter.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {dialogueFindManyArgs} args - Arguments to filter and select certain fields only.
+   * @param {DialogueFindManyArgs} args - Arguments to filter and select certain fields only.
    * @example
    * // Get all Dialogues
    * const dialogues = await prisma.dialogue.findMany()
@@ -1238,11 +1403,11 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * const dialogueWithIdOnly = await prisma.dialogue.findMany({ select: { id: true } })
    * 
    */
-  findMany<T extends dialogueFindManyArgs>(args?: Prisma.SelectSubset<T, dialogueFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$dialoguePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+  findMany<T extends DialogueFindManyArgs>(args?: Prisma.SelectSubset<T, DialogueFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DialoguePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
   /**
    * Create a Dialogue.
-   * @param {dialogueCreateArgs} args - Arguments to create a Dialogue.
+   * @param {DialogueCreateArgs} args - Arguments to create a Dialogue.
    * @example
    * // Create one Dialogue
    * const Dialogue = await prisma.dialogue.create({
@@ -1252,11 +1417,11 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * })
    * 
    */
-  create<T extends dialogueCreateArgs>(args: Prisma.SelectSubset<T, dialogueCreateArgs<ExtArgs>>): Prisma.Prisma__dialogueClient<runtime.Types.Result.GetResult<Prisma.$dialoguePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  create<T extends DialogueCreateArgs>(args: Prisma.SelectSubset<T, DialogueCreateArgs<ExtArgs>>): Prisma.Prisma__DialogueClient<runtime.Types.Result.GetResult<Prisma.$DialoguePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
    * Create many Dialogues.
-   * @param {dialogueCreateManyArgs} args - Arguments to create many Dialogues.
+   * @param {DialogueCreateManyArgs} args - Arguments to create many Dialogues.
    * @example
    * // Create many Dialogues
    * const dialogue = await prisma.dialogue.createMany({
@@ -1266,11 +1431,11 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * })
    *     
    */
-  createMany<T extends dialogueCreateManyArgs>(args?: Prisma.SelectSubset<T, dialogueCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+  createMany<T extends DialogueCreateManyArgs>(args?: Prisma.SelectSubset<T, DialogueCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
    * Create many Dialogues and returns the data saved in the database.
-   * @param {dialogueCreateManyAndReturnArgs} args - Arguments to create many Dialogues.
+   * @param {DialogueCreateManyAndReturnArgs} args - Arguments to create many Dialogues.
    * @example
    * // Create many Dialogues
    * const dialogue = await prisma.dialogue.createManyAndReturn({
@@ -1290,11 +1455,11 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * Read more here: https://pris.ly/d/null-undefined
    * 
    */
-  createManyAndReturn<T extends dialogueCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, dialogueCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$dialoguePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+  createManyAndReturn<T extends DialogueCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, DialogueCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DialoguePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Delete a Dialogue.
-   * @param {dialogueDeleteArgs} args - Arguments to delete one Dialogue.
+   * @param {DialogueDeleteArgs} args - Arguments to delete one Dialogue.
    * @example
    * // Delete one Dialogue
    * const Dialogue = await prisma.dialogue.delete({
@@ -1304,11 +1469,11 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * })
    * 
    */
-  delete<T extends dialogueDeleteArgs>(args: Prisma.SelectSubset<T, dialogueDeleteArgs<ExtArgs>>): Prisma.Prisma__dialogueClient<runtime.Types.Result.GetResult<Prisma.$dialoguePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  delete<T extends DialogueDeleteArgs>(args: Prisma.SelectSubset<T, DialogueDeleteArgs<ExtArgs>>): Prisma.Prisma__DialogueClient<runtime.Types.Result.GetResult<Prisma.$DialoguePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
    * Update one Dialogue.
-   * @param {dialogueUpdateArgs} args - Arguments to update one Dialogue.
+   * @param {DialogueUpdateArgs} args - Arguments to update one Dialogue.
    * @example
    * // Update one Dialogue
    * const dialogue = await prisma.dialogue.update({
@@ -1321,11 +1486,11 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * })
    * 
    */
-  update<T extends dialogueUpdateArgs>(args: Prisma.SelectSubset<T, dialogueUpdateArgs<ExtArgs>>): Prisma.Prisma__dialogueClient<runtime.Types.Result.GetResult<Prisma.$dialoguePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  update<T extends DialogueUpdateArgs>(args: Prisma.SelectSubset<T, DialogueUpdateArgs<ExtArgs>>): Prisma.Prisma__DialogueClient<runtime.Types.Result.GetResult<Prisma.$DialoguePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
    * Delete zero or more Dialogues.
-   * @param {dialogueDeleteManyArgs} args - Arguments to filter Dialogues to delete.
+   * @param {DialogueDeleteManyArgs} args - Arguments to filter Dialogues to delete.
    * @example
    * // Delete a few Dialogues
    * const { count } = await prisma.dialogue.deleteMany({
@@ -1335,13 +1500,13 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * })
    * 
    */
-  deleteMany<T extends dialogueDeleteManyArgs>(args?: Prisma.SelectSubset<T, dialogueDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+  deleteMany<T extends DialogueDeleteManyArgs>(args?: Prisma.SelectSubset<T, DialogueDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
    * Update zero or more Dialogues.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {dialogueUpdateManyArgs} args - Arguments to update one or more rows.
+   * @param {DialogueUpdateManyArgs} args - Arguments to update one or more rows.
    * @example
    * // Update many Dialogues
    * const dialogue = await prisma.dialogue.updateMany({
@@ -1354,11 +1519,11 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * })
    * 
    */
-  updateMany<T extends dialogueUpdateManyArgs>(args: Prisma.SelectSubset<T, dialogueUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+  updateMany<T extends DialogueUpdateManyArgs>(args: Prisma.SelectSubset<T, DialogueUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
    * Update zero or more Dialogues and returns the data updated in the database.
-   * @param {dialogueUpdateManyAndReturnArgs} args - Arguments to update many Dialogues.
+   * @param {DialogueUpdateManyAndReturnArgs} args - Arguments to update many Dialogues.
    * @example
    * // Update many Dialogues
    * const dialogue = await prisma.dialogue.updateManyAndReturn({
@@ -1384,11 +1549,11 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * Read more here: https://pris.ly/d/null-undefined
    * 
    */
-  updateManyAndReturn<T extends dialogueUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, dialogueUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$dialoguePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+  updateManyAndReturn<T extends DialogueUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, DialogueUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DialoguePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Dialogue.
-   * @param {dialogueUpsertArgs} args - Arguments to update or create a Dialogue.
+   * @param {DialogueUpsertArgs} args - Arguments to update or create a Dialogue.
    * @example
    * // Update or create a Dialogue
    * const dialogue = await prisma.dialogue.upsert({
@@ -1403,14 +1568,14 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    *   }
    * })
    */
-  upsert<T extends dialogueUpsertArgs>(args: Prisma.SelectSubset<T, dialogueUpsertArgs<ExtArgs>>): Prisma.Prisma__dialogueClient<runtime.Types.Result.GetResult<Prisma.$dialoguePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  upsert<T extends DialogueUpsertArgs>(args: Prisma.SelectSubset<T, DialogueUpsertArgs<ExtArgs>>): Prisma.Prisma__DialogueClient<runtime.Types.Result.GetResult<Prisma.$DialoguePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
   /**
    * Count the number of Dialogues.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {dialogueCountArgs} args - Arguments to filter Dialogues to count.
+   * @param {DialogueCountArgs} args - Arguments to filter Dialogues to count.
    * @example
    * // Count the number of Dialogues
    * const count = await prisma.dialogue.count({
@@ -1419,8 +1584,8 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    *   }
    * })
   **/
-  count<T extends dialogueCountArgs>(
-    args?: Prisma.Subset<T, dialogueCountArgs>,
+  count<T extends DialogueCountArgs>(
+    args?: Prisma.Subset<T, DialogueCountArgs>,
   ): Prisma.PrismaPromise<
     T extends runtime.Types.Utils.Record<'select', any>
       ? T['select'] extends true
@@ -1459,7 +1624,7 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * Group by Dialogue.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {dialogueGroupByArgs} args - Group by arguments.
+   * @param {DialogueGroupByArgs} args - Group by arguments.
    * @example
    * // Group by city, order by createdAt, get count
    * const result = await prisma.user.groupBy({
@@ -1474,14 +1639,14 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * 
   **/
   groupBy<
-    T extends dialogueGroupByArgs,
+    T extends DialogueGroupByArgs,
     HasSelectOrTake extends Prisma.Or<
       Prisma.Extends<'skip', Prisma.Keys<T>>,
       Prisma.Extends<'take', Prisma.Keys<T>>
     >,
     OrderByArg extends Prisma.True extends HasSelectOrTake
-      ? { orderBy: dialogueGroupByArgs['orderBy'] }
-      : { orderBy?: dialogueGroupByArgs['orderBy'] },
+      ? { orderBy: DialogueGroupByArgs['orderBy'] }
+      : { orderBy?: DialogueGroupByArgs['orderBy'] },
     OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>,
     ByFields extends Prisma.MaybeTupleToUnion<T['by']>,
     ByValid extends Prisma.Has<ByFields, OrderFields>,
@@ -1530,24 +1695,25 @@ export interface dialogueDelegate<ExtArgs extends runtime.Types.Extensions.Inter
           ? never
           : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
       }[OrderFields]
-  >(args: Prisma.SubsetIntersection<T, dialogueGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDialogueGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  >(args: Prisma.SubsetIntersection<T, DialogueGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDialogueGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 /**
- * Fields of the dialogue model
+ * Fields of the Dialogue model
  */
-readonly fields: dialogueFieldRefs;
+readonly fields: DialogueFieldRefs;
 }
 
 /**
- * The delegate class that acts as a "Promise-like" for dialogue.
+ * The delegate class that acts as a "Promise-like" for Dialogue.
  * Why is this prefixed with `Prisma__`?
  * Because we want to prevent naming conflicts as mentioned in
  * https://github.com/prisma/prisma-client-js/issues/707
  */
-export interface Prisma__dialogueClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+export interface Prisma__DialogueClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   scene<T extends Prisma.SceneDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SceneDefaultArgs<ExtArgs>>): Prisma.Prisma__SceneClient<runtime.Types.Result.GetResult<Prisma.$ScenePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  character<T extends Prisma.dialogue$characterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.dialogue$characterArgs<ExtArgs>>): Prisma.Prisma__CharacterClient<runtime.Types.Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  bookmarks<T extends Prisma.dialogue$bookmarksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.dialogue$bookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$dialogueBookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  character<T extends Prisma.Dialogue$characterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Dialogue$characterArgs<ExtArgs>>): Prisma.Prisma__CharacterClient<runtime.Types.Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  bookmarks<T extends Prisma.Dialogue$bookmarksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Dialogue$bookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$dialogueBookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  playEpisodeSlots<T extends Prisma.Dialogue$playEpisodeSlotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Dialogue$playEpisodeSlotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlayEpisodeSlotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1574,421 +1740,422 @@ export interface Prisma__dialogueClient<T, Null = never, ExtArgs extends runtime
 
 
 /**
- * Fields of the dialogue model
+ * Fields of the Dialogue model
  */
-export interface dialogueFieldRefs {
-  readonly id: Prisma.FieldRef<"dialogue", 'Int'>
-  readonly sceneId: Prisma.FieldRef<"dialogue", 'Int'>
-  readonly order: Prisma.FieldRef<"dialogue", 'Int'>
-  readonly type: Prisma.FieldRef<"dialogue", 'String'>
-  readonly characterName: Prisma.FieldRef<"dialogue", 'String'>
-  readonly characterId: Prisma.FieldRef<"dialogue", 'Int'>
-  readonly englishText: Prisma.FieldRef<"dialogue", 'String'>
-  readonly koreanText: Prisma.FieldRef<"dialogue", 'String'>
-  readonly charImageLabel: Prisma.FieldRef<"dialogue", 'String'>
-  readonly imageUrl: Prisma.FieldRef<"dialogue", 'String'>
-  readonly audioUrl: Prisma.FieldRef<"dialogue", 'String'>
-  readonly createdAt: Prisma.FieldRef<"dialogue", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"dialogue", 'DateTime'>
+export interface DialogueFieldRefs {
+  readonly id: Prisma.FieldRef<"Dialogue", 'Int'>
+  readonly sceneId: Prisma.FieldRef<"Dialogue", 'Int'>
+  readonly order: Prisma.FieldRef<"Dialogue", 'Int'>
+  readonly type: Prisma.FieldRef<"Dialogue", 'DialogueType'>
+  readonly characterName: Prisma.FieldRef<"Dialogue", 'String'>
+  readonly characterId: Prisma.FieldRef<"Dialogue", 'Int'>
+  readonly englishText: Prisma.FieldRef<"Dialogue", 'String'>
+  readonly koreanText: Prisma.FieldRef<"Dialogue", 'String'>
+  readonly charImageLabel: Prisma.FieldRef<"Dialogue", 'String'>
+  readonly imageUrl: Prisma.FieldRef<"Dialogue", 'String'>
+  readonly audioUrl: Prisma.FieldRef<"Dialogue", 'String'>
+  readonly data: Prisma.FieldRef<"Dialogue", 'Json'>
+  readonly createdAt: Prisma.FieldRef<"Dialogue", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Dialogue", 'DateTime'>
 }
     
 
 // Custom InputTypes
 /**
- * dialogue findUnique
+ * Dialogue findUnique
  */
-export type dialogueFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the dialogue
+   * Select specific fields to fetch from the Dialogue
    */
-  select?: Prisma.dialogueSelect<ExtArgs> | null
+  select?: Prisma.DialogueSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the dialogue
+   * Omit specific fields from the Dialogue
    */
-  omit?: Prisma.dialogueOmit<ExtArgs> | null
+  omit?: Prisma.DialogueOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.dialogueInclude<ExtArgs> | null
+  include?: Prisma.DialogueInclude<ExtArgs> | null
   /**
-   * Filter, which dialogue to fetch.
+   * Filter, which Dialogue to fetch.
    */
-  where: Prisma.dialogueWhereUniqueInput
+  where: Prisma.DialogueWhereUniqueInput
 }
 
 /**
- * dialogue findUniqueOrThrow
+ * Dialogue findUniqueOrThrow
  */
-export type dialogueFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the dialogue
+   * Select specific fields to fetch from the Dialogue
    */
-  select?: Prisma.dialogueSelect<ExtArgs> | null
+  select?: Prisma.DialogueSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the dialogue
+   * Omit specific fields from the Dialogue
    */
-  omit?: Prisma.dialogueOmit<ExtArgs> | null
+  omit?: Prisma.DialogueOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.dialogueInclude<ExtArgs> | null
+  include?: Prisma.DialogueInclude<ExtArgs> | null
   /**
-   * Filter, which dialogue to fetch.
+   * Filter, which Dialogue to fetch.
    */
-  where: Prisma.dialogueWhereUniqueInput
+  where: Prisma.DialogueWhereUniqueInput
 }
 
 /**
- * dialogue findFirst
+ * Dialogue findFirst
  */
-export type dialogueFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the dialogue
+   * Select specific fields to fetch from the Dialogue
    */
-  select?: Prisma.dialogueSelect<ExtArgs> | null
+  select?: Prisma.DialogueSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the dialogue
+   * Omit specific fields from the Dialogue
    */
-  omit?: Prisma.dialogueOmit<ExtArgs> | null
+  omit?: Prisma.DialogueOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.dialogueInclude<ExtArgs> | null
+  include?: Prisma.DialogueInclude<ExtArgs> | null
   /**
-   * Filter, which dialogue to fetch.
+   * Filter, which Dialogue to fetch.
    */
-  where?: Prisma.dialogueWhereInput
+  where?: Prisma.DialogueWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of dialogues to fetch.
+   * Determine the order of Dialogues to fetch.
    */
-  orderBy?: Prisma.dialogueOrderByWithRelationInput | Prisma.dialogueOrderByWithRelationInput[]
+  orderBy?: Prisma.DialogueOrderByWithRelationInput | Prisma.DialogueOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
-   * Sets the position for searching for dialogues.
+   * Sets the position for searching for Dialogues.
    */
-  cursor?: Prisma.dialogueWhereUniqueInput
+  cursor?: Prisma.DialogueWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` dialogues from the position of the cursor.
+   * Take `±n` Dialogues from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` dialogues.
+   * Skip the first `n` Dialogues.
    */
   skip?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
    * 
-   * Filter by unique combinations of dialogues.
+   * Filter by unique combinations of Dialogues.
    */
   distinct?: Prisma.DialogueScalarFieldEnum | Prisma.DialogueScalarFieldEnum[]
 }
 
 /**
- * dialogue findFirstOrThrow
+ * Dialogue findFirstOrThrow
  */
-export type dialogueFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the dialogue
+   * Select specific fields to fetch from the Dialogue
    */
-  select?: Prisma.dialogueSelect<ExtArgs> | null
+  select?: Prisma.DialogueSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the dialogue
+   * Omit specific fields from the Dialogue
    */
-  omit?: Prisma.dialogueOmit<ExtArgs> | null
+  omit?: Prisma.DialogueOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.dialogueInclude<ExtArgs> | null
+  include?: Prisma.DialogueInclude<ExtArgs> | null
   /**
-   * Filter, which dialogue to fetch.
+   * Filter, which Dialogue to fetch.
    */
-  where?: Prisma.dialogueWhereInput
+  where?: Prisma.DialogueWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of dialogues to fetch.
+   * Determine the order of Dialogues to fetch.
    */
-  orderBy?: Prisma.dialogueOrderByWithRelationInput | Prisma.dialogueOrderByWithRelationInput[]
+  orderBy?: Prisma.DialogueOrderByWithRelationInput | Prisma.DialogueOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
-   * Sets the position for searching for dialogues.
+   * Sets the position for searching for Dialogues.
    */
-  cursor?: Prisma.dialogueWhereUniqueInput
+  cursor?: Prisma.DialogueWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` dialogues from the position of the cursor.
+   * Take `±n` Dialogues from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` dialogues.
+   * Skip the first `n` Dialogues.
    */
   skip?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
    * 
-   * Filter by unique combinations of dialogues.
+   * Filter by unique combinations of Dialogues.
    */
   distinct?: Prisma.DialogueScalarFieldEnum | Prisma.DialogueScalarFieldEnum[]
 }
 
 /**
- * dialogue findMany
+ * Dialogue findMany
  */
-export type dialogueFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the dialogue
+   * Select specific fields to fetch from the Dialogue
    */
-  select?: Prisma.dialogueSelect<ExtArgs> | null
+  select?: Prisma.DialogueSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the dialogue
+   * Omit specific fields from the Dialogue
    */
-  omit?: Prisma.dialogueOmit<ExtArgs> | null
+  omit?: Prisma.DialogueOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.dialogueInclude<ExtArgs> | null
+  include?: Prisma.DialogueInclude<ExtArgs> | null
   /**
-   * Filter, which dialogues to fetch.
+   * Filter, which Dialogues to fetch.
    */
-  where?: Prisma.dialogueWhereInput
+  where?: Prisma.DialogueWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of dialogues to fetch.
+   * Determine the order of Dialogues to fetch.
    */
-  orderBy?: Prisma.dialogueOrderByWithRelationInput | Prisma.dialogueOrderByWithRelationInput[]
+  orderBy?: Prisma.DialogueOrderByWithRelationInput | Prisma.DialogueOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
-   * Sets the position for listing dialogues.
+   * Sets the position for listing Dialogues.
    */
-  cursor?: Prisma.dialogueWhereUniqueInput
+  cursor?: Prisma.DialogueWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` dialogues from the position of the cursor.
+   * Take `±n` Dialogues from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` dialogues.
+   * Skip the first `n` Dialogues.
    */
   skip?: number
   distinct?: Prisma.DialogueScalarFieldEnum | Prisma.DialogueScalarFieldEnum[]
 }
 
 /**
- * dialogue create
+ * Dialogue create
  */
-export type dialogueCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the dialogue
+   * Select specific fields to fetch from the Dialogue
    */
-  select?: Prisma.dialogueSelect<ExtArgs> | null
+  select?: Prisma.DialogueSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the dialogue
+   * Omit specific fields from the Dialogue
    */
-  omit?: Prisma.dialogueOmit<ExtArgs> | null
+  omit?: Prisma.DialogueOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.dialogueInclude<ExtArgs> | null
+  include?: Prisma.DialogueInclude<ExtArgs> | null
   /**
-   * The data needed to create a dialogue.
+   * The data needed to create a Dialogue.
    */
-  data: Prisma.XOR<Prisma.dialogueCreateInput, Prisma.dialogueUncheckedCreateInput>
+  data: Prisma.XOR<Prisma.DialogueCreateInput, Prisma.DialogueUncheckedCreateInput>
 }
 
 /**
- * dialogue createMany
+ * Dialogue createMany
  */
-export type dialogueCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * The data used to create many dialogues.
+   * The data used to create many Dialogues.
    */
-  data: Prisma.dialogueCreateManyInput | Prisma.dialogueCreateManyInput[]
+  data: Prisma.DialogueCreateManyInput | Prisma.DialogueCreateManyInput[]
   skipDuplicates?: boolean
 }
 
 /**
- * dialogue createManyAndReturn
+ * Dialogue createManyAndReturn
  */
-export type dialogueCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the dialogue
+   * Select specific fields to fetch from the Dialogue
    */
-  select?: Prisma.dialogueSelectCreateManyAndReturn<ExtArgs> | null
+  select?: Prisma.DialogueSelectCreateManyAndReturn<ExtArgs> | null
   /**
-   * Omit specific fields from the dialogue
+   * Omit specific fields from the Dialogue
    */
-  omit?: Prisma.dialogueOmit<ExtArgs> | null
+  omit?: Prisma.DialogueOmit<ExtArgs> | null
   /**
-   * The data used to create many dialogues.
+   * The data used to create many Dialogues.
    */
-  data: Prisma.dialogueCreateManyInput | Prisma.dialogueCreateManyInput[]
+  data: Prisma.DialogueCreateManyInput | Prisma.DialogueCreateManyInput[]
   skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.dialogueIncludeCreateManyAndReturn<ExtArgs> | null
+  include?: Prisma.DialogueIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
- * dialogue update
+ * Dialogue update
  */
-export type dialogueUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the dialogue
+   * Select specific fields to fetch from the Dialogue
    */
-  select?: Prisma.dialogueSelect<ExtArgs> | null
+  select?: Prisma.DialogueSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the dialogue
+   * Omit specific fields from the Dialogue
    */
-  omit?: Prisma.dialogueOmit<ExtArgs> | null
+  omit?: Prisma.DialogueOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.dialogueInclude<ExtArgs> | null
+  include?: Prisma.DialogueInclude<ExtArgs> | null
   /**
-   * The data needed to update a dialogue.
+   * The data needed to update a Dialogue.
    */
-  data: Prisma.XOR<Prisma.dialogueUpdateInput, Prisma.dialogueUncheckedUpdateInput>
+  data: Prisma.XOR<Prisma.DialogueUpdateInput, Prisma.DialogueUncheckedUpdateInput>
   /**
-   * Choose, which dialogue to update.
+   * Choose, which Dialogue to update.
    */
-  where: Prisma.dialogueWhereUniqueInput
+  where: Prisma.DialogueWhereUniqueInput
 }
 
 /**
- * dialogue updateMany
+ * Dialogue updateMany
  */
-export type dialogueUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * The data used to update dialogues.
+   * The data used to update Dialogues.
    */
-  data: Prisma.XOR<Prisma.dialogueUpdateManyMutationInput, Prisma.dialogueUncheckedUpdateManyInput>
+  data: Prisma.XOR<Prisma.DialogueUpdateManyMutationInput, Prisma.DialogueUncheckedUpdateManyInput>
   /**
-   * Filter which dialogues to update
+   * Filter which Dialogues to update
    */
-  where?: Prisma.dialogueWhereInput
+  where?: Prisma.DialogueWhereInput
   /**
-   * Limit how many dialogues to update.
+   * Limit how many Dialogues to update.
    */
   limit?: number
 }
 
 /**
- * dialogue updateManyAndReturn
+ * Dialogue updateManyAndReturn
  */
-export type dialogueUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the dialogue
+   * Select specific fields to fetch from the Dialogue
    */
-  select?: Prisma.dialogueSelectUpdateManyAndReturn<ExtArgs> | null
+  select?: Prisma.DialogueSelectUpdateManyAndReturn<ExtArgs> | null
   /**
-   * Omit specific fields from the dialogue
+   * Omit specific fields from the Dialogue
    */
-  omit?: Prisma.dialogueOmit<ExtArgs> | null
+  omit?: Prisma.DialogueOmit<ExtArgs> | null
   /**
-   * The data used to update dialogues.
+   * The data used to update Dialogues.
    */
-  data: Prisma.XOR<Prisma.dialogueUpdateManyMutationInput, Prisma.dialogueUncheckedUpdateManyInput>
+  data: Prisma.XOR<Prisma.DialogueUpdateManyMutationInput, Prisma.DialogueUncheckedUpdateManyInput>
   /**
-   * Filter which dialogues to update
+   * Filter which Dialogues to update
    */
-  where?: Prisma.dialogueWhereInput
+  where?: Prisma.DialogueWhereInput
   /**
-   * Limit how many dialogues to update.
+   * Limit how many Dialogues to update.
    */
   limit?: number
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.dialogueIncludeUpdateManyAndReturn<ExtArgs> | null
+  include?: Prisma.DialogueIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
- * dialogue upsert
+ * Dialogue upsert
  */
-export type dialogueUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the dialogue
+   * Select specific fields to fetch from the Dialogue
    */
-  select?: Prisma.dialogueSelect<ExtArgs> | null
+  select?: Prisma.DialogueSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the dialogue
+   * Omit specific fields from the Dialogue
    */
-  omit?: Prisma.dialogueOmit<ExtArgs> | null
+  omit?: Prisma.DialogueOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.dialogueInclude<ExtArgs> | null
+  include?: Prisma.DialogueInclude<ExtArgs> | null
   /**
-   * The filter to search for the dialogue to update in case it exists.
+   * The filter to search for the Dialogue to update in case it exists.
    */
-  where: Prisma.dialogueWhereUniqueInput
+  where: Prisma.DialogueWhereUniqueInput
   /**
-   * In case the dialogue found by the `where` argument doesn't exist, create a new dialogue with this data.
+   * In case the Dialogue found by the `where` argument doesn't exist, create a new Dialogue with this data.
    */
-  create: Prisma.XOR<Prisma.dialogueCreateInput, Prisma.dialogueUncheckedCreateInput>
+  create: Prisma.XOR<Prisma.DialogueCreateInput, Prisma.DialogueUncheckedCreateInput>
   /**
-   * In case the dialogue was found with the provided `where` argument, update it with this data.
+   * In case the Dialogue was found with the provided `where` argument, update it with this data.
    */
-  update: Prisma.XOR<Prisma.dialogueUpdateInput, Prisma.dialogueUncheckedUpdateInput>
+  update: Prisma.XOR<Prisma.DialogueUpdateInput, Prisma.DialogueUncheckedUpdateInput>
 }
 
 /**
- * dialogue delete
+ * Dialogue delete
  */
-export type dialogueDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the dialogue
+   * Select specific fields to fetch from the Dialogue
    */
-  select?: Prisma.dialogueSelect<ExtArgs> | null
+  select?: Prisma.DialogueSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the dialogue
+   * Omit specific fields from the Dialogue
    */
-  omit?: Prisma.dialogueOmit<ExtArgs> | null
+  omit?: Prisma.DialogueOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.dialogueInclude<ExtArgs> | null
+  include?: Prisma.DialogueInclude<ExtArgs> | null
   /**
-   * Filter which dialogue to delete.
+   * Filter which Dialogue to delete.
    */
-  where: Prisma.dialogueWhereUniqueInput
+  where: Prisma.DialogueWhereUniqueInput
 }
 
 /**
- * dialogue deleteMany
+ * Dialogue deleteMany
  */
-export type dialogueDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type DialogueDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Filter which dialogues to delete
+   * Filter which Dialogues to delete
    */
-  where?: Prisma.dialogueWhereInput
+  where?: Prisma.DialogueWhereInput
   /**
-   * Limit how many dialogues to delete.
+   * Limit how many Dialogues to delete.
    */
   limit?: number
 }
 
 /**
- * dialogue.character
+ * Dialogue.character
  */
-export type dialogue$characterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Dialogue$characterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Character
    */
@@ -2005,9 +2172,9 @@ export type dialogue$characterArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * dialogue.bookmarks
+ * Dialogue.bookmarks
  */
-export type dialogue$bookmarksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Dialogue$bookmarksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the dialogueBookmark
    */
@@ -2029,19 +2196,43 @@ export type dialogue$bookmarksArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * dialogue without action
+ * Dialogue.playEpisodeSlots
  */
-export type dialogueDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Dialogue$playEpisodeSlotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the dialogue
+   * Select specific fields to fetch from the PlayEpisodeSlot
    */
-  select?: Prisma.dialogueSelect<ExtArgs> | null
+  select?: Prisma.PlayEpisodeSlotSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the dialogue
+   * Omit specific fields from the PlayEpisodeSlot
    */
-  omit?: Prisma.dialogueOmit<ExtArgs> | null
+  omit?: Prisma.PlayEpisodeSlotOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.dialogueInclude<ExtArgs> | null
+  include?: Prisma.PlayEpisodeSlotInclude<ExtArgs> | null
+  where?: Prisma.PlayEpisodeSlotWhereInput
+  orderBy?: Prisma.PlayEpisodeSlotOrderByWithRelationInput | Prisma.PlayEpisodeSlotOrderByWithRelationInput[]
+  cursor?: Prisma.PlayEpisodeSlotWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PlayEpisodeSlotScalarFieldEnum | Prisma.PlayEpisodeSlotScalarFieldEnum[]
+}
+
+/**
+ * Dialogue without action
+ */
+export type DialogueDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Dialogue
+   */
+  select?: Prisma.DialogueSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Dialogue
+   */
+  omit?: Prisma.DialogueOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DialogueInclude<ExtArgs> | null
 }

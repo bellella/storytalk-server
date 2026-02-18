@@ -540,6 +540,11 @@ export type StoryScalarRelationFilter = {
   isNot?: Prisma.StoryWhereInput
 }
 
+export type StoryNullableScalarRelationFilter = {
+  is?: Prisma.StoryWhereInput | null
+  isNot?: Prisma.StoryWhereInput | null
+}
+
 export type EnumStoryTypeFieldUpdateOperationsInput = {
   set?: $Enums.StoryType
 }
@@ -582,10 +587,12 @@ export type StoryCreateNestedOneWithoutEpisodesInput = {
   connect?: Prisma.StoryWhereUniqueInput
 }
 
-export type StoryUpdateOneRequiredWithoutEpisodesNestedInput = {
+export type StoryUpdateOneWithoutEpisodesNestedInput = {
   create?: Prisma.XOR<Prisma.StoryCreateWithoutEpisodesInput, Prisma.StoryUncheckedCreateWithoutEpisodesInput>
   connectOrCreate?: Prisma.StoryCreateOrConnectWithoutEpisodesInput
   upsert?: Prisma.StoryUpsertWithoutEpisodesInput
+  disconnect?: Prisma.StoryWhereInput | boolean
+  delete?: Prisma.StoryWhereInput | boolean
   connect?: Prisma.StoryWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.StoryUpdateToOneWithWhereWithoutEpisodesInput, Prisma.StoryUpdateWithoutEpisodesInput>, Prisma.StoryUncheckedUpdateWithoutEpisodesInput>
 }

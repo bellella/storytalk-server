@@ -1,6 +1,7 @@
 import {
   EpisodeStage,
   QuizSessionType,
+  QuizSourceType,
   QuizType,
   XpSourceType,
   XpTriggerType,
@@ -27,6 +28,12 @@ import { QuizSessionResponseDto } from './dto/quiz-session-response.dto';
 import { StartQuizSessionDto } from './dto/start-quiz-session.dto';
 import { SubmitQuizAnswerDto } from './dto/submit-quiz-answer.dto';
 
+export interface QuizSentenceInput {
+  englishText: string;
+  koreanText: string;
+  dialogueId?: number;
+}
+
 @Injectable()
 export class QuizService {
   constructor(
@@ -34,13 +41,236 @@ export class QuizService {
     private xpService: XpService
   ) {}
 
+  async generateQuizzes(
+    sentences: QuizSentenceInput[],
+    sourceId: number,
+    sourceType: QuizSourceType
+  ): Promise<QuizDto[]> {
+    const quizTypes = [
+      QuizType.SENTENCE_BUILD,
+      QuizType.SENTENCE_CLOZE_BUILD,
+      QuizType.SPEAK_REPEAT,
+    ];
+
+    const quizzes = await Promise.all(
+      sentences.map((src, i) => {
+        const type = quizTypes[i % quizTypes.length];
+        const data = this.buildQuizData(type, src.englishText, src.koreanText);
+
+        return this.prisma.quiz.create({
+          data: {
+            sourceType,
+            sourceId,
+            dialogueId: src.dialogueId ?? null,
+            type,
+            questionEnglish: src.englishText,
+            questionKorean: src.koreanText,
+            order: i + 1,
+            data,
+          },
+        });
+      })
+    );
+
+    return quizzes.map((q, i) => this.toQuizDto(q, i + 1));
+  }
+
+  /**
+   * AI 없이 로컬에서 퀴즈 데이터 생성
+   */
+  private buildQuizData(
+    type: QuizType,
+    english: string,
+    korean: string
+  ): Record<string, any> {
+    switch (type) {
+      case QuizType.SENTENCE_BUILD:
+        return this.buildSentenceBuild(english, korean);
+      case QuizType.SENTENCE_CLOZE_BUILD:
+        return this.buildSentenceCloze(english, korean);
+      case QuizType.SPEAK_REPEAT:
+        return this.buildSpeakRepeat(english);
+      default:
+        return this.buildSentenceBuild(english, korean);
+    }
+  }
+
+  /**
+   * SENTENCE_BUILD: 단어 카드를 정렬해서 문장을 완성
+   */
+  private buildSentenceBuild(
+    english: string,
+    korean: string
+  ): Record<string, any> {
+    // 문장 끝 구두점 추출
+    const punctMatch = english.match(/([.!?]+)$/);
+    const punctuation = punctMatch ? punctMatch[1] : '';
+    const clean = english.replace(/[.!?]+$/, '').trim();
+
+    const words = clean.split(/\s+/);
+    const tokens = words.map((w, i) => ({ id: `t${i + 1}`, t: w }));
+    const answerTokenIds = tokens.map((t) => t.id);
+
+    // distractor 1~2개 추가
+    const distractors = this.pickDistractors(words, 2);
+    const distractorTokens = distractors.map((w, i) => ({
+      id: `t${tokens.length + i + 1}`,
+      t: w,
+    }));
+
+    const tokensAll = [...tokens, ...distractorTokens];
+
+    return {
+      promptKorean: korean,
+      tokensAll,
+      answerTokenIds,
+      settings: punctuation
+        ? { autoPunctuation: { append: punctuation } }
+        : undefined,
+    };
+  }
+
+  /**
+   * SENTENCE_CLOZE_BUILD: 문장에서 핵심 단어 1~2개를 빈칸으로 만들어 채우기
+   */
+  private buildSentenceCloze(
+    english: string,
+    korean: string
+  ): Record<string, any> {
+    const words = english.split(/\s+/);
+
+    // 빈칸으로 뺄 단어 선택: 관사/접속사/전치사 제외한 content word
+    const skipWords = new Set([
+      'a', 'an', 'the', 'is', 'am', 'are', 'was', 'were',
+      'i', 'you', 'he', 'she', 'it', 'we', 'they',
+      'in', 'on', 'at', 'to', 'for', 'of', 'and', 'but', 'or',
+      'do', 'does', 'did', 'not', 'no', 'my', 'your', 'his', 'her',
+    ]);
+
+    const candidates = words
+      .map((w, i) => ({ word: w, index: i }))
+      .filter((c) => !skipWords.has(c.word.toLowerCase().replace(/[^a-z]/g, ''))
+        && c.word.replace(/[^a-zA-Z]/g, '').length >= 3);
+
+    // 1~2개 선택
+    const slotCount = Math.min(candidates.length, words.length <= 5 ? 1 : 2);
+    const shuffled = [...candidates].sort(() => Math.random() - 0.5);
+    const selected = shuffled.slice(0, slotCount);
+    const slotIndices = new Set(selected.map((s) => s.index));
+
+    // parts 구성
+    const parts: { type: string; t?: string; slotId?: string }[] = [];
+    const answerBySlot: Record<string, string> = {};
+    const choices: { id: string; t: string }[] = [];
+    let slotNum = 0;
+    let choiceNum = 0;
+
+    let textBuf = '';
+    for (let i = 0; i < words.length; i++) {
+      if (slotIndices.has(i)) {
+        if (textBuf) {
+          parts.push({ type: 'text', t: textBuf });
+          textBuf = '';
+        }
+        slotNum++;
+        const slotId = `s${slotNum}`;
+        parts.push({ type: 'slot', slotId });
+
+        // 정답 choice
+        choiceNum++;
+        const correctId = `c${choiceNum}`;
+        choices.push({ id: correctId, t: words[i] });
+        answerBySlot[slotId] = correctId;
+
+        // distractor 1~2개
+        const distractors = this.pickDistractors(
+          [words[i]],
+          2
+        );
+        for (const d of distractors) {
+          choiceNum++;
+          choices.push({ id: `c${choiceNum}`, t: d });
+        }
+      } else {
+        textBuf += (textBuf ? ' ' : '') + words[i];
+      }
+    }
+    if (textBuf) parts.push({ type: 'text', t: textBuf });
+
+    return {
+      promptKorean: korean,
+      parts,
+      choices: choices.sort(() => Math.random() - 0.5),
+      answerBySlot,
+    };
+  }
+
+  /**
+   * SPEAK_REPEAT: 문장을 듣고 따라 말하기
+   */
+  private buildSpeakRepeat(english: string): Record<string, any> {
+    const words = english.split(/\s+/);
+
+    // content word 중 2~4개를 필수 발음 단어로 선택
+    const skipWords = new Set([
+      'a', 'an', 'the', 'is', 'am', 'are', 'was', 'were',
+      'i', 'you', 'he', 'she', 'it', 'we', 'they',
+      'in', 'on', 'at', 'to', 'for', 'of', 'and', 'but', 'or',
+    ]);
+
+    const contentWords = words.filter(
+      (w) => !skipWords.has(w.toLowerCase().replace(/[^a-z]/g, ''))
+        && w.replace(/[^a-zA-Z]/g, '').length >= 2
+    );
+
+    const count = Math.min(contentWords.length, 4);
+    const shuffled = [...contentWords].sort(() => Math.random() - 0.5);
+    const required = shuffled.slice(0, Math.max(count, 2)).map((w, i) => ({
+      id: `r${i + 1}`,
+      t: w.replace(/[^a-zA-Z']/g, '').toLowerCase(),
+    }));
+
+    return {
+      tts: {
+        text: english,
+        locale: 'en-US',
+        rate: 1.0,
+        pitch: 1.0,
+        autoPlay: true,
+      },
+      check: { required },
+    };
+  }
+
+  /** 간단한 distractor 단어 풀 */
+  private pickDistractors(exclude: string[], count: number): string[] {
+    const pool = [
+      'always', 'never', 'often', 'very', 'really', 'just',
+      'about', 'much', 'many', 'some', 'every', 'still',
+      'only', 'also', 'even', 'well', 'back', 'then',
+      'here', 'there', 'now', 'before', 'after', 'again',
+      'around', 'between', 'under', 'above', 'without',
+      'being', 'going', 'getting', 'making', 'having',
+      'should', 'would', 'could', 'might', 'must',
+      'than', 'both', 'each', 'while', 'where',
+    ];
+    const lower = new Set(exclude.map((w) => w.toLowerCase()));
+    const available = pool.filter((w) => !lower.has(w));
+    const shuffled = available.sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, count);
+  }
+
   async startSession(
     userId: number,
     dto: StartQuizSessionDto
   ): Promise<QuizSessionResponseDto> {
-    if (dto.type === QuizSessionType.EPISODE && !dto.episodeId) {
+    const needsSourceId: QuizSessionType[] = [
+      QuizSessionType.EPISODE,
+      QuizSessionType.PLAY,
+    ];
+    if (needsSourceId.includes(dto.type) && !dto.sourceId) {
       throw new BadRequestException(
-        'EPISODE 타입일 때 episodeId는 필수입니다.'
+        `${needsSourceId.join(', ')} 타입일 때 sourceId는 필수입니다.`
       );
     }
 
@@ -48,14 +278,19 @@ export class QuizService {
       data: {
         userId,
         type: dto.type,
-        episodeId: dto.episodeId ?? null,
+        ...(dto.sourceId ? { sourceId: dto.sourceId } : {}),
       },
     });
 
     // EPISODE 타입이면 UserEpisode 상태를 QUIZ_IN_PROGRESS로 업데이트
-    if (dto.type === QuizSessionType.EPISODE && dto.episodeId) {
+    if (dto.type === QuizSessionType.EPISODE && dto.sourceId) {
       await this.prisma.userEpisode.updateMany({
-        where: { userId, episodeId: dto.episodeId },
+        where: { userId, episodeId: dto.sourceId },
+        data: { currentStage: EpisodeStage.QUIZ_IN_PROGRESS },
+      });
+    } else if (dto.type === QuizSessionType.PLAY && dto.sourceId) {
+      await this.prisma.userPlayEpisode.updateMany({
+        where: { userId, episodeId: dto.sourceId },
         data: { currentStage: EpisodeStage.QUIZ_IN_PROGRESS },
       });
     }
@@ -195,12 +430,12 @@ export class QuizService {
       targetItems = session.quizSessionItems.filter(
         (item) => !answeredQuizIds.has(item.quizId)
       );
+      console.log(session, answeredQuizIds, isCompleted);
     }
 
     const quizzes: QuizDto[] = targetItems.map((item) =>
       this.toQuizDto(item.quiz, item.order ?? undefined)
     );
-
     return {
       session: this.toSessionDto(session),
       quizzes,
@@ -233,6 +468,17 @@ export class QuizService {
       },
       result: scoreResult,
     };
+  }
+
+  async getQuizzesBySource(
+    sourceType: QuizSourceType,
+    sourceId: number
+  ): Promise<QuizDto[]> {
+    const quizzes = await this.prisma.quiz.findMany({
+      where: { sourceType, sourceId, isActive: true },
+      orderBy: { order: 'asc' },
+    });
+    return quizzes.map((q) => this.toQuizDto(q));
   }
 
   private async findSessionOrThrow(sessionId: number, userId: number) {
@@ -279,7 +525,7 @@ export class QuizService {
       id: session.id,
       userId: session.userId,
       type: session.type,
-      episodeId: session.episodeId,
+      sourceId: session.sourceId,
       startedAt: session.startedAt,
       completedAt: session.completedAt,
       totalCount: session.totalCount,

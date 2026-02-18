@@ -21,6 +21,8 @@ import { DailyQuizResponseDto } from './dto/daily-quiz-response.dto';
 import { DailyQuizCompleteResponseDto } from './dto/daily-quiz-complete-response.dto';
 import { QuizScoreDto } from './dto/quiz-score.dto';
 import { XpService } from '../xp/xp.service';
+import { QuizSourceType } from '@/generated/prisma/enums';
+import { QuizDto } from '../episode/dto/quiz.dto';
 
 @Controller('quiz')
 @UseGuards(JwtAuthGuard)
@@ -76,5 +78,29 @@ export class QuizController {
     @Param('sessionId', ParseIntPipe) sessionId: number
   ): Promise<DailyQuizCompleteResponseDto> {
     return this.quizService.completeDailyQuiz(userId, sessionId);
+  }
+
+  // ── 소스별 퀴즈 조회 ──
+
+  @Get('episodes/:episodeId')
+  @ApiOkResponse({ type: [QuizDto] })
+  async getEpisodeQuizzes(
+    @Param('episodeId', ParseIntPipe) episodeId: number
+  ): Promise<QuizDto[]> {
+    return this.quizService.getQuizzesBySource(
+      QuizSourceType.EPISODE,
+      episodeId
+    );
+  }
+
+  @Get('plays/:playEpisodeId')
+  @ApiOkResponse({ type: [QuizDto] })
+  async getPlayQuizzes(
+    @Param('playEpisodeId', ParseIntPipe) playEpisodeId: number
+  ): Promise<QuizDto[]> {
+    return this.quizService.getQuizzesBySource(
+      QuizSourceType.PLAY,
+      playEpisodeId
+    );
   }
 }

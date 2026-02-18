@@ -17,6 +17,7 @@ import { AiModule } from './modules/ai/ai.module';
 import { FriendModule } from './modules/friend/friend.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { CharacterModule } from './modules/character/character.module';
+import { PlayModule } from './modules/episode/play/play.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { CharacterModule } from './modules/character/character.module';
     MailModule,
     StoryModule,
     EpisodeModule,
+    PlayModule,
     UnitModule,
     QuizModule,
     XpModule,

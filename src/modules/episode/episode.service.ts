@@ -125,8 +125,8 @@ export class EpisodeService {
         episodeId: episode.id,
         episodeTitle: episode.title,
         episodeOrder: episode.order,
-        storyId: episode.story.id,
-        storyTitle: episode.story.title,
+        storyId: episode.story?.id,
+        storyTitle: episode.story?.title,
       },
       rewards: rewards.map((r) => ({
         id: r.id,

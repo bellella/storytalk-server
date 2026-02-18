@@ -391,14 +391,13 @@ export const ModelName = {
   Unit: 'Unit',
   Episode: 'Episode',
   Scene: 'Scene',
-  dialogue: 'dialogue',
+  Dialogue: 'Dialogue',
   StoryProgress: 'StoryProgress',
   ReviewItem: 'ReviewItem',
   Quiz: 'Quiz',
   UserQuizSession: 'UserQuizSession',
   QuizSessionItem: 'QuizSessionItem',
   UserQuizAnswer: 'UserQuizAnswer',
-  UserEpisode: 'UserEpisode',
   Character: 'Character',
   StoryCharacter: 'StoryCharacter',
   CharacterImage: 'CharacterImage',
@@ -409,7 +408,11 @@ export const ModelName = {
   EpisodeReward: 'EpisodeReward',
   XpLevel: 'XpLevel',
   XpRule: 'XpRule',
-  UserXpHistory: 'UserXpHistory'
+  UserXpHistory: 'UserXpHistory',
+  UserEpisode: 'UserEpisode',
+  UserPlayEpisode: 'UserPlayEpisode',
+  PlayEpisodeSlot: 'PlayEpisodeSlot',
+  SlotDialogue: 'SlotDialogue'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -425,7 +428,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "story" | "tag" | "storyTag" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "userEpisode" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterChat" | "message" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory"
+    modelProps: "user" | "story" | "tag" | "storyTag" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterChat" | "message" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory" | "userEpisode" | "userPlayEpisode" | "playEpisodeSlot" | "slotDialogue"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -947,76 +950,76 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    dialogue: {
-      payload: Prisma.$dialoguePayload<ExtArgs>
-      fields: Prisma.dialogueFieldRefs
+    Dialogue: {
+      payload: Prisma.$DialoguePayload<ExtArgs>
+      fields: Prisma.DialogueFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.dialogueFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dialoguePayload> | null
+          args: Prisma.DialogueFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DialoguePayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.dialogueFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dialoguePayload>
+          args: Prisma.DialogueFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DialoguePayload>
         }
         findFirst: {
-          args: Prisma.dialogueFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dialoguePayload> | null
+          args: Prisma.DialogueFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DialoguePayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.dialogueFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dialoguePayload>
+          args: Prisma.DialogueFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DialoguePayload>
         }
         findMany: {
-          args: Prisma.dialogueFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dialoguePayload>[]
+          args: Prisma.DialogueFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DialoguePayload>[]
         }
         create: {
-          args: Prisma.dialogueCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dialoguePayload>
+          args: Prisma.DialogueCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DialoguePayload>
         }
         createMany: {
-          args: Prisma.dialogueCreateManyArgs<ExtArgs>
+          args: Prisma.DialogueCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.dialogueCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dialoguePayload>[]
+          args: Prisma.DialogueCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DialoguePayload>[]
         }
         delete: {
-          args: Prisma.dialogueDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dialoguePayload>
+          args: Prisma.DialogueDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DialoguePayload>
         }
         update: {
-          args: Prisma.dialogueUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dialoguePayload>
+          args: Prisma.DialogueUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DialoguePayload>
         }
         deleteMany: {
-          args: Prisma.dialogueDeleteManyArgs<ExtArgs>
+          args: Prisma.DialogueDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.dialogueUpdateManyArgs<ExtArgs>
+          args: Prisma.DialogueUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.dialogueUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dialoguePayload>[]
+          args: Prisma.DialogueUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DialoguePayload>[]
         }
         upsert: {
-          args: Prisma.dialogueUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dialoguePayload>
+          args: Prisma.DialogueUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DialoguePayload>
         }
         aggregate: {
           args: Prisma.DialogueAggregateArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AggregateDialogue>
         }
         groupBy: {
-          args: Prisma.dialogueGroupByArgs<ExtArgs>
+          args: Prisma.DialogueGroupByArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.DialogueGroupByOutputType>[]
         }
         count: {
-          args: Prisma.dialogueCountArgs<ExtArgs>
+          args: Prisma.DialogueCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.DialogueCountAggregateOutputType> | number
         }
       }
@@ -1462,80 +1465,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserQuizAnswerCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserQuizAnswerCountAggregateOutputType> | number
-        }
-      }
-    }
-    UserEpisode: {
-      payload: Prisma.$UserEpisodePayload<ExtArgs>
-      fields: Prisma.UserEpisodeFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.UserEpisodeFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.UserEpisodeFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>
-        }
-        findFirst: {
-          args: Prisma.UserEpisodeFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.UserEpisodeFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>
-        }
-        findMany: {
-          args: Prisma.UserEpisodeFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>[]
-        }
-        create: {
-          args: Prisma.UserEpisodeCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>
-        }
-        createMany: {
-          args: Prisma.UserEpisodeCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.UserEpisodeCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>[]
-        }
-        delete: {
-          args: Prisma.UserEpisodeDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>
-        }
-        update: {
-          args: Prisma.UserEpisodeUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>
-        }
-        deleteMany: {
-          args: Prisma.UserEpisodeDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.UserEpisodeUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.UserEpisodeUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>[]
-        }
-        upsert: {
-          args: Prisma.UserEpisodeUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>
-        }
-        aggregate: {
-          args: Prisma.UserEpisodeAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateUserEpisode>
-        }
-        groupBy: {
-          args: Prisma.UserEpisodeGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UserEpisodeGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.UserEpisodeCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UserEpisodeCountAggregateOutputType> | number
         }
       }
     }
@@ -2353,6 +2282,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UserEpisode: {
+      payload: Prisma.$UserEpisodePayload<ExtArgs>
+      fields: Prisma.UserEpisodeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserEpisodeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserEpisodeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>
+        }
+        findFirst: {
+          args: Prisma.UserEpisodeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserEpisodeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>
+        }
+        findMany: {
+          args: Prisma.UserEpisodeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>[]
+        }
+        create: {
+          args: Prisma.UserEpisodeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>
+        }
+        createMany: {
+          args: Prisma.UserEpisodeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserEpisodeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>[]
+        }
+        delete: {
+          args: Prisma.UserEpisodeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>
+        }
+        update: {
+          args: Prisma.UserEpisodeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserEpisodeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserEpisodeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserEpisodeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserEpisodeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEpisodePayload>
+        }
+        aggregate: {
+          args: Prisma.UserEpisodeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserEpisode>
+        }
+        groupBy: {
+          args: Prisma.UserEpisodeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserEpisodeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserEpisodeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserEpisodeCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserPlayEpisode: {
+      payload: Prisma.$UserPlayEpisodePayload<ExtArgs>
+      fields: Prisma.UserPlayEpisodeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserPlayEpisodeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPlayEpisodePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserPlayEpisodeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPlayEpisodePayload>
+        }
+        findFirst: {
+          args: Prisma.UserPlayEpisodeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPlayEpisodePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserPlayEpisodeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPlayEpisodePayload>
+        }
+        findMany: {
+          args: Prisma.UserPlayEpisodeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPlayEpisodePayload>[]
+        }
+        create: {
+          args: Prisma.UserPlayEpisodeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPlayEpisodePayload>
+        }
+        createMany: {
+          args: Prisma.UserPlayEpisodeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserPlayEpisodeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPlayEpisodePayload>[]
+        }
+        delete: {
+          args: Prisma.UserPlayEpisodeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPlayEpisodePayload>
+        }
+        update: {
+          args: Prisma.UserPlayEpisodeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPlayEpisodePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserPlayEpisodeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserPlayEpisodeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserPlayEpisodeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPlayEpisodePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserPlayEpisodeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPlayEpisodePayload>
+        }
+        aggregate: {
+          args: Prisma.UserPlayEpisodeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserPlayEpisode>
+        }
+        groupBy: {
+          args: Prisma.UserPlayEpisodeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserPlayEpisodeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserPlayEpisodeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserPlayEpisodeCountAggregateOutputType> | number
+        }
+      }
+    }
+    PlayEpisodeSlot: {
+      payload: Prisma.$PlayEpisodeSlotPayload<ExtArgs>
+      fields: Prisma.PlayEpisodeSlotFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PlayEpisodeSlotFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayEpisodeSlotPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PlayEpisodeSlotFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayEpisodeSlotPayload>
+        }
+        findFirst: {
+          args: Prisma.PlayEpisodeSlotFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayEpisodeSlotPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PlayEpisodeSlotFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayEpisodeSlotPayload>
+        }
+        findMany: {
+          args: Prisma.PlayEpisodeSlotFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayEpisodeSlotPayload>[]
+        }
+        create: {
+          args: Prisma.PlayEpisodeSlotCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayEpisodeSlotPayload>
+        }
+        createMany: {
+          args: Prisma.PlayEpisodeSlotCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PlayEpisodeSlotCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayEpisodeSlotPayload>[]
+        }
+        delete: {
+          args: Prisma.PlayEpisodeSlotDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayEpisodeSlotPayload>
+        }
+        update: {
+          args: Prisma.PlayEpisodeSlotUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayEpisodeSlotPayload>
+        }
+        deleteMany: {
+          args: Prisma.PlayEpisodeSlotDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PlayEpisodeSlotUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PlayEpisodeSlotUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayEpisodeSlotPayload>[]
+        }
+        upsert: {
+          args: Prisma.PlayEpisodeSlotUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayEpisodeSlotPayload>
+        }
+        aggregate: {
+          args: Prisma.PlayEpisodeSlotAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePlayEpisodeSlot>
+        }
+        groupBy: {
+          args: Prisma.PlayEpisodeSlotGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlayEpisodeSlotGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PlayEpisodeSlotCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlayEpisodeSlotCountAggregateOutputType> | number
+        }
+      }
+    }
+    SlotDialogue: {
+      payload: Prisma.$SlotDialoguePayload<ExtArgs>
+      fields: Prisma.SlotDialogueFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SlotDialogueFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SlotDialoguePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SlotDialogueFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SlotDialoguePayload>
+        }
+        findFirst: {
+          args: Prisma.SlotDialogueFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SlotDialoguePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SlotDialogueFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SlotDialoguePayload>
+        }
+        findMany: {
+          args: Prisma.SlotDialogueFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SlotDialoguePayload>[]
+        }
+        create: {
+          args: Prisma.SlotDialogueCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SlotDialoguePayload>
+        }
+        createMany: {
+          args: Prisma.SlotDialogueCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SlotDialogueCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SlotDialoguePayload>[]
+        }
+        delete: {
+          args: Prisma.SlotDialogueDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SlotDialoguePayload>
+        }
+        update: {
+          args: Prisma.SlotDialogueUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SlotDialoguePayload>
+        }
+        deleteMany: {
+          args: Prisma.SlotDialogueDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SlotDialogueUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SlotDialogueUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SlotDialoguePayload>[]
+        }
+        upsert: {
+          args: Prisma.SlotDialogueUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SlotDialoguePayload>
+        }
+        aggregate: {
+          args: Prisma.SlotDialogueAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSlotDialogue>
+        }
+        groupBy: {
+          args: Prisma.SlotDialogueGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SlotDialogueGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SlotDialogueCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SlotDialogueCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2467,6 +2692,7 @@ export type UnitScalarFieldEnum = (typeof UnitScalarFieldEnum)[keyof typeof Unit
 export const EpisodeScalarFieldEnum = {
   id: 'id',
   storyId: 'storyId',
+  type: 'type',
   title: 'title',
   koreanTitle: 'koreanTitle',
   order: 'order',
@@ -2508,6 +2734,7 @@ export const DialogueScalarFieldEnum = {
   charImageLabel: 'charImageLabel',
   imageUrl: 'imageUrl',
   audioUrl: 'audioUrl',
+  data: 'data',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2560,7 +2787,7 @@ export const UserQuizSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   type: 'type',
-  episodeId: 'episodeId',
+  sourceId: 'sourceId',
   startedAt: 'startedAt',
   completedAt: 'completedAt',
   totalCount: 'totalCount',
@@ -2594,22 +2821,6 @@ export const UserQuizAnswerScalarFieldEnum = {
 } as const
 
 export type UserQuizAnswerScalarFieldEnum = (typeof UserQuizAnswerScalarFieldEnum)[keyof typeof UserQuizAnswerScalarFieldEnum]
-
-
-export const UserEpisodeScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  episodeId: 'episodeId',
-  startedAt: 'startedAt',
-  completedAt: 'completedAt',
-  lastSceneId: 'lastSceneId',
-  currentStage: 'currentStage',
-  score: 'score',
-  isCompleted: 'isCompleted',
-  meta: 'meta'
-} as const
-
-export type UserEpisodeScalarFieldEnum = (typeof UserEpisodeScalarFieldEnum)[keyof typeof UserEpisodeScalarFieldEnum]
 
 
 export const CharacterScalarFieldEnum = {
@@ -2763,6 +2974,76 @@ export const UserXpHistoryScalarFieldEnum = {
 } as const
 
 export type UserXpHistoryScalarFieldEnum = (typeof UserXpHistoryScalarFieldEnum)[keyof typeof UserXpHistoryScalarFieldEnum]
+
+
+export const UserEpisodeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  episodeId: 'episodeId',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  lastSceneId: 'lastSceneId',
+  currentStage: 'currentStage',
+  score: 'score',
+  isCompleted: 'isCompleted',
+  meta: 'meta'
+} as const
+
+export type UserEpisodeScalarFieldEnum = (typeof UserEpisodeScalarFieldEnum)[keyof typeof UserEpisodeScalarFieldEnum]
+
+
+export const UserPlayEpisodeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  episodeId: 'episodeId',
+  mode: 'mode',
+  accessStatus: 'accessStatus',
+  acquiredAt: 'acquiredAt',
+  revokedAt: 'revokedAt',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  lastSceneId: 'lastSceneId',
+  lastDialogueId: 'lastDialogueId',
+  currentStage: 'currentStage',
+  isCompleted: 'isCompleted',
+  result: 'result',
+  data: 'data'
+} as const
+
+export type UserPlayEpisodeScalarFieldEnum = (typeof UserPlayEpisodeScalarFieldEnum)[keyof typeof UserPlayEpisodeScalarFieldEnum]
+
+
+export const PlayEpisodeSlotScalarFieldEnum = {
+  id: 'id',
+  playEpisodeId: 'playEpisodeId',
+  dialogueId: 'dialogueId',
+  order: 'order',
+  status: 'status',
+  data: 'data',
+  endedAt: 'endedAt'
+} as const
+
+export type PlayEpisodeSlotScalarFieldEnum = (typeof PlayEpisodeSlotScalarFieldEnum)[keyof typeof PlayEpisodeSlotScalarFieldEnum]
+
+
+export const SlotDialogueScalarFieldEnum = {
+  id: 'id',
+  slotId: 'slotId',
+  playEpisodeId: 'playEpisodeId',
+  sceneId: 'sceneId',
+  order: 'order',
+  type: 'type',
+  messageType: 'messageType',
+  characterId: 'characterId',
+  characterName: 'characterName',
+  charImageLabel: 'charImageLabel',
+  koreanText: 'koreanText',
+  englishText: 'englishText',
+  data: 'data',
+  createdAt: 'createdAt'
+} as const
+
+export type SlotDialogueScalarFieldEnum = (typeof SlotDialogueScalarFieldEnum)[keyof typeof SlotDialogueScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2925,6 +3206,20 @@ export type ListEnumPublishStatusFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
+ * Reference to a field of type 'EpisodeType'
+ */
+export type EnumEpisodeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EpisodeType'>
+    
+
+
+/**
+ * Reference to a field of type 'EpisodeType[]'
+ */
+export type ListEnumEpisodeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EpisodeType[]'>
+    
+
+
+/**
  * Reference to a field of type 'SceneType'
  */
 export type EnumSceneTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SceneType'>
@@ -2935,6 +3230,34 @@ export type EnumSceneTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
  * Reference to a field of type 'SceneType[]'
  */
 export type ListEnumSceneTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SceneType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DialogueType'
+ */
+export type EnumDialogueTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DialogueType'>
+    
+
+
+/**
+ * Reference to a field of type 'DialogueType[]'
+ */
+export type ListEnumDialogueTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DialogueType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -2981,20 +3304,6 @@ export type ListEnumQuizTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
  * Reference to a field of type 'QuizSessionType'
  */
 export type EnumQuizSessionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuizSessionType'>
@@ -3005,20 +3314,6 @@ export type EnumQuizSessionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'QuizSessionType[]'
  */
 export type ListEnumQuizSessionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuizSessionType[]'>
-    
-
-
-/**
- * Reference to a field of type 'EpisodeStage'
- */
-export type EnumEpisodeStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EpisodeStage'>
-    
-
-
-/**
- * Reference to a field of type 'EpisodeStage[]'
- */
-export type ListEnumEpisodeStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EpisodeStage[]'>
     
 
 
@@ -3089,6 +3384,90 @@ export type EnumXpSourceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'XpSourceType[]'
  */
 export type ListEnumXpSourceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'XpSourceType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'EpisodeStage'
+ */
+export type EnumEpisodeStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EpisodeStage'>
+    
+
+
+/**
+ * Reference to a field of type 'EpisodeStage[]'
+ */
+export type ListEnumEpisodeStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EpisodeStage[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PlayEpisodeMode'
+ */
+export type EnumPlayEpisodeModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlayEpisodeMode'>
+    
+
+
+/**
+ * Reference to a field of type 'PlayEpisodeMode[]'
+ */
+export type ListEnumPlayEpisodeModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlayEpisodeMode[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AccessStatus'
+ */
+export type EnumAccessStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AccessStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AccessStatus[]'
+ */
+export type ListEnumAccessStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AccessStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SlotStatus'
+ */
+export type EnumSlotStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SlotStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SlotStatus[]'
+ */
+export type ListEnumSlotStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SlotStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SlotDialogueType'
+ */
+export type EnumSlotDialogueTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SlotDialogueType'>
+    
+
+
+/**
+ * Reference to a field of type 'SlotDialogueType[]'
+ */
+export type ListEnumSlotDialogueTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SlotDialogueType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SlotMessageType'
+ */
+export type EnumSlotMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SlotMessageType'>
+    
+
+
+/**
+ * Reference to a field of type 'SlotMessageType[]'
+ */
+export type ListEnumSlotMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SlotMessageType[]'>
     
 
 /**
@@ -3177,14 +3556,13 @@ export type GlobalOmitConfig = {
   unit?: Prisma.UnitOmit
   episode?: Prisma.EpisodeOmit
   scene?: Prisma.SceneOmit
-  dialogue?: Prisma.dialogueOmit
+  dialogue?: Prisma.DialogueOmit
   storyProgress?: Prisma.StoryProgressOmit
   reviewItem?: Prisma.ReviewItemOmit
   quiz?: Prisma.QuizOmit
   userQuizSession?: Prisma.UserQuizSessionOmit
   quizSessionItem?: Prisma.QuizSessionItemOmit
   userQuizAnswer?: Prisma.UserQuizAnswerOmit
-  userEpisode?: Prisma.UserEpisodeOmit
   character?: Prisma.CharacterOmit
   storyCharacter?: Prisma.StoryCharacterOmit
   characterImage?: Prisma.CharacterImageOmit
@@ -3196,6 +3574,10 @@ export type GlobalOmitConfig = {
   xpLevel?: Prisma.XpLevelOmit
   xpRule?: Prisma.XpRuleOmit
   userXpHistory?: Prisma.UserXpHistoryOmit
+  userEpisode?: Prisma.UserEpisodeOmit
+  userPlayEpisode?: Prisma.UserPlayEpisodeOmit
+  playEpisodeSlot?: Prisma.PlayEpisodeSlotOmit
+  slotDialogue?: Prisma.SlotDialogueOmit
 }
 
 /* Types for Logging */

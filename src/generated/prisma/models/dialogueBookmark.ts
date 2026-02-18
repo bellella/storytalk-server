@@ -225,7 +225,7 @@ export type dialogueBookmarkWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"dialogueBookmark"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"dialogueBookmark"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  dialogue?: Prisma.XOR<Prisma.DialogueScalarRelationFilter, Prisma.dialogueWhereInput>
+  dialogue?: Prisma.XOR<Prisma.DialogueScalarRelationFilter, Prisma.DialogueWhereInput>
 }
 
 export type dialogueBookmarkOrderByWithRelationInput = {
@@ -235,7 +235,7 @@ export type dialogueBookmarkOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
-  dialogue?: Prisma.dialogueOrderByWithRelationInput
+  dialogue?: Prisma.DialogueOrderByWithRelationInput
 }
 
 export type dialogueBookmarkWhereUniqueInput = Prisma.AtLeast<{
@@ -249,7 +249,7 @@ export type dialogueBookmarkWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"dialogueBookmark"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"dialogueBookmark"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  dialogue?: Prisma.XOR<Prisma.DialogueScalarRelationFilter, Prisma.dialogueWhereInput>
+  dialogue?: Prisma.XOR<Prisma.DialogueScalarRelationFilter, Prisma.DialogueWhereInput>
 }, "id" | "userId_dialogueId">
 
 export type dialogueBookmarkOrderByWithAggregationInput = {
@@ -280,7 +280,7 @@ export type dialogueBookmarkCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutDialogueBookmarksInput
-  dialogue: Prisma.dialogueCreateNestedOneWithoutBookmarksInput
+  dialogue: Prisma.DialogueCreateNestedOneWithoutBookmarksInput
 }
 
 export type dialogueBookmarkUncheckedCreateInput = {
@@ -295,7 +295,7 @@ export type dialogueBookmarkUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutDialogueBookmarksNestedInput
-  dialogue?: Prisma.dialogueUpdateOneRequiredWithoutBookmarksNestedInput
+  dialogue?: Prisma.DialogueUpdateOneRequiredWithoutBookmarksNestedInput
 }
 
 export type dialogueBookmarkUncheckedUpdateInput = {
@@ -465,7 +465,7 @@ export type dialogueBookmarkUncheckedUpdateManyWithoutDialogueNestedInput = {
 export type dialogueBookmarkCreateWithoutUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
-  dialogue: Prisma.dialogueCreateNestedOneWithoutBookmarksInput
+  dialogue: Prisma.DialogueCreateNestedOneWithoutBookmarksInput
 }
 
 export type dialogueBookmarkUncheckedCreateWithoutUserInput = {
@@ -561,7 +561,7 @@ export type dialogueBookmarkCreateManyUserInput = {
 export type dialogueBookmarkUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dialogue?: Prisma.dialogueUpdateOneRequiredWithoutBookmarksNestedInput
+  dialogue?: Prisma.DialogueUpdateOneRequiredWithoutBookmarksNestedInput
 }
 
 export type dialogueBookmarkUncheckedUpdateWithoutUserInput = {
@@ -614,7 +614,7 @@ export type dialogueBookmarkSelect<ExtArgs extends runtime.Types.Extensions.Inte
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  dialogue?: boolean | Prisma.dialogueDefaultArgs<ExtArgs>
+  dialogue?: boolean | Prisma.DialogueDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dialogueBookmark"]>
 
 export type dialogueBookmarkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -624,7 +624,7 @@ export type dialogueBookmarkSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  dialogue?: boolean | Prisma.dialogueDefaultArgs<ExtArgs>
+  dialogue?: boolean | Prisma.DialogueDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dialogueBookmark"]>
 
 export type dialogueBookmarkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -634,7 +634,7 @@ export type dialogueBookmarkSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  dialogue?: boolean | Prisma.dialogueDefaultArgs<ExtArgs>
+  dialogue?: boolean | Prisma.DialogueDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dialogueBookmark"]>
 
 export type dialogueBookmarkSelectScalar = {
@@ -648,22 +648,22 @@ export type dialogueBookmarkSelectScalar = {
 export type dialogueBookmarkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "dialogueId" | "createdAt" | "updatedAt", ExtArgs["result"]["dialogueBookmark"]>
 export type dialogueBookmarkInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  dialogue?: boolean | Prisma.dialogueDefaultArgs<ExtArgs>
+  dialogue?: boolean | Prisma.DialogueDefaultArgs<ExtArgs>
 }
 export type dialogueBookmarkIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  dialogue?: boolean | Prisma.dialogueDefaultArgs<ExtArgs>
+  dialogue?: boolean | Prisma.DialogueDefaultArgs<ExtArgs>
 }
 export type dialogueBookmarkIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  dialogue?: boolean | Prisma.dialogueDefaultArgs<ExtArgs>
+  dialogue?: boolean | Prisma.DialogueDefaultArgs<ExtArgs>
 }
 
 export type $dialogueBookmarkPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "dialogueBookmark"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
-    dialogue: Prisma.$dialoguePayload<ExtArgs>
+    dialogue: Prisma.$DialoguePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1066,7 +1066,7 @@ readonly fields: dialogueBookmarkFieldRefs;
 export interface Prisma__dialogueBookmarkClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  dialogue<T extends Prisma.dialogueDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.dialogueDefaultArgs<ExtArgs>>): Prisma.Prisma__dialogueClient<runtime.Types.Result.GetResult<Prisma.$dialoguePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  dialogue<T extends Prisma.DialogueDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DialogueDefaultArgs<ExtArgs>>): Prisma.Prisma__DialogueClient<runtime.Types.Result.GetResult<Prisma.$DialoguePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

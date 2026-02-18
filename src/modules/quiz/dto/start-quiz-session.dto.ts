@@ -7,8 +7,8 @@ export class StartQuizSessionDto {
   @IsEnum(QuizSessionType)
   type: QuizSessionType;
 
-  @ApiPropertyOptional({ description: 'EPISODE 타입일 때 필수' })
+  @ApiPropertyOptional({ description: '소스 ID' })
   @IsOptional()
   @IsInt()
-  episodeId?: number;
+  sourceId?: number;
 }

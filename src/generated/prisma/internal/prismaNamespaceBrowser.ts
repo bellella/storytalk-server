@@ -58,14 +58,13 @@ export const ModelName = {
   Unit: 'Unit',
   Episode: 'Episode',
   Scene: 'Scene',
-  dialogue: 'dialogue',
+  Dialogue: 'Dialogue',
   StoryProgress: 'StoryProgress',
   ReviewItem: 'ReviewItem',
   Quiz: 'Quiz',
   UserQuizSession: 'UserQuizSession',
   QuizSessionItem: 'QuizSessionItem',
   UserQuizAnswer: 'UserQuizAnswer',
-  UserEpisode: 'UserEpisode',
   Character: 'Character',
   StoryCharacter: 'StoryCharacter',
   CharacterImage: 'CharacterImage',
@@ -76,7 +75,11 @@ export const ModelName = {
   EpisodeReward: 'EpisodeReward',
   XpLevel: 'XpLevel',
   XpRule: 'XpRule',
-  UserXpHistory: 'UserXpHistory'
+  UserXpHistory: 'UserXpHistory',
+  UserEpisode: 'UserEpisode',
+  UserPlayEpisode: 'UserPlayEpisode',
+  PlayEpisodeSlot: 'PlayEpisodeSlot',
+  SlotDialogue: 'SlotDialogue'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -170,6 +173,7 @@ export type UnitScalarFieldEnum = (typeof UnitScalarFieldEnum)[keyof typeof Unit
 export const EpisodeScalarFieldEnum = {
   id: 'id',
   storyId: 'storyId',
+  type: 'type',
   title: 'title',
   koreanTitle: 'koreanTitle',
   order: 'order',
@@ -211,6 +215,7 @@ export const DialogueScalarFieldEnum = {
   charImageLabel: 'charImageLabel',
   imageUrl: 'imageUrl',
   audioUrl: 'audioUrl',
+  data: 'data',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -263,7 +268,7 @@ export const UserQuizSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   type: 'type',
-  episodeId: 'episodeId',
+  sourceId: 'sourceId',
   startedAt: 'startedAt',
   completedAt: 'completedAt',
   totalCount: 'totalCount',
@@ -297,22 +302,6 @@ export const UserQuizAnswerScalarFieldEnum = {
 } as const
 
 export type UserQuizAnswerScalarFieldEnum = (typeof UserQuizAnswerScalarFieldEnum)[keyof typeof UserQuizAnswerScalarFieldEnum]
-
-
-export const UserEpisodeScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  episodeId: 'episodeId',
-  startedAt: 'startedAt',
-  completedAt: 'completedAt',
-  lastSceneId: 'lastSceneId',
-  currentStage: 'currentStage',
-  score: 'score',
-  isCompleted: 'isCompleted',
-  meta: 'meta'
-} as const
-
-export type UserEpisodeScalarFieldEnum = (typeof UserEpisodeScalarFieldEnum)[keyof typeof UserEpisodeScalarFieldEnum]
 
 
 export const CharacterScalarFieldEnum = {
@@ -466,6 +455,76 @@ export const UserXpHistoryScalarFieldEnum = {
 } as const
 
 export type UserXpHistoryScalarFieldEnum = (typeof UserXpHistoryScalarFieldEnum)[keyof typeof UserXpHistoryScalarFieldEnum]
+
+
+export const UserEpisodeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  episodeId: 'episodeId',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  lastSceneId: 'lastSceneId',
+  currentStage: 'currentStage',
+  score: 'score',
+  isCompleted: 'isCompleted',
+  meta: 'meta'
+} as const
+
+export type UserEpisodeScalarFieldEnum = (typeof UserEpisodeScalarFieldEnum)[keyof typeof UserEpisodeScalarFieldEnum]
+
+
+export const UserPlayEpisodeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  episodeId: 'episodeId',
+  mode: 'mode',
+  accessStatus: 'accessStatus',
+  acquiredAt: 'acquiredAt',
+  revokedAt: 'revokedAt',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  lastSceneId: 'lastSceneId',
+  lastDialogueId: 'lastDialogueId',
+  currentStage: 'currentStage',
+  isCompleted: 'isCompleted',
+  result: 'result',
+  data: 'data'
+} as const
+
+export type UserPlayEpisodeScalarFieldEnum = (typeof UserPlayEpisodeScalarFieldEnum)[keyof typeof UserPlayEpisodeScalarFieldEnum]
+
+
+export const PlayEpisodeSlotScalarFieldEnum = {
+  id: 'id',
+  playEpisodeId: 'playEpisodeId',
+  dialogueId: 'dialogueId',
+  order: 'order',
+  status: 'status',
+  data: 'data',
+  endedAt: 'endedAt'
+} as const
+
+export type PlayEpisodeSlotScalarFieldEnum = (typeof PlayEpisodeSlotScalarFieldEnum)[keyof typeof PlayEpisodeSlotScalarFieldEnum]
+
+
+export const SlotDialogueScalarFieldEnum = {
+  id: 'id',
+  slotId: 'slotId',
+  playEpisodeId: 'playEpisodeId',
+  sceneId: 'sceneId',
+  order: 'order',
+  type: 'type',
+  messageType: 'messageType',
+  characterId: 'characterId',
+  characterName: 'characterName',
+  charImageLabel: 'charImageLabel',
+  koreanText: 'koreanText',
+  englishText: 'englishText',
+  data: 'data',
+  createdAt: 'createdAt'
+} as const
+
+export type SlotDialogueScalarFieldEnum = (typeof SlotDialogueScalarFieldEnum)[keyof typeof SlotDialogueScalarFieldEnum]
 
 
 export const SortOrder = {

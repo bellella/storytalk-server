@@ -1,0 +1,193 @@
+// src/modules/play/dto/play.dto.ts
+import {
+  IsEnum,
+  IsInt,
+  IsOptional,
+  IsString,
+  MaxLength,
+  Min,
+} from 'class-validator';
+import {
+  AccessStatus,
+  EpisodeStage,
+  PlayEpisodeMode,
+  SlotDialogueType,
+  SlotMessageType,
+} from '@/generated/prisma/enums';
+import {
+  DialogueDto,
+  EpisodeDetailDto,
+} from '@/modules/story/dto/episode-detail.dto';
+
+/**
+ * ---------- Requests ----------
+ */
+
+// GET /play-episodes/me?status=in_progress|completed
+export class GetMyPlayEpisodesQueryDto {
+  @IsOptional()
+  @IsEnum(['in_progress', 'completed'] as const)
+  status?: 'in_progress' | 'completed';
+
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  page?: number;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  limit?: number;
+}
+
+// POST /episodes/:episodeId/play
+export class StartPlayEpisodeParamsDto {
+  @IsInt()
+  @Min(1)
+  episodeId: number;
+}
+
+export class AiInputSlotDto {
+  @IsInt()
+  @Min(1)
+  dialogueId: number;
+
+  @IsString()
+  @MaxLength(500) // 너 정책에 맞게
+  text: string;
+}
+
+export class AiSlotDto {
+  @IsInt()
+  @Min(1)
+  dialogueId: number;
+}
+
+/**
+ * ---------- Responses ----------
+ * ApiProperty 안 씀(너 설정으로 자동)
+ */
+
+export class EpisodeMetaDto {
+  id: number;
+  title: string;
+  koreanTitle?: string | null;
+  description?: string | null;
+  koreanDescription?: string | null;
+  // thumbnailUrl?: string | null;
+}
+
+export class PlayLinksDto {
+  play: string;
+  replay: string;
+  result: string;
+  quiz?: string | null;
+}
+
+export class MyPlayEpisodeItemDto {
+  playEpisodeId: number;
+  episode: EpisodeMetaDto;
+  mode: PlayEpisodeMode;
+  accessStatus: AccessStatus;
+  currentStage: EpisodeStage;
+  isCompleted: boolean;
+  startedAt: string;
+  completedAt?: string | null;
+  lastSceneId?: number | null;
+  lastDialogueId?: number | null;
+  resultSummary?: any | null;
+}
+
+export class StartPlayEpisodeResponseDto {
+  playEpisodeId: number;
+  mode: PlayEpisodeMode;
+  currentStage: EpisodeStage;
+  startedAt: string;
+  links: { play: string };
+}
+
+export class PlayEpisodeDetailResponseDto {
+  play: {
+    id: number;
+    episodeId: number;
+    mode: PlayEpisodeMode;
+    accessStatus: AccessStatus;
+    startedAt: string;
+    completedAt?: string | null;
+    lastSceneId?: number | null;
+    lastDialogueId?: number | null;
+    currentStage: EpisodeStage;
+    isCompleted: boolean;
+  };
+  episode: EpisodeDetailDto;
+}
+
+export class SavedDialogueDto {
+  id: number;
+  type: SlotDialogueType;
+  messageType: SlotMessageType;
+  order: number;
+  characterId: number | null;
+  characterName: string | null;
+  englishText: string | null;
+  koreanText: string | null;
+  charImageLabel?: string | null;
+  imageUrl?: string | null;
+  data?: any | null;
+  createdAt: string;
+}
+
+export class AiInputSlotResponseDto {
+  dialogueId: number;
+  savedDialogues: SavedDialogueDto[];
+}
+
+export class AiSlotResponseDto {
+  savedDialogues: SavedDialogueDto[];
+}
+
+export class CompletePlayResponseDto {
+  playEpisodeId: number;
+  currentStage: EpisodeStage;
+  isCompleted: boolean;
+}
+
+export class PlayEpisodeDto {
+  id: number;
+  episodeId: number;
+  isCompleted: boolean;
+  mode: PlayEpisodeMode;
+  accessStatus: AccessStatus;
+  startedAt: string;
+  completedAt?: string | null;
+}
+
+export class ReplayResponseDto {
+  episode: EpisodeDetailDto;
+  //segments: SegmentDto[];
+}
+
+export class ResultResponseDto {
+  playEpisodeId: number;
+  episode: EpisodeMetaDto;
+  currentStage: EpisodeStage;
+  isCompleted: boolean;
+  result: any | null;
+  correctedDialogues: {
+    type: 'correction' | 'translation';
+    userInput: string;
+    englishText: string;
+    koreanText: string;
+    evaluation: ResultEvaluationDto;
+  }[];
+}
+
+export class ResultEvaluationDto {
+  overallScore: number;
+  grammarScore: number;
+  fluencyScore: number;
+  naturalnessScore: number;
+  cefr: string;
+  summary: string;
+  feedback: string;
+}

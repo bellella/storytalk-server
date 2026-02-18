@@ -58,6 +58,7 @@ model User {
   Messages          Message[]
   userQuizSessions  UserQuizSession[]
   characterChats    CharacterChat[]
+  userPlayEpisodes  UserPlayEpisode[]
 
   @@unique([email, provider])
 }
@@ -69,6 +70,7 @@ model User {
 enum StoryType {
   UNIT // 학습 중심 (상황회화/유닛 기반)
   NOVEL // 줄거리/노벨 중심 (스토리 감상 + 대화)
+  PREMIUM //프리미엄 컨텐츠
 }
 
 model Story {
@@ -126,12 +128,19 @@ model Unit {
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
 
-  story Story @relation(fields: [storyId], references: [id], onDelete: SetNull)
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
+}
+
+enum EpisodeType {
+  STORY // 스토리 리딩형
+  PREMIUM // 구매 에피소드형
+  EVENT // 이벤트형
 }
 
 model Episode {
   id                Int           @id @default(autoincrement())
-  storyId           Int
+  storyId           Int?
+  type              EpisodeType   @default(STORY)
   title             String
   koreanTitle       String?
   order             Int
@@ -141,11 +150,11 @@ model Episode {
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
 
-  story            Story             @relation(fields: [storyId], references: [id])
+  story            Story?            @relation(fields: [storyId], references: [id])
   scenes           Scene[]
   rewards          EpisodeReward[]
   userEpisodes     UserEpisode[]
-  userQuizSessions UserQuizSession[]
+  userPlayEpisodes UserPlayEpisode[]
 
   @@unique([storyId, order])
 }
@@ -156,8 +165,8 @@ enum SceneType {
 }
 
 model Scene {
-  id          Int      @id @default(autoincrement())
-  episodeId   Int
+  id        Int @id @default(autoincrement())
+  episodeId Int
 
   type        SceneType @default(VISUAL)
   title       String
@@ -165,20 +174,36 @@ model Scene {
   order       Int
   bgImageUrl  String?
   audioUrl    String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   episode   Episode    @relation(fields: [episodeId], references: [id])
-  dialogues dialogue[]
+  dialogues Dialogue[]
 
   @@unique([episodeId, order])
 }
 
-model dialogue {
-  id             Int      @id @default(autoincrement())
+enum DialogueType {
+  // 기본 스토리/서사
+  NARRATION // 내레이션
+  DIALOGUE // 캐릭터 대사
+  IMAGE
+  HEADING
+
+  // 분기/선택
+  CHOICE // 선택지 표시
+  // AI
+  AI_INPUT_SLOT // 텍스트 입력 받기
+  AI_SLOT
+  // 학습/미션형
+  SPEAKING_MISSION // 따라 말하기
+}
+
+model Dialogue {
+  id             Int          @id @default(autoincrement())
   sceneId        Int
   order          Int
-  type           String   @default("dialogue")
+  type           DialogueType @default(DIALOGUE)
   characterName  String?
   characterId    Int?
   englishText    String
@@ -186,13 +211,17 @@ model dialogue {
   charImageLabel String?
   imageUrl       String?
   audioUrl       String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+
+  data Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   scene     Scene      @relation(fields: [sceneId], references: [id])
   character Character? @relation(fields: [characterId], references: [id])
 
-  bookmarks dialogueBookmark[]
+  bookmarks        dialogueBookmark[]
+  playEpisodeSlots PlayEpisodeSlot[]
 
   @@unique([sceneId, order])
 }
@@ -235,6 +264,7 @@ enum QuizType {
 enum QuizSourceType {
   EPISODE
   LESSON
+  PLAY
 }
 
 model Quiz {
@@ -262,6 +292,7 @@ model Quiz {
 enum QuizSessionType {
   EPISODE // 에피소드 끝나고 푸는 퀴즈
   DAILY_QUIZ // 오늘의 학습
+  PLAY
 }
 
 model UserQuizSession {
@@ -270,9 +301,8 @@ model UserQuizSession {
 
   type QuizSessionType
 
-  // 에피소드 퀴즈일 때만 연결
-  episodeId Int?
-  episode   Episode? @relation(fields: [episodeId], references: [id])
+  // EPISODE/PLAY 등 소스 ID (에피소드 ID 또는 플레이 에피소드 ID)
+  sourceId Int?
 
   // 진행 상태
   startedAt   DateTime  @default(now())
@@ -291,7 +321,7 @@ model UserQuizSession {
   quizSessionItems QuizSessionItem[]
 
   @@index([userId])
-  @@index([episodeId])
+  @@index([sourceId])
   @@index([type])
 }
 
@@ -329,36 +359,6 @@ model UserQuizAnswer {
   @@index([quizSessionId])
 }
 
-enum EpisodeStage {
-  STORY_IN_PROGRESS
-  STORY_COMPLETED
-  QUIZ_IN_PROGRESS
-  QUIZ_COMPLETED
-}
-
-model UserEpisode {
-  id        Int @id @default(autoincrement())
-  userId    Int
-  episodeId Int
-
-  startedAt   DateTime  @default(now())
-  completedAt DateTime?
-
-  lastSceneId  Int?
-  currentStage EpisodeStage
-
-  score       Int?
-  isCompleted Boolean @default(false)
-
-  meta    Json?
-  user    User    @relation(fields: [userId], references: [id])
-  episode Episode @relation(fields: [episodeId], references: [id])
-
-  @@unique([userId, episodeId])
-  @@index([userId])
-  @@index([episodeId])
-}
-
 //////////////////////////////////////////////////////
 // CHARACTER SYSTEM
 //////////////////////////////////////////////////////
@@ -384,11 +384,12 @@ model Character {
   updatedAt   DateTime      @updatedAt
 
   images         CharacterImage[]
-  dialogues      dialogue[]
+  dialogues      Dialogue[]
   friends        CharacterFriend[]
   messages       Message[]
   storyLinks     StoryCharacter[]
   characterChats CharacterChat[]
+  slotDialogues  SlotDialogue[]
 }
 
 model StoryCharacter {
@@ -517,7 +518,7 @@ model dialogueBookmark {
   updatedAt  DateTime @updatedAt
 
   user     User     @relation(fields: [userId], references: [id])
-  dialogue dialogue @relation(fields: [dialogueId], references: [id])
+  dialogue Dialogue @relation(fields: [dialogueId], references: [id])
 
   @@unique([userId, dialogueId])
 }
@@ -612,4 +613,146 @@ model UserXpHistory {
   /// 같은 source에 대해 중복 지급 방지
   @@unique([userId, sourceType, sourceId, triggerType])
   @@index([userId, grantedAt])
+}
+
+//////
+//PREMIUM
+/////
+
+enum EpisodeStage {
+  STORY_IN_PROGRESS
+  STORY_COMPLETED
+  QUIZ_IN_PROGRESS
+  QUIZ_COMPLETED
+}
+
+model UserEpisode {
+  id        Int @id @default(autoincrement())
+  userId    Int
+  episodeId Int
+
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+
+  lastSceneId  Int?
+  currentStage EpisodeStage
+
+  score       Int?
+  isCompleted Boolean @default(false)
+
+  meta    Json?
+  user    User    @relation(fields: [userId], references: [id])
+  episode Episode @relation(fields: [episodeId], references: [id])
+
+  @@unique([userId, episodeId])
+  @@index([userId])
+  @@index([episodeId])
+}
+
+enum AccessStatus {
+  ACTIVE
+  REFUNDED
+  CANCELED
+  EXPIRED
+}
+
+enum PlayEpisodeMode {
+  FREE_CHAT // 자유대화만
+  CHAT_WITH_EVAL // 자유대화 + 교정/평가/점수
+  CHAT_WITH_QUIZ // 대화 + 퀴즈 스테이지
+}
+
+enum SlotStatus {
+  ACTIVE
+  ENDED
+}
+
+model UserPlayEpisode {
+  id        Int @id @default(autoincrement())
+  userId    Int
+  episodeId Int
+
+  mode PlayEpisodeMode @default(FREE_CHAT)
+
+  accessStatus AccessStatus @default(ACTIVE)
+  acquiredAt   DateTime     @default(now())
+  revokedAt    DateTime?
+
+  startedAt      DateTime     @default(now())
+  completedAt    DateTime?
+  lastSceneId    Int?
+  lastDialogueId Int?
+  currentStage   EpisodeStage @default(STORY_IN_PROGRESS)
+  isCompleted    Boolean      @default(false)
+
+  result Json?
+  data   Json?
+
+  slots PlayEpisodeSlot[]
+
+  user    User    @relation(fields: [userId], references: [id])
+  episode Episode @relation(fields: [episodeId], references: [id])
+
+  @@index([userId, accessStatus])
+  @@index([episodeId])
+}
+
+model PlayEpisodeSlot {
+  id            Int @id @default(autoincrement())
+  playEpisodeId Int
+
+  dialogueId Int // dialogue.id (USER_INPUT 지점이라고 네가 정의)
+  order      Int?
+
+  status SlotStatus @default(ACTIVE)
+  data   Json?
+
+  slotDialogues SlotDialogue[]
+
+  endedAt DateTime? // ai 호출완료 시각
+
+  playEpisode UserPlayEpisode @relation(fields: [playEpisodeId], references: [id])
+  dialogue    Dialogue        @relation(fields: [dialogueId], references: [id])
+
+  @@index([playEpisodeId])
+  @@index([dialogueId])
+}
+
+enum SlotMessageType {
+  USER
+  NPC
+  SYSTEM
+}
+
+enum SlotDialogueType {
+  DIALOGUE
+  NARRATION
+}
+
+model SlotDialogue {
+  id     Int @id @default(autoincrement())
+  slotId Int
+
+  playEpisodeId Int?
+  sceneId       Int?
+  order         Int
+
+  type        SlotDialogueType @default(DIALOGUE)
+  messageType SlotMessageType  @default(USER)
+
+  characterId    Int?
+  characterName  String?
+  charImageLabel String?
+  koreanText     String?
+  englishText    String?
+
+  data      Json?
+  createdAt DateTime @default(now())
+
+  slot      PlayEpisodeSlot @relation(fields: [slotId], references: [id])
+  character Character?      @relation(fields: [characterId], references: [id])
+
+  @@unique([slotId, order])
+  @@index([slotId, createdAt])
+  @@index([playEpisodeId, sceneId])
 }

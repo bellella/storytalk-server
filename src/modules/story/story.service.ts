@@ -22,12 +22,14 @@ import {
 import { StoryDetailDto } from './dto/story-detail.dto';
 import { StoryListItemDto } from './dto/story-list-item.dto';
 import { TagItemDto } from './dto/tag-item.dto';
+import { CharacterService } from '../character/character.service';
 
 @Injectable()
 export class StoryService {
   constructor(
     private prisma: PrismaService,
-    private quizService: QuizService
+    private quizService: QuizService,
+    private characterService: CharacterService
   ) {}
 
   async getStoryDetail(
@@ -73,12 +75,22 @@ export class StoryService {
         [EpisodeStage.QUIZ_IN_PROGRESS]: 75,
         [EpisodeStage.QUIZ_COMPLETED]: 100,
       };
-      const userEpisodeResults = await this.prisma.userEpisode.findMany({
-        where: {
-          userId: user.id,
-          episode: { storyId }, // Prisma에서 relation 조건 가능
-        },
-      });
+      const userEpisodeResults = await this.prisma.userEpisode
+        .findMany({
+          select: {
+            id: true,
+            episodeId: true,
+            currentStage: true,
+          },
+          where: {
+            userId: user.id,
+            episode: { storyId }, // Prisma에서 relation 조건 가능
+          },
+        })
+        .catch((error) => {
+          console.error(error);
+          return [];
+        });
 
       // episodeId 기준으로 맵핑
       userEpisodeMap = Object.fromEntries(
@@ -216,44 +228,43 @@ export class StoryService {
       throw new NotFoundException('에피소드를 찾을 수 없습니다.');
     }
 
-    // StoryCharacter에 걸려있는 모든 CharacterImage 수집
-    const characterImagesMap = new Map<number, CharacterImageDto[]>();
-    episode.story.storyCharacters.forEach((storyChar) => {
-      if (storyChar.character) {
-        const images = storyChar.character.images.map(
-          (img): CharacterImageDto => ({
-            id: img.id,
-            characterId: img.characterId,
-            imageUrl: img.imageUrl,
-            label: img.label ?? undefined,
-            isDefault: img.isDefault,
-          })
-        );
-        characterImagesMap.set(storyChar.character.id, images);
-      }
-    });
+    // 스토리에 등록된 캐릭터 ID 수집 → 이미지 맵 빌드
+    const storyCharacterIds = (episode.story?.storyCharacters ?? [])
+      .map((sc) => sc.character?.id)
+      .filter((id): id is number => id != null);
 
-    // 모든 CharacterImage를 평탄화
-    const allCharacterImages: CharacterImageDto[] = Array.from(
-      characterImagesMap.values()
-    ).flat();
+    const imageMap =
+      await this.characterService.buildImageMap(storyCharacterIds);
 
-    // Scenes와 Dialogues 매핑 (charImageLabel로 CharacterImage 매칭)
+    // CharacterImageDto 평탄화 (응답용)
+    const allCharacterImages: CharacterImageDto[] = (
+      episode.story?.storyCharacters ?? []
+    ).flatMap((sc) =>
+      sc.character
+        ? sc.character.images.map(
+            (img): CharacterImageDto => ({
+              id: img.id,
+              characterId: img.characterId,
+              imageUrl: img.imageUrl,
+              label: img.label ?? undefined,
+              isDefault: img.isDefault,
+            })
+          )
+        : []
+    );
+
+    // Scenes와 Dialogues 매핑
     const scenes: SceneDto[] = episode.scenes.map((scene) => {
       const dialogues: DialogueDto[] = scene.dialogues.map((dialogue) => {
         let imageUrl = dialogue.imageUrl ?? undefined;
 
-        // charImageLabel이 있고 characterId가 있으면 CharacterImage에서 매핑
         if (dialogue.charImageLabel && dialogue.characterId) {
-          const characterImages = characterImagesMap.get(dialogue.characterId);
-          if (characterImages) {
-            const matchedImage = characterImages.find(
-              (img) => img.label === dialogue.charImageLabel
-            );
-            if (matchedImage) {
-              imageUrl = matchedImage.imageUrl;
-            }
-          }
+          const resolved = this.characterService.resolveImageUrl(
+            imageMap,
+            dialogue.characterId,
+            dialogue.charImageLabel
+          );
+          if (resolved) imageUrl = resolved;
         }
 
         return {
@@ -284,7 +295,7 @@ export class StoryService {
 
     return {
       id: episode.id,
-      storyId: episode.storyId,
+      storyId: episode.storyId ?? undefined,
       title: episode.title,
       koreanTitle: episode.koreanTitle ?? undefined,
       order: episode.order,
