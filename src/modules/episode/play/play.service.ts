@@ -5,6 +5,7 @@ import {
   DialogueType,
   EpisodeStage,
   PlayEpisodeMode,
+  QuizSourceType,
   SlotDialogueType,
   SlotMessageType,
   SlotStatus,
@@ -15,7 +16,7 @@ import {
   CharacterService,
 } from '@/modules/character/character.service';
 import { PrismaService } from '@/modules/prisma/prisma.service';
-import { QuizService } from '@/modules/quiz/quiz.service';
+import { QuizSentenceInput, QuizService } from '@/modules/quiz/quiz.service';
 import {
   DialogueDto,
   EpisodeDetailDto,
@@ -31,8 +32,10 @@ import {
   buildCorrectAndDialoguesPrompt,
   ReplyMode,
 } from './ai/correctAndDialogues.prompt';
+import { CorrectAndDialoguesResponseZ } from './ai/correctAndDialogues.schema';
 import { buildGenerateDialoguesPrompt } from './ai/generateDialogues.prompt';
 import { GenerateDialoguesResponseZ } from './ai/generateDialogues.schema';
+import { buildPickSentencesForQuizPrompt } from './ai/pickSentencesForQuiz.prompt';
 import {
   AiInputSlotDto,
   AiInputSlotResponseDto,
@@ -41,10 +44,10 @@ import {
   MyPlayEpisodeItemDto,
   PlayEpisodeDetailResponseDto,
   ResultResponseDto,
-  SavedDialogueDto,
+  SlotDialogueDto,
 } from './dto/play.dto';
 import { UpdatePlayDto } from './dto/update-play.dto';
-import { CorrectAndDialoguesResponseZ } from './ai/correctAndDialogues.schema';
+import { PickSentencesForQuizResponseZ } from './ai/pickSentencesForQuiz.schema';
 
 @Injectable()
 export class PlayService {
@@ -89,7 +92,7 @@ export class PlayService {
       startedAt: play.startedAt.toISOString(),
       completedAt: play.completedAt?.toISOString() ?? null,
       lastSceneId: play.lastSceneId ?? null,
-      lastDialogueId: play.lastDialogueId ?? null,
+      lastSlotId: play.lastSlotId ?? null,
       resultSummary: play.result ?? null,
     }));
 
@@ -108,9 +111,7 @@ export class PlayService {
       where: { id: play.id },
       data: {
         ...(dto.lastSceneId !== undefined && { lastSceneId: dto.lastSceneId }),
-        ...(dto.lastDialogueId !== undefined && {
-          lastDialogueId: dto.lastDialogueId,
-        }),
+        ...(dto.lastSlotId !== undefined && { lastSlotId: dto.lastSlotId }),
         ...(dto.currentStage !== undefined && {
           currentStage: dto.currentStage,
         }),
@@ -127,12 +128,13 @@ export class PlayService {
   ): Promise<PlayEpisodeDetailResponseDto> {
     const play = await this.assertAccessiblePlayEpisode(userId, playEpisodeId);
 
-    const episode = play.isCompleted
-      ? await this.buildEpisodeWithRuntimeDialogues(
-          play.episodeId,
-          playEpisodeId
-        )
-      : await this.storyService.getEpisodeDetail(play.episodeId);
+    // completed: 모든 slot 치환 / in-progress: lastSlotId 이하 slot만 치환
+    // → 어느 경우든 이미 플레이한 AI slot 마커는 runtime dialogues로 대체
+    const episode = await this.buildEpisodeWithRuntimeDialogues(
+      play.episodeId,
+      playEpisodeId,
+      play.isCompleted ? null : play.lastSlotId
+    );
 
     if (!episode) throw new NotFoundException('Episode not found');
 
@@ -145,7 +147,7 @@ export class PlayService {
         startedAt: play.startedAt.toISOString(),
         completedAt: play.completedAt?.toISOString() ?? null,
         lastSceneId: play.lastSceneId ?? null,
-        lastDialogueId: play.lastDialogueId ?? null,
+        lastSlotId: play.lastSlotId ?? null,
         currentStage: play.currentStage,
         isCompleted: play.isCompleted,
       },
@@ -154,17 +156,40 @@ export class PlayService {
   }
 
   /**
-   * isCompleted 상태의 episode를 반환할 때,
-   * AI_SLOT / AI_INPUT_SLOT 마커를 실제 플레이 시점에 생성된 slot dialogues로 채워서 반환.
+   * AI_SLOT / AI_INPUT_SLOT 마커를 runtime slot dialogues로 치환한 episode를 반환.
+   *
+   * - lastSlotId가 null이면 모든 ENDED slot을 치환 (completed 케이스)
+   * - lastSlotId가 있으면 해당 slot의 order 이하인 ENDED slot만 치환 (in-progress 케이스)
+   * - lastSlotId가 undefined이면 slot 없음 → 마커 그대로 반환
    */
   private async buildEpisodeWithRuntimeDialogues(
     episodeId: number,
-    playEpisodeId: number
+    playEpisodeId: number,
+    lastSlotId: number | null | undefined
   ): Promise<EpisodeDetailDto> {
     const episode = await this.storyService.getEpisodeDetail(episodeId);
 
+    // lastSlotId가 undefined면 아직 아무 slot도 플레이 안 한 것 → 치환 없이 반환
+    if (lastSlotId === undefined) {
+      return episode;
+    }
+
+    // lastSlotId가 있으면 해당 slot의 order를 조회해서 필터 기준으로 사용
+    let maxOrder: number | undefined;
+    if (lastSlotId !== null) {
+      const lastSlot = await this.prisma.playEpisodeSlot.findUnique({
+        where: { id: lastSlotId },
+        select: { order: true },
+      });
+      maxOrder = lastSlot?.order ?? undefined;
+    }
+
     const slots = await this.prisma.playEpisodeSlot.findMany({
-      where: { playEpisodeId },
+      where: {
+        playEpisodeId,
+        status: SlotStatus.ENDED,
+        ...(maxOrder !== undefined ? { order: { lte: maxOrder } } : {}),
+      },
       orderBy: [{ order: 'asc' }, { id: 'asc' }],
       include: {
         slotDialogues: {
@@ -431,7 +456,7 @@ export class PlayService {
         await tx.userPlayEpisode.update({
           where: { id: playEpisodeId },
           data: {
-            lastDialogueId: dialogueId,
+            lastSlotId: slot.id,
             data: {
               ...(playEpisode.data as Record<string, any>),
               ...dataTable,
@@ -452,7 +477,7 @@ export class PlayService {
     );
   }
 
-  private toDialogueDto(r: any, imageMap: CharacterImageMap): SavedDialogueDto {
+  private toDialogueDto(r: any, imageMap: CharacterImageMap): SlotDialogueDto {
     return {
       id: r.id,
       type: r.type,
@@ -634,7 +659,7 @@ export class PlayService {
         await tx.userPlayEpisode.update({
           where: { id: playEpisodeId },
           data: {
-            lastDialogueId: dialogueId,
+            lastSlotId: slot.id,
             data: { ...(play.data as Record<string, any>), ...dataTable },
           },
         });
@@ -674,117 +699,128 @@ export class PlayService {
       };
     }
 
-    return this.prisma.$transaction(async (tx) => {
-      // 1) ACTIVE slot 강제 종료(혹시 남아있으면)
-      const now = new Date();
-      await tx.playEpisodeSlot.updateMany({
-        where: {
-          playEpisodeId,
-          status: SlotStatus.ACTIVE,
-        },
-        data: {
-          status: SlotStatus.ENDED,
-          endedAt: now,
-        },
-      });
-
-      // 2) slot에서 evaluation 모아서 간단 결과 만들기(없으면 null)
-      const slots = await tx.playEpisodeSlot.findMany({
-        where: { playEpisodeId },
-        select: { data: true },
-        orderBy: { id: 'asc' },
-      });
-
-      // evaluation이 slot.data.evaluation에 있다고 가정
-      const evals = slots
-        .map((s) => (s.data as any)?.evaluation)
-        .filter(Boolean);
-
-      const avg = (key: string) => {
-        const nums = evals
-          .map((e: any) => e?.[key])
-          .filter((v: any) => typeof v === 'number');
-        if (!nums.length) return null;
-        const sum = nums.reduce((a: number, b: number) => a + b, 0);
-        return Math.round(sum / nums.length);
-      };
-
-      const result = evals.length
-        ? {
-            overallScore: avg('overallScore'),
-            grammarScore: avg('grammarScore'),
-            fluencyScore: avg('fluencyScore'),
-            naturalnessScore: avg('naturalnessScore'),
-            turns: evals.length,
-            generatedAt: now.toISOString(),
-          }
-        : null;
-
-      // 3) 모드에 따른 stage 전환
-      const nextStage =
-        play.mode === PlayEpisodeMode.CHAT_WITH_QUIZ
-          ? EpisodeStage.QUIZ_IN_PROGRESS
-          : EpisodeStage.STORY_COMPLETED;
-
-      // 4) play 업데이트
-      const updated = await tx.userPlayEpisode.update({
-        where: { id: playEpisodeId },
-        data: {
-          completedAt: now,
-          isCompleted: true,
-          currentStage: nextStage,
-          result: result ?? undefined,
-        },
-        select: {
-          id: true,
-          currentStage: true,
-          isCompleted: true,
-          result: true,
-        },
-      });
-
-      // 5) 퀴즈가 필요한 모드면 여기서 생성 트리거(너 테이블 있다고 했으니 연결만)
-      // TODO: mode === CHAT_WITH_QUIZ 인 경우:
-      // - episode/scene/dialogue 기반으로 퀴즈 생성
-      // - UserQuizSession 생성/연결
-      // - nextStage 유지(QUIZ_IN_PROGRESS)
-
-      if (play.mode === PlayEpisodeMode.CHAT_WITH_QUIZ) {
-        const slotData = await this.prisma.playEpisodeSlot.findMany({
-          where: { playEpisodeId },
-          select: {
-            slotDialogues: {
-              select: {
-                englishText: true,
-                koreanText: true,
-                id: true,
-              },
-            },
+    return this.prisma.$transaction(
+      async (tx) => {
+        // 1) ACTIVE slot 강제 종료(혹시 남아있으면)
+        const now = new Date();
+        await tx.playEpisodeSlot.updateMany({
+          where: {
+            playEpisodeId,
+            status: SlotStatus.ACTIVE,
+          },
+          data: {
+            status: SlotStatus.ENDED,
+            endedAt: now,
           },
         });
 
-        const sentences = slotData.flatMap((s) =>
-          s.slotDialogues.map((d) => ({
-            englishText: d.englishText ?? '',
-            koreanText: d.koreanText ?? '',
-            dialogueId: d.id,
-          }))
-        );
+        // 2) slot에서 evaluation 모아서 간단 결과 만들기(없으면 null)
+        const slots = await tx.playEpisodeSlot.findMany({
+          where: { playEpisodeId },
+          select: { data: true },
+          orderBy: { id: 'asc' },
+        });
 
-        // await this.quizService.generateQuizzes(
-        //   sentences,
-        //   play.episodeId,
-        //   QuizSourceType.PLAY
-        // );
-      }
+        // evaluation이 slot.data.evaluation에 있다고 가정
+        const evals = slots
+          .map((s) => (s.data as any)?.evaluation)
+          .filter(Boolean);
 
-      return {
-        playEpisodeId: updated.id,
-        currentStage: updated.currentStage,
-        isCompleted: updated.isCompleted,
-        result: updated.result ?? null,
-      };
-    });
+        const avg = (key: string) => {
+          const nums = evals
+            .map((e: any) => e?.[key])
+            .filter((v: any) => typeof v === 'number');
+          if (!nums.length) return null;
+          const sum = nums.reduce((a: number, b: number) => a + b, 0);
+          return Math.round(sum / nums.length);
+        };
+
+        const result = evals.length
+          ? {
+              overallScore: avg('overallScore'),
+              grammarScore: avg('grammarScore'),
+              fluencyScore: avg('fluencyScore'),
+              naturalnessScore: avg('naturalnessScore'),
+              turns: evals.length,
+              generatedAt: now.toISOString(),
+            }
+          : null;
+
+        // 3) 모드에 따른 stage 전환
+        const nextStage =
+          play.mode === PlayEpisodeMode.CHAT_WITH_QUIZ
+            ? EpisodeStage.QUIZ_IN_PROGRESS
+            : EpisodeStage.STORY_COMPLETED;
+
+        // 4) play 업데이트
+        const updated = await tx.userPlayEpisode.update({
+          where: { id: playEpisodeId },
+          data: {
+            completedAt: now,
+            isCompleted: true,
+            currentStage: nextStage,
+            result: result ?? undefined,
+          },
+          select: {
+            id: true,
+            currentStage: true,
+            isCompleted: true,
+            result: true,
+          },
+        });
+
+        // 5) 퀴즈가 필요한 모드면 여기서 생성 트리거(너 테이블 있다고 했으니 연결만)
+        // TODO: mode === CHAT_WITH_QUIZ 인 경우:
+        // - episode/scene/dialogue 기반으로 퀴즈 생성
+        // - UserQuizSession 생성/연결
+        // - nextStage 유지(QUIZ_IN_PROGRESS)
+
+        if (play.mode === PlayEpisodeMode.CHAT_WITH_QUIZ) {
+          const slotData = await this.prisma.playEpisodeSlot.findMany({
+            where: { playEpisodeId },
+            select: {
+              slotDialogues: {
+                select: {
+                  englishText: true,
+                },
+              },
+            },
+          });
+
+          const slotSentences = slotData.flatMap((s) =>
+            s.slotDialogues.map((d) => d.englishText ?? '')
+          );
+
+          const prompt = buildPickSentencesForQuizPrompt(slotSentences);
+          const rawText = await this.openAiService.callApi(prompt);
+          console.log(prompt);
+          console.log(rawText);
+          let parsed: any;
+          try {
+            parsed =
+              typeof rawText === 'string' ? JSON.parse(rawText) : rawText;
+          } catch {
+            throw new BadRequestException('AI returned invalid JSON');
+          }
+
+          const { results } = PickSentencesForQuizResponseZ.parse(parsed);
+
+          await this.quizService.generateQuizzes(
+            results,
+            playEpisodeId,
+            QuizSourceType.PLAY
+          );
+        }
+
+        return {
+          playEpisodeId: updated.id,
+          currentStage: updated.currentStage,
+          isCompleted: updated.isCompleted,
+          result: updated.result ?? null,
+        };
+      },
+      { timeout: 15000 }
+    );
   }
 
   // async getReplayData(
@@ -1054,7 +1090,7 @@ export class PlayService {
         result: true,
         data: true,
         lastSceneId: true,
-        lastDialogueId: true,
+        lastSlotId: true,
       },
     });
 

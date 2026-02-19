@@ -73,7 +73,7 @@ export class PlayController {
   }
 
   /**
-   * 중간 저장 (lastSceneId, lastDialogueId, currentStage 등)
+   * 중간 저장 (lastSceneId, lastSlotId, currentStage 등)
    * PATCH /play-episodes/:playEpisodeId/progress
    */
   @Patch('/:playEpisodeId/progress')

@@ -11,7 +11,7 @@ export class UpdatePlayDto {
   @IsOptional()
   @IsInt()
   @ApiPropertyOptional()
-  lastDialogueId?: number;
+  lastSlotId?: number;
 
   @IsOptional()
   @IsEnum(EpisodeStage)

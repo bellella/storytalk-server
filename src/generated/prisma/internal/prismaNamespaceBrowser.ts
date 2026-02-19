@@ -484,7 +484,7 @@ export const UserPlayEpisodeScalarFieldEnum = {
   startedAt: 'startedAt',
   completedAt: 'completedAt',
   lastSceneId: 'lastSceneId',
-  lastDialogueId: 'lastDialogueId',
+  lastSlotId: 'lastSlotId',
   currentStage: 'currentStage',
   isCompleted: 'isCompleted',
   result: 'result',

@@ -31,7 +31,7 @@ export type UserPlayEpisodeAvgAggregateOutputType = {
   userId: number | null
   episodeId: number | null
   lastSceneId: number | null
-  lastDialogueId: number | null
+  lastSlotId: number | null
 }
 
 export type UserPlayEpisodeSumAggregateOutputType = {
@@ -39,7 +39,7 @@ export type UserPlayEpisodeSumAggregateOutputType = {
   userId: number | null
   episodeId: number | null
   lastSceneId: number | null
-  lastDialogueId: number | null
+  lastSlotId: number | null
 }
 
 export type UserPlayEpisodeMinAggregateOutputType = {
@@ -53,7 +53,7 @@ export type UserPlayEpisodeMinAggregateOutputType = {
   startedAt: Date | null
   completedAt: Date | null
   lastSceneId: number | null
-  lastDialogueId: number | null
+  lastSlotId: number | null
   currentStage: $Enums.EpisodeStage | null
   isCompleted: boolean | null
 }
@@ -69,7 +69,7 @@ export type UserPlayEpisodeMaxAggregateOutputType = {
   startedAt: Date | null
   completedAt: Date | null
   lastSceneId: number | null
-  lastDialogueId: number | null
+  lastSlotId: number | null
   currentStage: $Enums.EpisodeStage | null
   isCompleted: boolean | null
 }
@@ -85,7 +85,7 @@ export type UserPlayEpisodeCountAggregateOutputType = {
   startedAt: number
   completedAt: number
   lastSceneId: number
-  lastDialogueId: number
+  lastSlotId: number
   currentStage: number
   isCompleted: number
   result: number
@@ -99,7 +99,7 @@ export type UserPlayEpisodeAvgAggregateInputType = {
   userId?: true
   episodeId?: true
   lastSceneId?: true
-  lastDialogueId?: true
+  lastSlotId?: true
 }
 
 export type UserPlayEpisodeSumAggregateInputType = {
@@ -107,7 +107,7 @@ export type UserPlayEpisodeSumAggregateInputType = {
   userId?: true
   episodeId?: true
   lastSceneId?: true
-  lastDialogueId?: true
+  lastSlotId?: true
 }
 
 export type UserPlayEpisodeMinAggregateInputType = {
@@ -121,7 +121,7 @@ export type UserPlayEpisodeMinAggregateInputType = {
   startedAt?: true
   completedAt?: true
   lastSceneId?: true
-  lastDialogueId?: true
+  lastSlotId?: true
   currentStage?: true
   isCompleted?: true
 }
@@ -137,7 +137,7 @@ export type UserPlayEpisodeMaxAggregateInputType = {
   startedAt?: true
   completedAt?: true
   lastSceneId?: true
-  lastDialogueId?: true
+  lastSlotId?: true
   currentStage?: true
   isCompleted?: true
 }
@@ -153,7 +153,7 @@ export type UserPlayEpisodeCountAggregateInputType = {
   startedAt?: true
   completedAt?: true
   lastSceneId?: true
-  lastDialogueId?: true
+  lastSlotId?: true
   currentStage?: true
   isCompleted?: true
   result?: true
@@ -258,7 +258,7 @@ export type UserPlayEpisodeGroupByOutputType = {
   startedAt: Date
   completedAt: Date | null
   lastSceneId: number | null
-  lastDialogueId: number | null
+  lastSlotId: number | null
   currentStage: $Enums.EpisodeStage
   isCompleted: boolean
   result: runtime.JsonValue | null
@@ -299,7 +299,7 @@ export type UserPlayEpisodeWhereInput = {
   startedAt?: Prisma.DateTimeFilter<"UserPlayEpisode"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"UserPlayEpisode"> | Date | string | null
   lastSceneId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
-  lastDialogueId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
+  lastSlotId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
   currentStage?: Prisma.EnumEpisodeStageFilter<"UserPlayEpisode"> | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolFilter<"UserPlayEpisode"> | boolean
   result?: Prisma.JsonNullableFilter<"UserPlayEpisode">
@@ -320,7 +320,7 @@ export type UserPlayEpisodeOrderByWithRelationInput = {
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastSceneId?: Prisma.SortOrderInput | Prisma.SortOrder
-  lastDialogueId?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastSlotId?: Prisma.SortOrderInput | Prisma.SortOrder
   currentStage?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
   result?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -344,7 +344,7 @@ export type UserPlayEpisodeWhereUniqueInput = Prisma.AtLeast<{
   startedAt?: Prisma.DateTimeFilter<"UserPlayEpisode"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"UserPlayEpisode"> | Date | string | null
   lastSceneId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
-  lastDialogueId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
+  lastSlotId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
   currentStage?: Prisma.EnumEpisodeStageFilter<"UserPlayEpisode"> | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolFilter<"UserPlayEpisode"> | boolean
   result?: Prisma.JsonNullableFilter<"UserPlayEpisode">
@@ -365,7 +365,7 @@ export type UserPlayEpisodeOrderByWithAggregationInput = {
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastSceneId?: Prisma.SortOrderInput | Prisma.SortOrder
-  lastDialogueId?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastSlotId?: Prisma.SortOrderInput | Prisma.SortOrder
   currentStage?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
   result?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -391,7 +391,7 @@ export type UserPlayEpisodeScalarWhereWithAggregatesInput = {
   startedAt?: Prisma.DateTimeWithAggregatesFilter<"UserPlayEpisode"> | Date | string
   completedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"UserPlayEpisode"> | Date | string | null
   lastSceneId?: Prisma.IntNullableWithAggregatesFilter<"UserPlayEpisode"> | number | null
-  lastDialogueId?: Prisma.IntNullableWithAggregatesFilter<"UserPlayEpisode"> | number | null
+  lastSlotId?: Prisma.IntNullableWithAggregatesFilter<"UserPlayEpisode"> | number | null
   currentStage?: Prisma.EnumEpisodeStageWithAggregatesFilter<"UserPlayEpisode"> | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolWithAggregatesFilter<"UserPlayEpisode"> | boolean
   result?: Prisma.JsonNullableWithAggregatesFilter<"UserPlayEpisode">
@@ -406,7 +406,7 @@ export type UserPlayEpisodeCreateInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
-  lastDialogueId?: number | null
+  lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
   isCompleted?: boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -427,7 +427,7 @@ export type UserPlayEpisodeUncheckedCreateInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
-  lastDialogueId?: number | null
+  lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
   isCompleted?: boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -443,7 +443,7 @@ export type UserPlayEpisodeUpdateInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastDialogueId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -464,7 +464,7 @@ export type UserPlayEpisodeUncheckedUpdateInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastDialogueId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -483,7 +483,7 @@ export type UserPlayEpisodeCreateManyInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
-  lastDialogueId?: number | null
+  lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
   isCompleted?: boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -498,7 +498,7 @@ export type UserPlayEpisodeUpdateManyMutationInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastDialogueId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -516,7 +516,7 @@ export type UserPlayEpisodeUncheckedUpdateManyInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastDialogueId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -544,7 +544,7 @@ export type UserPlayEpisodeCountOrderByAggregateInput = {
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   lastSceneId?: Prisma.SortOrder
-  lastDialogueId?: Prisma.SortOrder
+  lastSlotId?: Prisma.SortOrder
   currentStage?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
   result?: Prisma.SortOrder
@@ -556,7 +556,7 @@ export type UserPlayEpisodeAvgOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   episodeId?: Prisma.SortOrder
   lastSceneId?: Prisma.SortOrder
-  lastDialogueId?: Prisma.SortOrder
+  lastSlotId?: Prisma.SortOrder
 }
 
 export type UserPlayEpisodeMaxOrderByAggregateInput = {
@@ -570,7 +570,7 @@ export type UserPlayEpisodeMaxOrderByAggregateInput = {
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   lastSceneId?: Prisma.SortOrder
-  lastDialogueId?: Prisma.SortOrder
+  lastSlotId?: Prisma.SortOrder
   currentStage?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
 }
@@ -586,7 +586,7 @@ export type UserPlayEpisodeMinOrderByAggregateInput = {
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   lastSceneId?: Prisma.SortOrder
-  lastDialogueId?: Prisma.SortOrder
+  lastSlotId?: Prisma.SortOrder
   currentStage?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
 }
@@ -596,7 +596,7 @@ export type UserPlayEpisodeSumOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   episodeId?: Prisma.SortOrder
   lastSceneId?: Prisma.SortOrder
-  lastDialogueId?: Prisma.SortOrder
+  lastSlotId?: Prisma.SortOrder
 }
 
 export type UserPlayEpisodeScalarRelationFilter = {
@@ -718,7 +718,7 @@ export type UserPlayEpisodeCreateWithoutUserInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
-  lastDialogueId?: number | null
+  lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
   isCompleted?: boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -737,7 +737,7 @@ export type UserPlayEpisodeUncheckedCreateWithoutUserInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
-  lastDialogueId?: number | null
+  lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
   isCompleted?: boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -785,7 +785,7 @@ export type UserPlayEpisodeScalarWhereInput = {
   startedAt?: Prisma.DateTimeFilter<"UserPlayEpisode"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"UserPlayEpisode"> | Date | string | null
   lastSceneId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
-  lastDialogueId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
+  lastSlotId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
   currentStage?: Prisma.EnumEpisodeStageFilter<"UserPlayEpisode"> | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolFilter<"UserPlayEpisode"> | boolean
   result?: Prisma.JsonNullableFilter<"UserPlayEpisode">
@@ -800,7 +800,7 @@ export type UserPlayEpisodeCreateWithoutEpisodeInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
-  lastDialogueId?: number | null
+  lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
   isCompleted?: boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -819,7 +819,7 @@ export type UserPlayEpisodeUncheckedCreateWithoutEpisodeInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
-  lastDialogueId?: number | null
+  lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
   isCompleted?: boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -861,7 +861,7 @@ export type UserPlayEpisodeCreateWithoutSlotsInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
-  lastDialogueId?: number | null
+  lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
   isCompleted?: boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -881,7 +881,7 @@ export type UserPlayEpisodeUncheckedCreateWithoutSlotsInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
-  lastDialogueId?: number | null
+  lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
   isCompleted?: boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -912,7 +912,7 @@ export type UserPlayEpisodeUpdateWithoutSlotsInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastDialogueId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -932,7 +932,7 @@ export type UserPlayEpisodeUncheckedUpdateWithoutSlotsInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastDialogueId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -949,7 +949,7 @@ export type UserPlayEpisodeCreateManyUserInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
-  lastDialogueId?: number | null
+  lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
   isCompleted?: boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -964,7 +964,7 @@ export type UserPlayEpisodeUpdateWithoutUserInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastDialogueId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -983,7 +983,7 @@ export type UserPlayEpisodeUncheckedUpdateWithoutUserInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastDialogueId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1001,7 +1001,7 @@ export type UserPlayEpisodeUncheckedUpdateManyWithoutUserInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastDialogueId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1018,7 +1018,7 @@ export type UserPlayEpisodeCreateManyEpisodeInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
-  lastDialogueId?: number | null
+  lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
   isCompleted?: boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1033,7 +1033,7 @@ export type UserPlayEpisodeUpdateWithoutEpisodeInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastDialogueId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1052,7 +1052,7 @@ export type UserPlayEpisodeUncheckedUpdateWithoutEpisodeInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastDialogueId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1070,7 +1070,7 @@ export type UserPlayEpisodeUncheckedUpdateManyWithoutEpisodeInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastDialogueId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1119,7 +1119,7 @@ export type UserPlayEpisodeSelect<ExtArgs extends runtime.Types.Extensions.Inter
   startedAt?: boolean
   completedAt?: boolean
   lastSceneId?: boolean
-  lastDialogueId?: boolean
+  lastSlotId?: boolean
   currentStage?: boolean
   isCompleted?: boolean
   result?: boolean
@@ -1141,7 +1141,7 @@ export type UserPlayEpisodeSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   startedAt?: boolean
   completedAt?: boolean
   lastSceneId?: boolean
-  lastDialogueId?: boolean
+  lastSlotId?: boolean
   currentStage?: boolean
   isCompleted?: boolean
   result?: boolean
@@ -1161,7 +1161,7 @@ export type UserPlayEpisodeSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   startedAt?: boolean
   completedAt?: boolean
   lastSceneId?: boolean
-  lastDialogueId?: boolean
+  lastSlotId?: boolean
   currentStage?: boolean
   isCompleted?: boolean
   result?: boolean
@@ -1181,14 +1181,14 @@ export type UserPlayEpisodeSelectScalar = {
   startedAt?: boolean
   completedAt?: boolean
   lastSceneId?: boolean
-  lastDialogueId?: boolean
+  lastSlotId?: boolean
   currentStage?: boolean
   isCompleted?: boolean
   result?: boolean
   data?: boolean
 }
 
-export type UserPlayEpisodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "episodeId" | "mode" | "accessStatus" | "acquiredAt" | "revokedAt" | "startedAt" | "completedAt" | "lastSceneId" | "lastDialogueId" | "currentStage" | "isCompleted" | "result" | "data", ExtArgs["result"]["userPlayEpisode"]>
+export type UserPlayEpisodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "episodeId" | "mode" | "accessStatus" | "acquiredAt" | "revokedAt" | "startedAt" | "completedAt" | "lastSceneId" | "lastSlotId" | "currentStage" | "isCompleted" | "result" | "data", ExtArgs["result"]["userPlayEpisode"]>
 export type UserPlayEpisodeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   slots?: boolean | Prisma.UserPlayEpisode$slotsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1222,7 +1222,7 @@ export type $UserPlayEpisodePayload<ExtArgs extends runtime.Types.Extensions.Int
     startedAt: Date
     completedAt: Date | null
     lastSceneId: number | null
-    lastDialogueId: number | null
+    lastSlotId: number | null
     currentStage: $Enums.EpisodeStage
     isCompleted: boolean
     result: runtime.JsonValue | null
@@ -1663,7 +1663,7 @@ export interface UserPlayEpisodeFieldRefs {
   readonly startedAt: Prisma.FieldRef<"UserPlayEpisode", 'DateTime'>
   readonly completedAt: Prisma.FieldRef<"UserPlayEpisode", 'DateTime'>
   readonly lastSceneId: Prisma.FieldRef<"UserPlayEpisode", 'Int'>
-  readonly lastDialogueId: Prisma.FieldRef<"UserPlayEpisode", 'Int'>
+  readonly lastSlotId: Prisma.FieldRef<"UserPlayEpisode", 'Int'>
   readonly currentStage: Prisma.FieldRef<"UserPlayEpisode", 'EpisodeStage'>
   readonly isCompleted: Prisma.FieldRef<"UserPlayEpisode", 'Boolean'>
   readonly result: Prisma.FieldRef<"UserPlayEpisode", 'Json'>

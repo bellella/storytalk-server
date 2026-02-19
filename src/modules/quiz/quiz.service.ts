@@ -27,11 +27,12 @@ import { QuizScoreDto } from './dto/quiz-score.dto';
 import { QuizSessionResponseDto } from './dto/quiz-session-response.dto';
 import { StartQuizSessionDto } from './dto/start-quiz-session.dto';
 import { SubmitQuizAnswerDto } from './dto/submit-quiz-answer.dto';
+import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
 
 export interface QuizSentenceInput {
   englishText: string;
   koreanText: string;
-  dialogueId?: number;
+  description: string;
 }
 
 @Injectable()
@@ -45,13 +46,13 @@ export class QuizService {
     sentences: QuizSentenceInput[],
     sourceId: number,
     sourceType: QuizSourceType
-  ): Promise<QuizDto[]> {
+  ): Promise<SuccessResponseDto> {
     const quizTypes = [
       QuizType.SENTENCE_BUILD,
       QuizType.SENTENCE_CLOZE_BUILD,
       QuizType.SPEAK_REPEAT,
     ];
-
+    console.log(sentences);
     const quizzes = await Promise.all(
       sentences.map((src, i) => {
         const type = quizTypes[i % quizTypes.length];
@@ -59,12 +60,12 @@ export class QuizService {
 
         return this.prisma.quiz.create({
           data: {
+            type,
             sourceType,
             sourceId,
-            dialogueId: src.dialogueId ?? null,
-            type,
             questionEnglish: src.englishText,
             questionKorean: src.koreanText,
+            description: src.description,
             order: i + 1,
             data,
           },
@@ -72,9 +73,11 @@ export class QuizService {
       })
     );
 
-    return quizzes.map((q, i) => this.toQuizDto(q, i + 1));
+    return {
+      success: true,
+      message: '퀴즈가 생성되었습니다.',
+    };
   }
-
   /**
    * AI 없이 로컬에서 퀴즈 데이터 생성
    */
@@ -141,16 +144,48 @@ export class QuizService {
 
     // 빈칸으로 뺄 단어 선택: 관사/접속사/전치사 제외한 content word
     const skipWords = new Set([
-      'a', 'an', 'the', 'is', 'am', 'are', 'was', 'were',
-      'i', 'you', 'he', 'she', 'it', 'we', 'they',
-      'in', 'on', 'at', 'to', 'for', 'of', 'and', 'but', 'or',
-      'do', 'does', 'did', 'not', 'no', 'my', 'your', 'his', 'her',
+      'a',
+      'an',
+      'the',
+      'is',
+      'am',
+      'are',
+      'was',
+      'were',
+      'i',
+      'you',
+      'he',
+      'she',
+      'it',
+      'we',
+      'they',
+      'in',
+      'on',
+      'at',
+      'to',
+      'for',
+      'of',
+      'and',
+      'but',
+      'or',
+      'do',
+      'does',
+      'did',
+      'not',
+      'no',
+      'my',
+      'your',
+      'his',
+      'her',
     ]);
 
     const candidates = words
       .map((w, i) => ({ word: w, index: i }))
-      .filter((c) => !skipWords.has(c.word.toLowerCase().replace(/[^a-z]/g, ''))
-        && c.word.replace(/[^a-zA-Z]/g, '').length >= 3);
+      .filter(
+        (c) =>
+          !skipWords.has(c.word.toLowerCase().replace(/[^a-z]/g, '')) &&
+          c.word.replace(/[^a-zA-Z]/g, '').length >= 3
+      );
 
     // 1~2개 선택
     const slotCount = Math.min(candidates.length, words.length <= 5 ? 1 : 2);
@@ -183,10 +218,7 @@ export class QuizService {
         answerBySlot[slotId] = correctId;
 
         // distractor 1~2개
-        const distractors = this.pickDistractors(
-          [words[i]],
-          2
-        );
+        const distractors = this.pickDistractors([words[i]], 2);
         for (const d of distractors) {
           choiceNum++;
           choices.push({ id: `c${choiceNum}`, t: d });
@@ -213,14 +245,36 @@ export class QuizService {
 
     // content word 중 2~4개를 필수 발음 단어로 선택
     const skipWords = new Set([
-      'a', 'an', 'the', 'is', 'am', 'are', 'was', 'were',
-      'i', 'you', 'he', 'she', 'it', 'we', 'they',
-      'in', 'on', 'at', 'to', 'for', 'of', 'and', 'but', 'or',
+      'a',
+      'an',
+      'the',
+      'is',
+      'am',
+      'are',
+      'was',
+      'were',
+      'i',
+      'you',
+      'he',
+      'she',
+      'it',
+      'we',
+      'they',
+      'in',
+      'on',
+      'at',
+      'to',
+      'for',
+      'of',
+      'and',
+      'but',
+      'or',
     ]);
 
     const contentWords = words.filter(
-      (w) => !skipWords.has(w.toLowerCase().replace(/[^a-z]/g, ''))
-        && w.replace(/[^a-zA-Z]/g, '').length >= 2
+      (w) =>
+        !skipWords.has(w.toLowerCase().replace(/[^a-z]/g, '')) &&
+        w.replace(/[^a-zA-Z]/g, '').length >= 2
     );
 
     const count = Math.min(contentWords.length, 4);
@@ -245,14 +299,50 @@ export class QuizService {
   /** 간단한 distractor 단어 풀 */
   private pickDistractors(exclude: string[], count: number): string[] {
     const pool = [
-      'always', 'never', 'often', 'very', 'really', 'just',
-      'about', 'much', 'many', 'some', 'every', 'still',
-      'only', 'also', 'even', 'well', 'back', 'then',
-      'here', 'there', 'now', 'before', 'after', 'again',
-      'around', 'between', 'under', 'above', 'without',
-      'being', 'going', 'getting', 'making', 'having',
-      'should', 'would', 'could', 'might', 'must',
-      'than', 'both', 'each', 'while', 'where',
+      'always',
+      'never',
+      'often',
+      'very',
+      'really',
+      'just',
+      'about',
+      'much',
+      'many',
+      'some',
+      'every',
+      'still',
+      'only',
+      'also',
+      'even',
+      'well',
+      'back',
+      'then',
+      'here',
+      'there',
+      'now',
+      'before',
+      'after',
+      'again',
+      'around',
+      'between',
+      'under',
+      'above',
+      'without',
+      'being',
+      'going',
+      'getting',
+      'making',
+      'having',
+      'should',
+      'would',
+      'could',
+      'might',
+      'must',
+      'than',
+      'both',
+      'each',
+      'while',
+      'where',
     ];
     const lower = new Set(exclude.map((w) => w.toLowerCase()));
     const available = pool.filter((w) => !lower.has(w));

@@ -94,7 +94,7 @@ export class MyPlayEpisodeItemDto {
   startedAt: string;
   completedAt?: string | null;
   lastSceneId?: number | null;
-  lastDialogueId?: number | null;
+  lastSlotId?: number | null;
   resultSummary?: any | null;
 }
 
@@ -115,14 +115,14 @@ export class PlayEpisodeDetailResponseDto {
     startedAt: string;
     completedAt?: string | null;
     lastSceneId?: number | null;
-    lastDialogueId?: number | null;
+    lastSlotId?: number | null;
     currentStage: EpisodeStage;
     isCompleted: boolean;
   };
   episode: EpisodeDetailDto;
 }
 
-export class SavedDialogueDto {
+export class SlotDialogueDto {
   id: number;
   type: SlotDialogueType;
   messageType: SlotMessageType;
@@ -139,11 +139,11 @@ export class SavedDialogueDto {
 
 export class AiInputSlotResponseDto {
   dialogueId: number;
-  savedDialogues: SavedDialogueDto[];
+  savedDialogues: SlotDialogueDto[];
 }
 
 export class AiSlotResponseDto {
-  savedDialogues: SavedDialogueDto[];
+  savedDialogues: SlotDialogueDto[];
 }
 
 export class CompletePlayResponseDto {

@@ -681,7 +681,7 @@ model UserPlayEpisode {
   startedAt      DateTime     @default(now())
   completedAt    DateTime?
   lastSceneId    Int?
-  lastDialogueId Int?
+  lastSlotId     Int?
   currentStage   EpisodeStage @default(STORY_IN_PROGRESS)
   isCompleted    Boolean      @default(false)
 
