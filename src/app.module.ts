@@ -18,6 +18,9 @@ import { FriendModule } from './modules/friend/friend.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { CharacterModule } from './modules/character/character.module';
 import { PlayModule } from './modules/episode/play/play.module';
+import { ProductsModule } from './modules/products/products.module';
+import { CheckoutModule } from './modules/checkout/checkout.module';
+import { WalletModule } from './modules/wallet/wallet.module';
 
 @Module({
   imports: [
@@ -41,6 +44,9 @@ import { PlayModule } from './modules/episode/play/play.module';
     FriendModule,
     ChatModule,
     CharacterModule,
+    ProductsModule,
+    CheckoutModule,
+    WalletModule,
   ],
   controllers: [AppController],
   providers: [AppService],

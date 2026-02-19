@@ -182,3 +182,38 @@ export type PlayEpisodeSlot = Prisma.PlayEpisodeSlotModel
  * 
  */
 export type SlotDialogue = Prisma.SlotDialogueModel
+/**
+ * Model Collection
+ * 
+ */
+export type Collection = Prisma.CollectionModel
+/**
+ * Model CollectionProduct
+ * 
+ */
+export type CollectionProduct = Prisma.CollectionProductModel
+/**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel
+/**
+ * Model EpisodeProduct
+ * 
+ */
+export type EpisodeProduct = Prisma.EpisodeProductModel
+/**
+ * Model UserPurchase
+ * 
+ */
+export type UserPurchase = Prisma.UserPurchaseModel
+/**
+ * Model CoinTransaction
+ * 
+ */
+export type CoinTransaction = Prisma.CoinTransactionModel
+/**
+ * Model UserSubscription
+ * 
+ */
+export type UserSubscription = Prisma.UserSubscriptionModel

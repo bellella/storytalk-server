@@ -1,10 +1,10 @@
 import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
 import { Prisma } from '@/generated/prisma/client';
 import {
-  AccessStatus,
   DialogueType,
   EpisodeStage,
   PlayEpisodeMode,
+  PlayEpisodeStatus,
   QuizSourceType,
   SlotDialogueType,
   SlotMessageType,
@@ -16,7 +16,7 @@ import {
   CharacterService,
 } from '@/modules/character/character.service';
 import { PrismaService } from '@/modules/prisma/prisma.service';
-import { QuizSentenceInput, QuizService } from '@/modules/quiz/quiz.service';
+import { QuizService } from '@/modules/quiz/quiz.service';
 import {
   DialogueDto,
   EpisodeDetailDto,
@@ -36,6 +36,7 @@ import { CorrectAndDialoguesResponseZ } from './ai/correctAndDialogues.schema';
 import { buildGenerateDialoguesPrompt } from './ai/generateDialogues.prompt';
 import { GenerateDialoguesResponseZ } from './ai/generateDialogues.schema';
 import { buildPickSentencesForQuizPrompt } from './ai/pickSentencesForQuiz.prompt';
+import { PickSentencesForQuizResponseZ } from './ai/pickSentencesForQuiz.schema';
 import {
   AiInputSlotDto,
   AiInputSlotResponseDto,
@@ -47,7 +48,6 @@ import {
   SlotDialogueDto,
 } from './dto/play.dto';
 import { UpdatePlayDto } from './dto/update-play.dto';
-import { PickSentencesForQuizResponseZ } from './ai/pickSentencesForQuiz.schema';
 
 @Injectable()
 export class PlayService {
@@ -69,7 +69,7 @@ export class PlayService {
     const plays = await this.prisma.userPlayEpisode.findMany({
       where: {
         userId,
-        accessStatus: AccessStatus.ACTIVE,
+        status: PlayEpisodeStatus.IN_PROGRESS,
         ...(query.cursor ? { id: { lt: query.cursor } } : {}),
       },
       include: {
@@ -86,9 +86,8 @@ export class PlayService {
       playEpisodeId: play.id,
       episode: play.episode,
       mode: play.mode,
-      accessStatus: play.accessStatus,
       currentStage: play.currentStage,
-      isCompleted: play.isCompleted,
+      status: play.status,
       startedAt: play.startedAt.toISOString(),
       completedAt: play.completedAt?.toISOString() ?? null,
       lastSceneId: play.lastSceneId ?? null,
@@ -133,7 +132,7 @@ export class PlayService {
     const episode = await this.buildEpisodeWithRuntimeDialogues(
       play.episodeId,
       playEpisodeId,
-      play.isCompleted ? null : play.lastSlotId
+      play.status === PlayEpisodeStatus.COMPLETED ? null : play.lastSlotId
     );
 
     if (!episode) throw new NotFoundException('Episode not found');
@@ -143,13 +142,12 @@ export class PlayService {
         id: play.id,
         episodeId: play.episodeId,
         mode: play.mode,
-        accessStatus: play.accessStatus,
+        status: play.status,
         startedAt: play.startedAt.toISOString(),
         completedAt: play.completedAt?.toISOString() ?? null,
         lastSceneId: play.lastSceneId ?? null,
         lastSlotId: play.lastSlotId ?? null,
         currentStage: play.currentStage,
-        isCompleted: play.isCompleted,
       },
       episode,
     };
@@ -691,11 +689,11 @@ export class PlayService {
     const play = await this.assertAccessiblePlayEpisode(userId, playEpisodeId);
 
     // 이미 완료면 그대로 반환
-    if (play.isCompleted) {
+    if (play.status === PlayEpisodeStatus.COMPLETED) {
       return {
         playEpisodeId: play.id,
         currentStage: play.currentStage,
-        isCompleted: true,
+        status: play.status,
       };
     }
 
@@ -757,14 +755,14 @@ export class PlayService {
           where: { id: playEpisodeId },
           data: {
             completedAt: now,
-            isCompleted: true,
+            status: PlayEpisodeStatus.COMPLETED,
             currentStage: nextStage,
             result: result ?? undefined,
           },
           select: {
             id: true,
             currentStage: true,
-            isCompleted: true,
+            status: true,
             result: true,
           },
         });
@@ -815,7 +813,7 @@ export class PlayService {
         return {
           playEpisodeId: updated.id,
           currentStage: updated.currentStage,
-          isCompleted: updated.isCompleted,
+          status: updated.status,
           result: updated.result ?? null,
         };
       },
@@ -1065,7 +1063,7 @@ export class PlayService {
       playEpisodeId: play.id,
       episode,
       currentStage: play.currentStage,
-      isCompleted: play.isCompleted,
+      status: play.status,
       result: play.result ?? null,
       correctedDialogues,
     };
@@ -1082,9 +1080,8 @@ export class PlayService {
         userId: true,
         episodeId: true,
         mode: true,
-        accessStatus: true,
         currentStage: true,
-        isCompleted: true,
+        status: true,
         startedAt: true,
         completedAt: true,
         result: true,
@@ -1097,7 +1094,7 @@ export class PlayService {
     if (!play) throw new NotFoundException('Play episode not found');
     if (play.userId !== userId)
       throw new ForbiddenException('Not your play episode');
-    if (play.accessStatus !== AccessStatus.ACTIVE)
+    if (play.status !== PlayEpisodeStatus.IN_PROGRESS)
       throw new ForbiddenException('Not active');
     return play;
   }

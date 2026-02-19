@@ -5,7 +5,9 @@
       "Bash(npm install:*)",
       "Bash(npx tsc:*)",
       "Bash(npx prisma generate:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(/Users/miinaa/projects/storytalk-server/src/modules/wallet/wallet.service.ts:*)",
+      "Bash(/Users/miinaa/projects/storytalk-server/src/modules/wallet/wallet.controller.ts:*)"
     ],
     "deny": [],
     "ask": []

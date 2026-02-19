@@ -79,7 +79,14 @@ export const ModelName = {
   UserEpisode: 'UserEpisode',
   UserPlayEpisode: 'UserPlayEpisode',
   PlayEpisodeSlot: 'PlayEpisodeSlot',
-  SlotDialogue: 'SlotDialogue'
+  SlotDialogue: 'SlotDialogue',
+  Collection: 'Collection',
+  CollectionProduct: 'CollectionProduct',
+  Product: 'Product',
+  EpisodeProduct: 'EpisodeProduct',
+  UserPurchase: 'UserPurchase',
+  CoinTransaction: 'CoinTransaction',
+  UserSubscription: 'UserSubscription'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -179,6 +186,7 @@ export const EpisodeScalarFieldEnum = {
   order: 'order',
   description: 'description',
   koreanDescription: 'koreanDescription',
+  thumbnailUrl: 'thumbnailUrl',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -478,17 +486,21 @@ export const UserPlayEpisodeScalarFieldEnum = {
   userId: 'userId',
   episodeId: 'episodeId',
   mode: 'mode',
-  accessStatus: 'accessStatus',
-  acquiredAt: 'acquiredAt',
-  revokedAt: 'revokedAt',
+  title: 'title',
   startedAt: 'startedAt',
   completedAt: 'completedAt',
   lastSceneId: 'lastSceneId',
   lastSlotId: 'lastSlotId',
   currentStage: 'currentStage',
-  isCompleted: 'isCompleted',
+  status: 'status',
+  version: 'version',
   result: 'result',
-  data: 'data'
+  data: 'data',
+  source: 'source',
+  deletedAt: 'deletedAt',
+  archivedAt: 'archivedAt',
+  purchaseId: 'purchaseId',
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserPlayEpisodeScalarFieldEnum = (typeof UserPlayEpisodeScalarFieldEnum)[keyof typeof UserPlayEpisodeScalarFieldEnum]
@@ -525,6 +537,103 @@ export const SlotDialogueScalarFieldEnum = {
 } as const
 
 export type SlotDialogueScalarFieldEnum = (typeof SlotDialogueScalarFieldEnum)[keyof typeof SlotDialogueScalarFieldEnum]
+
+
+export const CollectionScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  thumbnailUrl: 'thumbnailUrl',
+  order: 'order',
+  isActive: 'isActive',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CollectionScalarFieldEnum = (typeof CollectionScalarFieldEnum)[keyof typeof CollectionScalarFieldEnum]
+
+
+export const CollectionProductScalarFieldEnum = {
+  id: 'id',
+  collectionId: 'collectionId',
+  productId: 'productId',
+  order: 'order'
+} as const
+
+export type CollectionProductScalarFieldEnum = (typeof CollectionProductScalarFieldEnum)[keyof typeof CollectionProductScalarFieldEnum]
+
+
+export const ProductScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  type: 'type',
+  currency: 'currency',
+  price: 'price',
+  storeSku: 'storeSku',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const EpisodeProductScalarFieldEnum = {
+  id: 'id',
+  episodeId: 'episodeId',
+  productId: 'productId',
+  userId: 'userId'
+} as const
+
+export type EpisodeProductScalarFieldEnum = (typeof EpisodeProductScalarFieldEnum)[keyof typeof EpisodeProductScalarFieldEnum]
+
+
+export const UserPurchaseScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  productId: 'productId',
+  type: 'type',
+  pricePaid: 'pricePaid',
+  currency: 'currency',
+  storeOrderId: 'storeOrderId',
+  createdAt: 'createdAt'
+} as const
+
+export type UserPurchaseScalarFieldEnum = (typeof UserPurchaseScalarFieldEnum)[keyof typeof UserPurchaseScalarFieldEnum]
+
+
+export const CoinTransactionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  amount: 'amount',
+  balanceAfter: 'balanceAfter',
+  relatedPurchaseId: 'relatedPurchaseId',
+  storeOrderId: 'storeOrderId',
+  createdAt: 'createdAt'
+} as const
+
+export type CoinTransactionScalarFieldEnum = (typeof CoinTransactionScalarFieldEnum)[keyof typeof CoinTransactionScalarFieldEnum]
+
+
+export const UserSubscriptionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  productId: 'productId',
+  status: 'status',
+  startedAt: 'startedAt',
+  currentPeriodStart: 'currentPeriodStart',
+  currentPeriodEnd: 'currentPeriodEnd',
+  storeSku: 'storeSku',
+  storeOrderId: 'storeOrderId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserSubscriptionScalarFieldEnum = (typeof UserSubscriptionScalarFieldEnum)[keyof typeof UserSubscriptionScalarFieldEnum]
 
 
 export const SortOrder = {

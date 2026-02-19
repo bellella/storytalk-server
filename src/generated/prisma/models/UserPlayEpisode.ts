@@ -32,6 +32,8 @@ export type UserPlayEpisodeAvgAggregateOutputType = {
   episodeId: number | null
   lastSceneId: number | null
   lastSlotId: number | null
+  version: number | null
+  purchaseId: number | null
 }
 
 export type UserPlayEpisodeSumAggregateOutputType = {
@@ -40,6 +42,8 @@ export type UserPlayEpisodeSumAggregateOutputType = {
   episodeId: number | null
   lastSceneId: number | null
   lastSlotId: number | null
+  version: number | null
+  purchaseId: number | null
 }
 
 export type UserPlayEpisodeMinAggregateOutputType = {
@@ -47,15 +51,19 @@ export type UserPlayEpisodeMinAggregateOutputType = {
   userId: number | null
   episodeId: number | null
   mode: $Enums.PlayEpisodeMode | null
-  accessStatus: $Enums.AccessStatus | null
-  acquiredAt: Date | null
-  revokedAt: Date | null
+  title: string | null
   startedAt: Date | null
   completedAt: Date | null
   lastSceneId: number | null
   lastSlotId: number | null
   currentStage: $Enums.EpisodeStage | null
-  isCompleted: boolean | null
+  status: $Enums.PlayEpisodeStatus | null
+  version: number | null
+  source: $Enums.PlayEpisodeSource | null
+  deletedAt: Date | null
+  archivedAt: Date | null
+  purchaseId: number | null
+  updatedAt: Date | null
 }
 
 export type UserPlayEpisodeMaxAggregateOutputType = {
@@ -63,15 +71,19 @@ export type UserPlayEpisodeMaxAggregateOutputType = {
   userId: number | null
   episodeId: number | null
   mode: $Enums.PlayEpisodeMode | null
-  accessStatus: $Enums.AccessStatus | null
-  acquiredAt: Date | null
-  revokedAt: Date | null
+  title: string | null
   startedAt: Date | null
   completedAt: Date | null
   lastSceneId: number | null
   lastSlotId: number | null
   currentStage: $Enums.EpisodeStage | null
-  isCompleted: boolean | null
+  status: $Enums.PlayEpisodeStatus | null
+  version: number | null
+  source: $Enums.PlayEpisodeSource | null
+  deletedAt: Date | null
+  archivedAt: Date | null
+  purchaseId: number | null
+  updatedAt: Date | null
 }
 
 export type UserPlayEpisodeCountAggregateOutputType = {
@@ -79,17 +91,21 @@ export type UserPlayEpisodeCountAggregateOutputType = {
   userId: number
   episodeId: number
   mode: number
-  accessStatus: number
-  acquiredAt: number
-  revokedAt: number
+  title: number
   startedAt: number
   completedAt: number
   lastSceneId: number
   lastSlotId: number
   currentStage: number
-  isCompleted: number
+  status: number
+  version: number
   result: number
   data: number
+  source: number
+  deletedAt: number
+  archivedAt: number
+  purchaseId: number
+  updatedAt: number
   _all: number
 }
 
@@ -100,6 +116,8 @@ export type UserPlayEpisodeAvgAggregateInputType = {
   episodeId?: true
   lastSceneId?: true
   lastSlotId?: true
+  version?: true
+  purchaseId?: true
 }
 
 export type UserPlayEpisodeSumAggregateInputType = {
@@ -108,6 +126,8 @@ export type UserPlayEpisodeSumAggregateInputType = {
   episodeId?: true
   lastSceneId?: true
   lastSlotId?: true
+  version?: true
+  purchaseId?: true
 }
 
 export type UserPlayEpisodeMinAggregateInputType = {
@@ -115,15 +135,19 @@ export type UserPlayEpisodeMinAggregateInputType = {
   userId?: true
   episodeId?: true
   mode?: true
-  accessStatus?: true
-  acquiredAt?: true
-  revokedAt?: true
+  title?: true
   startedAt?: true
   completedAt?: true
   lastSceneId?: true
   lastSlotId?: true
   currentStage?: true
-  isCompleted?: true
+  status?: true
+  version?: true
+  source?: true
+  deletedAt?: true
+  archivedAt?: true
+  purchaseId?: true
+  updatedAt?: true
 }
 
 export type UserPlayEpisodeMaxAggregateInputType = {
@@ -131,15 +155,19 @@ export type UserPlayEpisodeMaxAggregateInputType = {
   userId?: true
   episodeId?: true
   mode?: true
-  accessStatus?: true
-  acquiredAt?: true
-  revokedAt?: true
+  title?: true
   startedAt?: true
   completedAt?: true
   lastSceneId?: true
   lastSlotId?: true
   currentStage?: true
-  isCompleted?: true
+  status?: true
+  version?: true
+  source?: true
+  deletedAt?: true
+  archivedAt?: true
+  purchaseId?: true
+  updatedAt?: true
 }
 
 export type UserPlayEpisodeCountAggregateInputType = {
@@ -147,17 +175,21 @@ export type UserPlayEpisodeCountAggregateInputType = {
   userId?: true
   episodeId?: true
   mode?: true
-  accessStatus?: true
-  acquiredAt?: true
-  revokedAt?: true
+  title?: true
   startedAt?: true
   completedAt?: true
   lastSceneId?: true
   lastSlotId?: true
   currentStage?: true
-  isCompleted?: true
+  status?: true
+  version?: true
   result?: true
   data?: true
+  source?: true
+  deletedAt?: true
+  archivedAt?: true
+  purchaseId?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -252,17 +284,21 @@ export type UserPlayEpisodeGroupByOutputType = {
   userId: number
   episodeId: number
   mode: $Enums.PlayEpisodeMode
-  accessStatus: $Enums.AccessStatus
-  acquiredAt: Date
-  revokedAt: Date | null
+  title: string | null
   startedAt: Date
   completedAt: Date | null
   lastSceneId: number | null
   lastSlotId: number | null
   currentStage: $Enums.EpisodeStage
-  isCompleted: boolean
+  status: $Enums.PlayEpisodeStatus
+  version: number
   result: runtime.JsonValue | null
   data: runtime.JsonValue | null
+  source: $Enums.PlayEpisodeSource
+  deletedAt: Date | null
+  archivedAt: Date | null
+  purchaseId: number | null
+  updatedAt: Date
   _count: UserPlayEpisodeCountAggregateOutputType | null
   _avg: UserPlayEpisodeAvgAggregateOutputType | null
   _sum: UserPlayEpisodeSumAggregateOutputType | null
@@ -293,17 +329,22 @@ export type UserPlayEpisodeWhereInput = {
   userId?: Prisma.IntFilter<"UserPlayEpisode"> | number
   episodeId?: Prisma.IntFilter<"UserPlayEpisode"> | number
   mode?: Prisma.EnumPlayEpisodeModeFilter<"UserPlayEpisode"> | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusFilter<"UserPlayEpisode"> | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeFilter<"UserPlayEpisode"> | Date | string
-  revokedAt?: Prisma.DateTimeNullableFilter<"UserPlayEpisode"> | Date | string | null
+  title?: Prisma.StringNullableFilter<"UserPlayEpisode"> | string | null
   startedAt?: Prisma.DateTimeFilter<"UserPlayEpisode"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"UserPlayEpisode"> | Date | string | null
   lastSceneId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
   lastSlotId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
   currentStage?: Prisma.EnumEpisodeStageFilter<"UserPlayEpisode"> | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolFilter<"UserPlayEpisode"> | boolean
+  status?: Prisma.EnumPlayEpisodeStatusFilter<"UserPlayEpisode"> | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFilter<"UserPlayEpisode"> | number
   result?: Prisma.JsonNullableFilter<"UserPlayEpisode">
   data?: Prisma.JsonNullableFilter<"UserPlayEpisode">
+  source?: Prisma.EnumPlayEpisodeSourceFilter<"UserPlayEpisode"> | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.DateTimeNullableFilter<"UserPlayEpisode"> | Date | string | null
+  archivedAt?: Prisma.DateTimeNullableFilter<"UserPlayEpisode"> | Date | string | null
+  purchaseId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
+  updatedAt?: Prisma.DateTimeFilter<"UserPlayEpisode"> | Date | string
+  purchase?: Prisma.XOR<Prisma.UserPurchaseNullableScalarRelationFilter, Prisma.UserPurchaseWhereInput> | null
   slots?: Prisma.PlayEpisodeSlotListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   episode?: Prisma.XOR<Prisma.EpisodeScalarRelationFilter, Prisma.EpisodeWhereInput>
@@ -314,17 +355,22 @@ export type UserPlayEpisodeOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   episodeId?: Prisma.SortOrder
   mode?: Prisma.SortOrder
-  accessStatus?: Prisma.SortOrder
-  acquiredAt?: Prisma.SortOrder
-  revokedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  title?: Prisma.SortOrderInput | Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastSceneId?: Prisma.SortOrderInput | Prisma.SortOrder
   lastSlotId?: Prisma.SortOrderInput | Prisma.SortOrder
   currentStage?: Prisma.SortOrder
-  isCompleted?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  version?: Prisma.SortOrder
   result?: Prisma.SortOrderInput | Prisma.SortOrder
   data?: Prisma.SortOrderInput | Prisma.SortOrder
+  source?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  purchaseId?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  purchase?: Prisma.UserPurchaseOrderByWithRelationInput
   slots?: Prisma.PlayEpisodeSlotOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
   episode?: Prisma.EpisodeOrderByWithRelationInput
@@ -332,44 +378,53 @@ export type UserPlayEpisodeOrderByWithRelationInput = {
 
 export type UserPlayEpisodeWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  purchaseId?: number
   AND?: Prisma.UserPlayEpisodeWhereInput | Prisma.UserPlayEpisodeWhereInput[]
   OR?: Prisma.UserPlayEpisodeWhereInput[]
   NOT?: Prisma.UserPlayEpisodeWhereInput | Prisma.UserPlayEpisodeWhereInput[]
   userId?: Prisma.IntFilter<"UserPlayEpisode"> | number
   episodeId?: Prisma.IntFilter<"UserPlayEpisode"> | number
   mode?: Prisma.EnumPlayEpisodeModeFilter<"UserPlayEpisode"> | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusFilter<"UserPlayEpisode"> | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeFilter<"UserPlayEpisode"> | Date | string
-  revokedAt?: Prisma.DateTimeNullableFilter<"UserPlayEpisode"> | Date | string | null
+  title?: Prisma.StringNullableFilter<"UserPlayEpisode"> | string | null
   startedAt?: Prisma.DateTimeFilter<"UserPlayEpisode"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"UserPlayEpisode"> | Date | string | null
   lastSceneId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
   lastSlotId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
   currentStage?: Prisma.EnumEpisodeStageFilter<"UserPlayEpisode"> | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolFilter<"UserPlayEpisode"> | boolean
+  status?: Prisma.EnumPlayEpisodeStatusFilter<"UserPlayEpisode"> | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFilter<"UserPlayEpisode"> | number
   result?: Prisma.JsonNullableFilter<"UserPlayEpisode">
   data?: Prisma.JsonNullableFilter<"UserPlayEpisode">
+  source?: Prisma.EnumPlayEpisodeSourceFilter<"UserPlayEpisode"> | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.DateTimeNullableFilter<"UserPlayEpisode"> | Date | string | null
+  archivedAt?: Prisma.DateTimeNullableFilter<"UserPlayEpisode"> | Date | string | null
+  updatedAt?: Prisma.DateTimeFilter<"UserPlayEpisode"> | Date | string
+  purchase?: Prisma.XOR<Prisma.UserPurchaseNullableScalarRelationFilter, Prisma.UserPurchaseWhereInput> | null
   slots?: Prisma.PlayEpisodeSlotListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   episode?: Prisma.XOR<Prisma.EpisodeScalarRelationFilter, Prisma.EpisodeWhereInput>
-}, "id">
+}, "id" | "purchaseId">
 
 export type UserPlayEpisodeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   episodeId?: Prisma.SortOrder
   mode?: Prisma.SortOrder
-  accessStatus?: Prisma.SortOrder
-  acquiredAt?: Prisma.SortOrder
-  revokedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  title?: Prisma.SortOrderInput | Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastSceneId?: Prisma.SortOrderInput | Prisma.SortOrder
   lastSlotId?: Prisma.SortOrderInput | Prisma.SortOrder
   currentStage?: Prisma.SortOrder
-  isCompleted?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  version?: Prisma.SortOrder
   result?: Prisma.SortOrderInput | Prisma.SortOrder
   data?: Prisma.SortOrderInput | Prisma.SortOrder
+  source?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  purchaseId?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserPlayEpisodeCountOrderByAggregateInput
   _avg?: Prisma.UserPlayEpisodeAvgOrderByAggregateInput
   _max?: Prisma.UserPlayEpisodeMaxOrderByAggregateInput
@@ -385,32 +440,40 @@ export type UserPlayEpisodeScalarWhereWithAggregatesInput = {
   userId?: Prisma.IntWithAggregatesFilter<"UserPlayEpisode"> | number
   episodeId?: Prisma.IntWithAggregatesFilter<"UserPlayEpisode"> | number
   mode?: Prisma.EnumPlayEpisodeModeWithAggregatesFilter<"UserPlayEpisode"> | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusWithAggregatesFilter<"UserPlayEpisode"> | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeWithAggregatesFilter<"UserPlayEpisode"> | Date | string
-  revokedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"UserPlayEpisode"> | Date | string | null
+  title?: Prisma.StringNullableWithAggregatesFilter<"UserPlayEpisode"> | string | null
   startedAt?: Prisma.DateTimeWithAggregatesFilter<"UserPlayEpisode"> | Date | string
   completedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"UserPlayEpisode"> | Date | string | null
   lastSceneId?: Prisma.IntNullableWithAggregatesFilter<"UserPlayEpisode"> | number | null
   lastSlotId?: Prisma.IntNullableWithAggregatesFilter<"UserPlayEpisode"> | number | null
   currentStage?: Prisma.EnumEpisodeStageWithAggregatesFilter<"UserPlayEpisode"> | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolWithAggregatesFilter<"UserPlayEpisode"> | boolean
+  status?: Prisma.EnumPlayEpisodeStatusWithAggregatesFilter<"UserPlayEpisode"> | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntWithAggregatesFilter<"UserPlayEpisode"> | number
   result?: Prisma.JsonNullableWithAggregatesFilter<"UserPlayEpisode">
   data?: Prisma.JsonNullableWithAggregatesFilter<"UserPlayEpisode">
+  source?: Prisma.EnumPlayEpisodeSourceWithAggregatesFilter<"UserPlayEpisode"> | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"UserPlayEpisode"> | Date | string | null
+  archivedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"UserPlayEpisode"> | Date | string | null
+  purchaseId?: Prisma.IntNullableWithAggregatesFilter<"UserPlayEpisode"> | number | null
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserPlayEpisode"> | Date | string
 }
 
 export type UserPlayEpisodeCreateInput = {
   mode?: $Enums.PlayEpisodeMode
-  accessStatus?: $Enums.AccessStatus
-  acquiredAt?: Date | string
-  revokedAt?: Date | string | null
+  title?: string | null
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
   lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
-  isCompleted?: boolean
+  status?: $Enums.PlayEpisodeStatus
+  version?: number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: $Enums.PlayEpisodeSource
+  deletedAt?: Date | string | null
+  archivedAt?: Date | string | null
+  updatedAt?: Date | string
+  purchase?: Prisma.UserPurchaseCreateNestedOneWithoutUserPlayEpisodeInput
   slots?: Prisma.PlayEpisodeSlotCreateNestedManyWithoutPlayEpisodeInput
   user: Prisma.UserCreateNestedOneWithoutUserPlayEpisodesInput
   episode: Prisma.EpisodeCreateNestedOneWithoutUserPlayEpisodesInput
@@ -421,33 +484,41 @@ export type UserPlayEpisodeUncheckedCreateInput = {
   userId: number
   episodeId: number
   mode?: $Enums.PlayEpisodeMode
-  accessStatus?: $Enums.AccessStatus
-  acquiredAt?: Date | string
-  revokedAt?: Date | string | null
+  title?: string | null
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
   lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
-  isCompleted?: boolean
+  status?: $Enums.PlayEpisodeStatus
+  version?: number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: $Enums.PlayEpisodeSource
+  deletedAt?: Date | string | null
+  archivedAt?: Date | string | null
+  purchaseId?: number | null
+  updatedAt?: Date | string
   slots?: Prisma.PlayEpisodeSlotUncheckedCreateNestedManyWithoutPlayEpisodeInput
 }
 
 export type UserPlayEpisodeUpdateInput = {
   mode?: Prisma.EnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPlayEpisodeStatusFieldUpdateOperationsInput | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: Prisma.EnumPlayEpisodeSourceFieldUpdateOperationsInput | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  purchase?: Prisma.UserPurchaseUpdateOneWithoutUserPlayEpisodeNestedInput
   slots?: Prisma.PlayEpisodeSlotUpdateManyWithoutPlayEpisodeNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutUserPlayEpisodesNestedInput
   episode?: Prisma.EpisodeUpdateOneRequiredWithoutUserPlayEpisodesNestedInput
@@ -458,17 +529,21 @@ export type UserPlayEpisodeUncheckedUpdateInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   episodeId?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.EnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPlayEpisodeStatusFieldUpdateOperationsInput | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: Prisma.EnumPlayEpisodeSourceFieldUpdateOperationsInput | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   slots?: Prisma.PlayEpisodeSlotUncheckedUpdateManyWithoutPlayEpisodeNestedInput
 }
 
@@ -477,32 +552,39 @@ export type UserPlayEpisodeCreateManyInput = {
   userId: number
   episodeId: number
   mode?: $Enums.PlayEpisodeMode
-  accessStatus?: $Enums.AccessStatus
-  acquiredAt?: Date | string
-  revokedAt?: Date | string | null
+  title?: string | null
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
   lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
-  isCompleted?: boolean
+  status?: $Enums.PlayEpisodeStatus
+  version?: number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: $Enums.PlayEpisodeSource
+  deletedAt?: Date | string | null
+  archivedAt?: Date | string | null
+  purchaseId?: number | null
+  updatedAt?: Date | string
 }
 
 export type UserPlayEpisodeUpdateManyMutationInput = {
   mode?: Prisma.EnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPlayEpisodeStatusFieldUpdateOperationsInput | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: Prisma.EnumPlayEpisodeSourceFieldUpdateOperationsInput | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserPlayEpisodeUncheckedUpdateManyInput = {
@@ -510,17 +592,21 @@ export type UserPlayEpisodeUncheckedUpdateManyInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   episodeId?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.EnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPlayEpisodeStatusFieldUpdateOperationsInput | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: Prisma.EnumPlayEpisodeSourceFieldUpdateOperationsInput | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserPlayEpisodeListRelationFilter = {
@@ -538,17 +624,21 @@ export type UserPlayEpisodeCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   episodeId?: Prisma.SortOrder
   mode?: Prisma.SortOrder
-  accessStatus?: Prisma.SortOrder
-  acquiredAt?: Prisma.SortOrder
-  revokedAt?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   lastSceneId?: Prisma.SortOrder
   lastSlotId?: Prisma.SortOrder
   currentStage?: Prisma.SortOrder
-  isCompleted?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  version?: Prisma.SortOrder
   result?: Prisma.SortOrder
   data?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrder
+  purchaseId?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type UserPlayEpisodeAvgOrderByAggregateInput = {
@@ -557,6 +647,8 @@ export type UserPlayEpisodeAvgOrderByAggregateInput = {
   episodeId?: Prisma.SortOrder
   lastSceneId?: Prisma.SortOrder
   lastSlotId?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  purchaseId?: Prisma.SortOrder
 }
 
 export type UserPlayEpisodeMaxOrderByAggregateInput = {
@@ -564,15 +656,19 @@ export type UserPlayEpisodeMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   episodeId?: Prisma.SortOrder
   mode?: Prisma.SortOrder
-  accessStatus?: Prisma.SortOrder
-  acquiredAt?: Prisma.SortOrder
-  revokedAt?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   lastSceneId?: Prisma.SortOrder
   lastSlotId?: Prisma.SortOrder
   currentStage?: Prisma.SortOrder
-  isCompleted?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrder
+  purchaseId?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type UserPlayEpisodeMinOrderByAggregateInput = {
@@ -580,15 +676,19 @@ export type UserPlayEpisodeMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   episodeId?: Prisma.SortOrder
   mode?: Prisma.SortOrder
-  accessStatus?: Prisma.SortOrder
-  acquiredAt?: Prisma.SortOrder
-  revokedAt?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   lastSceneId?: Prisma.SortOrder
   lastSlotId?: Prisma.SortOrder
   currentStage?: Prisma.SortOrder
-  isCompleted?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrder
+  purchaseId?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type UserPlayEpisodeSumOrderByAggregateInput = {
@@ -597,11 +697,18 @@ export type UserPlayEpisodeSumOrderByAggregateInput = {
   episodeId?: Prisma.SortOrder
   lastSceneId?: Prisma.SortOrder
   lastSlotId?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  purchaseId?: Prisma.SortOrder
 }
 
 export type UserPlayEpisodeScalarRelationFilter = {
   is?: Prisma.UserPlayEpisodeWhereInput
   isNot?: Prisma.UserPlayEpisodeWhereInput
+}
+
+export type UserPlayEpisodeNullableScalarRelationFilter = {
+  is?: Prisma.UserPlayEpisodeWhereInput | null
+  isNot?: Prisma.UserPlayEpisodeWhereInput | null
 }
 
 export type UserPlayEpisodeCreateNestedManyWithoutUserInput = {
@@ -692,8 +799,12 @@ export type EnumPlayEpisodeModeFieldUpdateOperationsInput = {
   set?: $Enums.PlayEpisodeMode
 }
 
-export type EnumAccessStatusFieldUpdateOperationsInput = {
-  set?: $Enums.AccessStatus
+export type EnumPlayEpisodeStatusFieldUpdateOperationsInput = {
+  set?: $Enums.PlayEpisodeStatus
+}
+
+export type EnumPlayEpisodeSourceFieldUpdateOperationsInput = {
+  set?: $Enums.PlayEpisodeSource
 }
 
 export type UserPlayEpisodeCreateNestedOneWithoutSlotsInput = {
@@ -710,19 +821,55 @@ export type UserPlayEpisodeUpdateOneRequiredWithoutSlotsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserPlayEpisodeUpdateToOneWithWhereWithoutSlotsInput, Prisma.UserPlayEpisodeUpdateWithoutSlotsInput>, Prisma.UserPlayEpisodeUncheckedUpdateWithoutSlotsInput>
 }
 
+export type UserPlayEpisodeCreateNestedOneWithoutPurchaseInput = {
+  create?: Prisma.XOR<Prisma.UserPlayEpisodeCreateWithoutPurchaseInput, Prisma.UserPlayEpisodeUncheckedCreateWithoutPurchaseInput>
+  connectOrCreate?: Prisma.UserPlayEpisodeCreateOrConnectWithoutPurchaseInput
+  connect?: Prisma.UserPlayEpisodeWhereUniqueInput
+}
+
+export type UserPlayEpisodeUncheckedCreateNestedOneWithoutPurchaseInput = {
+  create?: Prisma.XOR<Prisma.UserPlayEpisodeCreateWithoutPurchaseInput, Prisma.UserPlayEpisodeUncheckedCreateWithoutPurchaseInput>
+  connectOrCreate?: Prisma.UserPlayEpisodeCreateOrConnectWithoutPurchaseInput
+  connect?: Prisma.UserPlayEpisodeWhereUniqueInput
+}
+
+export type UserPlayEpisodeUpdateOneWithoutPurchaseNestedInput = {
+  create?: Prisma.XOR<Prisma.UserPlayEpisodeCreateWithoutPurchaseInput, Prisma.UserPlayEpisodeUncheckedCreateWithoutPurchaseInput>
+  connectOrCreate?: Prisma.UserPlayEpisodeCreateOrConnectWithoutPurchaseInput
+  upsert?: Prisma.UserPlayEpisodeUpsertWithoutPurchaseInput
+  disconnect?: Prisma.UserPlayEpisodeWhereInput | boolean
+  delete?: Prisma.UserPlayEpisodeWhereInput | boolean
+  connect?: Prisma.UserPlayEpisodeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserPlayEpisodeUpdateToOneWithWhereWithoutPurchaseInput, Prisma.UserPlayEpisodeUpdateWithoutPurchaseInput>, Prisma.UserPlayEpisodeUncheckedUpdateWithoutPurchaseInput>
+}
+
+export type UserPlayEpisodeUncheckedUpdateOneWithoutPurchaseNestedInput = {
+  create?: Prisma.XOR<Prisma.UserPlayEpisodeCreateWithoutPurchaseInput, Prisma.UserPlayEpisodeUncheckedCreateWithoutPurchaseInput>
+  connectOrCreate?: Prisma.UserPlayEpisodeCreateOrConnectWithoutPurchaseInput
+  upsert?: Prisma.UserPlayEpisodeUpsertWithoutPurchaseInput
+  disconnect?: Prisma.UserPlayEpisodeWhereInput | boolean
+  delete?: Prisma.UserPlayEpisodeWhereInput | boolean
+  connect?: Prisma.UserPlayEpisodeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserPlayEpisodeUpdateToOneWithWhereWithoutPurchaseInput, Prisma.UserPlayEpisodeUpdateWithoutPurchaseInput>, Prisma.UserPlayEpisodeUncheckedUpdateWithoutPurchaseInput>
+}
+
 export type UserPlayEpisodeCreateWithoutUserInput = {
   mode?: $Enums.PlayEpisodeMode
-  accessStatus?: $Enums.AccessStatus
-  acquiredAt?: Date | string
-  revokedAt?: Date | string | null
+  title?: string | null
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
   lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
-  isCompleted?: boolean
+  status?: $Enums.PlayEpisodeStatus
+  version?: number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: $Enums.PlayEpisodeSource
+  deletedAt?: Date | string | null
+  archivedAt?: Date | string | null
+  updatedAt?: Date | string
+  purchase?: Prisma.UserPurchaseCreateNestedOneWithoutUserPlayEpisodeInput
   slots?: Prisma.PlayEpisodeSlotCreateNestedManyWithoutPlayEpisodeInput
   episode: Prisma.EpisodeCreateNestedOneWithoutUserPlayEpisodesInput
 }
@@ -731,17 +878,21 @@ export type UserPlayEpisodeUncheckedCreateWithoutUserInput = {
   id?: number
   episodeId: number
   mode?: $Enums.PlayEpisodeMode
-  accessStatus?: $Enums.AccessStatus
-  acquiredAt?: Date | string
-  revokedAt?: Date | string | null
+  title?: string | null
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
   lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
-  isCompleted?: boolean
+  status?: $Enums.PlayEpisodeStatus
+  version?: number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: $Enums.PlayEpisodeSource
+  deletedAt?: Date | string | null
+  archivedAt?: Date | string | null
+  purchaseId?: number | null
+  updatedAt?: Date | string
   slots?: Prisma.PlayEpisodeSlotUncheckedCreateNestedManyWithoutPlayEpisodeInput
 }
 
@@ -779,32 +930,40 @@ export type UserPlayEpisodeScalarWhereInput = {
   userId?: Prisma.IntFilter<"UserPlayEpisode"> | number
   episodeId?: Prisma.IntFilter<"UserPlayEpisode"> | number
   mode?: Prisma.EnumPlayEpisodeModeFilter<"UserPlayEpisode"> | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusFilter<"UserPlayEpisode"> | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeFilter<"UserPlayEpisode"> | Date | string
-  revokedAt?: Prisma.DateTimeNullableFilter<"UserPlayEpisode"> | Date | string | null
+  title?: Prisma.StringNullableFilter<"UserPlayEpisode"> | string | null
   startedAt?: Prisma.DateTimeFilter<"UserPlayEpisode"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"UserPlayEpisode"> | Date | string | null
   lastSceneId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
   lastSlotId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
   currentStage?: Prisma.EnumEpisodeStageFilter<"UserPlayEpisode"> | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolFilter<"UserPlayEpisode"> | boolean
+  status?: Prisma.EnumPlayEpisodeStatusFilter<"UserPlayEpisode"> | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFilter<"UserPlayEpisode"> | number
   result?: Prisma.JsonNullableFilter<"UserPlayEpisode">
   data?: Prisma.JsonNullableFilter<"UserPlayEpisode">
+  source?: Prisma.EnumPlayEpisodeSourceFilter<"UserPlayEpisode"> | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.DateTimeNullableFilter<"UserPlayEpisode"> | Date | string | null
+  archivedAt?: Prisma.DateTimeNullableFilter<"UserPlayEpisode"> | Date | string | null
+  purchaseId?: Prisma.IntNullableFilter<"UserPlayEpisode"> | number | null
+  updatedAt?: Prisma.DateTimeFilter<"UserPlayEpisode"> | Date | string
 }
 
 export type UserPlayEpisodeCreateWithoutEpisodeInput = {
   mode?: $Enums.PlayEpisodeMode
-  accessStatus?: $Enums.AccessStatus
-  acquiredAt?: Date | string
-  revokedAt?: Date | string | null
+  title?: string | null
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
   lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
-  isCompleted?: boolean
+  status?: $Enums.PlayEpisodeStatus
+  version?: number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: $Enums.PlayEpisodeSource
+  deletedAt?: Date | string | null
+  archivedAt?: Date | string | null
+  updatedAt?: Date | string
+  purchase?: Prisma.UserPurchaseCreateNestedOneWithoutUserPlayEpisodeInput
   slots?: Prisma.PlayEpisodeSlotCreateNestedManyWithoutPlayEpisodeInput
   user: Prisma.UserCreateNestedOneWithoutUserPlayEpisodesInput
 }
@@ -813,17 +972,21 @@ export type UserPlayEpisodeUncheckedCreateWithoutEpisodeInput = {
   id?: number
   userId: number
   mode?: $Enums.PlayEpisodeMode
-  accessStatus?: $Enums.AccessStatus
-  acquiredAt?: Date | string
-  revokedAt?: Date | string | null
+  title?: string | null
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
   lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
-  isCompleted?: boolean
+  status?: $Enums.PlayEpisodeStatus
+  version?: number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: $Enums.PlayEpisodeSource
+  deletedAt?: Date | string | null
+  archivedAt?: Date | string | null
+  purchaseId?: number | null
+  updatedAt?: Date | string
   slots?: Prisma.PlayEpisodeSlotUncheckedCreateNestedManyWithoutPlayEpisodeInput
 }
 
@@ -855,17 +1018,21 @@ export type UserPlayEpisodeUpdateManyWithWhereWithoutEpisodeInput = {
 
 export type UserPlayEpisodeCreateWithoutSlotsInput = {
   mode?: $Enums.PlayEpisodeMode
-  accessStatus?: $Enums.AccessStatus
-  acquiredAt?: Date | string
-  revokedAt?: Date | string | null
+  title?: string | null
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
   lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
-  isCompleted?: boolean
+  status?: $Enums.PlayEpisodeStatus
+  version?: number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: $Enums.PlayEpisodeSource
+  deletedAt?: Date | string | null
+  archivedAt?: Date | string | null
+  updatedAt?: Date | string
+  purchase?: Prisma.UserPurchaseCreateNestedOneWithoutUserPlayEpisodeInput
   user: Prisma.UserCreateNestedOneWithoutUserPlayEpisodesInput
   episode: Prisma.EpisodeCreateNestedOneWithoutUserPlayEpisodesInput
 }
@@ -875,17 +1042,21 @@ export type UserPlayEpisodeUncheckedCreateWithoutSlotsInput = {
   userId: number
   episodeId: number
   mode?: $Enums.PlayEpisodeMode
-  accessStatus?: $Enums.AccessStatus
-  acquiredAt?: Date | string
-  revokedAt?: Date | string | null
+  title?: string | null
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
   lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
-  isCompleted?: boolean
+  status?: $Enums.PlayEpisodeStatus
+  version?: number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: $Enums.PlayEpisodeSource
+  deletedAt?: Date | string | null
+  archivedAt?: Date | string | null
+  purchaseId?: number | null
+  updatedAt?: Date | string
 }
 
 export type UserPlayEpisodeCreateOrConnectWithoutSlotsInput = {
@@ -906,17 +1077,21 @@ export type UserPlayEpisodeUpdateToOneWithWhereWithoutSlotsInput = {
 
 export type UserPlayEpisodeUpdateWithoutSlotsInput = {
   mode?: Prisma.EnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPlayEpisodeStatusFieldUpdateOperationsInput | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: Prisma.EnumPlayEpisodeSourceFieldUpdateOperationsInput | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  purchase?: Prisma.UserPurchaseUpdateOneWithoutUserPlayEpisodeNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutUserPlayEpisodesNestedInput
   episode?: Prisma.EpisodeUpdateOneRequiredWithoutUserPlayEpisodesNestedInput
 }
@@ -926,49 +1101,163 @@ export type UserPlayEpisodeUncheckedUpdateWithoutSlotsInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   episodeId?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.EnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPlayEpisodeStatusFieldUpdateOperationsInput | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: Prisma.EnumPlayEpisodeSourceFieldUpdateOperationsInput | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserPlayEpisodeCreateWithoutPurchaseInput = {
+  mode?: $Enums.PlayEpisodeMode
+  title?: string | null
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  lastSceneId?: number | null
+  lastSlotId?: number | null
+  currentStage?: $Enums.EpisodeStage
+  status?: $Enums.PlayEpisodeStatus
+  version?: number
+  result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: $Enums.PlayEpisodeSource
+  deletedAt?: Date | string | null
+  archivedAt?: Date | string | null
+  updatedAt?: Date | string
+  slots?: Prisma.PlayEpisodeSlotCreateNestedManyWithoutPlayEpisodeInput
+  user: Prisma.UserCreateNestedOneWithoutUserPlayEpisodesInput
+  episode: Prisma.EpisodeCreateNestedOneWithoutUserPlayEpisodesInput
+}
+
+export type UserPlayEpisodeUncheckedCreateWithoutPurchaseInput = {
+  id?: number
+  userId: number
+  episodeId: number
+  mode?: $Enums.PlayEpisodeMode
+  title?: string | null
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  lastSceneId?: number | null
+  lastSlotId?: number | null
+  currentStage?: $Enums.EpisodeStage
+  status?: $Enums.PlayEpisodeStatus
+  version?: number
+  result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: $Enums.PlayEpisodeSource
+  deletedAt?: Date | string | null
+  archivedAt?: Date | string | null
+  updatedAt?: Date | string
+  slots?: Prisma.PlayEpisodeSlotUncheckedCreateNestedManyWithoutPlayEpisodeInput
+}
+
+export type UserPlayEpisodeCreateOrConnectWithoutPurchaseInput = {
+  where: Prisma.UserPlayEpisodeWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserPlayEpisodeCreateWithoutPurchaseInput, Prisma.UserPlayEpisodeUncheckedCreateWithoutPurchaseInput>
+}
+
+export type UserPlayEpisodeUpsertWithoutPurchaseInput = {
+  update: Prisma.XOR<Prisma.UserPlayEpisodeUpdateWithoutPurchaseInput, Prisma.UserPlayEpisodeUncheckedUpdateWithoutPurchaseInput>
+  create: Prisma.XOR<Prisma.UserPlayEpisodeCreateWithoutPurchaseInput, Prisma.UserPlayEpisodeUncheckedCreateWithoutPurchaseInput>
+  where?: Prisma.UserPlayEpisodeWhereInput
+}
+
+export type UserPlayEpisodeUpdateToOneWithWhereWithoutPurchaseInput = {
+  where?: Prisma.UserPlayEpisodeWhereInput
+  data: Prisma.XOR<Prisma.UserPlayEpisodeUpdateWithoutPurchaseInput, Prisma.UserPlayEpisodeUncheckedUpdateWithoutPurchaseInput>
+}
+
+export type UserPlayEpisodeUpdateWithoutPurchaseInput = {
+  mode?: Prisma.EnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
+  status?: Prisma.EnumPlayEpisodeStatusFieldUpdateOperationsInput | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: Prisma.EnumPlayEpisodeSourceFieldUpdateOperationsInput | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slots?: Prisma.PlayEpisodeSlotUpdateManyWithoutPlayEpisodeNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutUserPlayEpisodesNestedInput
+  episode?: Prisma.EpisodeUpdateOneRequiredWithoutUserPlayEpisodesNestedInput
+}
+
+export type UserPlayEpisodeUncheckedUpdateWithoutPurchaseInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  episodeId?: Prisma.IntFieldUpdateOperationsInput | number
+  mode?: Prisma.EnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
+  status?: Prisma.EnumPlayEpisodeStatusFieldUpdateOperationsInput | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: Prisma.EnumPlayEpisodeSourceFieldUpdateOperationsInput | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slots?: Prisma.PlayEpisodeSlotUncheckedUpdateManyWithoutPlayEpisodeNestedInput
 }
 
 export type UserPlayEpisodeCreateManyUserInput = {
   id?: number
   episodeId: number
   mode?: $Enums.PlayEpisodeMode
-  accessStatus?: $Enums.AccessStatus
-  acquiredAt?: Date | string
-  revokedAt?: Date | string | null
+  title?: string | null
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
   lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
-  isCompleted?: boolean
+  status?: $Enums.PlayEpisodeStatus
+  version?: number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: $Enums.PlayEpisodeSource
+  deletedAt?: Date | string | null
+  archivedAt?: Date | string | null
+  purchaseId?: number | null
+  updatedAt?: Date | string
 }
 
 export type UserPlayEpisodeUpdateWithoutUserInput = {
   mode?: Prisma.EnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPlayEpisodeStatusFieldUpdateOperationsInput | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: Prisma.EnumPlayEpisodeSourceFieldUpdateOperationsInput | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  purchase?: Prisma.UserPurchaseUpdateOneWithoutUserPlayEpisodeNestedInput
   slots?: Prisma.PlayEpisodeSlotUpdateManyWithoutPlayEpisodeNestedInput
   episode?: Prisma.EpisodeUpdateOneRequiredWithoutUserPlayEpisodesNestedInput
 }
@@ -977,17 +1266,21 @@ export type UserPlayEpisodeUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   episodeId?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.EnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPlayEpisodeStatusFieldUpdateOperationsInput | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: Prisma.EnumPlayEpisodeSourceFieldUpdateOperationsInput | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   slots?: Prisma.PlayEpisodeSlotUncheckedUpdateManyWithoutPlayEpisodeNestedInput
 }
 
@@ -995,49 +1288,61 @@ export type UserPlayEpisodeUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   episodeId?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.EnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPlayEpisodeStatusFieldUpdateOperationsInput | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: Prisma.EnumPlayEpisodeSourceFieldUpdateOperationsInput | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserPlayEpisodeCreateManyEpisodeInput = {
   id?: number
   userId: number
   mode?: $Enums.PlayEpisodeMode
-  accessStatus?: $Enums.AccessStatus
-  acquiredAt?: Date | string
-  revokedAt?: Date | string | null
+  title?: string | null
   startedAt?: Date | string
   completedAt?: Date | string | null
   lastSceneId?: number | null
   lastSlotId?: number | null
   currentStage?: $Enums.EpisodeStage
-  isCompleted?: boolean
+  status?: $Enums.PlayEpisodeStatus
+  version?: number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: $Enums.PlayEpisodeSource
+  deletedAt?: Date | string | null
+  archivedAt?: Date | string | null
+  purchaseId?: number | null
+  updatedAt?: Date | string
 }
 
 export type UserPlayEpisodeUpdateWithoutEpisodeInput = {
   mode?: Prisma.EnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPlayEpisodeStatusFieldUpdateOperationsInput | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: Prisma.EnumPlayEpisodeSourceFieldUpdateOperationsInput | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  purchase?: Prisma.UserPurchaseUpdateOneWithoutUserPlayEpisodeNestedInput
   slots?: Prisma.PlayEpisodeSlotUpdateManyWithoutPlayEpisodeNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutUserPlayEpisodesNestedInput
 }
@@ -1046,17 +1351,21 @@ export type UserPlayEpisodeUncheckedUpdateWithoutEpisodeInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.EnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPlayEpisodeStatusFieldUpdateOperationsInput | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: Prisma.EnumPlayEpisodeSourceFieldUpdateOperationsInput | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   slots?: Prisma.PlayEpisodeSlotUncheckedUpdateManyWithoutPlayEpisodeNestedInput
 }
 
@@ -1064,17 +1373,21 @@ export type UserPlayEpisodeUncheckedUpdateManyWithoutEpisodeInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.EnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode
-  accessStatus?: Prisma.EnumAccessStatusFieldUpdateOperationsInput | $Enums.AccessStatus
-  acquiredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastSceneId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSlotId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currentStage?: Prisma.EnumEpisodeStageFieldUpdateOperationsInput | $Enums.EpisodeStage
-  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumPlayEpisodeStatusFieldUpdateOperationsInput | $Enums.PlayEpisodeStatus
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   result?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  source?: Prisma.EnumPlayEpisodeSourceFieldUpdateOperationsInput | $Enums.PlayEpisodeSource
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  purchaseId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -1113,17 +1426,22 @@ export type UserPlayEpisodeSelect<ExtArgs extends runtime.Types.Extensions.Inter
   userId?: boolean
   episodeId?: boolean
   mode?: boolean
-  accessStatus?: boolean
-  acquiredAt?: boolean
-  revokedAt?: boolean
+  title?: boolean
   startedAt?: boolean
   completedAt?: boolean
   lastSceneId?: boolean
   lastSlotId?: boolean
   currentStage?: boolean
-  isCompleted?: boolean
+  status?: boolean
+  version?: boolean
   result?: boolean
   data?: boolean
+  source?: boolean
+  deletedAt?: boolean
+  archivedAt?: boolean
+  purchaseId?: boolean
+  updatedAt?: boolean
+  purchase?: boolean | Prisma.UserPlayEpisode$purchaseArgs<ExtArgs>
   slots?: boolean | Prisma.UserPlayEpisode$slotsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
@@ -1135,17 +1453,22 @@ export type UserPlayEpisodeSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   userId?: boolean
   episodeId?: boolean
   mode?: boolean
-  accessStatus?: boolean
-  acquiredAt?: boolean
-  revokedAt?: boolean
+  title?: boolean
   startedAt?: boolean
   completedAt?: boolean
   lastSceneId?: boolean
   lastSlotId?: boolean
   currentStage?: boolean
-  isCompleted?: boolean
+  status?: boolean
+  version?: boolean
   result?: boolean
   data?: boolean
+  source?: boolean
+  deletedAt?: boolean
+  archivedAt?: boolean
+  purchaseId?: boolean
+  updatedAt?: boolean
+  purchase?: boolean | Prisma.UserPlayEpisode$purchaseArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userPlayEpisode"]>
@@ -1155,17 +1478,22 @@ export type UserPlayEpisodeSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   userId?: boolean
   episodeId?: boolean
   mode?: boolean
-  accessStatus?: boolean
-  acquiredAt?: boolean
-  revokedAt?: boolean
+  title?: boolean
   startedAt?: boolean
   completedAt?: boolean
   lastSceneId?: boolean
   lastSlotId?: boolean
   currentStage?: boolean
-  isCompleted?: boolean
+  status?: boolean
+  version?: boolean
   result?: boolean
   data?: boolean
+  source?: boolean
+  deletedAt?: boolean
+  archivedAt?: boolean
+  purchaseId?: boolean
+  updatedAt?: boolean
+  purchase?: boolean | Prisma.UserPlayEpisode$purchaseArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userPlayEpisode"]>
@@ -1175,31 +1503,38 @@ export type UserPlayEpisodeSelectScalar = {
   userId?: boolean
   episodeId?: boolean
   mode?: boolean
-  accessStatus?: boolean
-  acquiredAt?: boolean
-  revokedAt?: boolean
+  title?: boolean
   startedAt?: boolean
   completedAt?: boolean
   lastSceneId?: boolean
   lastSlotId?: boolean
   currentStage?: boolean
-  isCompleted?: boolean
+  status?: boolean
+  version?: boolean
   result?: boolean
   data?: boolean
+  source?: boolean
+  deletedAt?: boolean
+  archivedAt?: boolean
+  purchaseId?: boolean
+  updatedAt?: boolean
 }
 
-export type UserPlayEpisodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "episodeId" | "mode" | "accessStatus" | "acquiredAt" | "revokedAt" | "startedAt" | "completedAt" | "lastSceneId" | "lastSlotId" | "currentStage" | "isCompleted" | "result" | "data", ExtArgs["result"]["userPlayEpisode"]>
+export type UserPlayEpisodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "episodeId" | "mode" | "title" | "startedAt" | "completedAt" | "lastSceneId" | "lastSlotId" | "currentStage" | "status" | "version" | "result" | "data" | "source" | "deletedAt" | "archivedAt" | "purchaseId" | "updatedAt", ExtArgs["result"]["userPlayEpisode"]>
 export type UserPlayEpisodeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  purchase?: boolean | Prisma.UserPlayEpisode$purchaseArgs<ExtArgs>
   slots?: boolean | Prisma.UserPlayEpisode$slotsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.UserPlayEpisodeCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserPlayEpisodeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  purchase?: boolean | Prisma.UserPlayEpisode$purchaseArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
 }
 export type UserPlayEpisodeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  purchase?: boolean | Prisma.UserPlayEpisode$purchaseArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
 }
@@ -1207,6 +1542,7 @@ export type UserPlayEpisodeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Ty
 export type $UserPlayEpisodePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "UserPlayEpisode"
   objects: {
+    purchase: Prisma.$UserPurchasePayload<ExtArgs> | null
     slots: Prisma.$PlayEpisodeSlotPayload<ExtArgs>[]
     user: Prisma.$UserPayload<ExtArgs>
     episode: Prisma.$EpisodePayload<ExtArgs>
@@ -1216,17 +1552,21 @@ export type $UserPlayEpisodePayload<ExtArgs extends runtime.Types.Extensions.Int
     userId: number
     episodeId: number
     mode: $Enums.PlayEpisodeMode
-    accessStatus: $Enums.AccessStatus
-    acquiredAt: Date
-    revokedAt: Date | null
+    title: string | null
     startedAt: Date
     completedAt: Date | null
     lastSceneId: number | null
     lastSlotId: number | null
     currentStage: $Enums.EpisodeStage
-    isCompleted: boolean
+    status: $Enums.PlayEpisodeStatus
+    version: number
     result: runtime.JsonValue | null
     data: runtime.JsonValue | null
+    source: $Enums.PlayEpisodeSource
+    deletedAt: Date | null
+    archivedAt: Date | null
+    purchaseId: number | null
+    updatedAt: Date
   }, ExtArgs["result"]["userPlayEpisode"]>
   composites: {}
 }
@@ -1621,6 +1961,7 @@ readonly fields: UserPlayEpisodeFieldRefs;
  */
 export interface Prisma__UserPlayEpisodeClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  purchase<T extends Prisma.UserPlayEpisode$purchaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserPlayEpisode$purchaseArgs<ExtArgs>>): Prisma.Prisma__UserPurchaseClient<runtime.Types.Result.GetResult<Prisma.$UserPurchasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   slots<T extends Prisma.UserPlayEpisode$slotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserPlayEpisode$slotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlayEpisodeSlotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   episode<T extends Prisma.EpisodeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EpisodeDefaultArgs<ExtArgs>>): Prisma.Prisma__EpisodeClient<runtime.Types.Result.GetResult<Prisma.$EpisodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -1657,17 +1998,21 @@ export interface UserPlayEpisodeFieldRefs {
   readonly userId: Prisma.FieldRef<"UserPlayEpisode", 'Int'>
   readonly episodeId: Prisma.FieldRef<"UserPlayEpisode", 'Int'>
   readonly mode: Prisma.FieldRef<"UserPlayEpisode", 'PlayEpisodeMode'>
-  readonly accessStatus: Prisma.FieldRef<"UserPlayEpisode", 'AccessStatus'>
-  readonly acquiredAt: Prisma.FieldRef<"UserPlayEpisode", 'DateTime'>
-  readonly revokedAt: Prisma.FieldRef<"UserPlayEpisode", 'DateTime'>
+  readonly title: Prisma.FieldRef<"UserPlayEpisode", 'String'>
   readonly startedAt: Prisma.FieldRef<"UserPlayEpisode", 'DateTime'>
   readonly completedAt: Prisma.FieldRef<"UserPlayEpisode", 'DateTime'>
   readonly lastSceneId: Prisma.FieldRef<"UserPlayEpisode", 'Int'>
   readonly lastSlotId: Prisma.FieldRef<"UserPlayEpisode", 'Int'>
   readonly currentStage: Prisma.FieldRef<"UserPlayEpisode", 'EpisodeStage'>
-  readonly isCompleted: Prisma.FieldRef<"UserPlayEpisode", 'Boolean'>
+  readonly status: Prisma.FieldRef<"UserPlayEpisode", 'PlayEpisodeStatus'>
+  readonly version: Prisma.FieldRef<"UserPlayEpisode", 'Int'>
   readonly result: Prisma.FieldRef<"UserPlayEpisode", 'Json'>
   readonly data: Prisma.FieldRef<"UserPlayEpisode", 'Json'>
+  readonly source: Prisma.FieldRef<"UserPlayEpisode", 'PlayEpisodeSource'>
+  readonly deletedAt: Prisma.FieldRef<"UserPlayEpisode", 'DateTime'>
+  readonly archivedAt: Prisma.FieldRef<"UserPlayEpisode", 'DateTime'>
+  readonly purchaseId: Prisma.FieldRef<"UserPlayEpisode", 'Int'>
+  readonly updatedAt: Prisma.FieldRef<"UserPlayEpisode", 'DateTime'>
 }
     
 
@@ -2061,6 +2406,25 @@ export type UserPlayEpisodeDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many UserPlayEpisodes to delete.
    */
   limit?: number
+}
+
+/**
+ * UserPlayEpisode.purchase
+ */
+export type UserPlayEpisode$purchaseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserPurchase
+   */
+  select?: Prisma.UserPurchaseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserPurchase
+   */
+  omit?: Prisma.UserPurchaseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserPurchaseInclude<ExtArgs> | null
+  where?: Prisma.UserPurchaseWhereInput
 }
 
 /**

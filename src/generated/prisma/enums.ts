@@ -158,16 +158,6 @@ export const EpisodeStage = {
 export type EpisodeStage = (typeof EpisodeStage)[keyof typeof EpisodeStage]
 
 
-export const AccessStatus = {
-  ACTIVE: 'ACTIVE',
-  REFUNDED: 'REFUNDED',
-  CANCELED: 'CANCELED',
-  EXPIRED: 'EXPIRED'
-} as const
-
-export type AccessStatus = (typeof AccessStatus)[keyof typeof AccessStatus]
-
-
 export const PlayEpisodeMode = {
   FREE_CHAT: 'FREE_CHAT',
   CHAT_WITH_EVAL: 'CHAT_WITH_EVAL',
@@ -185,6 +175,26 @@ export const SlotStatus = {
 export type SlotStatus = (typeof SlotStatus)[keyof typeof SlotStatus]
 
 
+export const PlayEpisodeSource = {
+  PURCHASE: 'PURCHASE',
+  SUBSCRIPTION: 'SUBSCRIPTION',
+  COUPON: 'COUPON',
+  EVENT: 'EVENT',
+  ADMIN_GRANT: 'ADMIN_GRANT'
+} as const
+
+export type PlayEpisodeSource = (typeof PlayEpisodeSource)[keyof typeof PlayEpisodeSource]
+
+
+export const PlayEpisodeStatus = {
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type PlayEpisodeStatus = (typeof PlayEpisodeStatus)[keyof typeof PlayEpisodeStatus]
+
+
 export const SlotMessageType = {
   USER: 'USER',
   NPC: 'NPC',
@@ -200,3 +210,52 @@ export const SlotDialogueType = {
 } as const
 
 export type SlotDialogueType = (typeof SlotDialogueType)[keyof typeof SlotDialogueType]
+
+
+export const ProductType = {
+  PLAY_EPISODE: 'PLAY_EPISODE',
+  COIN_PACK: 'COIN_PACK',
+  SUBSCRIPTION: 'SUBSCRIPTION'
+} as const
+
+export type ProductType = (typeof ProductType)[keyof typeof ProductType]
+
+
+export const CurrencyType = {
+  COIN: 'COIN',
+  KRW: 'KRW',
+  USD: 'USD'
+} as const
+
+export type CurrencyType = (typeof CurrencyType)[keyof typeof CurrencyType]
+
+
+export const PurchaseType = {
+  COIN: 'COIN',
+  IN_APP: 'IN_APP',
+  SUBSCRIPTION_ACCESS: 'SUBSCRIPTION_ACCESS'
+} as const
+
+export type PurchaseType = (typeof PurchaseType)[keyof typeof PurchaseType]
+
+
+export const CoinTxType = {
+  TOPUP: 'TOPUP',
+  SPEND: 'SPEND',
+  REFUND: 'REFUND',
+  AD_REWARD: 'AD_REWARD',
+  ADMIN_ADJUST: 'ADMIN_ADJUST'
+} as const
+
+export type CoinTxType = (typeof CoinTxType)[keyof typeof CoinTxType]
+
+
+export const SubscriptionStatus = {
+  INACTIVE: 'INACTIVE',
+  ACTIVE: 'ACTIVE',
+  CANCELED: 'CANCELED',
+  PAST_DUE: 'PAST_DUE',
+  EXPIRED: 'EXPIRED'
+} as const
+
+export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]

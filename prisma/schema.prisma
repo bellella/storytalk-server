@@ -4,6 +4,12 @@ generator client {
   moduleFormat = "cjs"
 }
 
+generator class_generator {
+  provider = "prisma-class-generator"
+  output   = "../src/generated/entity-class"
+  useSwagger = "true"
+}
+
 datasource db {
   provider = "postgresql"
 }
@@ -59,6 +65,10 @@ model User {
   userQuizSessions  UserQuizSession[]
   characterChats    CharacterChat[]
   userPlayEpisodes  UserPlayEpisode[]
+  products          EpisodeProduct[]
+  userPurchases     UserPurchase[]
+  coinTransactions  CoinTransaction[]
+  userSubscriptions UserSubscription[]
 
   @@unique([email, provider])
 }
@@ -146,6 +156,8 @@ model Episode {
   order             Int
   description       String?
   koreanDescription String?
+  thumbnailUrl      String?
+
   status            PublishStatus @default(DRAFT)
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
@@ -155,6 +167,7 @@ model Episode {
   rewards          EpisodeReward[]
   userEpisodes     UserEpisode[]
   userPlayEpisodes UserPlayEpisode[]
+  episodeProducts  EpisodeProduct[]
 
   @@unique([storyId, order])
 }
@@ -649,13 +662,6 @@ model UserEpisode {
   @@index([episodeId])
 }
 
-enum AccessStatus {
-  ACTIVE
-  REFUNDED
-  CANCELED
-  EXPIRED
-}
-
 enum PlayEpisodeMode {
   FREE_CHAT // 자유대화만
   CHAT_WITH_EVAL // 자유대화 + 교정/평가/점수
@@ -667,33 +673,60 @@ enum SlotStatus {
   ENDED
 }
 
+enum PlayEpisodeSource {
+  PURCHASE
+  SUBSCRIPTION
+  COUPON
+  EVENT
+  ADMIN_GRANT
+}
+
+enum PlayEpisodeStatus {
+  IN_PROGRESS
+  COMPLETED
+  ARCHIVED
+}
+
 model UserPlayEpisode {
   id        Int @id @default(autoincrement())
   userId    Int
   episodeId Int
 
-  mode PlayEpisodeMode @default(FREE_CHAT)
+  mode  PlayEpisodeMode @default(FREE_CHAT)
+  title String?
 
-  accessStatus AccessStatus @default(ACTIVE)
-  acquiredAt   DateTime     @default(now())
-  revokedAt    DateTime?
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
 
-  startedAt      DateTime     @default(now())
-  completedAt    DateTime?
-  lastSceneId    Int?
-  lastSlotId     Int?
-  currentStage   EpisodeStage @default(STORY_IN_PROGRESS)
-  isCompleted    Boolean      @default(false)
+  lastSceneId  Int?
+  lastSlotId   Int?
+  currentStage EpisodeStage      @default(STORY_IN_PROGRESS)
+  status       PlayEpisodeStatus @default(IN_PROGRESS)
+
+  version Int @default(1)
 
   result Json?
   data   Json?
+
+  source PlayEpisodeSource @default(PURCHASE)
+
+  deletedAt  DateTime?
+  archivedAt DateTime?
+
+  purchaseId Int?          @unique
+  purchase   UserPurchase? @relation(fields: [purchaseId], references: [id], onDelete: SetNull)
+
+  updatedAt DateTime  @updatedAt
 
   slots PlayEpisodeSlot[]
 
   user    User    @relation(fields: [userId], references: [id])
   episode Episode @relation(fields: [episodeId], references: [id])
 
-  @@index([userId, accessStatus])
+  @@index([userId, startedAt])
+  @@index([userId, updatedAt])
+  @@index([userId, status])
+  @@index([userId, episodeId])
   @@index([episodeId])
 }
 
@@ -755,4 +788,197 @@ model SlotDialogue {
   @@unique([slotId, order])
   @@index([slotId, createdAt])
   @@index([playEpisodeId, sceneId])
+}
+
+model Collection {
+  id           Int     @id @default(autoincrement())
+  title        String
+  description  String?
+  thumbnailUrl String?
+
+  order    Int     @default(0)
+  isActive Boolean @default(true)
+
+  startsAt DateTime?
+  endsAt   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  products CollectionProduct[]
+}
+
+model CollectionProduct {
+  id           Int @id @default(autoincrement())
+  collectionId Int
+  productId    Int
+
+  order Int @default(0)
+
+  collection Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  product    Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([collectionId, productId])
+}
+
+//////////////////////////////////////////////////////
+// COMMERCE
+//////////////////////////////////////////////////////
+
+// Product는 지금은 3종만:
+// - EPISODE_ACCESS: 코인으로 개별 에피소드 해금
+// - COIN_PACK: 인앱결제로 코인 충전
+// - SUBSCRIPTION: 구독(뼈대)
+model Product {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+
+  type ProductType
+
+  // 코인 결제 상품(에피소드 해금)은 COIN + price=코인값
+  // 코인팩/구독은 storeSku를 사용하고 price는 옵션(표시용)으로 둘 수도 있음
+  currency CurrencyType
+  price    Int
+
+  storeSku String? @unique // 인앱결제 SKU (코인팩/구독에서 사용)
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  episodes           EpisodeProduct[]
+  purchases          UserPurchase[]
+  collectionProducts CollectionProduct[]
+  userSubscriptions  UserSubscription[]
+}
+
+enum ProductType {
+  PLAY_EPISODE
+  COIN_PACK
+  SUBSCRIPTION
+}
+
+enum CurrencyType {
+  COIN
+  KRW
+  USD
+}
+
+model EpisodeProduct {
+  id        Int @id @default(autoincrement())
+  episodeId Int
+  productId Int
+
+  episode Episode @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user    User?   @relation(fields: [userId], references: [id])
+  userId  Int?
+
+  @@unique([episodeId, productId])
+}
+
+//////////////////////////////////////////////////////
+// PURCHASE / ENTITLEMENT
+//////////////////////////////////////////////////////
+
+enum PurchaseType {
+  COIN
+  IN_APP
+  SUBSCRIPTION_ACCESS
+}
+
+model UserPurchase {
+  id        Int @id @default(autoincrement())
+  userId    Int
+  productId Int
+
+  // 코인으로 샀는지, 인앱결제로 샀는지, 구독으로 접근인지
+  type PurchaseType
+
+  // 결제 당시 가격(코인이면 코인값)
+  pricePaid Int
+  currency  CurrencyType
+
+  // 인앱결제 영수증/거래키 (코인팩/구독 결제 검증에 사용)
+  storeOrderId String?
+
+  createdAt DateTime @default(now())
+
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product          Product           @relation(fields: [productId], references: [id], onDelete: Restrict)
+  userPlayEpisode  UserPlayEpisode?
+  coinTransactions CoinTransaction[]
+
+  // EPISODE_ACCESS는 보통 1회만 구매 가능하게 막는 게 안전
+  @@unique([userId, productId])
+}
+
+//////////////////////////////////////////////////////
+// COIN (충전/차감)
+//////////////////////////////////////////////////////
+enum CoinTxType {
+  TOPUP // 코인 충전
+  SPEND // 에피소드 구매로 차감
+  REFUND // 환불/롤백
+  AD_REWARD // 광고 보상(추가할 경우)
+  ADMIN_ADJUST
+}
+
+model CoinTransaction {
+  id     Int @id @default(autoincrement())
+  userId Int
+
+  type         CoinTxType
+  amount       Int // +충전, -차감
+  balanceAfter Int // 처리 후 잔액 스냅샷(디버깅/정합성용)
+
+  // 연결 정보
+  relatedPurchaseId Int?
+  relatedPurchase   UserPurchase? @relation(fields: [relatedPurchaseId], references: [id], onDelete: SetNull)
+
+  // 인앱 충전이면 storeOrderId/receipt 키도 남기기 좋음
+  storeOrderId String?
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+//////////////////////////////////////////////////////
+// SUBSCRIPTION
+//////////////////////////////////////////////////////
+
+enum SubscriptionStatus {
+  INACTIVE
+  ACTIVE
+  CANCELED
+  PAST_DUE
+  EXPIRED
+}
+
+model UserSubscription {
+  id        Int  @id @default(autoincrement())
+  userId    Int
+  productId Int? // SUBSCRIPTION Product 연결(옵션)
+
+  status SubscriptionStatus @default(INACTIVE)
+
+  startedAt          DateTime?
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+
+  // 스토어 결제 식별자
+  storeSku     String?
+  storeOrderId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  @@index([userId, status])
 }

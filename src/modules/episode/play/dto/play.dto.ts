@@ -1,5 +1,13 @@
 // src/modules/play/dto/play.dto.ts
 import {
+  EpisodeStage,
+  PlayEpisodeMode,
+  PlayEpisodeStatus,
+  SlotDialogueType,
+  SlotMessageType,
+} from '@/generated/prisma/enums';
+import { EpisodeDetailDto } from '@/modules/story/dto/episode-detail.dto';
+import {
   IsEnum,
   IsInt,
   IsOptional,
@@ -7,17 +15,6 @@ import {
   MaxLength,
   Min,
 } from 'class-validator';
-import {
-  AccessStatus,
-  EpisodeStage,
-  PlayEpisodeMode,
-  SlotDialogueType,
-  SlotMessageType,
-} from '@/generated/prisma/enums';
-import {
-  DialogueDto,
-  EpisodeDetailDto,
-} from '@/modules/story/dto/episode-detail.dto';
 
 /**
  * ---------- Requests ----------
@@ -88,9 +85,8 @@ export class MyPlayEpisodeItemDto {
   playEpisodeId: number;
   episode: EpisodeMetaDto;
   mode: PlayEpisodeMode;
-  accessStatus: AccessStatus;
+  status: PlayEpisodeStatus;
   currentStage: EpisodeStage;
-  isCompleted: boolean;
   startedAt: string;
   completedAt?: string | null;
   lastSceneId?: number | null;
@@ -111,13 +107,12 @@ export class PlayEpisodeDetailResponseDto {
     id: number;
     episodeId: number;
     mode: PlayEpisodeMode;
-    accessStatus: AccessStatus;
+    status: PlayEpisodeStatus;
     startedAt: string;
     completedAt?: string | null;
     lastSceneId?: number | null;
     lastSlotId?: number | null;
     currentStage: EpisodeStage;
-    isCompleted: boolean;
   };
   episode: EpisodeDetailDto;
 }
@@ -149,7 +144,7 @@ export class AiSlotResponseDto {
 export class CompletePlayResponseDto {
   playEpisodeId: number;
   currentStage: EpisodeStage;
-  isCompleted: boolean;
+  status: PlayEpisodeStatus;
 }
 
 export class PlayEpisodeDto {
@@ -157,7 +152,7 @@ export class PlayEpisodeDto {
   episodeId: number;
   isCompleted: boolean;
   mode: PlayEpisodeMode;
-  accessStatus: AccessStatus;
+  status: PlayEpisodeStatus;
   startedAt: string;
   completedAt?: string | null;
 }
@@ -171,7 +166,7 @@ export class ResultResponseDto {
   playEpisodeId: number;
   episode: EpisodeMetaDto;
   currentStage: EpisodeStage;
-  isCompleted: boolean;
+  status: PlayEpisodeStatus;
   result: any | null;
   correctedDialogues: {
     type: 'correction' | 'translation';
