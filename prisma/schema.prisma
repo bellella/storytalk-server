@@ -4,12 +4,6 @@ generator client {
   moduleFormat = "cjs"
 }
 
-generator class_generator {
-  provider = "prisma-class-generator"
-  output   = "../src/generated/entity-class"
-  useSwagger = "true"
-}
-
 datasource db {
   provider = "postgresql"
 }

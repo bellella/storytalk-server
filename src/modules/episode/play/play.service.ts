@@ -1,5 +1,4 @@
 import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
-import { Prisma } from '@/generated/prisma/client';
 import {
   DialogueType,
   EpisodeStage,
@@ -285,17 +284,7 @@ export class PlayService {
    *   - constraints?: string[]
    *   - situation?: string
    */
-  private async resolveDialogueData(
-    dialogue: Prisma.DialogueGetPayload<{
-      select: {
-        sceneId: true;
-        order: true;
-        characterId: true;
-        characterName: true;
-        data: true;
-      };
-    }> | null
-  ) {
+  private async resolveDialogueData(dialogue: any | null) {
     if (!dialogue) throw new NotFoundException('Dialogue not found');
     if (!dialogue.characterId)
       throw new BadRequestException('Dialogue must have characterId');

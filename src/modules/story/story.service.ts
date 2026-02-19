@@ -328,7 +328,8 @@ export class StoryService {
     });
 
     // dialogue를 Map으로 변환하여 빠른 조회
-    const dialogueMap = new Map(
+    type DialogueWithCharacter = (typeof dialogues)[number];
+    const dialogueMap = new Map<number, DialogueWithCharacter>(
       dialogues.map((dialogue) => [dialogue.id, dialogue])
     );
 
