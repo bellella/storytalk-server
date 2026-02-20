@@ -3,6 +3,7 @@ import { CursorRequestDto } from '@/common/dtos/cursor-request.dto';
 import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
 import {
   EpisodeStage,
+  EpisodeType,
   PublishStatus,
   StoryType,
 } from '@/generated/prisma/client';
@@ -20,6 +21,7 @@ import {
   SceneDto,
 } from './dto/episode-detail.dto';
 import { StoryDetailDto } from './dto/story-detail.dto';
+import { RecentlyPlayedEpisodeItemDto } from './dto/story.dto';
 import { StoryListItemDto } from './dto/story-list-item.dto';
 import { TagItemDto } from './dto/tag-item.dto';
 import { CharacterService } from '../character/character.service';
@@ -396,5 +398,79 @@ export class StoryService {
       color: tag.color ?? undefined,
       icon: tag.icon ?? undefined,
     }));
+  }
+
+  async getRecentlyPlayedEpisodes(
+    userId: number,
+    limit = 7
+  ): Promise<RecentlyPlayedEpisodeItemDto[]> {
+    const userEpisodes = await this.prisma.userEpisode.findMany({
+      where: {
+        userId,
+        episode: {
+          type: EpisodeType.STORY,
+          story: { status: PublishStatus.PUBLISHED },
+        },
+      },
+      orderBy: { startedAt: 'desc' },
+      take: limit,
+      select: {
+        currentStage: true,
+        isCompleted: true,
+        score: true,
+        lastSceneId: true,
+        startedAt: true,
+        completedAt: true,
+        episode: {
+          select: {
+            id: true,
+            title: true,
+            koreanTitle: true,
+            order: true,
+            thumbnailUrl: true,
+            story: {
+              select: {
+                id: true,
+                title: true,
+                koreanTitle: true,
+                type: true,
+                level: true,
+                icon: true,
+                coverImage: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return userEpisodes
+      .filter((ue) => ue.episode.story !== null)
+      .map((ue): RecentlyPlayedEpisodeItemDto => ({
+        story: {
+          id: ue.episode.story!.id,
+          title: ue.episode.story!.title,
+          koreanTitle: ue.episode.story!.koreanTitle,
+          type: ue.episode.story!.type,
+          level: ue.episode.story!.level,
+          icon: ue.episode.story!.icon,
+          coverImage: ue.episode.story!.coverImage,
+        },
+        episode: {
+          id: ue.episode.id,
+          title: ue.episode.title,
+          koreanTitle: ue.episode.koreanTitle,
+          order: ue.episode.order,
+          thumbnailUrl: ue.episode.thumbnailUrl,
+        },
+        userEpisode: {
+          currentStage: ue.currentStage,
+          isCompleted: ue.isCompleted,
+          score: ue.score,
+          lastSceneId: ue.lastSceneId,
+          startedAt: ue.startedAt.toISOString(),
+          completedAt: ue.completedAt?.toISOString() ?? null,
+        },
+      }));
   }
 }

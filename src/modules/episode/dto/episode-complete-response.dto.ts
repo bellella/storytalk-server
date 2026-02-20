@@ -2,6 +2,17 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { RewardType } from '@/generated/prisma/client';
 import { XpProgressDto } from '@/modules/xp/dto/xp-progress.dto';
 
+export class UnlockedCharacterDto {
+  @ApiProperty()
+  characterId: number;
+
+  @ApiProperty()
+  name: string;
+
+  @ApiProperty({ nullable: true })
+  avatarImageUrl: string | null;
+}
+
 export class EpisodeRewardDto {
   @ApiProperty()
   id: number;
@@ -11,6 +22,9 @@ export class EpisodeRewardDto {
 
   @ApiProperty({ description: '리워드 상세 정보(JSON)' })
   payload: Record<string, any>;
+
+  @ApiProperty({ type: UnlockedCharacterDto, nullable: true, required: false })
+  unlockedCharacter?: UnlockedCharacterDto | null;
 }
 
 export class EpisodeMetaDto {

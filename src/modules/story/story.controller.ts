@@ -1,7 +1,7 @@
 import { ReqUser } from '@/common/decorators/user.decorator';
 import { CursorRequestDto } from '@/common/dtos/cursor-request.dto';
 import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
-import { CurrentUser } from '@/types/auth.type';
+import type { CurrentUser } from '@/types/auth.type';
 import {
   Controller,
   Get,
@@ -11,10 +11,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiQuery } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { OptionalJwtAuthGuard } from '../auth/guards/optional-auth.guard';
 import { StoryDetailDto } from './dto/story-detail.dto';
 import { StoryListItemDto } from './dto/story-list-item.dto';
-import { StoriesResponseDto } from './dto/story.dto';
+import { RecentlyPlayedEpisodeItemDto, StoriesResponseDto } from './dto/story.dto';
 import { TagItemDto } from './dto/tag-item.dto';
 import { StoryService } from './story.service';
 
@@ -41,6 +42,15 @@ export class StoryController {
   @ApiOkResponse({ type: [TagItemDto] })
   async getTags(): Promise<TagItemDto[]> {
     return await this.storyService.getTags();
+  }
+
+  @Get('recently-played')
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: [RecentlyPlayedEpisodeItemDto] })
+  async getRecentlyPlayedEpisodes(
+    @ReqUser() user: CurrentUser
+  ): Promise<RecentlyPlayedEpisodeItemDto[]> {
+    return this.storyService.getRecentlyPlayedEpisodes(user.id);
   }
 
   @Get(':id')

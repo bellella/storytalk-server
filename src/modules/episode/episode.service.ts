@@ -1,5 +1,6 @@
 import {
   EpisodeStage,
+  RewardType,
   XpSourceType,
   XpTriggerType,
 } from '@/generated/prisma/client';
@@ -8,7 +9,7 @@ import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { EpisodeProgressDto } from './dto/episode-progress-response.dto';
 import { XpService } from '../xp/xp.service';
-import { EpisodeCompleteResponseDto } from './dto/episode-complete-response.dto';
+import { EpisodeCompleteResponseDto, EpisodeRewardDto } from './dto/episode-complete-response.dto';
 
 @Injectable()
 export class EpisodeService {
@@ -91,12 +92,12 @@ export class EpisodeService {
     }
 
     const rewards = await this.prisma.episodeReward.findMany({
-      where: { episodeId },
+      where: { episodeId, isActive: true },
     });
 
-    for (const reward of rewards) {
-      // TODO: 보상 지급
-    }
+    const rewardResults: EpisodeRewardDto[] = await Promise.all(
+      rewards.map((reward) => this.processReward(userId, reward))
+    );
 
     await this.prisma.userEpisode.update({
       where: { id: userEpisode.id },
@@ -128,11 +129,47 @@ export class EpisodeService {
         storyId: episode.story?.id,
         storyTitle: episode.story?.title,
       },
-      rewards: rewards.map((r) => ({
-        id: r.id,
-        type: r.type,
-        payload: r.payload as Record<string, any>,
-      })),
+      rewards: rewardResults,
+    };
+  }
+
+  private async processReward(
+    userId: number,
+    reward: { id: number; type: RewardType; payload: any }
+  ): Promise<EpisodeRewardDto> {
+    if (reward.type === RewardType.CHARACTER_UNLOCK) {
+      const characterId = (reward.payload as { characterId: number }).characterId;
+
+      const [character] = await Promise.all([
+        this.prisma.character.findUnique({
+          where: { id: characterId },
+          select: { id: true, name: true, avatarImage: true },
+        }),
+        this.prisma.characterFriend.upsert({
+          where: { userId_characterId: { userId, characterId } },
+          create: { userId, characterId, affinity: 0 },
+          update: {},
+        }),
+      ]);
+
+      return {
+        id: reward.id,
+        type: reward.type,
+        payload: reward.payload,
+        unlockedCharacter: character
+          ? {
+              characterId: character.id,
+              name: character.name,
+              avatarImageUrl: character.avatarImage,
+            }
+          : null,
+      };
+    }
+
+    return {
+      id: reward.id,
+      type: reward.type,
+      payload: reward.payload,
     };
   }
 
