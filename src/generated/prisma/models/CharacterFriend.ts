@@ -47,6 +47,7 @@ export type CharacterFriendMinAggregateOutputType = {
   affinity: number | null
   createdAt: Date | null
   updatedAt: Date | null
+  status: $Enums.CharacterRelationStatus | null
 }
 
 export type CharacterFriendMaxAggregateOutputType = {
@@ -56,6 +57,7 @@ export type CharacterFriendMaxAggregateOutputType = {
   affinity: number | null
   createdAt: Date | null
   updatedAt: Date | null
+  status: $Enums.CharacterRelationStatus | null
 }
 
 export type CharacterFriendCountAggregateOutputType = {
@@ -65,6 +67,7 @@ export type CharacterFriendCountAggregateOutputType = {
   affinity: number
   createdAt: number
   updatedAt: number
+  status: number
   _all: number
 }
 
@@ -90,6 +93,7 @@ export type CharacterFriendMinAggregateInputType = {
   affinity?: true
   createdAt?: true
   updatedAt?: true
+  status?: true
 }
 
 export type CharacterFriendMaxAggregateInputType = {
@@ -99,6 +103,7 @@ export type CharacterFriendMaxAggregateInputType = {
   affinity?: true
   createdAt?: true
   updatedAt?: true
+  status?: true
 }
 
 export type CharacterFriendCountAggregateInputType = {
@@ -108,6 +113,7 @@ export type CharacterFriendCountAggregateInputType = {
   affinity?: true
   createdAt?: true
   updatedAt?: true
+  status?: true
   _all?: true
 }
 
@@ -204,6 +210,7 @@ export type CharacterFriendGroupByOutputType = {
   affinity: number
   createdAt: Date
   updatedAt: Date
+  status: $Enums.CharacterRelationStatus
   _count: CharacterFriendCountAggregateOutputType | null
   _avg: CharacterFriendAvgAggregateOutputType | null
   _sum: CharacterFriendSumAggregateOutputType | null
@@ -236,6 +243,7 @@ export type CharacterFriendWhereInput = {
   affinity?: Prisma.IntFilter<"CharacterFriend"> | number
   createdAt?: Prisma.DateTimeFilter<"CharacterFriend"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CharacterFriend"> | Date | string
+  status?: Prisma.EnumCharacterRelationStatusFilter<"CharacterFriend"> | $Enums.CharacterRelationStatus
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
 }
@@ -247,6 +255,7 @@ export type CharacterFriendOrderByWithRelationInput = {
   affinity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   character?: Prisma.CharacterOrderByWithRelationInput
 }
@@ -262,6 +271,7 @@ export type CharacterFriendWhereUniqueInput = Prisma.AtLeast<{
   affinity?: Prisma.IntFilter<"CharacterFriend"> | number
   createdAt?: Prisma.DateTimeFilter<"CharacterFriend"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CharacterFriend"> | Date | string
+  status?: Prisma.EnumCharacterRelationStatusFilter<"CharacterFriend"> | $Enums.CharacterRelationStatus
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
 }, "id" | "userId_characterId">
@@ -273,6 +283,7 @@ export type CharacterFriendOrderByWithAggregationInput = {
   affinity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   _count?: Prisma.CharacterFriendCountOrderByAggregateInput
   _avg?: Prisma.CharacterFriendAvgOrderByAggregateInput
   _max?: Prisma.CharacterFriendMaxOrderByAggregateInput
@@ -290,12 +301,14 @@ export type CharacterFriendScalarWhereWithAggregatesInput = {
   affinity?: Prisma.IntWithAggregatesFilter<"CharacterFriend"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CharacterFriend"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CharacterFriend"> | Date | string
+  status?: Prisma.EnumCharacterRelationStatusWithAggregatesFilter<"CharacterFriend"> | $Enums.CharacterRelationStatus
 }
 
 export type CharacterFriendCreateInput = {
   affinity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.CharacterRelationStatus
   user: Prisma.UserCreateNestedOneWithoutCharacterFriendsInput
   character: Prisma.CharacterCreateNestedOneWithoutFriendsInput
 }
@@ -307,12 +320,14 @@ export type CharacterFriendUncheckedCreateInput = {
   affinity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.CharacterRelationStatus
 }
 
 export type CharacterFriendUpdateInput = {
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumCharacterRelationStatusFieldUpdateOperationsInput | $Enums.CharacterRelationStatus
   user?: Prisma.UserUpdateOneRequiredWithoutCharacterFriendsNestedInput
   character?: Prisma.CharacterUpdateOneRequiredWithoutFriendsNestedInput
 }
@@ -324,6 +339,7 @@ export type CharacterFriendUncheckedUpdateInput = {
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumCharacterRelationStatusFieldUpdateOperationsInput | $Enums.CharacterRelationStatus
 }
 
 export type CharacterFriendCreateManyInput = {
@@ -333,12 +349,14 @@ export type CharacterFriendCreateManyInput = {
   affinity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.CharacterRelationStatus
 }
 
 export type CharacterFriendUpdateManyMutationInput = {
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumCharacterRelationStatusFieldUpdateOperationsInput | $Enums.CharacterRelationStatus
 }
 
 export type CharacterFriendUncheckedUpdateManyInput = {
@@ -348,6 +366,7 @@ export type CharacterFriendUncheckedUpdateManyInput = {
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumCharacterRelationStatusFieldUpdateOperationsInput | $Enums.CharacterRelationStatus
 }
 
 export type CharacterFriendListRelationFilter = {
@@ -372,6 +391,7 @@ export type CharacterFriendCountOrderByAggregateInput = {
   affinity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type CharacterFriendAvgOrderByAggregateInput = {
@@ -388,6 +408,7 @@ export type CharacterFriendMaxOrderByAggregateInput = {
   affinity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type CharacterFriendMinOrderByAggregateInput = {
@@ -397,6 +418,7 @@ export type CharacterFriendMinOrderByAggregateInput = {
   affinity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type CharacterFriendSumOrderByAggregateInput = {
@@ -490,10 +512,15 @@ export type CharacterFriendUncheckedUpdateManyWithoutCharacterNestedInput = {
   deleteMany?: Prisma.CharacterFriendScalarWhereInput | Prisma.CharacterFriendScalarWhereInput[]
 }
 
+export type EnumCharacterRelationStatusFieldUpdateOperationsInput = {
+  set?: $Enums.CharacterRelationStatus
+}
+
 export type CharacterFriendCreateWithoutUserInput = {
   affinity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.CharacterRelationStatus
   character: Prisma.CharacterCreateNestedOneWithoutFriendsInput
 }
 
@@ -503,6 +530,7 @@ export type CharacterFriendUncheckedCreateWithoutUserInput = {
   affinity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.CharacterRelationStatus
 }
 
 export type CharacterFriendCreateOrConnectWithoutUserInput = {
@@ -541,12 +569,14 @@ export type CharacterFriendScalarWhereInput = {
   affinity?: Prisma.IntFilter<"CharacterFriend"> | number
   createdAt?: Prisma.DateTimeFilter<"CharacterFriend"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CharacterFriend"> | Date | string
+  status?: Prisma.EnumCharacterRelationStatusFilter<"CharacterFriend"> | $Enums.CharacterRelationStatus
 }
 
 export type CharacterFriendCreateWithoutCharacterInput = {
   affinity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.CharacterRelationStatus
   user: Prisma.UserCreateNestedOneWithoutCharacterFriendsInput
 }
 
@@ -556,6 +586,7 @@ export type CharacterFriendUncheckedCreateWithoutCharacterInput = {
   affinity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.CharacterRelationStatus
 }
 
 export type CharacterFriendCreateOrConnectWithoutCharacterInput = {
@@ -590,12 +621,14 @@ export type CharacterFriendCreateManyUserInput = {
   affinity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.CharacterRelationStatus
 }
 
 export type CharacterFriendUpdateWithoutUserInput = {
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumCharacterRelationStatusFieldUpdateOperationsInput | $Enums.CharacterRelationStatus
   character?: Prisma.CharacterUpdateOneRequiredWithoutFriendsNestedInput
 }
 
@@ -605,6 +638,7 @@ export type CharacterFriendUncheckedUpdateWithoutUserInput = {
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumCharacterRelationStatusFieldUpdateOperationsInput | $Enums.CharacterRelationStatus
 }
 
 export type CharacterFriendUncheckedUpdateManyWithoutUserInput = {
@@ -613,6 +647,7 @@ export type CharacterFriendUncheckedUpdateManyWithoutUserInput = {
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumCharacterRelationStatusFieldUpdateOperationsInput | $Enums.CharacterRelationStatus
 }
 
 export type CharacterFriendCreateManyCharacterInput = {
@@ -621,12 +656,14 @@ export type CharacterFriendCreateManyCharacterInput = {
   affinity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.CharacterRelationStatus
 }
 
 export type CharacterFriendUpdateWithoutCharacterInput = {
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumCharacterRelationStatusFieldUpdateOperationsInput | $Enums.CharacterRelationStatus
   user?: Prisma.UserUpdateOneRequiredWithoutCharacterFriendsNestedInput
 }
 
@@ -636,6 +673,7 @@ export type CharacterFriendUncheckedUpdateWithoutCharacterInput = {
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumCharacterRelationStatusFieldUpdateOperationsInput | $Enums.CharacterRelationStatus
 }
 
 export type CharacterFriendUncheckedUpdateManyWithoutCharacterInput = {
@@ -644,6 +682,7 @@ export type CharacterFriendUncheckedUpdateManyWithoutCharacterInput = {
   affinity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumCharacterRelationStatusFieldUpdateOperationsInput | $Enums.CharacterRelationStatus
 }
 
 
@@ -655,6 +694,7 @@ export type CharacterFriendSelect<ExtArgs extends runtime.Types.Extensions.Inter
   affinity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["characterFriend"]>
@@ -666,6 +706,7 @@ export type CharacterFriendSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   affinity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["characterFriend"]>
@@ -677,6 +718,7 @@ export type CharacterFriendSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   affinity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["characterFriend"]>
@@ -688,9 +730,10 @@ export type CharacterFriendSelectScalar = {
   affinity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
 }
 
-export type CharacterFriendOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "characterId" | "affinity" | "createdAt" | "updatedAt", ExtArgs["result"]["characterFriend"]>
+export type CharacterFriendOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "characterId" | "affinity" | "createdAt" | "updatedAt" | "status", ExtArgs["result"]["characterFriend"]>
 export type CharacterFriendInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
@@ -717,6 +760,7 @@ export type $CharacterFriendPayload<ExtArgs extends runtime.Types.Extensions.Int
     affinity: number
     createdAt: Date
     updatedAt: Date
+    status: $Enums.CharacterRelationStatus
   }, ExtArgs["result"]["characterFriend"]>
   composites: {}
 }
@@ -1148,6 +1192,7 @@ export interface CharacterFriendFieldRefs {
   readonly affinity: Prisma.FieldRef<"CharacterFriend", 'Int'>
   readonly createdAt: Prisma.FieldRef<"CharacterFriend", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CharacterFriend", 'DateTime'>
+  readonly status: Prisma.FieldRef<"CharacterFriend", 'CharacterRelationStatus'>
 }
     
 

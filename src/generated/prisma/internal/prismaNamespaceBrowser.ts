@@ -360,7 +360,8 @@ export const CharacterFriendScalarFieldEnum = {
   characterId: 'characterId',
   affinity: 'affinity',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  status: 'status'
 } as const
 
 export type CharacterFriendScalarFieldEnum = (typeof CharacterFriendScalarFieldEnum)[keyof typeof CharacterFriendScalarFieldEnum]

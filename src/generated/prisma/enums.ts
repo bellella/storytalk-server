@@ -114,6 +114,16 @@ export const CharacterScope = {
 export type CharacterScope = (typeof CharacterScope)[keyof typeof CharacterScope]
 
 
+export const CharacterRelationStatus = {
+  LOCKED: 'LOCKED',
+  INVITABLE: 'INVITABLE',
+  FRIEND: 'FRIEND',
+  BLOCKED: 'BLOCKED'
+} as const
+
+export type CharacterRelationStatus = (typeof CharacterRelationStatus)[keyof typeof CharacterRelationStatus]
+
+
 export const MessageType = {
   TEXT: 'TEXT',
   SYSTEM: 'SYSTEM',
@@ -124,7 +134,7 @@ export type MessageType = (typeof MessageType)[keyof typeof MessageType]
 
 
 export const RewardType = {
-  CHARACTER_UNLOCK: 'CHARACTER_UNLOCK',
+  CHARACTER_INVITE: 'CHARACTER_INVITE',
   ITEM: 'ITEM'
 } as const
 

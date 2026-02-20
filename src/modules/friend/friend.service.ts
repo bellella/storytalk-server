@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { CharacterRelationStatus } from '@/generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
-import { FriendDetailDto, FriendListItemDto } from './dto/friend.dto';
+import { FriendChatItemDto, FriendListItemDto } from './dto/friend.dto';
 import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
 
 @Injectable()
@@ -11,56 +12,96 @@ export class FriendService {
     userId: number,
     characterId: number
   ): Promise<SuccessResponseDto> {
-    const friend = await this.prisma.characterFriend
+    await this.prisma.characterFriend
       .create({
-        data: { userId, characterId, affinity: 1 },
+        data: { userId, characterId, status: CharacterRelationStatus.FRIEND, affinity: 1 },
       })
       .catch((error) => {
-        if (error.code === 'P2002') {
-          return {
-            success: false,
-            message: 'Friend already exists',
-          };
-        }
+        if (error.code === 'P2002') return null;
         throw error;
       });
-    return {
-      success: true,
-      message: 'Friend added successfully',
-    };
+    return { success: true };
+  }
+
+  async inviteFriend(
+    userId: number,
+    characterId: number
+  ): Promise<SuccessResponseDto> {
+    const record = await this.prisma.characterFriend.findUnique({
+      where: { userId_characterId: { userId, characterId } },
+      select: { status: true },
+    });
+
+    if (!record) {
+      throw new NotFoundException('해금된 캐릭터가 아닙니다.');
+    }
+    if (record.status === CharacterRelationStatus.FRIEND) {
+      throw new BadRequestException('이미 친구입니다.');
+    }
+
+    await this.prisma.characterFriend.update({
+      where: { userId_characterId: { userId, characterId } },
+      data: { status: CharacterRelationStatus.FRIEND, affinity: 1 },
+    });
+
+    return { success: true };
   }
 
   async getFriends(userId: number): Promise<FriendListItemDto[]> {
+    const friends = await this.findFriendsByUserId(userId);
+
+    const items: FriendListItemDto[] = friends.map((friend) => ({
+      characterId: friend.characterId,
+      name: friend.character.name,
+      avatarImage: friend.character.avatarImage,
+      status: friend.status,
+    }));
+
+    // FRIEND 먼저, INVITABLE 뒤
+    return items.sort((a, b) => {
+      if (a.status === b.status) return 0;
+      return a.status === CharacterRelationStatus.FRIEND ? -1 : 1;
+    });
+  }
+
+  async getFriendChats(userId: number): Promise<FriendChatItemDto[]> {
     const friends = await this.findFriendsByUserId(userId);
     if (friends.length === 0) return [];
 
     const characterIds = friends.map((f) => f.characterId);
     const chatMap = await this.buildChatMap(userId, characterIds);
 
-    const items: FriendListItemDto[] = friends.map((friend) => {
+    const items: FriendChatItemDto[] = [];
+    for (const friend of friends) {
       const chat = chatMap.get(friend.characterId);
-      return {
+      if (!chat) continue;
+      items.push({
         characterId: friend.characterId,
         name: friend.character.name,
         avatarImage: friend.character.avatarImage,
-        affinity: friend.affinity,
-        chatId: chat?.id ?? null,
-        lastMessageAt: chat?.lastMessageAt ?? null,
-        lastMessagePreview: this.truncate(
-          chat?.lastMessage?.content ?? null,
-          60
-        ),
-        unreadCount: chat?.unreadCount ?? 0,
-      };
-    });
+        chatId: chat.id,
+        lastMessageAt: chat.lastMessageAt,
+        lastMessagePreview: this.truncate(chat.lastMessage?.content ?? null, 60),
+        unreadCount: chat.unreadCount,
+      });
+    }
 
-    return this.sortFriends(items);
+    return items.sort((a, b) => {
+      if (a.lastMessageAt && b.lastMessageAt)
+        return b.lastMessageAt.getTime() - a.lastMessageAt.getTime();
+      if (a.lastMessageAt) return -1;
+      if (b.lastMessageAt) return 1;
+      return 0;
+    });
   }
 
   private async findFriendsByUserId(userId: number) {
     return this.prisma.characterFriend.findMany({
-      where: { userId },
-      include: {
+      where: { userId, status: { not: CharacterRelationStatus.LOCKED } },
+      select: {
+        characterId: true,
+        status: true,
+        affinity: true,
         character: {
           select: { id: true, name: true, avatarImage: true },
         },
@@ -79,17 +120,6 @@ export class FriendService {
     });
 
     return new Map(chats.map((c) => [c.characterId, c]));
-  }
-
-  private sortFriends(items: FriendListItemDto[]): FriendListItemDto[] {
-    return items.sort((a, b) => {
-      if (a.lastMessageAt && b.lastMessageAt) {
-        return b.lastMessageAt.getTime() - a.lastMessageAt.getTime();
-      }
-      if (a.lastMessageAt) return -1;
-      if (b.lastMessageAt) return 1;
-      return b.affinity - a.affinity;
-    });
   }
 
   private truncate(text: string | null, maxLength: number): string | null {

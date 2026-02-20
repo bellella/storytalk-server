@@ -1,4 +1,5 @@
 import {
+  CharacterRelationStatus,
   EpisodeStage,
   RewardType,
   XpSourceType,
@@ -147,7 +148,7 @@ export class EpisodeService {
         }),
         this.prisma.characterFriend.upsert({
           where: { userId_characterId: { userId, characterId } },
-          create: { userId, characterId, affinity: 0 },
+          create: { userId, characterId, status: CharacterRelationStatus.INVITABLE, affinity: 0 },
           update: {},
         }),
       ]);

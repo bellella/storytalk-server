@@ -1,3 +1,4 @@
+import { CharacterRelationStatus } from '@/generated/prisma/enums';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class FriendListItemDto {
@@ -8,19 +9,30 @@ export class FriendListItemDto {
   name: string;
 
   @ApiPropertyOptional()
-  avatarImage?: string | null;
+  avatarImage: string | null;
+
+  @ApiProperty({ enum: CharacterRelationStatus })
+  status: CharacterRelationStatus;
+}
+
+export class FriendChatItemDto {
+  @ApiProperty()
+  characterId: number;
 
   @ApiProperty()
-  affinity: number;
+  name: string;
 
   @ApiPropertyOptional()
-  chatId?: number | null;
+  avatarImage: string | null;
+
+  @ApiProperty()
+  chatId: number;
 
   @ApiPropertyOptional()
-  lastMessageAt?: Date | null;
+  lastMessageAt: Date | null;
 
   @ApiPropertyOptional()
-  lastMessagePreview?: string | null;
+  lastMessagePreview: string | null;
 
   @ApiProperty({ default: 0 })
   unreadCount: number;

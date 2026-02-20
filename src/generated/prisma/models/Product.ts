@@ -285,7 +285,6 @@ export type ProductOrderByWithRelationInput = {
 
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  storeSku?: string
   AND?: Prisma.ProductWhereInput | Prisma.ProductWhereInput[]
   OR?: Prisma.ProductWhereInput[]
   NOT?: Prisma.ProductWhereInput | Prisma.ProductWhereInput[]
@@ -294,6 +293,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   type?: Prisma.EnumProductTypeFilter<"Product"> | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeFilter<"Product"> | $Enums.CurrencyType
   price?: Prisma.IntFilter<"Product"> | number
+  storeSku?: Prisma.StringNullableFilter<"Product"> | string | null
   isActive?: Prisma.BoolFilter<"Product"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
@@ -301,7 +301,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   purchases?: Prisma.UserPurchaseListRelationFilter
   collectionProducts?: Prisma.CollectionProductListRelationFilter
   userSubscriptions?: Prisma.UserSubscriptionListRelationFilter
-}, "id" | "storeSku">
+}, "id">
 
 export type ProductOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

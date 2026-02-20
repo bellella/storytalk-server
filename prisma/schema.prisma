@@ -428,6 +428,13 @@ model CharacterImage {
 // CHARACTER FRIEND SYSTEM (USER ↔ CHARACTER)
 //////////////////////////////////////////////////////
 
+enum CharacterRelationStatus {
+  LOCKED
+  INVITABLE
+  FRIEND
+  BLOCKED
+}
+
 model CharacterFriend {
   id          Int      @id @default(autoincrement())
   userId      Int
@@ -435,6 +442,7 @@ model CharacterFriend {
   affinity    Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  status      CharacterRelationStatus @default(INVITABLE)
 
   user      User      @relation(fields: [userId], references: [id])
   character Character @relation(fields: [characterId], references: [id])
@@ -547,7 +555,7 @@ model EpisodeReward {
 }
 
 enum RewardType {
-  CHARACTER_UNLOCK
+  CHARACTER_INVITE
   ITEM
 }
 
@@ -835,7 +843,7 @@ model Product {
   currency CurrencyType
   price    Int
 
-  storeSku String? @unique // 인앱결제 SKU (코인팩/구독에서 사용)
+  storeSku String? //@unique // 인앱결제 SKU (코인팩/구독에서 사용)
   isActive Boolean @default(true)
 
   createdAt DateTime @default(now())

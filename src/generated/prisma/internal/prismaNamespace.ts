@@ -3397,7 +3397,8 @@ export const CharacterFriendScalarFieldEnum = {
   characterId: 'characterId',
   affinity: 'affinity',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  status: 'status'
 } as const
 
 export type CharacterFriendScalarFieldEnum = (typeof CharacterFriendScalarFieldEnum)[keyof typeof CharacterFriendScalarFieldEnum]
@@ -3955,6 +3956,20 @@ export type EnumCharacterScopeFieldRefInput<$PrismaModel> = FieldRefInputType<$P
  * Reference to a field of type 'CharacterScope[]'
  */
 export type ListEnumCharacterScopeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CharacterScope[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CharacterRelationStatus'
+ */
+export type EnumCharacterRelationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CharacterRelationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'CharacterRelationStatus[]'
+ */
+export type ListEnumCharacterRelationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CharacterRelationStatus[]'>
     
 
 
