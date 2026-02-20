@@ -10,7 +10,10 @@ import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { EpisodeProgressDto } from './dto/episode-progress-response.dto';
 import { XpService } from '../xp/xp.service';
-import { EpisodeCompleteResponseDto, EpisodeRewardDto } from './dto/episode-complete-response.dto';
+import {
+  EpisodeCompleteResponseDto,
+  EpisodeRewardDto,
+} from './dto/episode-complete-response.dto';
 
 @Injectable()
 export class EpisodeService {
@@ -138,8 +141,9 @@ export class EpisodeService {
     userId: number,
     reward: { id: number; type: RewardType; payload: any }
   ): Promise<EpisodeRewardDto> {
-    if (reward.type === RewardType.CHARACTER_UNLOCK) {
-      const characterId = (reward.payload as { characterId: number }).characterId;
+    if (reward.type === RewardType.CHARACTER_INVITE) {
+      const characterId = (reward.payload as { characterId: number })
+        .characterId;
 
       const [character] = await Promise.all([
         this.prisma.character.findUnique({
@@ -148,7 +152,12 @@ export class EpisodeService {
         }),
         this.prisma.characterFriend.upsert({
           where: { userId_characterId: { userId, characterId } },
-          create: { userId, characterId, status: CharacterRelationStatus.INVITABLE, affinity: 0 },
+          create: {
+            userId,
+            characterId,
+            status: CharacterRelationStatus.INVITABLE,
+            affinity: 0,
+          },
           update: {},
         }),
       ]);
