@@ -7,6 +7,7 @@ import {
   SlotMessageType,
 } from '@/generated/prisma/enums';
 import { EpisodeDetailDto } from '@/modules/story/dto/episode-detail.dto';
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEnum,
   IsInt,
@@ -103,18 +104,21 @@ export class StartPlayEpisodeResponseDto {
 }
 
 export class PlayEpisodeDetailResponseDto {
-  play: {
-    id: number;
-    episodeId: number;
-    mode: PlayEpisodeMode;
-    status: PlayEpisodeStatus;
-    startedAt: string;
-    completedAt?: string | null;
-    lastSceneId?: number | null;
-    lastSlotId?: number | null;
-    currentStage: EpisodeStage;
-  };
+  play: PlayEpisodeDetailDto;
   episode: EpisodeDetailDto;
+}
+
+export class PlayEpisodeDetailDto {
+  id: number;
+  episodeId: number;
+  mode: PlayEpisodeMode;
+  @ApiProperty({ enum: Object.values(PlayEpisodeStatus) })
+  status: PlayEpisodeStatus;
+  startedAt: string;
+  completedAt?: string | null;
+  lastSceneId?: number | null;
+  lastSlotId?: number | null;
+  currentStage: EpisodeStage;
 }
 
 export class SlotDialogueDto {
@@ -166,6 +170,7 @@ export class ResultResponseDto {
   playEpisodeId: number;
   episode: EpisodeMetaDto;
   currentStage: EpisodeStage;
+  @ApiProperty({ enum: Object.values(PlayEpisodeStatus) })
   status: PlayEpisodeStatus;
   result: any | null;
   correctedDialogues: {

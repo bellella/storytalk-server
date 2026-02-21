@@ -68,7 +68,6 @@ export class PlayService {
     const plays = await this.prisma.userPlayEpisode.findMany({
       where: {
         userId,
-        status: PlayEpisodeStatus.IN_PROGRESS,
         ...(query.cursor ? { id: { lt: query.cursor } } : {}),
       },
       include: {
@@ -124,7 +123,7 @@ export class PlayService {
     userId: number,
     playEpisodeId: number
   ): Promise<PlayEpisodeDetailResponseDto> {
-    const play = await this.assertAccessiblePlayEpisode(userId, playEpisodeId);
+    const play = await this.fetchPlayEpisode(userId, playEpisodeId);
 
     // completed: 모든 slot 치환 / in-progress: lastSlotId 이하 slot만 치환
     // → 어느 경우든 이미 플레이한 AI slot 마커는 runtime dialogues로 대체
@@ -1062,6 +1061,13 @@ export class PlayService {
     userId: number,
     playEpisodeId: number
   ) {
+    const play = await this.fetchPlayEpisode(userId, playEpisodeId);
+    if (play.status !== PlayEpisodeStatus.IN_PROGRESS)
+      throw new ForbiddenException('Not active');
+    return play;
+  }
+
+  private async fetchPlayEpisode(userId: number, playEpisodeId: number) {
     const play = await this.prisma.userPlayEpisode.findUnique({
       where: { id: playEpisodeId },
       select: {
@@ -1083,8 +1089,6 @@ export class PlayService {
     if (!play) throw new NotFoundException('Play episode not found');
     if (play.userId !== userId)
       throw new ForbiddenException('Not your play episode');
-    if (play.status !== PlayEpisodeStatus.IN_PROGRESS)
-      throw new ForbiddenException('Not active');
     return play;
   }
 }
