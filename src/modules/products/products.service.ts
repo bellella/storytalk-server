@@ -31,6 +31,7 @@ export class ProductsService {
             product: {
               include: {
                 episodes: {
+                  take: 1,
                   include: {
                     episode: {
                       select: {
@@ -87,16 +88,17 @@ export class ProductsService {
         product: {
           include: {
             episodes: {
+              take: 1,
               include: {
                 episode: {
                   select: {
                     id: true,
                     title: true,
                     koreanTitle: true,
-                    thumbnailUrl: true,
                     story: { select: { id: true, title: true } },
                   },
                 },
+                product: { select: { thumbnailUrl: true } },
               },
             },
           },
@@ -131,6 +133,7 @@ export class ProductsService {
       where: { id: productId, isActive: true },
       include: {
         episodes: {
+          take: 1,
           include: {
             episode: {
               select: {
@@ -204,7 +207,9 @@ export class ProductsService {
       price: product.price,
       storeSku: product.storeSku,
       thumbnailUrl: product.thumbnailUrl,
-      episodes: product.episodes.map((ep) => this.mapEpisode(ep)),
+      episode: product.episodes[0]
+        ? this.mapEpisode(product.episodes[0])
+        : null,
       ...(userId !== undefined
         ? { isPurchased: purchasedProductIds.has(product.id) }
         : {}),

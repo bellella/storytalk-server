@@ -116,6 +116,7 @@ export const UserScalarFieldEnum = {
   XpLevel: 'XpLevel',
   xp: 'xp',
   streakDays: 'streakDays',
+  selectedCharacterId: 'selectedCharacterId',
   lastLoginAt: 'lastLoginAt',
   registeredAt: 'registeredAt',
   createdAt: 'createdAt',
@@ -321,10 +322,13 @@ export const CharacterScalarFieldEnum = {
   mainImage: 'mainImage',
   description: 'description',
   personality: 'personality',
+  greetingMessage: 'greetingMessage',
   aiPrompt: 'aiPrompt',
   status: 'status',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  isSelectable: 'isSelectable',
+  minUserLevel: 'minUserLevel'
 } as const
 
 export type CharacterScalarFieldEnum = (typeof CharacterScalarFieldEnum)[keyof typeof CharacterScalarFieldEnum]
@@ -570,6 +574,7 @@ export const ProductScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
+  thumbnailUrl: 'thumbnailUrl',
   type: 'type',
   currency: 'currency',
   price: 'price',

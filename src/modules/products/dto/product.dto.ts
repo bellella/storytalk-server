@@ -22,7 +22,7 @@ export class ProductItemDto {
   price: number;
   storeSku: string | null;
   thumbnailUrl: string | null;
-  episodes: EpisodeInProductDto[];
+  episode: EpisodeInProductDto | null;
   isPurchased?: boolean;
 }
 
@@ -55,7 +55,7 @@ export class ProductDetailDto {
   currency: CurrencyType;
   price: number;
   storeSku: string | null;
-  episodes: EpisodeInProductDto[];
+  episode: EpisodeInProductDto | null;
   thumbnailUrl: string | null;
   isPurchased?: boolean;
 }

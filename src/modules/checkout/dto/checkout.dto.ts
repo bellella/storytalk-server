@@ -8,6 +8,7 @@ export class BuyPlayEpisodeDto {
 
 export class BuyPlayEpisodeResponseDto {
   purchaseId: number;
+  playEpisodeId: number;
   productId: number;
   coinSpent: number;
   coinBalanceAfter: number;

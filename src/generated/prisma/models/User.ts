@@ -31,6 +31,7 @@ export type UserAvgAggregateOutputType = {
   XpLevel: number | null
   xp: number | null
   streakDays: number | null
+  selectedCharacterId: number | null
 }
 
 export type UserSumAggregateOutputType = {
@@ -38,6 +39,7 @@ export type UserSumAggregateOutputType = {
   XpLevel: number | null
   xp: number | null
   streakDays: number | null
+  selectedCharacterId: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -51,6 +53,7 @@ export type UserMinAggregateOutputType = {
   XpLevel: number | null
   xp: number | null
   streakDays: number | null
+  selectedCharacterId: number | null
   lastLoginAt: Date | null
   registeredAt: Date | null
   createdAt: Date | null
@@ -68,6 +71,7 @@ export type UserMaxAggregateOutputType = {
   XpLevel: number | null
   xp: number | null
   streakDays: number | null
+  selectedCharacterId: number | null
   lastLoginAt: Date | null
   registeredAt: Date | null
   createdAt: Date | null
@@ -85,6 +89,7 @@ export type UserCountAggregateOutputType = {
   XpLevel: number
   xp: number
   streakDays: number
+  selectedCharacterId: number
   lastLoginAt: number
   registeredAt: number
   createdAt: number
@@ -98,6 +103,7 @@ export type UserAvgAggregateInputType = {
   XpLevel?: true
   xp?: true
   streakDays?: true
+  selectedCharacterId?: true
 }
 
 export type UserSumAggregateInputType = {
@@ -105,6 +111,7 @@ export type UserSumAggregateInputType = {
   XpLevel?: true
   xp?: true
   streakDays?: true
+  selectedCharacterId?: true
 }
 
 export type UserMinAggregateInputType = {
@@ -118,6 +125,7 @@ export type UserMinAggregateInputType = {
   XpLevel?: true
   xp?: true
   streakDays?: true
+  selectedCharacterId?: true
   lastLoginAt?: true
   registeredAt?: true
   createdAt?: true
@@ -135,6 +143,7 @@ export type UserMaxAggregateInputType = {
   XpLevel?: true
   xp?: true
   streakDays?: true
+  selectedCharacterId?: true
   lastLoginAt?: true
   registeredAt?: true
   createdAt?: true
@@ -152,6 +161,7 @@ export type UserCountAggregateInputType = {
   XpLevel?: true
   xp?: true
   streakDays?: true
+  selectedCharacterId?: true
   lastLoginAt?: true
   registeredAt?: true
   createdAt?: true
@@ -256,6 +266,7 @@ export type UserGroupByOutputType = {
   XpLevel: number
   xp: number
   streakDays: number
+  selectedCharacterId: number | null
   lastLoginAt: Date
   registeredAt: Date | null
   createdAt: Date
@@ -296,10 +307,12 @@ export type UserWhereInput = {
   XpLevel?: Prisma.IntFilter<"User"> | number
   xp?: Prisma.IntFilter<"User"> | number
   streakDays?: Prisma.IntFilter<"User"> | number
+  selectedCharacterId?: Prisma.IntNullableFilter<"User"> | number | null
   lastLoginAt?: Prisma.DateTimeFilter<"User"> | Date | string
   registeredAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   isNew?: Prisma.BoolFilter<"User"> | boolean
+  selectedCharacter?: Prisma.XOR<Prisma.CharacterNullableScalarRelationFilter, Prisma.CharacterWhereInput> | null
   storyProgress?: Prisma.StoryProgressListRelationFilter
   userEpisodes?: Prisma.UserEpisodeListRelationFilter
   dialogueBookmarks?: Prisma.DialogueBookmarkListRelationFilter
@@ -325,10 +338,12 @@ export type UserOrderByWithRelationInput = {
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
+  selectedCharacterId?: Prisma.SortOrderInput | Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   registeredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   isNew?: Prisma.SortOrder
+  selectedCharacter?: Prisma.CharacterOrderByWithRelationInput
   storyProgress?: Prisma.StoryProgressOrderByRelationAggregateInput
   userEpisodes?: Prisma.UserEpisodeOrderByRelationAggregateInput
   dialogueBookmarks?: Prisma.dialogueBookmarkOrderByRelationAggregateInput
@@ -358,10 +373,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   XpLevel?: Prisma.IntFilter<"User"> | number
   xp?: Prisma.IntFilter<"User"> | number
   streakDays?: Prisma.IntFilter<"User"> | number
+  selectedCharacterId?: Prisma.IntNullableFilter<"User"> | number | null
   lastLoginAt?: Prisma.DateTimeFilter<"User"> | Date | string
   registeredAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   isNew?: Prisma.BoolFilter<"User"> | boolean
+  selectedCharacter?: Prisma.XOR<Prisma.CharacterNullableScalarRelationFilter, Prisma.CharacterWhereInput> | null
   storyProgress?: Prisma.StoryProgressListRelationFilter
   userEpisodes?: Prisma.UserEpisodeListRelationFilter
   dialogueBookmarks?: Prisma.DialogueBookmarkListRelationFilter
@@ -387,6 +404,7 @@ export type UserOrderByWithAggregationInput = {
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
+  selectedCharacterId?: Prisma.SortOrderInput | Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   registeredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -412,6 +430,7 @@ export type UserScalarWhereWithAggregatesInput = {
   XpLevel?: Prisma.IntWithAggregatesFilter<"User"> | number
   xp?: Prisma.IntWithAggregatesFilter<"User"> | number
   streakDays?: Prisma.IntWithAggregatesFilter<"User"> | number
+  selectedCharacterId?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
   lastLoginAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   registeredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -432,6 +451,7 @@ export type UserCreateInput = {
   registeredAt?: Date | string | null
   createdAt?: Date | string
   isNew?: boolean
+  selectedCharacter?: Prisma.CharacterCreateNestedOneWithoutUsersInput
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
@@ -457,6 +477,7 @@ export type UserUncheckedCreateInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -489,6 +510,7 @@ export type UserUpdateInput = {
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedCharacter?: Prisma.CharacterUpdateOneWithoutUsersNestedInput
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
@@ -514,6 +536,7 @@ export type UserUncheckedUpdateInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -543,6 +566,7 @@ export type UserCreateManyInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -576,6 +600,7 @@ export type UserUncheckedUpdateManyInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -598,6 +623,7 @@ export type UserCountOrderByAggregateInput = {
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
+  selectedCharacterId?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   registeredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -609,6 +635,7 @@ export type UserAvgOrderByAggregateInput = {
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
+  selectedCharacterId?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -622,6 +649,7 @@ export type UserMaxOrderByAggregateInput = {
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
+  selectedCharacterId?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   registeredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -639,6 +667,7 @@ export type UserMinOrderByAggregateInput = {
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
+  selectedCharacterId?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   registeredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -650,11 +679,22 @@ export type UserSumOrderByAggregateInput = {
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
+  selectedCharacterId?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
+}
+
+export type UserListRelationFilter = {
+  every?: Prisma.UserWhereInput
+  some?: Prisma.UserWhereInput
+  none?: Prisma.UserWhereInput
+}
+
+export type UserOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type UserNullableScalarRelationFilter = {
@@ -698,6 +738,14 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type UserCreateNestedOneWithoutStoryProgressInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutStoryProgressInput, Prisma.UserUncheckedCreateWithoutStoryProgressInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutStoryProgressInput
@@ -724,6 +772,48 @@ export type UserUpdateOneRequiredWithoutUserQuizSessionsNestedInput = {
   upsert?: Prisma.UserUpsertWithoutUserQuizSessionsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserQuizSessionsInput, Prisma.UserUpdateWithoutUserQuizSessionsInput>, Prisma.UserUncheckedUpdateWithoutUserQuizSessionsInput>
+}
+
+export type UserCreateNestedManyWithoutSelectedCharacterInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSelectedCharacterInput, Prisma.UserUncheckedCreateWithoutSelectedCharacterInput> | Prisma.UserCreateWithoutSelectedCharacterInput[] | Prisma.UserUncheckedCreateWithoutSelectedCharacterInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSelectedCharacterInput | Prisma.UserCreateOrConnectWithoutSelectedCharacterInput[]
+  createMany?: Prisma.UserCreateManySelectedCharacterInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutSelectedCharacterInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSelectedCharacterInput, Prisma.UserUncheckedCreateWithoutSelectedCharacterInput> | Prisma.UserCreateWithoutSelectedCharacterInput[] | Prisma.UserUncheckedCreateWithoutSelectedCharacterInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSelectedCharacterInput | Prisma.UserCreateOrConnectWithoutSelectedCharacterInput[]
+  createMany?: Prisma.UserCreateManySelectedCharacterInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateManyWithoutSelectedCharacterNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSelectedCharacterInput, Prisma.UserUncheckedCreateWithoutSelectedCharacterInput> | Prisma.UserCreateWithoutSelectedCharacterInput[] | Prisma.UserUncheckedCreateWithoutSelectedCharacterInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSelectedCharacterInput | Prisma.UserCreateOrConnectWithoutSelectedCharacterInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutSelectedCharacterInput | Prisma.UserUpsertWithWhereUniqueWithoutSelectedCharacterInput[]
+  createMany?: Prisma.UserCreateManySelectedCharacterInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutSelectedCharacterInput | Prisma.UserUpdateWithWhereUniqueWithoutSelectedCharacterInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutSelectedCharacterInput | Prisma.UserUpdateManyWithWhereWithoutSelectedCharacterInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutSelectedCharacterNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSelectedCharacterInput, Prisma.UserUncheckedCreateWithoutSelectedCharacterInput> | Prisma.UserCreateWithoutSelectedCharacterInput[] | Prisma.UserUncheckedCreateWithoutSelectedCharacterInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSelectedCharacterInput | Prisma.UserCreateOrConnectWithoutSelectedCharacterInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutSelectedCharacterInput | Prisma.UserUpsertWithWhereUniqueWithoutSelectedCharacterInput[]
+  createMany?: Prisma.UserCreateManySelectedCharacterInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutSelectedCharacterInput | Prisma.UserUpdateWithWhereUniqueWithoutSelectedCharacterInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutSelectedCharacterInput | Prisma.UserUpdateManyWithWhereWithoutSelectedCharacterInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
 export type UserCreateNestedOneWithoutCharacterFriendsInput = {
@@ -882,6 +972,7 @@ export type UserCreateWithoutStoryProgressInput = {
   registeredAt?: Date | string | null
   createdAt?: Date | string
   isNew?: boolean
+  selectedCharacter?: Prisma.CharacterCreateNestedOneWithoutUsersInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
@@ -906,6 +997,7 @@ export type UserUncheckedCreateWithoutStoryProgressInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -953,6 +1045,7 @@ export type UserUpdateWithoutStoryProgressInput = {
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedCharacter?: Prisma.CharacterUpdateOneWithoutUsersNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
@@ -977,6 +1070,7 @@ export type UserUncheckedUpdateWithoutStoryProgressInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1008,6 +1102,7 @@ export type UserCreateWithoutUserQuizSessionsInput = {
   registeredAt?: Date | string | null
   createdAt?: Date | string
   isNew?: boolean
+  selectedCharacter?: Prisma.CharacterCreateNestedOneWithoutUsersInput
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
@@ -1032,6 +1127,7 @@ export type UserUncheckedCreateWithoutUserQuizSessionsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -1079,6 +1175,7 @@ export type UserUpdateWithoutUserQuizSessionsInput = {
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedCharacter?: Prisma.CharacterUpdateOneWithoutUsersNestedInput
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
@@ -1103,6 +1200,7 @@ export type UserUncheckedUpdateWithoutUserQuizSessionsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1120,6 +1218,110 @@ export type UserUncheckedUpdateWithoutUserQuizSessionsInput = {
   userSubscriptions?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput
 }
 
+export type UserCreateWithoutSelectedCharacterInput = {
+  name?: string | null
+  email: string
+  provider: $Enums.AuthProvider
+  providerId: string
+  profileImage?: string | null
+  level?: $Enums.Level
+  XpLevel?: number
+  xp?: number
+  streakDays?: number
+  lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
+  createdAt?: Date | string
+  isNew?: boolean
+  storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
+  characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
+  Messages?: Prisma.MessageCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatCreateNestedManyWithoutUserInput
+  userPlayEpisodes?: Prisma.UserPlayEpisodeCreateNestedManyWithoutUserInput
+  products?: Prisma.EpisodeProductCreateNestedManyWithoutUserInput
+  userPurchases?: Prisma.UserPurchaseCreateNestedManyWithoutUserInput
+  coinTransactions?: Prisma.CoinTransactionCreateNestedManyWithoutUserInput
+  userSubscriptions?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSelectedCharacterInput = {
+  id?: number
+  name?: string | null
+  email: string
+  provider: $Enums.AuthProvider
+  providerId: string
+  profileImage?: string | null
+  level?: $Enums.Level
+  XpLevel?: number
+  xp?: number
+  streakDays?: number
+  lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
+  createdAt?: Date | string
+  isNew?: boolean
+  storyProgress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
+  characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
+  Messages?: Prisma.MessageUncheckedCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatUncheckedCreateNestedManyWithoutUserInput
+  userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedCreateNestedManyWithoutUserInput
+  products?: Prisma.EpisodeProductUncheckedCreateNestedManyWithoutUserInput
+  userPurchases?: Prisma.UserPurchaseUncheckedCreateNestedManyWithoutUserInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedCreateNestedManyWithoutUserInput
+  userSubscriptions?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSelectedCharacterInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSelectedCharacterInput, Prisma.UserUncheckedCreateWithoutSelectedCharacterInput>
+}
+
+export type UserCreateManySelectedCharacterInputEnvelope = {
+  data: Prisma.UserCreateManySelectedCharacterInput | Prisma.UserCreateManySelectedCharacterInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithWhereUniqueWithoutSelectedCharacterInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSelectedCharacterInput, Prisma.UserUncheckedUpdateWithoutSelectedCharacterInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSelectedCharacterInput, Prisma.UserUncheckedCreateWithoutSelectedCharacterInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutSelectedCharacterInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSelectedCharacterInput, Prisma.UserUncheckedUpdateWithoutSelectedCharacterInput>
+}
+
+export type UserUpdateManyWithWhereWithoutSelectedCharacterInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutSelectedCharacterInput>
+}
+
+export type UserScalarWhereInput = {
+  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  OR?: Prisma.UserScalarWhereInput[]
+  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  id?: Prisma.IntFilter<"User"> | number
+  name?: Prisma.StringNullableFilter<"User"> | string | null
+  email?: Prisma.StringFilter<"User"> | string
+  provider?: Prisma.EnumAuthProviderFilter<"User"> | $Enums.AuthProvider
+  providerId?: Prisma.StringFilter<"User"> | string
+  profileImage?: Prisma.StringNullableFilter<"User"> | string | null
+  level?: Prisma.EnumLevelFilter<"User"> | $Enums.Level
+  XpLevel?: Prisma.IntFilter<"User"> | number
+  xp?: Prisma.IntFilter<"User"> | number
+  streakDays?: Prisma.IntFilter<"User"> | number
+  selectedCharacterId?: Prisma.IntNullableFilter<"User"> | number | null
+  lastLoginAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  registeredAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  isNew?: Prisma.BoolFilter<"User"> | boolean
+}
+
 export type UserCreateWithoutCharacterFriendsInput = {
   name?: string | null
   email: string
@@ -1134,6 +1336,7 @@ export type UserCreateWithoutCharacterFriendsInput = {
   registeredAt?: Date | string | null
   createdAt?: Date | string
   isNew?: boolean
+  selectedCharacter?: Prisma.CharacterCreateNestedOneWithoutUsersInput
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
@@ -1158,6 +1361,7 @@ export type UserUncheckedCreateWithoutCharacterFriendsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -1205,6 +1409,7 @@ export type UserUpdateWithoutCharacterFriendsInput = {
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedCharacter?: Prisma.CharacterUpdateOneWithoutUsersNestedInput
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
@@ -1229,6 +1434,7 @@ export type UserUncheckedUpdateWithoutCharacterFriendsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1260,6 +1466,7 @@ export type UserCreateWithoutCharacterChatsInput = {
   registeredAt?: Date | string | null
   createdAt?: Date | string
   isNew?: boolean
+  selectedCharacter?: Prisma.CharacterCreateNestedOneWithoutUsersInput
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
@@ -1284,6 +1491,7 @@ export type UserUncheckedCreateWithoutCharacterChatsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -1331,6 +1539,7 @@ export type UserUpdateWithoutCharacterChatsInput = {
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedCharacter?: Prisma.CharacterUpdateOneWithoutUsersNestedInput
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
@@ -1355,6 +1564,7 @@ export type UserUncheckedUpdateWithoutCharacterChatsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1386,6 +1596,7 @@ export type UserCreateWithoutMessagesInput = {
   registeredAt?: Date | string | null
   createdAt?: Date | string
   isNew?: boolean
+  selectedCharacter?: Prisma.CharacterCreateNestedOneWithoutUsersInput
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
@@ -1410,6 +1621,7 @@ export type UserUncheckedCreateWithoutMessagesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -1457,6 +1669,7 @@ export type UserUpdateWithoutMessagesInput = {
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedCharacter?: Prisma.CharacterUpdateOneWithoutUsersNestedInput
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
@@ -1481,6 +1694,7 @@ export type UserUncheckedUpdateWithoutMessagesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1512,6 +1726,7 @@ export type UserCreateWithoutDialogueBookmarksInput = {
   registeredAt?: Date | string | null
   createdAt?: Date | string
   isNew?: boolean
+  selectedCharacter?: Prisma.CharacterCreateNestedOneWithoutUsersInput
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
@@ -1536,6 +1751,7 @@ export type UserUncheckedCreateWithoutDialogueBookmarksInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -1583,6 +1799,7 @@ export type UserUpdateWithoutDialogueBookmarksInput = {
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedCharacter?: Prisma.CharacterUpdateOneWithoutUsersNestedInput
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
@@ -1607,6 +1824,7 @@ export type UserUncheckedUpdateWithoutDialogueBookmarksInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1638,6 +1856,7 @@ export type UserCreateWithoutUserEpisodesInput = {
   registeredAt?: Date | string | null
   createdAt?: Date | string
   isNew?: boolean
+  selectedCharacter?: Prisma.CharacterCreateNestedOneWithoutUsersInput
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
   characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
@@ -1662,6 +1881,7 @@ export type UserUncheckedCreateWithoutUserEpisodesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -1709,6 +1929,7 @@ export type UserUpdateWithoutUserEpisodesInput = {
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedCharacter?: Prisma.CharacterUpdateOneWithoutUsersNestedInput
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
   characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
@@ -1733,6 +1954,7 @@ export type UserUncheckedUpdateWithoutUserEpisodesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1764,6 +1986,7 @@ export type UserCreateWithoutUserPlayEpisodesInput = {
   registeredAt?: Date | string | null
   createdAt?: Date | string
   isNew?: boolean
+  selectedCharacter?: Prisma.CharacterCreateNestedOneWithoutUsersInput
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
@@ -1788,6 +2011,7 @@ export type UserUncheckedCreateWithoutUserPlayEpisodesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -1835,6 +2059,7 @@ export type UserUpdateWithoutUserPlayEpisodesInput = {
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedCharacter?: Prisma.CharacterUpdateOneWithoutUsersNestedInput
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
@@ -1859,6 +2084,7 @@ export type UserUncheckedUpdateWithoutUserPlayEpisodesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1890,6 +2116,7 @@ export type UserCreateWithoutProductsInput = {
   registeredAt?: Date | string | null
   createdAt?: Date | string
   isNew?: boolean
+  selectedCharacter?: Prisma.CharacterCreateNestedOneWithoutUsersInput
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
@@ -1914,6 +2141,7 @@ export type UserUncheckedCreateWithoutProductsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -1961,6 +2189,7 @@ export type UserUpdateWithoutProductsInput = {
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedCharacter?: Prisma.CharacterUpdateOneWithoutUsersNestedInput
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
@@ -1985,6 +2214,7 @@ export type UserUncheckedUpdateWithoutProductsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2016,6 +2246,7 @@ export type UserCreateWithoutUserPurchasesInput = {
   registeredAt?: Date | string | null
   createdAt?: Date | string
   isNew?: boolean
+  selectedCharacter?: Prisma.CharacterCreateNestedOneWithoutUsersInput
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
@@ -2040,6 +2271,7 @@ export type UserUncheckedCreateWithoutUserPurchasesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -2087,6 +2319,7 @@ export type UserUpdateWithoutUserPurchasesInput = {
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedCharacter?: Prisma.CharacterUpdateOneWithoutUsersNestedInput
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
@@ -2111,6 +2344,7 @@ export type UserUncheckedUpdateWithoutUserPurchasesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2142,6 +2376,7 @@ export type UserCreateWithoutCoinTransactionsInput = {
   registeredAt?: Date | string | null
   createdAt?: Date | string
   isNew?: boolean
+  selectedCharacter?: Prisma.CharacterCreateNestedOneWithoutUsersInput
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
@@ -2166,6 +2401,7 @@ export type UserUncheckedCreateWithoutCoinTransactionsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -2213,6 +2449,7 @@ export type UserUpdateWithoutCoinTransactionsInput = {
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedCharacter?: Prisma.CharacterUpdateOneWithoutUsersNestedInput
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
@@ -2237,6 +2474,7 @@ export type UserUncheckedUpdateWithoutCoinTransactionsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2268,6 +2506,7 @@ export type UserCreateWithoutUserSubscriptionsInput = {
   registeredAt?: Date | string | null
   createdAt?: Date | string
   isNew?: boolean
+  selectedCharacter?: Prisma.CharacterCreateNestedOneWithoutUsersInput
   storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
   userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
   dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
@@ -2292,6 +2531,7 @@ export type UserUncheckedCreateWithoutUserSubscriptionsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -2339,6 +2579,7 @@ export type UserUpdateWithoutUserSubscriptionsInput = {
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedCharacter?: Prisma.CharacterUpdateOneWithoutUsersNestedInput
   storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
   userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
   dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
@@ -2353,6 +2594,80 @@ export type UserUpdateWithoutUserSubscriptionsInput = {
 }
 
 export type UserUncheckedUpdateWithoutUserSubscriptionsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
+  XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  storyProgress?: Prisma.StoryProgressUncheckedUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
+  characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
+  Messages?: Prisma.MessageUncheckedUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUncheckedUpdateManyWithoutUserNestedInput
+  userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedUpdateManyWithoutUserNestedInput
+  products?: Prisma.EpisodeProductUncheckedUpdateManyWithoutUserNestedInput
+  userPurchases?: Prisma.UserPurchaseUncheckedUpdateManyWithoutUserNestedInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateManySelectedCharacterInput = {
+  id?: number
+  name?: string | null
+  email: string
+  provider: $Enums.AuthProvider
+  providerId: string
+  profileImage?: string | null
+  level?: $Enums.Level
+  XpLevel?: number
+  xp?: number
+  streakDays?: number
+  lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
+  createdAt?: Date | string
+  isNew?: boolean
+}
+
+export type UserUpdateWithoutSelectedCharacterInput = {
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
+  XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
+  characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
+  Messages?: Prisma.MessageUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUpdateManyWithoutUserNestedInput
+  userPlayEpisodes?: Prisma.UserPlayEpisodeUpdateManyWithoutUserNestedInput
+  products?: Prisma.EpisodeProductUpdateManyWithoutUserNestedInput
+  userPurchases?: Prisma.UserPurchaseUpdateManyWithoutUserNestedInput
+  coinTransactions?: Prisma.CoinTransactionUpdateManyWithoutUserNestedInput
+  userSubscriptions?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSelectedCharacterInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2378,6 +2693,24 @@ export type UserUncheckedUpdateWithoutUserSubscriptionsInput = {
   products?: Prisma.EpisodeProductUncheckedUpdateManyWithoutUserNestedInput
   userPurchases?: Prisma.UserPurchaseUncheckedUpdateManyWithoutUserNestedInput
   coinTransactions?: Prisma.CoinTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userSubscriptions?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutSelectedCharacterInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
+  XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -2521,10 +2854,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   XpLevel?: boolean
   xp?: boolean
   streakDays?: boolean
+  selectedCharacterId?: boolean
   lastLoginAt?: boolean
   registeredAt?: boolean
   createdAt?: boolean
   isNew?: boolean
+  selectedCharacter?: boolean | Prisma.User$selectedCharacterArgs<ExtArgs>
   storyProgress?: boolean | Prisma.User$storyProgressArgs<ExtArgs>
   userEpisodes?: boolean | Prisma.User$userEpisodesArgs<ExtArgs>
   dialogueBookmarks?: boolean | Prisma.User$dialogueBookmarksArgs<ExtArgs>
@@ -2551,10 +2886,12 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   XpLevel?: boolean
   xp?: boolean
   streakDays?: boolean
+  selectedCharacterId?: boolean
   lastLoginAt?: boolean
   registeredAt?: boolean
   createdAt?: boolean
   isNew?: boolean
+  selectedCharacter?: boolean | Prisma.User$selectedCharacterArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2568,10 +2905,12 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   XpLevel?: boolean
   xp?: boolean
   streakDays?: boolean
+  selectedCharacterId?: boolean
   lastLoginAt?: boolean
   registeredAt?: boolean
   createdAt?: boolean
   isNew?: boolean
+  selectedCharacter?: boolean | Prisma.User$selectedCharacterArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -2585,14 +2924,16 @@ export type UserSelectScalar = {
   XpLevel?: boolean
   xp?: boolean
   streakDays?: boolean
+  selectedCharacterId?: boolean
   lastLoginAt?: boolean
   registeredAt?: boolean
   createdAt?: boolean
   isNew?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "provider" | "providerId" | "profileImage" | "level" | "XpLevel" | "xp" | "streakDays" | "lastLoginAt" | "registeredAt" | "createdAt" | "isNew", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "provider" | "providerId" | "profileImage" | "level" | "XpLevel" | "xp" | "streakDays" | "selectedCharacterId" | "lastLoginAt" | "registeredAt" | "createdAt" | "isNew", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  selectedCharacter?: boolean | Prisma.User$selectedCharacterArgs<ExtArgs>
   storyProgress?: boolean | Prisma.User$storyProgressArgs<ExtArgs>
   userEpisodes?: boolean | Prisma.User$userEpisodesArgs<ExtArgs>
   dialogueBookmarks?: boolean | Prisma.User$dialogueBookmarksArgs<ExtArgs>
@@ -2607,12 +2948,17 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   userSubscriptions?: boolean | Prisma.User$userSubscriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  selectedCharacter?: boolean | Prisma.User$selectedCharacterArgs<ExtArgs>
+}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  selectedCharacter?: boolean | Prisma.User$selectedCharacterArgs<ExtArgs>
+}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    selectedCharacter: Prisma.$CharacterPayload<ExtArgs> | null
     storyProgress: Prisma.$StoryProgressPayload<ExtArgs>[]
     userEpisodes: Prisma.$UserEpisodePayload<ExtArgs>[]
     dialogueBookmarks: Prisma.$dialogueBookmarkPayload<ExtArgs>[]
@@ -2637,6 +2983,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     XpLevel: number
     xp: number
     streakDays: number
+    selectedCharacterId: number | null
     lastLoginAt: Date
     registeredAt: Date | null
     createdAt: Date
@@ -3035,6 +3382,7 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  selectedCharacter<T extends Prisma.User$selectedCharacterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$selectedCharacterArgs<ExtArgs>>): Prisma.Prisma__CharacterClient<runtime.Types.Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   storyProgress<T extends Prisma.User$storyProgressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$storyProgressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StoryProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   userEpisodes<T extends Prisma.User$userEpisodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userEpisodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserEpisodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dialogueBookmarks<T extends Prisma.User$dialogueBookmarksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$dialogueBookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$dialogueBookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3086,6 +3434,7 @@ export interface UserFieldRefs {
   readonly XpLevel: Prisma.FieldRef<"User", 'Int'>
   readonly xp: Prisma.FieldRef<"User", 'Int'>
   readonly streakDays: Prisma.FieldRef<"User", 'Int'>
+  readonly selectedCharacterId: Prisma.FieldRef<"User", 'Int'>
   readonly lastLoginAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly registeredAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
@@ -3339,6 +3688,10 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -3409,6 +3762,10 @@ export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Users to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -3475,6 +3832,25 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Users to delete.
    */
   limit?: number
+}
+
+/**
+ * User.selectedCharacter
+ */
+export type User$selectedCharacterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Character
+   */
+  select?: Prisma.CharacterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Character
+   */
+  omit?: Prisma.CharacterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CharacterInclude<ExtArgs> | null
+  where?: Prisma.CharacterWhereInput
 }
 
 /**

@@ -40,6 +40,7 @@ export type ProductMinAggregateOutputType = {
   id: number | null
   name: string | null
   description: string | null
+  thumbnailUrl: string | null
   type: $Enums.ProductType | null
   currency: $Enums.CurrencyType | null
   price: number | null
@@ -53,6 +54,7 @@ export type ProductMaxAggregateOutputType = {
   id: number | null
   name: string | null
   description: string | null
+  thumbnailUrl: string | null
   type: $Enums.ProductType | null
   currency: $Enums.CurrencyType | null
   price: number | null
@@ -66,6 +68,7 @@ export type ProductCountAggregateOutputType = {
   id: number
   name: number
   description: number
+  thumbnailUrl: number
   type: number
   currency: number
   price: number
@@ -91,6 +94,7 @@ export type ProductMinAggregateInputType = {
   id?: true
   name?: true
   description?: true
+  thumbnailUrl?: true
   type?: true
   currency?: true
   price?: true
@@ -104,6 +108,7 @@ export type ProductMaxAggregateInputType = {
   id?: true
   name?: true
   description?: true
+  thumbnailUrl?: true
   type?: true
   currency?: true
   price?: true
@@ -117,6 +122,7 @@ export type ProductCountAggregateInputType = {
   id?: true
   name?: true
   description?: true
+  thumbnailUrl?: true
   type?: true
   currency?: true
   price?: true
@@ -217,6 +223,7 @@ export type ProductGroupByOutputType = {
   id: number
   name: string
   description: string | null
+  thumbnailUrl: string | null
   type: $Enums.ProductType
   currency: $Enums.CurrencyType
   price: number
@@ -253,6 +260,7 @@ export type ProductWhereInput = {
   id?: Prisma.IntFilter<"Product"> | number
   name?: Prisma.StringFilter<"Product"> | string
   description?: Prisma.StringNullableFilter<"Product"> | string | null
+  thumbnailUrl?: Prisma.StringNullableFilter<"Product"> | string | null
   type?: Prisma.EnumProductTypeFilter<"Product"> | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeFilter<"Product"> | $Enums.CurrencyType
   price?: Prisma.IntFilter<"Product"> | number
@@ -270,6 +278,7 @@ export type ProductOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  thumbnailUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -290,6 +299,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ProductWhereInput | Prisma.ProductWhereInput[]
   name?: Prisma.StringFilter<"Product"> | string
   description?: Prisma.StringNullableFilter<"Product"> | string | null
+  thumbnailUrl?: Prisma.StringNullableFilter<"Product"> | string | null
   type?: Prisma.EnumProductTypeFilter<"Product"> | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeFilter<"Product"> | $Enums.CurrencyType
   price?: Prisma.IntFilter<"Product"> | number
@@ -307,6 +317,7 @@ export type ProductOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  thumbnailUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -328,6 +339,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Product"> | number
   name?: Prisma.StringWithAggregatesFilter<"Product"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  thumbnailUrl?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   type?: Prisma.EnumProductTypeWithAggregatesFilter<"Product"> | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeWithAggregatesFilter<"Product"> | $Enums.CurrencyType
   price?: Prisma.IntWithAggregatesFilter<"Product"> | number
@@ -340,6 +352,7 @@ export type ProductScalarWhereWithAggregatesInput = {
 export type ProductCreateInput = {
   name: string
   description?: string | null
+  thumbnailUrl?: string | null
   type: $Enums.ProductType
   currency: $Enums.CurrencyType
   price: number
@@ -357,6 +370,7 @@ export type ProductUncheckedCreateInput = {
   id?: number
   name: string
   description?: string | null
+  thumbnailUrl?: string | null
   type: $Enums.ProductType
   currency: $Enums.CurrencyType
   price: number
@@ -373,6 +387,7 @@ export type ProductUncheckedCreateInput = {
 export type ProductUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   price?: Prisma.IntFieldUpdateOperationsInput | number
@@ -390,6 +405,7 @@ export type ProductUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   price?: Prisma.IntFieldUpdateOperationsInput | number
@@ -407,6 +423,7 @@ export type ProductCreateManyInput = {
   id?: number
   name: string
   description?: string | null
+  thumbnailUrl?: string | null
   type: $Enums.ProductType
   currency: $Enums.CurrencyType
   price: number
@@ -419,6 +436,7 @@ export type ProductCreateManyInput = {
 export type ProductUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   price?: Prisma.IntFieldUpdateOperationsInput | number
@@ -432,6 +450,7 @@ export type ProductUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   price?: Prisma.IntFieldUpdateOperationsInput | number
@@ -450,6 +469,7 @@ export type ProductCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  thumbnailUrl?: Prisma.SortOrder
   type?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -468,6 +488,7 @@ export type ProductMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  thumbnailUrl?: Prisma.SortOrder
   type?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -481,6 +502,7 @@ export type ProductMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  thumbnailUrl?: Prisma.SortOrder
   type?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -569,6 +591,7 @@ export type ProductUpdateOneWithoutUserSubscriptionsNestedInput = {
 export type ProductCreateWithoutCollectionProductsInput = {
   name: string
   description?: string | null
+  thumbnailUrl?: string | null
   type: $Enums.ProductType
   currency: $Enums.CurrencyType
   price: number
@@ -585,6 +608,7 @@ export type ProductUncheckedCreateWithoutCollectionProductsInput = {
   id?: number
   name: string
   description?: string | null
+  thumbnailUrl?: string | null
   type: $Enums.ProductType
   currency: $Enums.CurrencyType
   price: number
@@ -616,6 +640,7 @@ export type ProductUpdateToOneWithWhereWithoutCollectionProductsInput = {
 export type ProductUpdateWithoutCollectionProductsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   price?: Prisma.IntFieldUpdateOperationsInput | number
@@ -632,6 +657,7 @@ export type ProductUncheckedUpdateWithoutCollectionProductsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   price?: Prisma.IntFieldUpdateOperationsInput | number
@@ -647,6 +673,7 @@ export type ProductUncheckedUpdateWithoutCollectionProductsInput = {
 export type ProductCreateWithoutEpisodesInput = {
   name: string
   description?: string | null
+  thumbnailUrl?: string | null
   type: $Enums.ProductType
   currency: $Enums.CurrencyType
   price: number
@@ -663,6 +690,7 @@ export type ProductUncheckedCreateWithoutEpisodesInput = {
   id?: number
   name: string
   description?: string | null
+  thumbnailUrl?: string | null
   type: $Enums.ProductType
   currency: $Enums.CurrencyType
   price: number
@@ -694,6 +722,7 @@ export type ProductUpdateToOneWithWhereWithoutEpisodesInput = {
 export type ProductUpdateWithoutEpisodesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   price?: Prisma.IntFieldUpdateOperationsInput | number
@@ -710,6 +739,7 @@ export type ProductUncheckedUpdateWithoutEpisodesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   price?: Prisma.IntFieldUpdateOperationsInput | number
@@ -725,6 +755,7 @@ export type ProductUncheckedUpdateWithoutEpisodesInput = {
 export type ProductCreateWithoutPurchasesInput = {
   name: string
   description?: string | null
+  thumbnailUrl?: string | null
   type: $Enums.ProductType
   currency: $Enums.CurrencyType
   price: number
@@ -741,6 +772,7 @@ export type ProductUncheckedCreateWithoutPurchasesInput = {
   id?: number
   name: string
   description?: string | null
+  thumbnailUrl?: string | null
   type: $Enums.ProductType
   currency: $Enums.CurrencyType
   price: number
@@ -772,6 +804,7 @@ export type ProductUpdateToOneWithWhereWithoutPurchasesInput = {
 export type ProductUpdateWithoutPurchasesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   price?: Prisma.IntFieldUpdateOperationsInput | number
@@ -788,6 +821,7 @@ export type ProductUncheckedUpdateWithoutPurchasesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   price?: Prisma.IntFieldUpdateOperationsInput | number
@@ -803,6 +837,7 @@ export type ProductUncheckedUpdateWithoutPurchasesInput = {
 export type ProductCreateWithoutUserSubscriptionsInput = {
   name: string
   description?: string | null
+  thumbnailUrl?: string | null
   type: $Enums.ProductType
   currency: $Enums.CurrencyType
   price: number
@@ -819,6 +854,7 @@ export type ProductUncheckedCreateWithoutUserSubscriptionsInput = {
   id?: number
   name: string
   description?: string | null
+  thumbnailUrl?: string | null
   type: $Enums.ProductType
   currency: $Enums.CurrencyType
   price: number
@@ -850,6 +886,7 @@ export type ProductUpdateToOneWithWhereWithoutUserSubscriptionsInput = {
 export type ProductUpdateWithoutUserSubscriptionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   price?: Prisma.IntFieldUpdateOperationsInput | number
@@ -866,6 +903,7 @@ export type ProductUncheckedUpdateWithoutUserSubscriptionsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   price?: Prisma.IntFieldUpdateOperationsInput | number
@@ -940,6 +978,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   name?: boolean
   description?: boolean
+  thumbnailUrl?: boolean
   type?: boolean
   currency?: boolean
   price?: boolean
@@ -958,6 +997,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   name?: boolean
   description?: boolean
+  thumbnailUrl?: boolean
   type?: boolean
   currency?: boolean
   price?: boolean
@@ -971,6 +1011,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   name?: boolean
   description?: boolean
+  thumbnailUrl?: boolean
   type?: boolean
   currency?: boolean
   price?: boolean
@@ -984,6 +1025,7 @@ export type ProductSelectScalar = {
   id?: boolean
   name?: boolean
   description?: boolean
+  thumbnailUrl?: boolean
   type?: boolean
   currency?: boolean
   price?: boolean
@@ -993,7 +1035,7 @@ export type ProductSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "type" | "currency" | "price" | "storeSku" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "thumbnailUrl" | "type" | "currency" | "price" | "storeSku" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   episodes?: boolean | Prisma.Product$episodesArgs<ExtArgs>
   purchases?: boolean | Prisma.Product$purchasesArgs<ExtArgs>
@@ -1016,6 +1058,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: number
     name: string
     description: string | null
+    thumbnailUrl: string | null
     type: $Enums.ProductType
     currency: $Enums.CurrencyType
     price: number
@@ -1453,6 +1496,7 @@ export interface ProductFieldRefs {
   readonly id: Prisma.FieldRef<"Product", 'Int'>
   readonly name: Prisma.FieldRef<"Product", 'String'>
   readonly description: Prisma.FieldRef<"Product", 'String'>
+  readonly thumbnailUrl: Prisma.FieldRef<"Product", 'String'>
   readonly type: Prisma.FieldRef<"Product", 'ProductType'>
   readonly currency: Prisma.FieldRef<"Product", 'CurrencyType'>
   readonly price: Prisma.FieldRef<"Product", 'Int'>

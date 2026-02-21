@@ -275,7 +275,6 @@ export type UserPurchaseOrderByWithRelationInput = {
 
 export type UserPurchaseWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  userId_productId?: Prisma.UserPurchaseUserIdProductIdCompoundUniqueInput
   AND?: Prisma.UserPurchaseWhereInput | Prisma.UserPurchaseWhereInput[]
   OR?: Prisma.UserPurchaseWhereInput[]
   NOT?: Prisma.UserPurchaseWhereInput | Prisma.UserPurchaseWhereInput[]
@@ -290,7 +289,7 @@ export type UserPurchaseWhereUniqueInput = Prisma.AtLeast<{
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   userPlayEpisode?: Prisma.XOR<Prisma.UserPlayEpisodeNullableScalarRelationFilter, Prisma.UserPlayEpisodeWhereInput> | null
   coinTransactions?: Prisma.CoinTransactionListRelationFilter
-}, "id" | "userId_productId">
+}, "id">
 
 export type UserPurchaseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -415,11 +414,6 @@ export type UserPurchaseOrderByRelationAggregateInput = {
 export type UserPurchaseNullableScalarRelationFilter = {
   is?: Prisma.UserPurchaseWhereInput | null
   isNot?: Prisma.UserPurchaseWhereInput | null
-}
-
-export type UserPurchaseUserIdProductIdCompoundUniqueInput = {
-  userId: number
-  productId: number
 }
 
 export type UserPurchaseCountOrderByAggregateInput = {

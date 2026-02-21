@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CharacterRelationStatus } from '@/generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { FriendChatItemDto, FriendListItemDto } from './dto/friend.dto';
@@ -12,14 +16,61 @@ export class FriendService {
     userId: number,
     characterId: number
   ): Promise<SuccessResponseDto> {
-    await this.prisma.characterFriend
-      .create({
-        data: { userId, characterId, status: CharacterRelationStatus.FRIEND, affinity: 1 },
-      })
-      .catch((error) => {
-        if (error.code === 'P2002') return null;
-        throw error;
+    const character = await this.prisma.character.findUnique({
+      where: { id: characterId },
+      select: { name: true, greetingMessage: true },
+    });
+
+    await this.prisma.$transaction(async (tx) => {
+      const friend = await tx.characterFriend.findUnique({
+        where: {
+          userId_characterId: {
+            userId,
+            characterId,
+          },
+          status: CharacterRelationStatus.INVITABLE,
+        },
       });
+
+      if (!friend) {
+        throw new NotFoundException('해금된 캐릭터가 아닙니다.');
+      }
+
+      await tx.characterFriend.update({
+        where: {
+          userId_characterId: { userId, characterId },
+        },
+        data: { status: CharacterRelationStatus.FRIEND },
+      });
+
+      const chat = await tx.characterChat.upsert({
+        where: { userId_characterId: { userId, characterId } },
+        create: { userId, characterId },
+        update: {},
+      });
+
+      const message = await tx.message.create({
+        data: {
+          chatId: chat.id,
+          userId,
+          characterId,
+          isFromUser: false,
+          content:
+            character?.greetingMessage ??
+            `안녕! 나는 ${character?.name ?? ''}야. 잘 부탁해!`,
+        },
+      });
+
+      await tx.characterChat.update({
+        where: { id: chat.id },
+        data: {
+          lastMessageId: message.id,
+          lastMessageAt: message.createdAt,
+          unreadCount: { increment: 1 },
+        },
+      });
+    });
+
     return { success: true };
   }
 
@@ -81,7 +132,10 @@ export class FriendService {
         avatarImage: friend.character.avatarImage,
         chatId: chat.id,
         lastMessageAt: chat.lastMessageAt,
-        lastMessagePreview: this.truncate(chat.lastMessage?.content ?? null, 60),
+        lastMessagePreview: this.truncate(
+          chat.lastMessage?.content ?? null,
+          60
+        ),
         unreadCount: chat.unreadCount,
       });
     }

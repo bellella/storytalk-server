@@ -71,7 +71,7 @@ export class EpisodeMetaDto {
   koreanTitle?: string | null;
   description?: string | null;
   koreanDescription?: string | null;
-  // thumbnailUrl?: string | null;
+  thumbnailUrl?: string | null;
 }
 
 export class PlayLinksDto {

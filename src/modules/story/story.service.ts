@@ -116,13 +116,20 @@ export class StoryService {
       totalEpisodes: story.episodes.length,
       status: story.status === PublishStatus.PUBLISHED ? '연재중' : '준비중',
       likeCount: 123, // TODO: 실제 좋아요 카운트 로직으로 교체
-      episodes: story.episodes.map((ep) => ({
-        id: ep.id,
-        title: ep.title,
-        order: ep.order,
-        duration: '5 min', // TODO: Episode 모델에 duration 필드 추가
-        userEpisode: userEpisodeMap[ep.id] ?? null, // 유저 진행 상태 포함
-      })),
+      episodes: story.episodes.map((ep, idx) => {
+        const prevEp = idx > 0 ? story.episodes[idx - 1] : null;
+        const isLocked = prevEp
+          ? userEpisodeMap[prevEp.id]?.currentStage !== EpisodeStage.QUIZ_COMPLETED
+          : false;
+        return {
+          id: ep.id,
+          title: ep.title,
+          order: ep.order,
+          duration: '5 min', // TODO: Episode 모델에 duration 필드 추가
+          isLocked,
+          userEpisode: userEpisodeMap[ep.id] ?? null,
+        };
+      }),
       characters: story.storyCharacters.map((sc) => ({
         id: sc.character?.id!,
         name: sc.character?.name!,
@@ -303,6 +310,7 @@ export class StoryService {
       order: episode.order,
       description: episode.description ?? undefined,
       koreanDescription: episode.koreanDescription ?? undefined,
+      thumbnailUrl: episode.thumbnailUrl ?? undefined,
       scenes,
       characterImages: allCharacterImages,
     };
@@ -461,7 +469,7 @@ export class StoryService {
           title: ue.episode.title,
           koreanTitle: ue.episode.koreanTitle,
           order: ue.episode.order,
-          thumbnailUrl: ue.episode.thumbnailUrl,
+          thumbnailUrl: ue.episode.thumbnailUrl ?? null,
         },
         userEpisode: {
           currentStage: ue.currentStage,

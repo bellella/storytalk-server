@@ -43,6 +43,7 @@ export class EpisodeDetailDto {
   order: number;
   description?: string;
   koreanDescription?: string;
+  thumbnailUrl?: string | null;
   scenes: SceneDto[];
   characterImages: CharacterImageDto[]; // StoryCharacter에 걸려있는 CharacterImage들
 }

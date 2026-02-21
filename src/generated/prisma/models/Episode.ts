@@ -616,14 +616,6 @@ export type EnumEpisodeTypeFieldUpdateOperationsInput = {
   set?: $Enums.EpisodeType
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type EpisodeCreateNestedOneWithoutScenesInput = {
   create?: Prisma.XOR<Prisma.EpisodeCreateWithoutScenesInput, Prisma.EpisodeUncheckedCreateWithoutScenesInput>
   connectOrCreate?: Prisma.EpisodeCreateOrConnectWithoutScenesInput

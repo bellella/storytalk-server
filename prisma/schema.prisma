@@ -45,11 +45,16 @@ model User {
   XpLevel      Int          @default(1)
   xp           Int          @default(0)
   streakDays   Int          @default(0)
-  lastLoginAt  DateTime     @default(now())
+
+  selectedCharacterId Int?
+
+  lastLoginAt  DateTime  @default(now())
   registeredAt DateTime?
-  createdAt    DateTime     @default(now())
+  createdAt    DateTime  @default(now())
 
   isNew Boolean @default(true)
+
+  selectedCharacter Character? @relation("UserSelectedCharacter", fields: [selectedCharacterId], references: [id])
 
   storyProgress     StoryProgress[]
   userEpisodes      UserEpisode[]
@@ -142,9 +147,9 @@ enum EpisodeType {
 }
 
 model Episode {
-  id                Int           @id @default(autoincrement())
+  id                Int         @id @default(autoincrement())
   storyId           Int?
-  type              EpisodeType   @default(STORY)
+  type              EpisodeType @default(STORY)
   title             String
   koreanTitle       String?
   order             Int
@@ -152,9 +157,9 @@ model Episode {
   koreanDescription String?
   thumbnailUrl      String?
 
-  status            PublishStatus @default(DRAFT)
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
+  status    PublishStatus @default(DRAFT)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 
   story            Story?            @relation(fields: [storyId], references: [id])
   scenes           Scene[]
@@ -379,16 +384,20 @@ model Character {
   id    Int            @id @default(autoincrement())
   scope CharacterScope @default(GLOBAL)
 
-  name        String
-  koreanName  String?
-  avatarImage String?
-  mainImage   String?
-  description String
-  personality String?
-  aiPrompt    String?
-  status      PublishStatus @default(DRAFT)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  name            String
+  koreanName      String?
+  avatarImage     String?
+  mainImage       String?
+  description     String
+  personality     String?
+  greetingMessage String?
+  aiPrompt        String?
+  status          PublishStatus @default(DRAFT)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  isSelectable Boolean @default(false)
+  minUserLevel Int     @default(1)
 
   images         CharacterImage[]
   dialogues      Dialogue[]
@@ -397,6 +406,7 @@ model Character {
   storyLinks     StoryCharacter[]
   characterChats CharacterChat[]
   slotDialogues  SlotDialogue[]
+  users          User[]            @relation("UserSelectedCharacter")
 }
 
 model StoryCharacter {
@@ -436,12 +446,12 @@ enum CharacterRelationStatus {
 }
 
 model CharacterFriend {
-  id          Int      @id @default(autoincrement())
+  id          Int                     @id @default(autoincrement())
   userId      Int
   characterId Int
-  affinity    Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  affinity    Int                     @default(0)
+  createdAt   DateTime                @default(now())
+  updatedAt   DateTime                @updatedAt
   status      CharacterRelationStatus @default(INVITABLE)
 
   user      User      @relation(fields: [userId], references: [id])
@@ -718,7 +728,7 @@ model UserPlayEpisode {
   purchaseId Int?          @unique
   purchase   UserPurchase? @relation(fields: [purchaseId], references: [id], onDelete: SetNull)
 
-  updatedAt DateTime  @updatedAt
+  updatedAt DateTime @updatedAt
 
   slots PlayEpisodeSlot[]
 
@@ -728,7 +738,6 @@ model UserPlayEpisode {
   @@index([userId, startedAt])
   @@index([userId, updatedAt])
   @@index([userId, status])
-  @@index([userId, episodeId])
   @@index([episodeId])
 }
 
@@ -832,9 +841,10 @@ model CollectionProduct {
 // - COIN_PACK: 인앱결제로 코인 충전
 // - SUBSCRIPTION: 구독(뼈대)
 model Product {
-  id          Int     @id @default(autoincrement())
-  name        String
-  description String?
+  id           Int     @id @default(autoincrement())
+  name         String
+  description  String?
+  thumbnailUrl String?
 
   type ProductType
 
@@ -911,9 +921,6 @@ model UserPurchase {
   product          Product           @relation(fields: [productId], references: [id], onDelete: Restrict)
   userPlayEpisode  UserPlayEpisode?
   coinTransactions CoinTransaction[]
-
-  // EPISODE_ACCESS는 보통 1회만 구매 가능하게 막는 게 안전
-  @@unique([userId, productId])
 }
 
 //////////////////////////////////////////////////////
