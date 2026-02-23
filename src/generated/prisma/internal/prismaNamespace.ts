@@ -3254,6 +3254,7 @@ export const DialogueScalarFieldEnum = {
   sceneId: 'sceneId',
   order: 'order',
   type: 'type',
+  speakerRole: 'speakerRole',
   characterName: 'characterName',
   characterId: 'characterId',
   englishText: 'englishText',
@@ -3364,7 +3365,7 @@ export const CharacterScalarFieldEnum = {
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  isSelectable: 'isSelectable',
+  isUserSelectable: 'isUserSelectable',
   minUserLevel: 'minUserLevel'
 } as const
 
@@ -3877,6 +3878,20 @@ export type EnumDialogueTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'DialogueType[]'
  */
 export type ListEnumDialogueTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DialogueType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DialogueSpeakerRole'
+ */
+export type EnumDialogueSpeakerRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DialogueSpeakerRole'>
+    
+
+
+/**
+ * Reference to a field of type 'DialogueSpeakerRole[]'
+ */
+export type ListEnumDialogueSpeakerRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DialogueSpeakerRole[]'>
     
 
 

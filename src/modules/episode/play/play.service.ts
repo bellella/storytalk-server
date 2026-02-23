@@ -1,5 +1,6 @@
 import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
 import {
+  DialogueSpeakerRole,
   DialogueType,
   EpisodeStage,
   PlayEpisodeMode,
@@ -123,7 +124,13 @@ export class PlayService {
     userId: number,
     playEpisodeId: number
   ): Promise<PlayEpisodeDetailResponseDto> {
-    const play = await this.fetchPlayEpisode(userId, playEpisodeId);
+    const [play, user] = await Promise.all([
+      this.fetchPlayEpisode(userId, playEpisodeId),
+      this.prisma.user.findUnique({
+        where: { id: userId },
+        select: { name: true, selectedCharacterId: true },
+      }),
+    ]);
 
     // completed: 모든 slot 치환 / in-progress: lastSlotId 이하 slot만 치환
     // → 어느 경우든 이미 플레이한 AI slot 마커는 runtime dialogues로 대체
@@ -134,6 +141,30 @@ export class PlayService {
     );
 
     if (!episode) throw new NotFoundException('Episode not found');
+
+    // USER speakerRole 대화에 유저 캐릭터 정보 주입
+    if (user?.selectedCharacterId) {
+      const userImageMap = await this.characterService.buildImageMap([
+        user.selectedCharacterId,
+      ]);
+      episode.scenes = episode.scenes.map((scene) => ({
+        ...scene,
+        dialogues: scene.dialogues.map((d) => {
+          if (d.speakerRole !== DialogueSpeakerRole.USER) return d;
+          return {
+            ...d,
+            characterId: user.selectedCharacterId!,
+            characterName: user.name ?? undefined,
+            imageUrl:
+              this.characterService.resolveImageUrl(
+                userImageMap,
+                user.selectedCharacterId!,
+                d.charImageLabel
+              ) ?? d.imageUrl,
+          };
+        }),
+      }));
+    }
 
     return {
       play: {
@@ -194,6 +225,7 @@ export class PlayService {
             id: true,
             order: true,
             type: true,
+            messageType: true,
             characterId: true,
             characterName: true,
             englishText: true,
@@ -255,6 +287,9 @@ export class PlayService {
             id: d.id,
             order: d.order,
             type: rd.type as unknown as DialogueType,
+            speakerRole: rd.messageType === SlotMessageType.USER
+              ? DialogueSpeakerRole.USER
+              : DialogueSpeakerRole.SYSTEM,
             characterId: rd.characterId ?? undefined,
             characterName: rd.characterName ?? undefined,
             englishText: rd.englishText ?? '',

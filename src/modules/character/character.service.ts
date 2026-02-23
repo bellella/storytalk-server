@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CharacterDetailDto, CharacterListItemDto } from './dto/character.dto';
+import { CharacterDetailDto, CharacterListItemDto, SelectableCharacterDto } from './dto/character.dto';
 import { CharacterScope } from '@/generated/prisma/client';
 
 export interface CharacterImageEntry {
@@ -42,6 +42,35 @@ export class CharacterService {
       name: character.name,
       avatarImage: character.avatarImage ?? '',
       followers: character.friends.length,
+    }));
+  }
+
+  async getSelectableCharacters(userId?: number): Promise<SelectableCharacterDto[]> {
+    const [characters, user] = await Promise.all([
+      this.prisma.character.findMany({
+        where: { isUserSelectable: true },
+        select: {
+          id: true,
+          name: true,
+          avatarImage: true,
+          minUserLevel: true,
+        },
+        orderBy: { minUserLevel: 'asc' },
+      }),
+      userId
+        ? this.prisma.user.findUnique({
+            where: { id: userId },
+            select: { selectedCharacterId: true },
+          })
+        : null,
+    ]);
+
+    return characters.map((c) => ({
+      id: c.id,
+      name: c.name,
+      avatarImage: c.avatarImage,
+      minUserLevel: c.minUserLevel,
+      isSelected: user?.selectedCharacterId === c.id,
     }));
   }
 

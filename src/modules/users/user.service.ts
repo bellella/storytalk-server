@@ -40,6 +40,11 @@ export class UserService {
     const { start: todayStart, end: todayEnd } = getTodayRange();
     const user = await this.prisma.user.findUnique({
       where: { id },
+      include: {
+        selectedCharacter: {
+          select: { id: true, avatarImage: true },
+        },
+      },
     });
     // 오늘의 퀴즈 완료 여부
     const dailySession = await this.prisma.userQuizSession.findFirst({
@@ -61,11 +66,18 @@ export class UserService {
       name: user.name,
       profileImage: user.profileImage,
       level: user.level,
+      xpLevel: user.XpLevel,
       xp: user.xp,
       streakDays: user.streakDays,
       dailyStatus: {
         quizCompleted: !!dailySession?.completedAt,
       },
+      selectedCharacter: user.selectedCharacter
+        ? {
+            id: user.selectedCharacter.id,
+            avatarImage: user.selectedCharacter.avatarImage,
+          }
+        : null,
     };
   }
 

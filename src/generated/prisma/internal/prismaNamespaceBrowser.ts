@@ -217,6 +217,7 @@ export const DialogueScalarFieldEnum = {
   sceneId: 'sceneId',
   order: 'order',
   type: 'type',
+  speakerRole: 'speakerRole',
   characterName: 'characterName',
   characterId: 'characterId',
   englishText: 'englishText',
@@ -327,7 +328,7 @@ export const CharacterScalarFieldEnum = {
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  isSelectable: 'isSelectable',
+  isUserSelectable: 'isUserSelectable',
   minUserLevel: 'minUserLevel'
 } as const
 

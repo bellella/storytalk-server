@@ -79,6 +79,14 @@ export const DialogueType = {
 export type DialogueType = (typeof DialogueType)[keyof typeof DialogueType]
 
 
+export const DialogueSpeakerRole = {
+  SYSTEM: 'SYSTEM',
+  USER: 'USER'
+} as const
+
+export type DialogueSpeakerRole = (typeof DialogueSpeakerRole)[keyof typeof DialogueSpeakerRole]
+
+
 export const QuizType = {
   SENTENCE_BUILD: 'SENTENCE_BUILD',
   SENTENCE_CLOZE_BUILD: 'SENTENCE_CLOZE_BUILD',

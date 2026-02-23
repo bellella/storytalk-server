@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { CharacterService } from './character.service';
-import { CharacterDetailDto, CharacterListItemDto } from './dto/character.dto';
+import { CharacterDetailDto, CharacterListItemDto, SelectableCharacterDto } from './dto/character.dto';
 import { OptionalJwtAuthGuard } from '../auth/guards/optional-auth.guard';
 import { CurrentUser } from '@/types/auth.type';
 import { ReqUser } from '@/common/decorators/user.decorator';
@@ -20,6 +20,15 @@ export class CharacterController {
   @ApiOkResponse({ type: [CharacterListItemDto] })
   async findAll(): Promise<CharacterListItemDto[]> {
     return this.characterService.getCharacters();
+  }
+
+  @Get('selectable')
+  @UseGuards(OptionalJwtAuthGuard)
+  @ApiOkResponse({ type: [SelectableCharacterDto] })
+  async getSelectableCharacters(
+    @ReqUser() user: CurrentUser | undefined
+  ): Promise<SelectableCharacterDto[]> {
+    return this.characterService.getSelectableCharacters(user?.id);
   }
 
   @Get(':characterId')

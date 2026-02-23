@@ -211,11 +211,18 @@ enum DialogueType {
   SPEAKING_MISSION // 따라 말하기
 }
 
+enum DialogueSpeakerRole {
+  SYSTEM
+  USER
+}
+
 model Dialogue {
-  id             Int          @id @default(autoincrement())
+  id             Int                   @id @default(autoincrement())
   sceneId        Int
   order          Int
-  type           DialogueType @default(DIALOGUE)
+  type           DialogueType          @default(DIALOGUE)
+  speakerRole    DialogueSpeakerRole   @default(SYSTEM)
+  // characterName은 사실상 중복이라 점진적으로 제거 추천
   characterName  String?
   characterId    Int?
   englishText    String
@@ -396,8 +403,8 @@ model Character {
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 
-  isSelectable Boolean @default(false)
-  minUserLevel Int     @default(1)
+  isUserSelectable Boolean @default(false)
+  minUserLevel     Int     @default(1)
 
   images         CharacterImage[]
   dialogues      Dialogue[]

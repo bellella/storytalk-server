@@ -1,4 +1,4 @@
-import { IsEmail } from 'class-validator';
+import { IsEmail, IsInt } from 'class-validator';
 import { IsString } from 'class-validator';
 import { IsNotEmpty } from 'class-validator';
 
@@ -7,7 +7,7 @@ export class UpdatePersonalInfoDto {
   @IsNotEmpty()
   name: string;
 
-  @IsEmail()
+  @IsInt()
   @IsNotEmpty()
-  email: string;
+  selectedCharacterId: number;
 }

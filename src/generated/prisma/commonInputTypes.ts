@@ -311,6 +311,13 @@ export type EnumDialogueTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumDialogueTypeFilter<$PrismaModel> | $Enums.DialogueType
 }
 
+export type EnumDialogueSpeakerRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.DialogueSpeakerRole | Prisma.EnumDialogueSpeakerRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.DialogueSpeakerRole[] | Prisma.ListEnumDialogueSpeakerRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DialogueSpeakerRole[] | Prisma.ListEnumDialogueSpeakerRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDialogueSpeakerRoleFilter<$PrismaModel> | $Enums.DialogueSpeakerRole
+}
+
 export type JsonNullableFilter<$PrismaModel = never> =
 | Prisma.PatchUndefined<
     Prisma.Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
@@ -343,6 +350,16 @@ export type EnumDialogueTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumDialogueTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumDialogueTypeFilter<$PrismaModel>
+}
+
+export type EnumDialogueSpeakerRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DialogueSpeakerRole | Prisma.EnumDialogueSpeakerRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.DialogueSpeakerRole[] | Prisma.ListEnumDialogueSpeakerRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DialogueSpeakerRole[] | Prisma.ListEnumDialogueSpeakerRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDialogueSpeakerRoleWithAggregatesFilter<$PrismaModel> | $Enums.DialogueSpeakerRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDialogueSpeakerRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDialogueSpeakerRoleFilter<$PrismaModel>
 }
 
 export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
@@ -1130,6 +1147,13 @@ export type NestedEnumDialogueTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumDialogueTypeFilter<$PrismaModel> | $Enums.DialogueType
 }
 
+export type NestedEnumDialogueSpeakerRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.DialogueSpeakerRole | Prisma.EnumDialogueSpeakerRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.DialogueSpeakerRole[] | Prisma.ListEnumDialogueSpeakerRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DialogueSpeakerRole[] | Prisma.ListEnumDialogueSpeakerRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDialogueSpeakerRoleFilter<$PrismaModel> | $Enums.DialogueSpeakerRole
+}
+
 export type NestedEnumDialogueTypeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.DialogueType | Prisma.EnumDialogueTypeFieldRefInput<$PrismaModel>
   in?: $Enums.DialogueType[] | Prisma.ListEnumDialogueTypeFieldRefInput<$PrismaModel>
@@ -1138,6 +1162,16 @@ export type NestedEnumDialogueTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumDialogueTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumDialogueTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumDialogueSpeakerRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DialogueSpeakerRole | Prisma.EnumDialogueSpeakerRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.DialogueSpeakerRole[] | Prisma.ListEnumDialogueSpeakerRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DialogueSpeakerRole[] | Prisma.ListEnumDialogueSpeakerRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDialogueSpeakerRoleWithAggregatesFilter<$PrismaModel> | $Enums.DialogueSpeakerRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDialogueSpeakerRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDialogueSpeakerRoleFilter<$PrismaModel>
 }
 
 export type NestedJsonNullableFilter<$PrismaModel = never> =

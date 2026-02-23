@@ -50,7 +50,7 @@ export type CharacterMinAggregateOutputType = {
   status: $Enums.PublishStatus | null
   createdAt: Date | null
   updatedAt: Date | null
-  isSelectable: boolean | null
+  isUserSelectable: boolean | null
   minUserLevel: number | null
 }
 
@@ -68,7 +68,7 @@ export type CharacterMaxAggregateOutputType = {
   status: $Enums.PublishStatus | null
   createdAt: Date | null
   updatedAt: Date | null
-  isSelectable: boolean | null
+  isUserSelectable: boolean | null
   minUserLevel: number | null
 }
 
@@ -86,7 +86,7 @@ export type CharacterCountAggregateOutputType = {
   status: number
   createdAt: number
   updatedAt: number
-  isSelectable: number
+  isUserSelectable: number
   minUserLevel: number
   _all: number
 }
@@ -116,7 +116,7 @@ export type CharacterMinAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
-  isSelectable?: true
+  isUserSelectable?: true
   minUserLevel?: true
 }
 
@@ -134,7 +134,7 @@ export type CharacterMaxAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
-  isSelectable?: true
+  isUserSelectable?: true
   minUserLevel?: true
 }
 
@@ -152,7 +152,7 @@ export type CharacterCountAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
-  isSelectable?: true
+  isUserSelectable?: true
   minUserLevel?: true
   _all?: true
 }
@@ -257,7 +257,7 @@ export type CharacterGroupByOutputType = {
   status: $Enums.PublishStatus
   createdAt: Date
   updatedAt: Date
-  isSelectable: boolean
+  isUserSelectable: boolean
   minUserLevel: number
   _count: CharacterCountAggregateOutputType | null
   _avg: CharacterAvgAggregateOutputType | null
@@ -298,7 +298,7 @@ export type CharacterWhereInput = {
   status?: Prisma.EnumPublishStatusFilter<"Character"> | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
-  isSelectable?: Prisma.BoolFilter<"Character"> | boolean
+  isUserSelectable?: Prisma.BoolFilter<"Character"> | boolean
   minUserLevel?: Prisma.IntFilter<"Character"> | number
   images?: Prisma.CharacterImageListRelationFilter
   dialogues?: Prisma.DialogueListRelationFilter
@@ -324,7 +324,7 @@ export type CharacterOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  isSelectable?: Prisma.SortOrder
+  isUserSelectable?: Prisma.SortOrder
   minUserLevel?: Prisma.SortOrder
   images?: Prisma.CharacterImageOrderByRelationAggregateInput
   dialogues?: Prisma.DialogueOrderByRelationAggregateInput
@@ -353,7 +353,7 @@ export type CharacterWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumPublishStatusFilter<"Character"> | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
-  isSelectable?: Prisma.BoolFilter<"Character"> | boolean
+  isUserSelectable?: Prisma.BoolFilter<"Character"> | boolean
   minUserLevel?: Prisma.IntFilter<"Character"> | number
   images?: Prisma.CharacterImageListRelationFilter
   dialogues?: Prisma.DialogueListRelationFilter
@@ -379,7 +379,7 @@ export type CharacterOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  isSelectable?: Prisma.SortOrder
+  isUserSelectable?: Prisma.SortOrder
   minUserLevel?: Prisma.SortOrder
   _count?: Prisma.CharacterCountOrderByAggregateInput
   _avg?: Prisma.CharacterAvgOrderByAggregateInput
@@ -405,7 +405,7 @@ export type CharacterScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumPublishStatusWithAggregatesFilter<"Character"> | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Character"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Character"> | Date | string
-  isSelectable?: Prisma.BoolWithAggregatesFilter<"Character"> | boolean
+  isUserSelectable?: Prisma.BoolWithAggregatesFilter<"Character"> | boolean
   minUserLevel?: Prisma.IntWithAggregatesFilter<"Character"> | number
 }
 
@@ -422,7 +422,7 @@ export type CharacterCreateInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.DialogueCreateNestedManyWithoutCharacterInput
@@ -448,7 +448,7 @@ export type CharacterUncheckedCreateInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageUncheckedCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.DialogueUncheckedCreateNestedManyWithoutCharacterInput
@@ -473,7 +473,7 @@ export type CharacterUpdateInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.DialogueUpdateManyWithoutCharacterNestedInput
@@ -499,7 +499,7 @@ export type CharacterUncheckedUpdateInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUncheckedUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.DialogueUncheckedUpdateManyWithoutCharacterNestedInput
@@ -525,7 +525,7 @@ export type CharacterCreateManyInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
 }
 
@@ -542,7 +542,7 @@ export type CharacterUpdateManyMutationInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -560,7 +560,7 @@ export type CharacterUncheckedUpdateManyInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -583,7 +583,7 @@ export type CharacterCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  isSelectable?: Prisma.SortOrder
+  isUserSelectable?: Prisma.SortOrder
   minUserLevel?: Prisma.SortOrder
 }
 
@@ -606,7 +606,7 @@ export type CharacterMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  isSelectable?: Prisma.SortOrder
+  isUserSelectable?: Prisma.SortOrder
   minUserLevel?: Prisma.SortOrder
 }
 
@@ -624,7 +624,7 @@ export type CharacterMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  isSelectable?: Prisma.SortOrder
+  isUserSelectable?: Prisma.SortOrder
   minUserLevel?: Prisma.SortOrder
 }
 
@@ -773,7 +773,7 @@ export type CharacterCreateWithoutUsersInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.DialogueCreateNestedManyWithoutCharacterInput
@@ -798,7 +798,7 @@ export type CharacterUncheckedCreateWithoutUsersInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageUncheckedCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.DialogueUncheckedCreateNestedManyWithoutCharacterInput
@@ -838,7 +838,7 @@ export type CharacterUpdateWithoutUsersInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.DialogueUpdateManyWithoutCharacterNestedInput
@@ -863,7 +863,7 @@ export type CharacterUncheckedUpdateWithoutUsersInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUncheckedUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.DialogueUncheckedUpdateManyWithoutCharacterNestedInput
@@ -887,7 +887,7 @@ export type CharacterCreateWithoutDialoguesInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageCreateNestedManyWithoutCharacterInput
   friends?: Prisma.CharacterFriendCreateNestedManyWithoutCharacterInput
@@ -912,7 +912,7 @@ export type CharacterUncheckedCreateWithoutDialoguesInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageUncheckedCreateNestedManyWithoutCharacterInput
   friends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutCharacterInput
@@ -952,7 +952,7 @@ export type CharacterUpdateWithoutDialoguesInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUpdateManyWithoutCharacterNestedInput
   friends?: Prisma.CharacterFriendUpdateManyWithoutCharacterNestedInput
@@ -977,7 +977,7 @@ export type CharacterUncheckedUpdateWithoutDialoguesInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUncheckedUpdateManyWithoutCharacterNestedInput
   friends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1001,7 +1001,7 @@ export type CharacterCreateWithoutStoryLinksInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.DialogueCreateNestedManyWithoutCharacterInput
@@ -1026,7 +1026,7 @@ export type CharacterUncheckedCreateWithoutStoryLinksInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageUncheckedCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.DialogueUncheckedCreateNestedManyWithoutCharacterInput
@@ -1066,7 +1066,7 @@ export type CharacterUpdateWithoutStoryLinksInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.DialogueUpdateManyWithoutCharacterNestedInput
@@ -1091,7 +1091,7 @@ export type CharacterUncheckedUpdateWithoutStoryLinksInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUncheckedUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.DialogueUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1115,7 +1115,7 @@ export type CharacterCreateWithoutImagesInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   dialogues?: Prisma.DialogueCreateNestedManyWithoutCharacterInput
   friends?: Prisma.CharacterFriendCreateNestedManyWithoutCharacterInput
@@ -1140,7 +1140,7 @@ export type CharacterUncheckedCreateWithoutImagesInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   dialogues?: Prisma.DialogueUncheckedCreateNestedManyWithoutCharacterInput
   friends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutCharacterInput
@@ -1180,7 +1180,7 @@ export type CharacterUpdateWithoutImagesInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   dialogues?: Prisma.DialogueUpdateManyWithoutCharacterNestedInput
   friends?: Prisma.CharacterFriendUpdateManyWithoutCharacterNestedInput
@@ -1205,7 +1205,7 @@ export type CharacterUncheckedUpdateWithoutImagesInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   dialogues?: Prisma.DialogueUncheckedUpdateManyWithoutCharacterNestedInput
   friends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1229,7 +1229,7 @@ export type CharacterCreateWithoutFriendsInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.DialogueCreateNestedManyWithoutCharacterInput
@@ -1254,7 +1254,7 @@ export type CharacterUncheckedCreateWithoutFriendsInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageUncheckedCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.DialogueUncheckedCreateNestedManyWithoutCharacterInput
@@ -1294,7 +1294,7 @@ export type CharacterUpdateWithoutFriendsInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.DialogueUpdateManyWithoutCharacterNestedInput
@@ -1319,7 +1319,7 @@ export type CharacterUncheckedUpdateWithoutFriendsInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUncheckedUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.DialogueUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1343,7 +1343,7 @@ export type CharacterCreateWithoutCharacterChatsInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.DialogueCreateNestedManyWithoutCharacterInput
@@ -1368,7 +1368,7 @@ export type CharacterUncheckedCreateWithoutCharacterChatsInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageUncheckedCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.DialogueUncheckedCreateNestedManyWithoutCharacterInput
@@ -1408,7 +1408,7 @@ export type CharacterUpdateWithoutCharacterChatsInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.DialogueUpdateManyWithoutCharacterNestedInput
@@ -1433,7 +1433,7 @@ export type CharacterUncheckedUpdateWithoutCharacterChatsInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUncheckedUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.DialogueUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1457,7 +1457,7 @@ export type CharacterCreateWithoutMessagesInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.DialogueCreateNestedManyWithoutCharacterInput
@@ -1482,7 +1482,7 @@ export type CharacterUncheckedCreateWithoutMessagesInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageUncheckedCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.DialogueUncheckedCreateNestedManyWithoutCharacterInput
@@ -1522,7 +1522,7 @@ export type CharacterUpdateWithoutMessagesInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.DialogueUpdateManyWithoutCharacterNestedInput
@@ -1547,7 +1547,7 @@ export type CharacterUncheckedUpdateWithoutMessagesInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUncheckedUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.DialogueUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1571,7 +1571,7 @@ export type CharacterCreateWithoutSlotDialoguesInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.DialogueCreateNestedManyWithoutCharacterInput
@@ -1596,7 +1596,7 @@ export type CharacterUncheckedCreateWithoutSlotDialoguesInput = {
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: number
   images?: Prisma.CharacterImageUncheckedCreateNestedManyWithoutCharacterInput
   dialogues?: Prisma.DialogueUncheckedCreateNestedManyWithoutCharacterInput
@@ -1636,7 +1636,7 @@ export type CharacterUpdateWithoutSlotDialoguesInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.DialogueUpdateManyWithoutCharacterNestedInput
@@ -1661,7 +1661,7 @@ export type CharacterUncheckedUpdateWithoutSlotDialoguesInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUserSelectable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   minUserLevel?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.CharacterImageUncheckedUpdateManyWithoutCharacterNestedInput
   dialogues?: Prisma.DialogueUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1780,7 +1780,7 @@ export type CharacterSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: boolean
   images?: boolean | Prisma.Character$imagesArgs<ExtArgs>
   dialogues?: boolean | Prisma.Character$dialoguesArgs<ExtArgs>
@@ -1807,7 +1807,7 @@ export type CharacterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: boolean
 }, ExtArgs["result"]["character"]>
 
@@ -1825,7 +1825,7 @@ export type CharacterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: boolean
 }, ExtArgs["result"]["character"]>
 
@@ -1843,11 +1843,11 @@ export type CharacterSelectScalar = {
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  isSelectable?: boolean
+  isUserSelectable?: boolean
   minUserLevel?: boolean
 }
 
-export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "scope" | "name" | "koreanName" | "avatarImage" | "mainImage" | "description" | "personality" | "greetingMessage" | "aiPrompt" | "status" | "createdAt" | "updatedAt" | "isSelectable" | "minUserLevel", ExtArgs["result"]["character"]>
+export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "scope" | "name" | "koreanName" | "avatarImage" | "mainImage" | "description" | "personality" | "greetingMessage" | "aiPrompt" | "status" | "createdAt" | "updatedAt" | "isUserSelectable" | "minUserLevel", ExtArgs["result"]["character"]>
 export type CharacterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   images?: boolean | Prisma.Character$imagesArgs<ExtArgs>
   dialogues?: boolean | Prisma.Character$dialoguesArgs<ExtArgs>
@@ -1888,7 +1888,7 @@ export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     status: $Enums.PublishStatus
     createdAt: Date
     updatedAt: Date
-    isSelectable: boolean
+    isUserSelectable: boolean
     minUserLevel: number
   }, ExtArgs["result"]["character"]>
   composites: {}
@@ -2334,7 +2334,7 @@ export interface CharacterFieldRefs {
   readonly status: Prisma.FieldRef<"Character", 'PublishStatus'>
   readonly createdAt: Prisma.FieldRef<"Character", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Character", 'DateTime'>
-  readonly isSelectable: Prisma.FieldRef<"Character", 'Boolean'>
+  readonly isUserSelectable: Prisma.FieldRef<"Character", 'Boolean'>
   readonly minUserLevel: Prisma.FieldRef<"Character", 'Int'>
 }
     

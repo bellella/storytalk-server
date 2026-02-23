@@ -84,15 +84,25 @@ export class PlayLinksDto {
 
 export class MyPlayEpisodeItemDto {
   playEpisodeId: number;
-  episode: EpisodeMetaDto;
+  episode: EpisodeDto;
+  @ApiProperty({ enum: Object.values(PlayEpisodeMode) })
   mode: PlayEpisodeMode;
+  @ApiProperty({ enum: Object.values(PlayEpisodeStatus) })
   status: PlayEpisodeStatus;
+  @ApiProperty({ enum: Object.values(EpisodeStage) })
   currentStage: EpisodeStage;
   startedAt: string;
   completedAt?: string | null;
   lastSceneId?: number | null;
   lastSlotId?: number | null;
   resultSummary?: any | null;
+}
+
+export class EpisodeDto {
+  id: number;
+  title: string;
+  thumbnailUrl?: string | null;
+  koreanTitle?: string | null;
 }
 
 export class StartPlayEpisodeResponseDto {

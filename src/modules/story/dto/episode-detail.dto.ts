@@ -1,4 +1,4 @@
-import { DialogueType, SceneType } from '@/generated/prisma/enums';
+import { DialogueSpeakerRole, DialogueType, SceneType } from '@/generated/prisma/enums';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class DialogueDto {
@@ -6,6 +6,8 @@ export class DialogueDto {
   order: number;
   @ApiProperty({ enum: DialogueType })
   type: DialogueType;
+  @ApiProperty({ enum: DialogueSpeakerRole })
+  speakerRole: DialogueSpeakerRole;
   characterName?: string;
   characterId?: number;
   englishText: string;

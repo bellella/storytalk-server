@@ -4,6 +4,14 @@ export class CharacterListItemDto {
   avatarImage: string;
 }
 
+export class SelectableCharacterDto {
+  id: number;
+  name: string;
+  avatarImage: string | null;
+  minUserLevel: number;
+  isSelected: boolean;
+}
+
 export class CharacterDetailDto {
   id: number;
   name: string;

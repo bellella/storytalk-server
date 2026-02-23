@@ -280,6 +280,7 @@ export class StoryService {
           id: dialogue.id,
           order: dialogue.order,
           type: dialogue.type,
+          speakerRole: dialogue.speakerRole,
           characterId: dialogue.characterId ?? undefined,
           characterName:
             dialogue.character?.name ?? dialogue.characterName ?? undefined,
