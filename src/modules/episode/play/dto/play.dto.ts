@@ -155,10 +155,18 @@ export class AiSlotResponseDto {
   savedDialogues: SlotDialogueDto[];
 }
 
+export class RewardGrantDto {
+  type: string;
+  payload: any;
+}
+
 export class CompletePlayResponseDto {
   playEpisodeId: number;
   currentStage: EpisodeStage;
   status: PlayEpisodeStatus;
+  result?: any | null;
+  xpGained: number;
+  rewards: RewardGrantDto[];
 }
 
 export class PlayEpisodeDto {

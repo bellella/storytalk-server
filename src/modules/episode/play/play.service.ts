@@ -1,14 +1,18 @@
 import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
 import {
+  CharacterRelationStatus,
   DialogueSpeakerRole,
   DialogueType,
   EpisodeStage,
   PlayEpisodeMode,
   PlayEpisodeStatus,
   QuizSourceType,
+  RewardType,
   SlotDialogueType,
   SlotMessageType,
   SlotStatus,
+  XpSourceType,
+  XpTriggerType,
 } from '@/generated/prisma/enums';
 import { OpenAiService } from '@/modules/ai/openai.service';
 import {
@@ -752,6 +756,9 @@ export class PlayService {
         playEpisodeId: play.id,
         currentStage: play.currentStage,
         status: play.status,
+        result: play.result ?? null,
+        xpGained: 0,
+        rewards: [],
       };
     }
 
@@ -868,11 +875,106 @@ export class PlayService {
           );
         }
 
+        // 6) XP 지급 (중복 방지)
+        let xpGained = 0;
+        const xpRule = await tx.xpRule.findFirst({
+          where: {
+            triggerType: XpTriggerType.EPISODE_COMPLETE,
+            isActive: true,
+            OR: [{ startsAt: null }, { startsAt: { lte: now } }],
+            AND: [{ OR: [{ endsAt: null }, { endsAt: { gte: now } }] }],
+          },
+          orderBy: { priority: 'desc' },
+        });
+
+        if (xpRule) {
+          const alreadyGranted = await tx.userXpHistory.findUnique({
+            where: {
+              userId_sourceType_sourceId_triggerType: {
+                userId,
+                sourceType: XpSourceType.EPISODE,
+                sourceId: play.episodeId,
+                triggerType: XpTriggerType.EPISODE_COMPLETE,
+              },
+            },
+          });
+
+          if (!alreadyGranted) {
+            await tx.userXpHistory.create({
+              data: {
+                userId,
+                xpRuleId: xpRule.id,
+                triggerType: XpTriggerType.EPISODE_COMPLETE,
+                sourceType: XpSourceType.EPISODE,
+                sourceId: play.episodeId,
+                xpAmount: xpRule.xpAmount,
+              },
+            });
+
+            const currentUser = await tx.user.findUniqueOrThrow({
+              where: { id: userId },
+              select: { xp: true, XpLevel: true },
+            });
+            const newXp = currentUser.xp + xpRule.xpAmount;
+            const nextLevel = await tx.xpLevel.findFirst({
+              where: { requiredTotalXp: { lte: newXp }, isActive: true },
+              orderBy: { requiredTotalXp: 'desc' },
+            });
+            await tx.user.update({
+              where: { id: userId },
+              data: {
+                xp: newXp,
+                XpLevel: nextLevel?.level ?? currentUser.XpLevel,
+              },
+            });
+            xpGained = xpRule.xpAmount;
+          }
+        }
+
+        // 7) EpisodeReward 지급
+        const grantedRewards: { type: string; payload: any }[] = [];
+        const episodeRewards = await tx.episodeReward.findMany({
+          where: { episodeId: play.episodeId, isActive: true },
+        });
+
+        for (const reward of episodeRewards) {
+          const payload = reward.payload as Record<string, any>;
+
+          if (reward.type === RewardType.CHARACTER_INVITE) {
+            const characterId = payload.characterId as number;
+            if (characterId) {
+              const existing = await tx.characterFriend.findUnique({
+                where: { userId_characterId: { userId, characterId } },
+              });
+              if (!existing) {
+                await tx.characterFriend.create({
+                  data: {
+                    userId,
+                    characterId,
+                    status: CharacterRelationStatus.INVITABLE,
+                  },
+                });
+                grantedRewards.push({ type: reward.type, payload });
+              } else if (
+                existing.status === CharacterRelationStatus.LOCKED
+              ) {
+                await tx.characterFriend.update({
+                  where: { userId_characterId: { userId, characterId } },
+                  data: { status: CharacterRelationStatus.INVITABLE },
+                });
+                grantedRewards.push({ type: reward.type, payload });
+              }
+            }
+          }
+        }
+
         return {
           playEpisodeId: updated.id,
           currentStage: updated.currentStage,
           status: updated.status,
           result: updated.result ?? null,
+          xpGained,
+          rewards: grantedRewards,
         };
       },
       { timeout: 15000 }
