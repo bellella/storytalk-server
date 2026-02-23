@@ -287,9 +287,10 @@ export class PlayService {
             id: d.id,
             order: d.order,
             type: rd.type as unknown as DialogueType,
-            speakerRole: rd.messageType === SlotMessageType.USER
-              ? DialogueSpeakerRole.USER
-              : DialogueSpeakerRole.SYSTEM,
+            speakerRole:
+              rd.messageType === SlotMessageType.USER
+                ? DialogueSpeakerRole.USER
+                : DialogueSpeakerRole.SYSTEM,
             characterId: rd.characterId ?? undefined,
             characterName: rd.characterName ?? undefined,
             englishText: rd.englishText ?? '',
@@ -318,13 +319,15 @@ export class PlayService {
    *   - constraints?: string[]
    *   - situation?: string
    */
-  private async resolveDialogueData(dialogue: any | null) {
+  private async resolveDialogueData(
+    dialogue: any | null,
+    userInfo?: { selectedCharacterId?: number | null; name?: string | null }
+  ) {
     if (!dialogue) throw new NotFoundException('Dialogue not found');
     if (!dialogue.characterId && dialogue.speakerRole !== 'USER')
       throw new BadRequestException('Dialogue must have characterId');
     const data = dialogue.data as Record<string, any>;
-    const characterId = dialogue.characterId;
-    const characterName = dialogue.characterName;
+    const isUserSpeaker = dialogue.speakerRole === 'USER';
     const includeDialogues =
       (data.includeDialogues as boolean | undefined) ?? false;
     // NPC 캐릭터 ID 목록: 멀티 우선, 레거시 폴백
@@ -334,9 +337,18 @@ export class PlayService {
         ? [data.partnerCharacterId]
         : [];
 
-    // DB에서 캐릭터 정보 조회 (유저 + NPC 전부)
+    // USER speakerRole이면 selectedCharacterId, 아니면 dialogue.characterId
+    const userCharId = isUserSpeaker
+      ? (userInfo?.selectedCharacterId ?? null)
+      : (dialogue.characterId ?? null);
+
+    const allCharIds = [
+      ...npcCharacterIds,
+      ...(userCharId ? [userCharId] : []),
+    ];
+
     const characters = await this.prisma.character.findMany({
-      where: { id: { in: npcCharacterIds } },
+      where: { id: { in: allCharIds } },
       select: {
         id: true,
         name: true,
@@ -346,15 +358,17 @@ export class PlayService {
     });
     const charMap = new Map(characters.map((c) => [c.id, c]));
 
-    const userChar = characterId ? charMap.get(characterId) : null;
+    const userChar = userCharId ? charMap.get(userCharId) : null;
     const npcChars = npcCharacterIds
       .map((id) => charMap.get(id))
       .filter(Boolean) as typeof characters;
     const dataTablePrompt = data.dataTablePrompt ?? '';
     return {
       userCharacter: {
-        characterId,
-        name: characterName ?? userChar?.name ?? 'User',
+        characterId: userCharId,
+        name: isUserSpeaker
+          ? (userInfo?.name ?? userChar?.name ?? 'User')
+          : (dialogue.characterName ?? userChar?.name ?? 'User'),
         personality: userChar?.personality ?? null,
       },
       npcCharacters: npcChars.map((c) => ({
@@ -378,17 +392,19 @@ export class PlayService {
     playEpisodeId: number,
     dialogueId: number
   ): Promise<AiSlotResponseDto> {
-    const playEpisode = await this.assertAccessiblePlayEpisode(
-      userId,
-      playEpisodeId
-    );
-    // user play episode 의 data 가져오기
+    const [playEpisode, user] = await Promise.all([
+      this.assertAccessiblePlayEpisode(userId, playEpisodeId),
+      this.prisma.user.findUnique({
+        where: { id: userId },
+        select: { name: true, selectedCharacterId: true },
+      }),
+    ]);
     const dialogue = await this.prisma.dialogue.findUniqueOrThrow({
       where: { id: dialogueId },
     });
     if (!dialogue) throw new NotFoundException('Dialogue not found');
 
-    const dialogueData = await this.resolveDialogueData(dialogue);
+    const dialogueData = await this.resolveDialogueData(dialogue, user ?? undefined);
 
     const slotOrder = await this.prisma.playEpisodeSlot.count({
       where: { playEpisodeId },
@@ -546,6 +562,7 @@ export class PlayService {
         order: true,
         characterId: true,
         characterName: true,
+        speakerRole: true,
         data: true,
       },
     });
@@ -559,7 +576,7 @@ export class PlayService {
       }),
     ]);
 
-    const dialogueData = await this.resolveDialogueData(dialogue);
+    const dialogueData = await this.resolveDialogueData(dialogue, user ?? undefined);
 
     const slotOrder = await this.prisma.playEpisodeSlot.count({
       where: { playEpisodeId },
@@ -626,8 +643,12 @@ export class PlayService {
         const aiCharIds = messages
           .map((m) => m.characterId)
           .filter((id): id is number => id != null);
-        const extraIds = user?.selectedCharacterId ? [user.selectedCharacterId] : [];
-        const imageMap = await this.characterService.buildImageMap([...new Set([...aiCharIds, ...extraIds])]);
+        const extraIds = user?.selectedCharacterId
+          ? [user.selectedCharacterId]
+          : [];
+        const imageMap = await this.characterService.buildImageMap([
+          ...new Set([...aiCharIds, ...extraIds]),
+        ]);
 
         // AI 응답의 characterId를 그대로 사용하되, USER 타입은 유저 캐릭터로 매핑
         const savedRows: any[] = [];
@@ -1047,7 +1068,7 @@ export class PlayService {
     userId: number,
     playEpisodeId: number
   ): Promise<ResultResponseDto> {
-    const play = await this.assertAccessiblePlayEpisode(userId, playEpisodeId);
+    const play = await this.fetchPlayEpisode(userId, playEpisodeId);
 
     // 아직 완료 전인데 결과 요청하면(정책 선택)
     if (!play.result) {
