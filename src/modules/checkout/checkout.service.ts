@@ -8,6 +8,7 @@ import {
 import {
   CoinTxType,
   CurrencyType,
+  PlayEpisodeMode,
   PlayEpisodeSource,
   ProductType,
   PurchaseType,
@@ -90,6 +91,7 @@ export class CheckoutService {
             episodeId,
             purchaseId: newPurchase.id,
             source: PlayEpisodeSource.PURCHASE,
+            mode: PlayEpisodeMode.CHAT_WITH_QUIZ,
           },
         });
 
