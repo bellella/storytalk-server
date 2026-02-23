@@ -320,7 +320,7 @@ export class PlayService {
    */
   private async resolveDialogueData(dialogue: any | null) {
     if (!dialogue) throw new NotFoundException('Dialogue not found');
-    if (!dialogue.characterId)
+    if (!dialogue.characterId && dialogue.speakerRole !== 'USER')
       throw new BadRequestException('Dialogue must have characterId');
     const data = dialogue.data as Record<string, any>;
     const characterId = dialogue.characterId;
@@ -551,7 +551,13 @@ export class PlayService {
     });
     if (!dialogue) throw new NotFoundException('Dialogue not found');
 
-    const play = await this.assertAccessiblePlayEpisode(userId, playEpisodeId);
+    const [play, user] = await Promise.all([
+      this.assertAccessiblePlayEpisode(userId, playEpisodeId),
+      this.prisma.user.findUnique({
+        where: { id: userId },
+        select: { name: true, selectedCharacterId: true },
+      }),
+    ]);
 
     const dialogueData = await this.resolveDialogueData(dialogue);
 
@@ -617,16 +623,24 @@ export class PlayService {
           CorrectAndDialoguesResponseZ.parse(parsed);
 
         // charImageLabel → imageUrl resolve용 맵
-        const allCharIds = messages
+        const aiCharIds = messages
           .map((m) => m.characterId)
           .filter((id): id is number => id != null);
-        const imageMap = await this.characterService.buildImageMap(allCharIds);
+        const extraIds = user?.selectedCharacterId ? [user.selectedCharacterId] : [];
+        const imageMap = await this.characterService.buildImageMap([...new Set([...aiCharIds, ...extraIds])]);
 
-        // AI 응답의 characterId를 그대로 사용하여 저장
+        // AI 응답의 characterId를 그대로 사용하되, USER 타입은 유저 캐릭터로 매핑
         const savedRows: any[] = [];
         let order = 0;
 
         for (const m of messages) {
+          const messageType = m.characterId
+            ? m.characterId === dialogue.characterId
+              ? SlotMessageType.USER
+              : SlotMessageType.NPC
+            : SlotMessageType.SYSTEM;
+          const isUserMessage = messageType === SlotMessageType.USER;
+
           const row = await tx.slotDialogue.create({
             data: {
               slotId: slot.id,
@@ -634,13 +648,13 @@ export class PlayService {
               sceneId: dialogue.sceneId,
               order,
               type: m.type ?? SlotDialogueType.DIALOGUE,
-              messageType: m.characterId
-                ? m.characterId === dialogue.characterId
-                  ? SlotMessageType.USER
-                  : SlotMessageType.NPC
-                : SlotMessageType.SYSTEM,
-              characterId: m.characterId ?? null,
-              characterName: m.characterName,
+              messageType,
+              characterId: isUserMessage
+                ? (user?.selectedCharacterId ?? m.characterId ?? null)
+                : (m.characterId ?? null),
+              characterName: isUserMessage
+                ? (user?.name ?? m.characterName)
+                : m.characterName,
               englishText: m.englishText,
               koreanText: m.koreanText ?? null,
               charImageLabel: m.charImageLabel ?? null,
