@@ -28,6 +28,7 @@ export class OpenAiService {
       type: options.type,
       aiPrompt: options.aiPrompt,
       affinity: options.affinity,
+      userName: options.userName,
       options: options.options,
     });
     const messages = this.buildMessageHistory(
@@ -39,11 +40,14 @@ export class OpenAiService {
   }
 
   buildSystemPrompt(data: BuildSystemPromptData): string {
-    const { aiPrompt = '', affinity, options } = data;
+    const { aiPrompt = '', affinity, userName, options } = data;
 
     const parts = [
       `Instructions: ${aiPrompt}`,
       `Friendship Level (0-100): ${affinity}`,
+      userName
+        ? `The user's name is "${userName}". Use their name naturally in conversation when appropriate.`
+        : 'The user has not set a display name.',
     ];
 
     parts.push(`

@@ -22,6 +22,7 @@ export interface AiMessageContext {
 export class GenerateCharacterResponseOptions {
   type: MessageType;
   userId: number;
+  userName: string | null;
   aiPrompt: string;
   affinity: number;
   recentMessages: MessageContext[];
@@ -33,6 +34,7 @@ export class BuildSystemPromptData {
   type: MessageType;
   aiPrompt: string;
   affinity: number;
+  userName: string | null;
   options?: SendMessageOptionType[];
 }
 

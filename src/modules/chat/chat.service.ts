@@ -131,13 +131,17 @@ export class ChatService {
     await this.updateChatAfterMessage(chat.id, userMsg.id, false);
 
     // 2) AI 응답 생성
-    const recentMessages = await this.getRecentMessages(chat.id);
-    const { aiPrompt } = await this.prisma.character.findUniqueOrThrow({
-      where: { id: characterId },
-      select: {
-        aiPrompt: true,
-      },
-    });
+    const [recentMessages, character, user] = await Promise.all([
+      this.getRecentMessages(chat.id),
+      this.prisma.character.findUniqueOrThrow({
+        where: { id: characterId },
+        select: { aiPrompt: true },
+      }),
+      this.prisma.user.findUnique({
+        where: { id: userId },
+        select: { name: true },
+      }),
+    ]);
 
     const affinity = await this.getAffinity(userId, characterId);
 
@@ -145,7 +149,8 @@ export class ChatService {
     const aiResponse = await this.openAiService.generateCharacterResponse({
       type: dto.type,
       userId,
-      aiPrompt: aiPrompt || '',
+      userName: user?.name ?? null,
+      aiPrompt: character.aiPrompt || '',
       affinity,
       recentMessages: recentMessages.map((m) => ({
         isFromUser: m.isFromUser,
