@@ -201,49 +201,62 @@ export class StoryService {
     return new CursorResponseDto(storyListItems, null, nextCursor);
   }
 
-  async getEpisodeDetail(episodeId: number): Promise<EpisodeDetailDto> {
-    // Episode와 관련된 모든 데이터 가져오기
-    const episode = await this.prisma.episode.findUnique({
-      where: { id: episodeId },
-      include: {
-        scenes: {
-          orderBy: { order: 'asc' },
-          include: {
-            dialogues: {
-              orderBy: { order: 'asc' },
-              include: {
-                character: true,
+  async getEpisodeDetail(
+    episodeId: number,
+    userId?: number
+  ): Promise<EpisodeDetailDto> {
+    const [episode, userInfo] = await Promise.all([
+      this.prisma.episode.findUnique({
+        where: { id: episodeId },
+        include: {
+          scenes: {
+            orderBy: { order: 'asc' },
+            include: {
+              dialogues: {
+                orderBy: { order: 'asc' },
+                include: {
+                  character: true,
+                },
               },
             },
           },
-        },
-        story: {
-          include: {
-            storyCharacters: {
-              include: {
-                character: {
-                  include: {
-                    images: true,
+          story: {
+            include: {
+              storyCharacters: {
+                include: {
+                  character: {
+                    include: {
+                      images: true,
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    });
+      }),
+      userId
+        ? this.prisma.user.findUnique({
+            where: { id: userId },
+            select: { name: true, selectedCharacterId: true },
+          })
+        : Promise.resolve(null),
+    ]);
 
     if (!episode) {
       throw new NotFoundException('에피소드를 찾을 수 없습니다.');
     }
 
-    // 스토리에 등록된 캐릭터 ID 수집 → 이미지 맵 빌드
+    // 스토리에 등록된 캐릭터 ID 수집 → 이미지 맵 빌드 (유저 선택 캐릭터 포함)
     const storyCharacterIds = (episode.story?.storyCharacters ?? [])
       .map((sc) => sc.character?.id)
       .filter((id): id is number => id != null);
 
-    const imageMap =
-      await this.characterService.buildImageMap(storyCharacterIds);
+    const allCharacterIds = userInfo?.selectedCharacterId
+      ? [...new Set([...storyCharacterIds, userInfo.selectedCharacterId])]
+      : storyCharacterIds;
+
+    const imageMap = await this.characterService.buildImageMap(allCharacterIds);
 
     // CharacterImageDto 평탄화 (응답용)
     const allCharacterImages: CharacterImageDto[] = (
@@ -262,16 +275,28 @@ export class StoryService {
         : []
     );
 
+    const userName = userInfo?.name ?? undefined;
+    const selectedCharacterId = userInfo?.selectedCharacterId ?? undefined;
+
+    const replaceUserName = (text: string) =>
+      userName ? text.replaceAll('{{userName}}', userName) : text;
+
     // Scenes와 Dialogues 매핑
     const scenes: SceneDto[] = episode.scenes.map((scene) => {
       const dialogues: DialogueDto[] = scene.dialogues.map((dialogue) => {
-        let imageUrl = dialogue.imageUrl ?? undefined;
+        const isUserSpeaker = dialogue.speakerRole === 'USER';
 
-        if (dialogue.charImageLabel && dialogue.characterId) {
+        // characterId: USER speakerRole이면 selectedCharacterId로 대체
+        const characterId = isUserSpeaker
+          ? selectedCharacterId
+          : (dialogue.characterId ?? undefined);
+
+        let imageUrl = dialogue.imageUrl ?? undefined;
+        if (characterId) {
           const resolved = this.characterService.resolveImageUrl(
             imageMap,
-            dialogue.characterId,
-            dialogue.charImageLabel
+            characterId,
+            dialogue.charImageLabel ?? null
           );
           if (resolved) imageUrl = resolved;
         }
@@ -281,11 +306,12 @@ export class StoryService {
           order: dialogue.order,
           type: dialogue.type,
           speakerRole: dialogue.speakerRole,
-          characterId: dialogue.characterId ?? undefined,
-          characterName:
-            dialogue.character?.name ?? dialogue.characterName ?? undefined,
-          englishText: dialogue.englishText,
-          koreanText: dialogue.koreanText,
+          characterId,
+          characterName: isUserSpeaker
+            ? (userName ?? dialogue.character?.name ?? dialogue.characterName ?? undefined)
+            : (dialogue.character?.name ?? dialogue.characterName ?? undefined),
+          englishText: replaceUserName(dialogue.englishText),
+          koreanText: replaceUserName(dialogue.koreanText),
           charImageLabel: dialogue.charImageLabel ?? undefined,
           imageUrl,
           audioUrl: dialogue.audioUrl ?? undefined,

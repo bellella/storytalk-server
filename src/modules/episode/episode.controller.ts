@@ -10,7 +10,9 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { OptionalJwtAuthGuard } from '../auth/guards/optional-auth.guard';
 import { ReqUser } from '@/common/decorators/user.decorator';
+import { CurrentUser } from '@/types/auth.type';
 import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
 import { StoryService } from '../story/story.service';
 import { EpisodeService } from './episode.service';
@@ -29,11 +31,13 @@ export class EpisodeController {
   ) {}
 
   @Get(':id')
+  @UseGuards(OptionalJwtAuthGuard)
   @ApiOkResponse({ type: EpisodeDetailDto })
   async getEpisodeDetail(
-    @Param('id', ParseIntPipe) id: number
+    @Param('id', ParseIntPipe) id: number,
+    @ReqUser() user: CurrentUser | undefined
   ): Promise<EpisodeDetailDto> {
-    return await this.storyService.getEpisodeDetail(id);
+    return await this.storyService.getEpisodeDetail(id, user?.id);
   }
 
   @Get(':id/review-items')

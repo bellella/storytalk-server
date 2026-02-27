@@ -128,47 +128,19 @@ export class PlayService {
     userId: number,
     playEpisodeId: number
   ): Promise<PlayEpisodeDetailResponseDto> {
-    const [play, user] = await Promise.all([
-      this.fetchPlayEpisode(userId, playEpisodeId),
-      this.prisma.user.findUnique({
-        where: { id: userId },
-        select: { name: true, selectedCharacterId: true },
-      }),
-    ]);
+    const play = await this.fetchPlayEpisode(userId, playEpisodeId);
 
     // completed: 모든 slot 치환 / in-progress: lastSlotId 이하 slot만 치환
     // → 어느 경우든 이미 플레이한 AI slot 마커는 runtime dialogues로 대체
+    // getEpisodeDetail(userId)에서 스크립트 USER 대화 매핑 처리
     const episode = await this.buildEpisodeWithRuntimeDialogues(
       play.episodeId,
       playEpisodeId,
-      play.status === PlayEpisodeStatus.COMPLETED ? null : play.lastSlotId
+      play.status === PlayEpisodeStatus.COMPLETED ? null : play.lastSlotId,
+      userId
     );
 
     if (!episode) throw new NotFoundException('Episode not found');
-
-    // USER speakerRole 대화에 유저 캐릭터 정보 주입
-    if (user?.selectedCharacterId) {
-      const userImageMap = await this.characterService.buildImageMap([
-        user.selectedCharacterId,
-      ]);
-      episode.scenes = episode.scenes.map((scene) => ({
-        ...scene,
-        dialogues: scene.dialogues.map((d) => {
-          if (d.speakerRole !== DialogueSpeakerRole.USER) return d;
-          return {
-            ...d,
-            characterId: user.selectedCharacterId!,
-            characterName: user.name ?? undefined,
-            imageUrl:
-              this.characterService.resolveImageUrl(
-                userImageMap,
-                user.selectedCharacterId!,
-                d.charImageLabel
-              ) ?? d.imageUrl,
-          };
-        }),
-      }));
-    }
 
     return {
       play: {
@@ -196,9 +168,10 @@ export class PlayService {
   private async buildEpisodeWithRuntimeDialogues(
     episodeId: number,
     playEpisodeId: number,
-    lastSlotId: number | null | undefined
+    lastSlotId: number | null | undefined,
+    userId?: number
   ): Promise<EpisodeDetailDto> {
-    const episode = await this.storyService.getEpisodeDetail(episodeId);
+    const episode = await this.storyService.getEpisodeDetail(episodeId, userId);
 
     // lastSlotId가 undefined면 아직 아무 slot도 플레이 안 한 것 → 치환 없이 반환
     if (lastSlotId === undefined) {
