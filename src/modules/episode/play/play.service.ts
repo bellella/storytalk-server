@@ -1424,7 +1424,7 @@ export class PlayService {
       .map((d) => d.characterId)
       .filter((id): id is number => id != null);
     if (user?.selectedCharacterId) charIds.push(user.selectedCharacterId);
-    const imageMap = await this.characterService.buildImageMap([...new Set(charIds)]);
+    const imageMap = await this.characterService.buildImageMap([...new Set<number>(charIds)]);
 
     const replaceUserName = (text: string) =>
       user?.name ? text.replaceAll('{{userName}}', user.name) : text;
