@@ -25,6 +25,10 @@ import {
   AiInputSlotResponseDto,
   AiSlotDto,
   AiSlotResponseDto,
+  BranchTriggerDto,
+  BranchTriggerResponseDto,
+  ChoiceSlotDto,
+  ChoiceSlotResponseDto,
   CompletePlayResponseDto,
   MyPlayEpisodeItemDto,
   PlayEpisodeDetailResponseDto,
@@ -114,6 +118,34 @@ export class PlayController {
   }
 
   /**
+   * 선택지 선택
+   * POST /play-episodes/:playEpisodeId/choice-slot
+   */
+  @Post('/:playEpisodeId/choice-slot')
+  @ApiOkResponse({ type: ChoiceSlotResponseDto })
+  submitChoiceSlot(
+    @ReqUser('id') userId: number,
+    @Param('playEpisodeId', ParseIntPipe) playEpisodeId: number,
+    @Body() dto: ChoiceSlotDto
+  ): Promise<ChoiceSlotResponseDto> {
+    return this.playService.handleChoiceSlot(userId, playEpisodeId, dto);
+  }
+
+  /**
+   * 분기 전환 트리거
+   * POST /play-episodes/:playEpisodeId/branch-trigger
+   */
+  @Post('/:playEpisodeId/branch-trigger')
+  @ApiOkResponse({ type: BranchTriggerResponseDto })
+  submitBranchTrigger(
+    @ReqUser('id') userId: number,
+    @Param('playEpisodeId', ParseIntPipe) playEpisodeId: number,
+    @Body() dto: BranchTriggerDto
+  ): Promise<BranchTriggerResponseDto> {
+    return this.playService.handleBranchTrigger(userId, playEpisodeId, dto);
+  }
+
+  /**
    * 4️⃣ 플레이 종료 → 결과 생성 + 퀴즈 생성
    * POST /play-episodes/:playEpisodeId/complete
    */
@@ -125,19 +157,6 @@ export class PlayController {
   ): Promise<CompletePlayResponseDto> {
     return this.playService.completePlayEpisode(userId, playEpisodeId);
   }
-
-  /**
-   * 5️⃣ 리플레이 데이터
-   * GET /play-episodes/:playEpisodeId/replay
-   */
-  // @Get('/:playEpisodeId/replay')
-  // @ApiOkResponse({ type: ReplayResponseDto })
-  // getReplayData(
-  //   @ReqUser('id') userId: number,
-  //   @Param('playEpisodeId', ParseIntPipe) playEpisodeId: number
-  // ): Promise<ReplayResponseDto> {
-  //   return this.playService.getReplayData(userId, playEpisodeId);
-  // }
 
   /**
    * 결과 조회

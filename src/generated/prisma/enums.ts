@@ -65,12 +65,21 @@ export const SceneType = {
 export type SceneType = (typeof SceneType)[keyof typeof SceneType]
 
 
+export const SceneFlowType = {
+  NORMAL: 'NORMAL',
+  BRANCH: 'BRANCH',
+  BRANCH_TRIGGER: 'BRANCH_TRIGGER'
+} as const
+
+export type SceneFlowType = (typeof SceneFlowType)[keyof typeof SceneFlowType]
+
+
 export const DialogueType = {
   NARRATION: 'NARRATION',
   DIALOGUE: 'DIALOGUE',
   IMAGE: 'IMAGE',
   HEADING: 'HEADING',
-  CHOICE: 'CHOICE',
+  CHOICE_SLOT: 'CHOICE_SLOT',
   AI_INPUT_SLOT: 'AI_INPUT_SLOT',
   AI_SLOT: 'AI_SLOT',
   SPEAKING_MISSION: 'SPEAKING_MISSION'
@@ -85,6 +94,14 @@ export const DialogueSpeakerRole = {
 } as const
 
 export type DialogueSpeakerRole = (typeof DialogueSpeakerRole)[keyof typeof DialogueSpeakerRole]
+
+
+export const DialogueFlowType = {
+  NORMAL: 'NORMAL',
+  BRANCH: 'BRANCH'
+} as const
+
+export type DialogueFlowType = (typeof DialogueFlowType)[keyof typeof DialogueFlowType]
 
 
 export const QuizType = {
@@ -211,6 +228,15 @@ export const PlayEpisodeStatus = {
 } as const
 
 export type PlayEpisodeStatus = (typeof PlayEpisodeStatus)[keyof typeof PlayEpisodeStatus]
+
+
+export const PlayEpisodeSlotType = {
+  AI_INPUT: 'AI_INPUT',
+  AI_CALL: 'AI_CALL',
+  CHOICE: 'CHOICE'
+} as const
+
+export type PlayEpisodeSlotType = (typeof PlayEpisodeSlotType)[keyof typeof PlayEpisodeSlotType]
 
 
 export const SlotMessageType = {

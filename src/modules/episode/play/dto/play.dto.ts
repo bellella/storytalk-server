@@ -6,7 +6,7 @@ import {
   SlotDialogueType,
   SlotMessageType,
 } from '@/generated/prisma/enums';
-import { EpisodeDetailDto } from '@/modules/story/dto/episode-detail.dto';
+import { DialogueDto, EpisodeDetailDto, SceneDto } from '@/modules/story/dto/episode-detail.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEnum,
@@ -51,7 +51,7 @@ export class AiInputSlotDto {
   dialogueId: number;
 
   @IsString()
-  @MaxLength(500) // 너 정책에 맞게
+  @MaxLength(500)
   text: string;
 }
 
@@ -59,6 +59,21 @@ export class AiSlotDto {
   @IsInt()
   @Min(1)
   dialogueId: number;
+}
+
+export class ChoiceSlotDto {
+  @IsInt()
+  @Min(1)
+  dialogueId: number;
+
+  @IsString()
+  optionKey: string;
+}
+
+export class BranchTriggerDto {
+  @IsInt()
+  @Min(1)
+  sceneId: number;
 }
 
 /**
@@ -153,6 +168,15 @@ export class AiInputSlotResponseDto {
 
 export class AiSlotResponseDto {
   savedDialogues: SlotDialogueDto[];
+}
+
+export class ChoiceSlotResponseDto {
+  followUpDialogues: DialogueDto[];
+}
+
+export class BranchTriggerResponseDto {
+  pickedSceneId: number;
+  nextScenes: SceneDto[];
 }
 
 export class RewardGrantDto {

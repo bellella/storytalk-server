@@ -3225,6 +3225,7 @@ export const EpisodeScalarFieldEnum = {
   description: 'description',
   koreanDescription: 'koreanDescription',
   thumbnailUrl: 'thumbnailUrl',
+  totalScenes: 'totalScenes',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -3237,11 +3238,13 @@ export const SceneScalarFieldEnum = {
   id: 'id',
   episodeId: 'episodeId',
   type: 'type',
+  flowType: 'flowType',
   title: 'title',
   koreanTitle: 'koreanTitle',
   order: 'order',
   bgImageUrl: 'bgImageUrl',
   audioUrl: 'audioUrl',
+  data: 'data',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -3253,6 +3256,7 @@ export const DialogueScalarFieldEnum = {
   id: 'id',
   sceneId: 'sceneId',
   order: 'order',
+  flowType: 'flowType',
   type: 'type',
   speakerRole: 'speakerRole',
   characterName: 'characterName',
@@ -3552,6 +3556,7 @@ export type UserPlayEpisodeScalarFieldEnum = (typeof UserPlayEpisodeScalarFieldE
 export const PlayEpisodeSlotScalarFieldEnum = {
   id: 'id',
   playEpisodeId: 'playEpisodeId',
+  type: 'type',
   dialogueId: 'dialogueId',
   order: 'order',
   status: 'status',
@@ -3868,6 +3873,48 @@ export type ListEnumSceneTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 
 
 /**
+ * Reference to a field of type 'SceneFlowType'
+ */
+export type EnumSceneFlowTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SceneFlowType'>
+    
+
+
+/**
+ * Reference to a field of type 'SceneFlowType[]'
+ */
+export type ListEnumSceneFlowTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SceneFlowType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'DialogueFlowType'
+ */
+export type EnumDialogueFlowTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DialogueFlowType'>
+    
+
+
+/**
+ * Reference to a field of type 'DialogueFlowType[]'
+ */
+export type ListEnumDialogueFlowTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DialogueFlowType[]'>
+    
+
+
+/**
  * Reference to a field of type 'DialogueType'
  */
 export type EnumDialogueTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DialogueType'>
@@ -3892,20 +3939,6 @@ export type EnumDialogueSpeakerRoleFieldRefInput<$PrismaModel> = FieldRefInputTy
  * Reference to a field of type 'DialogueSpeakerRole[]'
  */
 export type ListEnumDialogueSpeakerRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DialogueSpeakerRole[]'>
-    
-
-
-/**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -4102,6 +4135,20 @@ export type EnumPlayEpisodeSourceFieldRefInput<$PrismaModel> = FieldRefInputType
  * Reference to a field of type 'PlayEpisodeSource[]'
  */
 export type ListEnumPlayEpisodeSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlayEpisodeSource[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PlayEpisodeSlotType'
+ */
+export type EnumPlayEpisodeSlotTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlayEpisodeSlotType'>
+    
+
+
+/**
+ * Reference to a field of type 'PlayEpisodeSlotType[]'
+ */
+export type ListEnumPlayEpisodeSlotTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlayEpisodeSlotType[]'>
     
 
 

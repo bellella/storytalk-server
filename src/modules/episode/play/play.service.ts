@@ -5,9 +5,11 @@ import {
   DialogueType,
   EpisodeStage,
   PlayEpisodeMode,
+  PlayEpisodeSlotType,
   PlayEpisodeStatus,
   QuizSourceType,
   RewardType,
+  SceneFlowType,
   SlotDialogueType,
   SlotMessageType,
   SlotStatus,
@@ -24,6 +26,7 @@ import { QuizService } from '@/modules/quiz/quiz.service';
 import {
   DialogueDto,
   EpisodeDetailDto,
+  SceneDto,
 } from '@/modules/story/dto/episode-detail.dto';
 import { StoryService } from '@/modules/story/story.service';
 import {
@@ -45,6 +48,10 @@ import {
   AiInputSlotDto,
   AiInputSlotResponseDto,
   AiSlotResponseDto,
+  BranchTriggerDto,
+  BranchTriggerResponseDto,
+  ChoiceSlotDto,
+  ChoiceSlotResponseDto,
   CompletePlayResponseDto,
   MyPlayEpisodeItemDto,
   PlayEpisodeDetailResponseDto,
@@ -142,6 +149,21 @@ export class PlayService {
 
     if (!episode) throw new NotFoundException('Episode not found');
 
+    // NORMAL 씬은 항상 포함, BRANCH 씬은 이미 resolve된 것만 포함
+    const playData = (play.data as Record<string, any>) ?? {};
+    const branchResults = (playData.branchResults ?? {}) as Record<
+      string,
+      { pickedSceneId: number }
+    >;
+    const resolvedPickedSceneIds = new Set(
+      Object.values(branchResults).map((r) => r.pickedSceneId)
+    );
+    const preloadedScenes = episode.scenes.filter(
+      (s) =>
+        s.flowType !== SceneFlowType.BRANCH ||
+        resolvedPickedSceneIds.has(s.id)
+    );
+
     return {
       play: {
         id: play.id,
@@ -154,7 +176,7 @@ export class PlayService {
         lastSlotId: play.lastSlotId ?? null,
         currentStage: play.currentStage,
       },
-      episode,
+      episode: { ...episode, scenes: preloadedScenes },
     };
   }
 
@@ -213,20 +235,76 @@ export class PlayService {
       },
     });
 
-    // runtime 캐릭터 imageMap 빌드
+    // markerDialogueId → slot 매핑
+    const slotByMarker = new Map<number, (typeof slots)[number]>();
+    for (const slot of slots) slotByMarker.set(slot.dialogueId, slot);
+
+    // CHOICE slot 처리: 선택된 follow-up dialogues 미리 로드
+    const choiceSlotByDialogueId = new Map<number, (typeof slots)[number]>();
+    for (const slot of slots) {
+      if (slot.type === PlayEpisodeSlotType.CHOICE) {
+        choiceSlotByDialogueId.set(slot.dialogueId, slot);
+      }
+    }
+
+    const choiceRawDataMap = new Map<number, any>();
+    if (choiceSlotByDialogueId.size) {
+      const rows = await this.prisma.dialogue.findMany({
+        where: { id: { in: [...choiceSlotByDialogueId.keys()] } },
+        select: { id: true, data: true },
+      });
+      for (const r of rows) choiceRawDataMap.set(r.id, r.data);
+    }
+
+    // choice slot마다 선택된 optionKey → followUpDialogueIds 수집
+    const choiceFollowUpIdsMap = new Map<number, number[]>(); // dialogueId → followUpIds
+    const allFollowUpIds: number[] = [];
+    for (const [dialogueId, slot] of choiceSlotByDialogueId) {
+      const optionKey = (slot.data as any)?.optionKey;
+      const options = ((choiceRawDataMap.get(dialogueId) as any)?.options ?? []) as any[];
+      const option = options.find((o: any) => o.key === optionKey);
+      const ids: number[] = option?.followUpDialogueIds ?? [];
+      choiceFollowUpIdsMap.set(dialogueId, ids);
+      allFollowUpIds.push(...ids);
+    }
+
+    // follow-up dialogues 벌크 조회
+    const followUpRowMap = new Map<number, any>();
+    if (allFollowUpIds.length) {
+      const rows = await this.prisma.dialogue.findMany({
+        where: { id: { in: allFollowUpIds } },
+        include: { character: true },
+      });
+      for (const r of rows) followUpRowMap.set(r.id, r);
+    }
+
+    // user 정보 (follow-up USER speaker 처리)
+    const user =
+      userId && allFollowUpIds.length
+        ? await this.prisma.user.findUnique({
+            where: { id: userId },
+            select: { name: true, selectedCharacterId: true },
+          })
+        : null;
+
+    // runtime 캐릭터 imageMap 빌드 (AI slot + follow-up + user 선택 캐릭터)
     const runtimeCharIds = new Set<number>();
     for (const slot of slots) {
       for (const d of slot.slotDialogues) {
         if (d.characterId) runtimeCharIds.add(d.characterId);
       }
     }
+    for (const d of followUpRowMap.values()) {
+      if (d.characterId) runtimeCharIds.add(d.characterId);
+    }
+    if (user?.selectedCharacterId) runtimeCharIds.add(user.selectedCharacterId);
+
     const imageMap = await this.characterService.buildImageMap([
       ...runtimeCharIds,
     ]);
 
-    // markerDialogueId → slot 매핑
-    const slotByMarker = new Map<number, (typeof slots)[number]>();
-    for (const slot of slots) slotByMarker.set(slot.dialogueId, slot);
+    const replaceUserName = (text: string) =>
+      user?.name ? text.replaceAll('{{userName}}', user.name) : text;
 
     const AI_SLOT_TYPES = new Set<string>([
       DialogueType.AI_INPUT_SLOT,
@@ -237,6 +315,43 @@ export class PlayService {
       const dialogues: DialogueDto[] = [];
 
       for (const d of scene.dialogues) {
+        // CHOICE_SLOT: 선택 기록 있으면 follow-up dialogues로 교체
+        if (String(d.type) === DialogueType.CHOICE_SLOT) {
+          const choiceSlot = choiceSlotByDialogueId.get(d.id);
+          if (!choiceSlot) {
+            dialogues.push(d); // 아직 선택 안 함 → 선택지 그대로 노출
+            continue;
+          }
+          const followUpIds = choiceFollowUpIdsMap.get(d.id) ?? [];
+          for (const fid of followUpIds) {
+            const fu = followUpRowMap.get(fid);
+            if (!fu) continue;
+            const isUserSpeaker = fu.speakerRole === DialogueSpeakerRole.USER;
+            const charId = isUserSpeaker
+              ? (user?.selectedCharacterId ?? undefined)
+              : (fu.characterId ?? undefined);
+            const imageUrl = charId
+              ? (this.characterService.resolveImageUrl(imageMap, charId, fu.charImageLabel) ?? undefined)
+              : (fu.imageUrl ?? undefined);
+            dialogues.push({
+              id: fu.id,
+              order: fu.order,
+              type: fu.type,
+              speakerRole: fu.speakerRole,
+              characterId: charId,
+              characterName: isUserSpeaker
+                ? (user?.name ?? fu.character?.name ?? fu.characterName ?? undefined)
+                : (fu.character?.name ?? fu.characterName ?? undefined),
+              englishText: replaceUserName(fu.englishText ?? ''),
+              koreanText: replaceUserName(fu.koreanText ?? ''),
+              charImageLabel: fu.charImageLabel ?? undefined,
+              imageUrl,
+              audioUrl: fu.audioUrl ?? undefined,
+            });
+          }
+          continue;
+        }
+
         // AI slot이 아니면 스크립트 그대로
         if (!AI_SLOT_TYPES.has(String(d.type))) {
           dialogues.push(d);
@@ -1200,6 +1315,232 @@ export class PlayService {
       result: play.result ?? null,
       correctedDialogues,
     };
+  }
+
+  async handleChoiceSlot(
+    userId: number,
+    playEpisodeId: number,
+    dto: ChoiceSlotDto
+  ): Promise<ChoiceSlotResponseDto> {
+    const { dialogueId, optionKey } = dto;
+    const play = await this.assertAccessiblePlayEpisode(userId, playEpisodeId);
+
+    const dialogue = await this.prisma.dialogue.findUnique({
+      where: { id: dialogueId },
+      select: { id: true, type: true, data: true },
+    });
+    if (!dialogue) throw new NotFoundException('Dialogue not found');
+    if (dialogue.type !== DialogueType.CHOICE_SLOT)
+      throw new BadRequestException('Dialogue is not a CHOICE_SLOT');
+
+    const dialogueData = dialogue.data as Record<string, any>;
+    const options = (dialogueData.options ?? []) as Array<{
+      key: string;
+      englishText: string;
+      koreanText: string;
+      followUpDialogueIds: number[];
+      scoreDelta: { sceneId: number; delta: number }[];
+    }>;
+
+    // Idempotency: slot already exists → return stored result
+    const existingSlot = await this.prisma.playEpisodeSlot.findFirst({
+      where: { playEpisodeId, dialogueId, status: SlotStatus.ENDED },
+      select: { data: true },
+    });
+    if (existingSlot) {
+      const storedKey =
+        (existingSlot.data as Record<string, any>)?.optionKey ?? optionKey;
+      const storedOption = options.find((o) => o.key === storedKey);
+      const followUpDialogues = storedOption?.followUpDialogueIds?.length
+        ? await this.fetchFollowUpDialogues(storedOption.followUpDialogueIds, userId)
+        : [];
+      return { followUpDialogues };
+    }
+
+    const option = options.find((o) => o.key === optionKey);
+    if (!option) throw new BadRequestException(`Invalid optionKey: ${optionKey}`);
+
+    const followUpDialogues = option.followUpDialogueIds?.length
+      ? await this.fetchFollowUpDialogues(option.followUpDialogueIds, userId)
+      : [];
+
+    const playData = (play.data as Record<string, any>) ?? {};
+    const slotOrder = await this.prisma.playEpisodeSlot.count({
+      where: { playEpisodeId },
+    });
+
+    await this.prisma.$transaction(async (tx) => {
+      const slot = await tx.playEpisodeSlot.create({
+        data: {
+          playEpisodeId,
+          dialogueId,
+          order: slotOrder,
+          type: PlayEpisodeSlotType.CHOICE,
+          status: SlotStatus.ENDED,
+          endedAt: new Date(),
+          data: { optionKey },
+        },
+        select: { id: true },
+      });
+
+      // scoreDelta 누적
+      const sceneScores = { ...((playData.sceneScores ?? {}) as Record<string, number>) };
+      for (const { sceneId, delta } of option.scoreDelta ?? []) {
+        sceneScores[sceneId] = (sceneScores[sceneId] ?? 0) + delta;
+      }
+
+      const branchResults = { ...((playData.branchResults ?? {}) as Record<string, any>) };
+      branchResults[dialogueId] = { optionKey, createdAt: new Date().toISOString() };
+
+      await tx.userPlayEpisode.update({
+        where: { id: playEpisodeId },
+        data: {
+          lastSlotId: slot.id,
+          data: { ...playData, sceneScores, branchResults },
+        },
+      });
+    });
+
+    return { followUpDialogues };
+  }
+
+  private async fetchFollowUpDialogues(
+    dialogueIds: number[],
+    userId?: number
+  ): Promise<DialogueDto[]> {
+    const user = userId
+      ? await this.prisma.user.findUnique({
+          where: { id: userId },
+          select: { name: true, selectedCharacterId: true },
+        })
+      : null;
+
+    const dialogues = await this.prisma.dialogue.findMany({
+      where: { id: { in: dialogueIds } },
+      include: { character: true },
+    });
+
+    const charIds = dialogues
+      .map((d) => d.characterId)
+      .filter((id): id is number => id != null);
+    if (user?.selectedCharacterId) charIds.push(user.selectedCharacterId);
+    const imageMap = await this.characterService.buildImageMap([...new Set(charIds)]);
+
+    const replaceUserName = (text: string) =>
+      user?.name ? text.replaceAll('{{userName}}', user.name) : text;
+
+    return dialogueIds
+      .map((id) => dialogues.find((d) => d.id === id))
+      .filter((d): d is NonNullable<typeof d> => d != null)
+      .map((d) => {
+        const isUserSpeaker = d.speakerRole === 'USER';
+        const characterId = isUserSpeaker
+          ? (user?.selectedCharacterId ?? undefined)
+          : (d.characterId ?? undefined);
+        const imageUrl = characterId
+          ? (this.characterService.resolveImageUrl(imageMap, characterId, d.charImageLabel ?? null) ?? undefined)
+          : (d.imageUrl ?? undefined);
+
+        return {
+          id: d.id,
+          order: d.order,
+          type: d.type,
+          speakerRole: d.speakerRole,
+          characterId,
+          characterName: isUserSpeaker
+            ? (user?.name ?? d.character?.name ?? d.characterName ?? undefined)
+            : (d.character?.name ?? d.characterName ?? undefined),
+          englishText: replaceUserName(d.englishText),
+          koreanText: replaceUserName(d.koreanText),
+          charImageLabel: d.charImageLabel ?? undefined,
+          imageUrl,
+          audioUrl: d.audioUrl ?? undefined,
+        };
+      });
+  }
+
+  async handleBranchTrigger(
+    userId: number,
+    playEpisodeId: number,
+    dto: BranchTriggerDto
+  ): Promise<BranchTriggerResponseDto> {
+    const { sceneId: triggerSceneId } = dto;
+    const play = await this.assertAccessiblePlayEpisode(userId, playEpisodeId);
+
+    const scene = await this.prisma.scene.findUnique({
+      where: { id: triggerSceneId },
+      select: { id: true, flowType: true, data: true },
+    });
+    if (!scene) throw new NotFoundException('Scene not found');
+    if (scene.flowType !== SceneFlowType.BRANCH_TRIGGER)
+      throw new BadRequestException('Scene is not a BRANCH_TRIGGER');
+
+    const sceneData = scene.data as Record<string, any>;
+    const selectionMode: string = sceneData.selectionMode ?? 'TOP';
+    const candidates = (sceneData.candidates ?? []) as Array<{
+      sceneId: number;
+    }>;
+    const threshold: number = sceneData.threshold ?? 0;
+    const fallbackSceneIds: number[] = sceneData.fallbackSceneIds ?? [];
+
+    if (!candidates.length)
+      throw new BadRequestException('BRANCH_TRIGGER scene has no candidates');
+
+    const playData = (play.data as Record<string, any>) ?? {};
+    const sceneScores = (playData.sceneScores ?? {}) as Record<string, number>;
+
+    // pickedSceneId 결정
+    let pickedSceneId: number | undefined;
+
+    if (selectionMode === 'TOP') {
+      // threshold 이상인 candidates 중 가장 높은 점수 선택
+      let best = -Infinity;
+      for (const c of candidates) {
+        const score = sceneScores[c.sceneId] ?? 0;
+        if (score >= threshold && score > best) {
+          best = score;
+          pickedSceneId = c.sceneId;
+        }
+      }
+      // threshold 이상인 게 없으면 fallbackSceneIds 사용
+      if (pickedSceneId == null && fallbackSceneIds.length > 0) {
+        pickedSceneId = fallbackSceneIds[0];
+      }
+    }
+
+    // 최종 폴백: 첫 번째 candidate
+    if (pickedSceneId == null) pickedSceneId = candidates[0].sceneId;
+
+    // Load full episode scenes
+    const episode = await this.storyService.getEpisodeDetail(
+      play.episodeId,
+      userId
+    );
+
+    const pickedIdx = episode.scenes.findIndex((s) => s.id === pickedSceneId);
+    if (pickedIdx < 0)
+      throw new NotFoundException(`Scene ${pickedSceneId} not found in episode`);
+
+    // nextScenes: pickedScene부터 다음 BRANCH/BRANCH_TRIGGER scene 직전까지
+    const tail = episode.scenes.slice(pickedIdx);
+    const nextStopIdx = tail.findIndex(
+      (s, i) => i > 0 && s.flowType !== SceneFlowType.NORMAL
+    );
+    const nextScenes: SceneDto[] =
+      nextStopIdx >= 0 ? tail.slice(0, nextStopIdx) : tail;
+
+    // 결과 저장 (key: triggerSceneId)
+    const branchResults = { ...((playData.branchResults ?? {}) as Record<string, any>) };
+    branchResults[triggerSceneId] = {
+      pickedSceneId,
+      createdAt: new Date().toISOString(),
+    };
+    await this.prisma.userPlayEpisode.update({
+      where: { id: playEpisodeId },
+      data: { data: { ...playData, branchResults } },
+    });
+
+    return { pickedSceneId, nextScenes };
   }
 
   private async assertAccessiblePlayEpisode(

@@ -43,6 +43,7 @@ export type PlayEpisodeSlotSumAggregateOutputType = {
 export type PlayEpisodeSlotMinAggregateOutputType = {
   id: number | null
   playEpisodeId: number | null
+  type: $Enums.PlayEpisodeSlotType | null
   dialogueId: number | null
   order: number | null
   status: $Enums.SlotStatus | null
@@ -52,6 +53,7 @@ export type PlayEpisodeSlotMinAggregateOutputType = {
 export type PlayEpisodeSlotMaxAggregateOutputType = {
   id: number | null
   playEpisodeId: number | null
+  type: $Enums.PlayEpisodeSlotType | null
   dialogueId: number | null
   order: number | null
   status: $Enums.SlotStatus | null
@@ -61,6 +63,7 @@ export type PlayEpisodeSlotMaxAggregateOutputType = {
 export type PlayEpisodeSlotCountAggregateOutputType = {
   id: number
   playEpisodeId: number
+  type: number
   dialogueId: number
   order: number
   status: number
@@ -87,6 +90,7 @@ export type PlayEpisodeSlotSumAggregateInputType = {
 export type PlayEpisodeSlotMinAggregateInputType = {
   id?: true
   playEpisodeId?: true
+  type?: true
   dialogueId?: true
   order?: true
   status?: true
@@ -96,6 +100,7 @@ export type PlayEpisodeSlotMinAggregateInputType = {
 export type PlayEpisodeSlotMaxAggregateInputType = {
   id?: true
   playEpisodeId?: true
+  type?: true
   dialogueId?: true
   order?: true
   status?: true
@@ -105,6 +110,7 @@ export type PlayEpisodeSlotMaxAggregateInputType = {
 export type PlayEpisodeSlotCountAggregateInputType = {
   id?: true
   playEpisodeId?: true
+  type?: true
   dialogueId?: true
   order?: true
   status?: true
@@ -202,8 +208,9 @@ export type PlayEpisodeSlotGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 export type PlayEpisodeSlotGroupByOutputType = {
   id: number
   playEpisodeId: number
+  type: $Enums.PlayEpisodeSlotType
   dialogueId: number
-  order: number | null
+  order: number
   status: $Enums.SlotStatus
   data: runtime.JsonValue | null
   endedAt: Date | null
@@ -235,8 +242,9 @@ export type PlayEpisodeSlotWhereInput = {
   NOT?: Prisma.PlayEpisodeSlotWhereInput | Prisma.PlayEpisodeSlotWhereInput[]
   id?: Prisma.IntFilter<"PlayEpisodeSlot"> | number
   playEpisodeId?: Prisma.IntFilter<"PlayEpisodeSlot"> | number
+  type?: Prisma.EnumPlayEpisodeSlotTypeFilter<"PlayEpisodeSlot"> | $Enums.PlayEpisodeSlotType
   dialogueId?: Prisma.IntFilter<"PlayEpisodeSlot"> | number
-  order?: Prisma.IntNullableFilter<"PlayEpisodeSlot"> | number | null
+  order?: Prisma.IntFilter<"PlayEpisodeSlot"> | number
   status?: Prisma.EnumSlotStatusFilter<"PlayEpisodeSlot"> | $Enums.SlotStatus
   data?: Prisma.JsonNullableFilter<"PlayEpisodeSlot">
   endedAt?: Prisma.DateTimeNullableFilter<"PlayEpisodeSlot"> | Date | string | null
@@ -248,8 +256,9 @@ export type PlayEpisodeSlotWhereInput = {
 export type PlayEpisodeSlotOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   playEpisodeId?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   dialogueId?: Prisma.SortOrder
-  order?: Prisma.SortOrderInput | Prisma.SortOrder
+  order?: Prisma.SortOrder
   status?: Prisma.SortOrder
   data?: Prisma.SortOrderInput | Prisma.SortOrder
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -264,8 +273,9 @@ export type PlayEpisodeSlotWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.PlayEpisodeSlotWhereInput[]
   NOT?: Prisma.PlayEpisodeSlotWhereInput | Prisma.PlayEpisodeSlotWhereInput[]
   playEpisodeId?: Prisma.IntFilter<"PlayEpisodeSlot"> | number
+  type?: Prisma.EnumPlayEpisodeSlotTypeFilter<"PlayEpisodeSlot"> | $Enums.PlayEpisodeSlotType
   dialogueId?: Prisma.IntFilter<"PlayEpisodeSlot"> | number
-  order?: Prisma.IntNullableFilter<"PlayEpisodeSlot"> | number | null
+  order?: Prisma.IntFilter<"PlayEpisodeSlot"> | number
   status?: Prisma.EnumSlotStatusFilter<"PlayEpisodeSlot"> | $Enums.SlotStatus
   data?: Prisma.JsonNullableFilter<"PlayEpisodeSlot">
   endedAt?: Prisma.DateTimeNullableFilter<"PlayEpisodeSlot"> | Date | string | null
@@ -277,8 +287,9 @@ export type PlayEpisodeSlotWhereUniqueInput = Prisma.AtLeast<{
 export type PlayEpisodeSlotOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   playEpisodeId?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   dialogueId?: Prisma.SortOrder
-  order?: Prisma.SortOrderInput | Prisma.SortOrder
+  order?: Prisma.SortOrder
   status?: Prisma.SortOrder
   data?: Prisma.SortOrderInput | Prisma.SortOrder
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -295,15 +306,17 @@ export type PlayEpisodeSlotScalarWhereWithAggregatesInput = {
   NOT?: Prisma.PlayEpisodeSlotScalarWhereWithAggregatesInput | Prisma.PlayEpisodeSlotScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"PlayEpisodeSlot"> | number
   playEpisodeId?: Prisma.IntWithAggregatesFilter<"PlayEpisodeSlot"> | number
+  type?: Prisma.EnumPlayEpisodeSlotTypeWithAggregatesFilter<"PlayEpisodeSlot"> | $Enums.PlayEpisodeSlotType
   dialogueId?: Prisma.IntWithAggregatesFilter<"PlayEpisodeSlot"> | number
-  order?: Prisma.IntNullableWithAggregatesFilter<"PlayEpisodeSlot"> | number | null
+  order?: Prisma.IntWithAggregatesFilter<"PlayEpisodeSlot"> | number
   status?: Prisma.EnumSlotStatusWithAggregatesFilter<"PlayEpisodeSlot"> | $Enums.SlotStatus
   data?: Prisma.JsonNullableWithAggregatesFilter<"PlayEpisodeSlot">
   endedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PlayEpisodeSlot"> | Date | string | null
 }
 
 export type PlayEpisodeSlotCreateInput = {
-  order?: number | null
+  type?: $Enums.PlayEpisodeSlotType
+  order: number
   status?: $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Date | string | null
@@ -315,8 +328,9 @@ export type PlayEpisodeSlotCreateInput = {
 export type PlayEpisodeSlotUncheckedCreateInput = {
   id?: number
   playEpisodeId: number
+  type?: $Enums.PlayEpisodeSlotType
   dialogueId: number
-  order?: number | null
+  order: number
   status?: $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Date | string | null
@@ -324,7 +338,8 @@ export type PlayEpisodeSlotUncheckedCreateInput = {
 }
 
 export type PlayEpisodeSlotUpdateInput = {
-  order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  type?: Prisma.EnumPlayEpisodeSlotTypeFieldUpdateOperationsInput | $Enums.PlayEpisodeSlotType
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSlotStatusFieldUpdateOperationsInput | $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -336,8 +351,9 @@ export type PlayEpisodeSlotUpdateInput = {
 export type PlayEpisodeSlotUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   playEpisodeId?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumPlayEpisodeSlotTypeFieldUpdateOperationsInput | $Enums.PlayEpisodeSlotType
   dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
-  order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSlotStatusFieldUpdateOperationsInput | $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -347,15 +363,17 @@ export type PlayEpisodeSlotUncheckedUpdateInput = {
 export type PlayEpisodeSlotCreateManyInput = {
   id?: number
   playEpisodeId: number
+  type?: $Enums.PlayEpisodeSlotType
   dialogueId: number
-  order?: number | null
+  order: number
   status?: $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Date | string | null
 }
 
 export type PlayEpisodeSlotUpdateManyMutationInput = {
-  order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  type?: Prisma.EnumPlayEpisodeSlotTypeFieldUpdateOperationsInput | $Enums.PlayEpisodeSlotType
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSlotStatusFieldUpdateOperationsInput | $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -364,8 +382,9 @@ export type PlayEpisodeSlotUpdateManyMutationInput = {
 export type PlayEpisodeSlotUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   playEpisodeId?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumPlayEpisodeSlotTypeFieldUpdateOperationsInput | $Enums.PlayEpisodeSlotType
   dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
-  order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSlotStatusFieldUpdateOperationsInput | $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -384,6 +403,7 @@ export type PlayEpisodeSlotOrderByRelationAggregateInput = {
 export type PlayEpisodeSlotCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   playEpisodeId?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   dialogueId?: Prisma.SortOrder
   order?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -401,6 +421,7 @@ export type PlayEpisodeSlotAvgOrderByAggregateInput = {
 export type PlayEpisodeSlotMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   playEpisodeId?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   dialogueId?: Prisma.SortOrder
   order?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -410,6 +431,7 @@ export type PlayEpisodeSlotMaxOrderByAggregateInput = {
 export type PlayEpisodeSlotMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   playEpisodeId?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   dialogueId?: Prisma.SortOrder
   order?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -512,6 +534,10 @@ export type PlayEpisodeSlotUncheckedUpdateManyWithoutPlayEpisodeNestedInput = {
   deleteMany?: Prisma.PlayEpisodeSlotScalarWhereInput | Prisma.PlayEpisodeSlotScalarWhereInput[]
 }
 
+export type EnumPlayEpisodeSlotTypeFieldUpdateOperationsInput = {
+  set?: $Enums.PlayEpisodeSlotType
+}
+
 export type EnumSlotStatusFieldUpdateOperationsInput = {
   set?: $Enums.SlotStatus
 }
@@ -531,7 +557,8 @@ export type PlayEpisodeSlotUpdateOneRequiredWithoutSlotDialoguesNestedInput = {
 }
 
 export type PlayEpisodeSlotCreateWithoutDialogueInput = {
-  order?: number | null
+  type?: $Enums.PlayEpisodeSlotType
+  order: number
   status?: $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Date | string | null
@@ -542,7 +569,8 @@ export type PlayEpisodeSlotCreateWithoutDialogueInput = {
 export type PlayEpisodeSlotUncheckedCreateWithoutDialogueInput = {
   id?: number
   playEpisodeId: number
-  order?: number | null
+  type?: $Enums.PlayEpisodeSlotType
+  order: number
   status?: $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Date | string | null
@@ -581,15 +609,17 @@ export type PlayEpisodeSlotScalarWhereInput = {
   NOT?: Prisma.PlayEpisodeSlotScalarWhereInput | Prisma.PlayEpisodeSlotScalarWhereInput[]
   id?: Prisma.IntFilter<"PlayEpisodeSlot"> | number
   playEpisodeId?: Prisma.IntFilter<"PlayEpisodeSlot"> | number
+  type?: Prisma.EnumPlayEpisodeSlotTypeFilter<"PlayEpisodeSlot"> | $Enums.PlayEpisodeSlotType
   dialogueId?: Prisma.IntFilter<"PlayEpisodeSlot"> | number
-  order?: Prisma.IntNullableFilter<"PlayEpisodeSlot"> | number | null
+  order?: Prisma.IntFilter<"PlayEpisodeSlot"> | number
   status?: Prisma.EnumSlotStatusFilter<"PlayEpisodeSlot"> | $Enums.SlotStatus
   data?: Prisma.JsonNullableFilter<"PlayEpisodeSlot">
   endedAt?: Prisma.DateTimeNullableFilter<"PlayEpisodeSlot"> | Date | string | null
 }
 
 export type PlayEpisodeSlotCreateWithoutPlayEpisodeInput = {
-  order?: number | null
+  type?: $Enums.PlayEpisodeSlotType
+  order: number
   status?: $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Date | string | null
@@ -599,8 +629,9 @@ export type PlayEpisodeSlotCreateWithoutPlayEpisodeInput = {
 
 export type PlayEpisodeSlotUncheckedCreateWithoutPlayEpisodeInput = {
   id?: number
+  type?: $Enums.PlayEpisodeSlotType
   dialogueId: number
-  order?: number | null
+  order: number
   status?: $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Date | string | null
@@ -634,7 +665,8 @@ export type PlayEpisodeSlotUpdateManyWithWhereWithoutPlayEpisodeInput = {
 }
 
 export type PlayEpisodeSlotCreateWithoutSlotDialoguesInput = {
-  order?: number | null
+  type?: $Enums.PlayEpisodeSlotType
+  order: number
   status?: $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Date | string | null
@@ -645,8 +677,9 @@ export type PlayEpisodeSlotCreateWithoutSlotDialoguesInput = {
 export type PlayEpisodeSlotUncheckedCreateWithoutSlotDialoguesInput = {
   id?: number
   playEpisodeId: number
+  type?: $Enums.PlayEpisodeSlotType
   dialogueId: number
-  order?: number | null
+  order: number
   status?: $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Date | string | null
@@ -669,7 +702,8 @@ export type PlayEpisodeSlotUpdateToOneWithWhereWithoutSlotDialoguesInput = {
 }
 
 export type PlayEpisodeSlotUpdateWithoutSlotDialoguesInput = {
-  order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  type?: Prisma.EnumPlayEpisodeSlotTypeFieldUpdateOperationsInput | $Enums.PlayEpisodeSlotType
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSlotStatusFieldUpdateOperationsInput | $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -680,8 +714,9 @@ export type PlayEpisodeSlotUpdateWithoutSlotDialoguesInput = {
 export type PlayEpisodeSlotUncheckedUpdateWithoutSlotDialoguesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   playEpisodeId?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumPlayEpisodeSlotTypeFieldUpdateOperationsInput | $Enums.PlayEpisodeSlotType
   dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
-  order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSlotStatusFieldUpdateOperationsInput | $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -690,14 +725,16 @@ export type PlayEpisodeSlotUncheckedUpdateWithoutSlotDialoguesInput = {
 export type PlayEpisodeSlotCreateManyDialogueInput = {
   id?: number
   playEpisodeId: number
-  order?: number | null
+  type?: $Enums.PlayEpisodeSlotType
+  order: number
   status?: $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Date | string | null
 }
 
 export type PlayEpisodeSlotUpdateWithoutDialogueInput = {
-  order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  type?: Prisma.EnumPlayEpisodeSlotTypeFieldUpdateOperationsInput | $Enums.PlayEpisodeSlotType
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSlotStatusFieldUpdateOperationsInput | $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -708,7 +745,8 @@ export type PlayEpisodeSlotUpdateWithoutDialogueInput = {
 export type PlayEpisodeSlotUncheckedUpdateWithoutDialogueInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   playEpisodeId?: Prisma.IntFieldUpdateOperationsInput | number
-  order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  type?: Prisma.EnumPlayEpisodeSlotTypeFieldUpdateOperationsInput | $Enums.PlayEpisodeSlotType
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSlotStatusFieldUpdateOperationsInput | $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -718,7 +756,8 @@ export type PlayEpisodeSlotUncheckedUpdateWithoutDialogueInput = {
 export type PlayEpisodeSlotUncheckedUpdateManyWithoutDialogueInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   playEpisodeId?: Prisma.IntFieldUpdateOperationsInput | number
-  order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  type?: Prisma.EnumPlayEpisodeSlotTypeFieldUpdateOperationsInput | $Enums.PlayEpisodeSlotType
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSlotStatusFieldUpdateOperationsInput | $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -726,15 +765,17 @@ export type PlayEpisodeSlotUncheckedUpdateManyWithoutDialogueInput = {
 
 export type PlayEpisodeSlotCreateManyPlayEpisodeInput = {
   id?: number
+  type?: $Enums.PlayEpisodeSlotType
   dialogueId: number
-  order?: number | null
+  order: number
   status?: $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Date | string | null
 }
 
 export type PlayEpisodeSlotUpdateWithoutPlayEpisodeInput = {
-  order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  type?: Prisma.EnumPlayEpisodeSlotTypeFieldUpdateOperationsInput | $Enums.PlayEpisodeSlotType
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSlotStatusFieldUpdateOperationsInput | $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -744,8 +785,9 @@ export type PlayEpisodeSlotUpdateWithoutPlayEpisodeInput = {
 
 export type PlayEpisodeSlotUncheckedUpdateWithoutPlayEpisodeInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumPlayEpisodeSlotTypeFieldUpdateOperationsInput | $Enums.PlayEpisodeSlotType
   dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
-  order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSlotStatusFieldUpdateOperationsInput | $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -754,8 +796,9 @@ export type PlayEpisodeSlotUncheckedUpdateWithoutPlayEpisodeInput = {
 
 export type PlayEpisodeSlotUncheckedUpdateManyWithoutPlayEpisodeInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumPlayEpisodeSlotTypeFieldUpdateOperationsInput | $Enums.PlayEpisodeSlotType
   dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
-  order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumSlotStatusFieldUpdateOperationsInput | $Enums.SlotStatus
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -795,6 +838,7 @@ export type PlayEpisodeSlotCountOutputTypeCountSlotDialoguesArgs<ExtArgs extends
 export type PlayEpisodeSlotSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   playEpisodeId?: boolean
+  type?: boolean
   dialogueId?: boolean
   order?: boolean
   status?: boolean
@@ -809,6 +853,7 @@ export type PlayEpisodeSlotSelect<ExtArgs extends runtime.Types.Extensions.Inter
 export type PlayEpisodeSlotSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   playEpisodeId?: boolean
+  type?: boolean
   dialogueId?: boolean
   order?: boolean
   status?: boolean
@@ -821,6 +866,7 @@ export type PlayEpisodeSlotSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
 export type PlayEpisodeSlotSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   playEpisodeId?: boolean
+  type?: boolean
   dialogueId?: boolean
   order?: boolean
   status?: boolean
@@ -833,6 +879,7 @@ export type PlayEpisodeSlotSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
 export type PlayEpisodeSlotSelectScalar = {
   id?: boolean
   playEpisodeId?: boolean
+  type?: boolean
   dialogueId?: boolean
   order?: boolean
   status?: boolean
@@ -840,7 +887,7 @@ export type PlayEpisodeSlotSelectScalar = {
   endedAt?: boolean
 }
 
-export type PlayEpisodeSlotOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playEpisodeId" | "dialogueId" | "order" | "status" | "data" | "endedAt", ExtArgs["result"]["playEpisodeSlot"]>
+export type PlayEpisodeSlotOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playEpisodeId" | "type" | "dialogueId" | "order" | "status" | "data" | "endedAt", ExtArgs["result"]["playEpisodeSlot"]>
 export type PlayEpisodeSlotInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   slotDialogues?: boolean | Prisma.PlayEpisodeSlot$slotDialoguesArgs<ExtArgs>
   playEpisode?: boolean | Prisma.UserPlayEpisodeDefaultArgs<ExtArgs>
@@ -866,8 +913,9 @@ export type $PlayEpisodeSlotPayload<ExtArgs extends runtime.Types.Extensions.Int
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     playEpisodeId: number
+    type: $Enums.PlayEpisodeSlotType
     dialogueId: number
-    order: number | null
+    order: number
     status: $Enums.SlotStatus
     data: runtime.JsonValue | null
     endedAt: Date | null
@@ -1299,6 +1347,7 @@ export interface Prisma__PlayEpisodeSlotClient<T, Null = never, ExtArgs extends 
 export interface PlayEpisodeSlotFieldRefs {
   readonly id: Prisma.FieldRef<"PlayEpisodeSlot", 'Int'>
   readonly playEpisodeId: Prisma.FieldRef<"PlayEpisodeSlot", 'Int'>
+  readonly type: Prisma.FieldRef<"PlayEpisodeSlot", 'PlayEpisodeSlotType'>
   readonly dialogueId: Prisma.FieldRef<"PlayEpisodeSlot", 'Int'>
   readonly order: Prisma.FieldRef<"PlayEpisodeSlot", 'Int'>
   readonly status: Prisma.FieldRef<"PlayEpisodeSlot", 'SlotStatus'>

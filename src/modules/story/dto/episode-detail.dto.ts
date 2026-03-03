@@ -1,5 +1,11 @@
-import { DialogueSpeakerRole, DialogueType, SceneType } from '@/generated/prisma/enums';
+import { DialogueSpeakerRole, DialogueType, SceneFlowType, SceneType } from '@/generated/prisma/enums';
 import { ApiProperty } from '@nestjs/swagger';
+
+export class ChoiceOptionDto {
+  key: string;
+  englishText: string;
+  koreanText: string;
+}
 
 export class DialogueDto {
   id: number;
@@ -15,6 +21,7 @@ export class DialogueDto {
   charImageLabel?: string;
   imageUrl?: string; // dialogue의 imageUrl 또는 CharacterImage에서 매핑된 imageUrl
   audioUrl?: string;
+  options?: ChoiceOptionDto[]; // CHOICE_SLOT 전용: 선택지 목록
 }
 
 export class SceneDto {
@@ -22,6 +29,8 @@ export class SceneDto {
   title: string;
   @ApiProperty({ enum: SceneType })
   type: SceneType;
+  @ApiProperty({ enum: SceneFlowType })
+  flowType: SceneFlowType;
   koreanTitle?: string;
   order: number;
   bgImageUrl?: string;
@@ -46,6 +55,7 @@ export class EpisodeDetailDto {
   description?: string;
   koreanDescription?: string;
   thumbnailUrl?: string | null;
+  totalScenes?: number | null; // 메인 경로 씬 수 (프론트 진행도 표시용)
   scenes: SceneDto[];
   characterImages: CharacterImageDto[]; // StoryCharacter에 걸려있는 CharacterImage들
 }

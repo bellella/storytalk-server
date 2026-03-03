@@ -44,6 +44,7 @@ export type DialogueMinAggregateOutputType = {
   id: number | null
   sceneId: number | null
   order: number | null
+  flowType: $Enums.DialogueFlowType | null
   type: $Enums.DialogueType | null
   speakerRole: $Enums.DialogueSpeakerRole | null
   characterName: string | null
@@ -61,6 +62,7 @@ export type DialogueMaxAggregateOutputType = {
   id: number | null
   sceneId: number | null
   order: number | null
+  flowType: $Enums.DialogueFlowType | null
   type: $Enums.DialogueType | null
   speakerRole: $Enums.DialogueSpeakerRole | null
   characterName: string | null
@@ -78,6 +80,7 @@ export type DialogueCountAggregateOutputType = {
   id: number
   sceneId: number
   order: number
+  flowType: number
   type: number
   speakerRole: number
   characterName: number
@@ -112,6 +115,7 @@ export type DialogueMinAggregateInputType = {
   id?: true
   sceneId?: true
   order?: true
+  flowType?: true
   type?: true
   speakerRole?: true
   characterName?: true
@@ -129,6 +133,7 @@ export type DialogueMaxAggregateInputType = {
   id?: true
   sceneId?: true
   order?: true
+  flowType?: true
   type?: true
   speakerRole?: true
   characterName?: true
@@ -146,6 +151,7 @@ export type DialogueCountAggregateInputType = {
   id?: true
   sceneId?: true
   order?: true
+  flowType?: true
   type?: true
   speakerRole?: true
   characterName?: true
@@ -251,6 +257,7 @@ export type DialogueGroupByOutputType = {
   id: number
   sceneId: number
   order: number
+  flowType: $Enums.DialogueFlowType
   type: $Enums.DialogueType
   speakerRole: $Enums.DialogueSpeakerRole
   characterName: string | null
@@ -292,6 +299,7 @@ export type DialogueWhereInput = {
   id?: Prisma.IntFilter<"Dialogue"> | number
   sceneId?: Prisma.IntFilter<"Dialogue"> | number
   order?: Prisma.IntFilter<"Dialogue"> | number
+  flowType?: Prisma.EnumDialogueFlowTypeFilter<"Dialogue"> | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFilter<"Dialogue"> | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFilter<"Dialogue"> | $Enums.DialogueSpeakerRole
   characterName?: Prisma.StringNullableFilter<"Dialogue"> | string | null
@@ -314,6 +322,7 @@ export type DialogueOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   sceneId?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  flowType?: Prisma.SortOrder
   type?: Prisma.SortOrder
   speakerRole?: Prisma.SortOrder
   characterName?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -340,6 +349,7 @@ export type DialogueWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.DialogueWhereInput | Prisma.DialogueWhereInput[]
   sceneId?: Prisma.IntFilter<"Dialogue"> | number
   order?: Prisma.IntFilter<"Dialogue"> | number
+  flowType?: Prisma.EnumDialogueFlowTypeFilter<"Dialogue"> | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFilter<"Dialogue"> | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFilter<"Dialogue"> | $Enums.DialogueSpeakerRole
   characterName?: Prisma.StringNullableFilter<"Dialogue"> | string | null
@@ -362,6 +372,7 @@ export type DialogueOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   sceneId?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  flowType?: Prisma.SortOrder
   type?: Prisma.SortOrder
   speakerRole?: Prisma.SortOrder
   characterName?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -388,6 +399,7 @@ export type DialogueScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Dialogue"> | number
   sceneId?: Prisma.IntWithAggregatesFilter<"Dialogue"> | number
   order?: Prisma.IntWithAggregatesFilter<"Dialogue"> | number
+  flowType?: Prisma.EnumDialogueFlowTypeWithAggregatesFilter<"Dialogue"> | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeWithAggregatesFilter<"Dialogue"> | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleWithAggregatesFilter<"Dialogue"> | $Enums.DialogueSpeakerRole
   characterName?: Prisma.StringNullableWithAggregatesFilter<"Dialogue"> | string | null
@@ -404,6 +416,7 @@ export type DialogueScalarWhereWithAggregatesInput = {
 
 export type DialogueCreateInput = {
   order: number
+  flowType?: $Enums.DialogueFlowType
   type?: $Enums.DialogueType
   speakerRole?: $Enums.DialogueSpeakerRole
   characterName?: string | null
@@ -425,6 +438,7 @@ export type DialogueUncheckedCreateInput = {
   id?: number
   sceneId: number
   order: number
+  flowType?: $Enums.DialogueFlowType
   type?: $Enums.DialogueType
   speakerRole?: $Enums.DialogueSpeakerRole
   characterName?: string | null
@@ -443,6 +457,7 @@ export type DialogueUncheckedCreateInput = {
 
 export type DialogueUpdateInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -464,6 +479,7 @@ export type DialogueUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sceneId?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -484,6 +500,7 @@ export type DialogueCreateManyInput = {
   id?: number
   sceneId: number
   order: number
+  flowType?: $Enums.DialogueFlowType
   type?: $Enums.DialogueType
   speakerRole?: $Enums.DialogueSpeakerRole
   characterName?: string | null
@@ -500,6 +517,7 @@ export type DialogueCreateManyInput = {
 
 export type DialogueUpdateManyMutationInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -517,6 +535,7 @@ export type DialogueUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sceneId?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -550,6 +569,7 @@ export type DialogueCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sceneId?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  flowType?: Prisma.SortOrder
   type?: Prisma.SortOrder
   speakerRole?: Prisma.SortOrder
   characterName?: Prisma.SortOrder
@@ -575,6 +595,7 @@ export type DialogueMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sceneId?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  flowType?: Prisma.SortOrder
   type?: Prisma.SortOrder
   speakerRole?: Prisma.SortOrder
   characterName?: Prisma.SortOrder
@@ -592,6 +613,7 @@ export type DialogueMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sceneId?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  flowType?: Prisma.SortOrder
   type?: Prisma.SortOrder
   speakerRole?: Prisma.SortOrder
   characterName?: Prisma.SortOrder
@@ -657,6 +679,10 @@ export type DialogueUncheckedUpdateManyWithoutSceneNestedInput = {
   update?: Prisma.DialogueUpdateWithWhereUniqueWithoutSceneInput | Prisma.DialogueUpdateWithWhereUniqueWithoutSceneInput[]
   updateMany?: Prisma.DialogueUpdateManyWithWhereWithoutSceneInput | Prisma.DialogueUpdateManyWithWhereWithoutSceneInput[]
   deleteMany?: Prisma.DialogueScalarWhereInput | Prisma.DialogueScalarWhereInput[]
+}
+
+export type EnumDialogueFlowTypeFieldUpdateOperationsInput = {
+  set?: $Enums.DialogueFlowType
 }
 
 export type EnumDialogueTypeFieldUpdateOperationsInput = {
@@ -739,6 +765,7 @@ export type DialogueUpdateOneRequiredWithoutPlayEpisodeSlotsNestedInput = {
 
 export type DialogueCreateWithoutSceneInput = {
   order: number
+  flowType?: $Enums.DialogueFlowType
   type?: $Enums.DialogueType
   speakerRole?: $Enums.DialogueSpeakerRole
   characterName?: string | null
@@ -758,6 +785,7 @@ export type DialogueCreateWithoutSceneInput = {
 export type DialogueUncheckedCreateWithoutSceneInput = {
   id?: number
   order: number
+  flowType?: $Enums.DialogueFlowType
   type?: $Enums.DialogueType
   speakerRole?: $Enums.DialogueSpeakerRole
   characterName?: string | null
@@ -807,6 +835,7 @@ export type DialogueScalarWhereInput = {
   id?: Prisma.IntFilter<"Dialogue"> | number
   sceneId?: Prisma.IntFilter<"Dialogue"> | number
   order?: Prisma.IntFilter<"Dialogue"> | number
+  flowType?: Prisma.EnumDialogueFlowTypeFilter<"Dialogue"> | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFilter<"Dialogue"> | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFilter<"Dialogue"> | $Enums.DialogueSpeakerRole
   characterName?: Prisma.StringNullableFilter<"Dialogue"> | string | null
@@ -823,6 +852,7 @@ export type DialogueScalarWhereInput = {
 
 export type DialogueCreateWithoutCharacterInput = {
   order: number
+  flowType?: $Enums.DialogueFlowType
   type?: $Enums.DialogueType
   speakerRole?: $Enums.DialogueSpeakerRole
   characterName?: string | null
@@ -843,6 +873,7 @@ export type DialogueUncheckedCreateWithoutCharacterInput = {
   id?: number
   sceneId: number
   order: number
+  flowType?: $Enums.DialogueFlowType
   type?: $Enums.DialogueType
   speakerRole?: $Enums.DialogueSpeakerRole
   characterName?: string | null
@@ -886,6 +917,7 @@ export type DialogueUpdateManyWithWhereWithoutCharacterInput = {
 
 export type DialogueCreateWithoutBookmarksInput = {
   order: number
+  flowType?: $Enums.DialogueFlowType
   type?: $Enums.DialogueType
   speakerRole?: $Enums.DialogueSpeakerRole
   characterName?: string | null
@@ -906,6 +938,7 @@ export type DialogueUncheckedCreateWithoutBookmarksInput = {
   id?: number
   sceneId: number
   order: number
+  flowType?: $Enums.DialogueFlowType
   type?: $Enums.DialogueType
   speakerRole?: $Enums.DialogueSpeakerRole
   characterName?: string | null
@@ -939,6 +972,7 @@ export type DialogueUpdateToOneWithWhereWithoutBookmarksInput = {
 
 export type DialogueUpdateWithoutBookmarksInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -959,6 +993,7 @@ export type DialogueUncheckedUpdateWithoutBookmarksInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sceneId?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -976,6 +1011,7 @@ export type DialogueUncheckedUpdateWithoutBookmarksInput = {
 
 export type DialogueCreateWithoutPlayEpisodeSlotsInput = {
   order: number
+  flowType?: $Enums.DialogueFlowType
   type?: $Enums.DialogueType
   speakerRole?: $Enums.DialogueSpeakerRole
   characterName?: string | null
@@ -996,6 +1032,7 @@ export type DialogueUncheckedCreateWithoutPlayEpisodeSlotsInput = {
   id?: number
   sceneId: number
   order: number
+  flowType?: $Enums.DialogueFlowType
   type?: $Enums.DialogueType
   speakerRole?: $Enums.DialogueSpeakerRole
   characterName?: string | null
@@ -1029,6 +1066,7 @@ export type DialogueUpdateToOneWithWhereWithoutPlayEpisodeSlotsInput = {
 
 export type DialogueUpdateWithoutPlayEpisodeSlotsInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1049,6 +1087,7 @@ export type DialogueUncheckedUpdateWithoutPlayEpisodeSlotsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sceneId?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1067,6 +1106,7 @@ export type DialogueUncheckedUpdateWithoutPlayEpisodeSlotsInput = {
 export type DialogueCreateManySceneInput = {
   id?: number
   order: number
+  flowType?: $Enums.DialogueFlowType
   type?: $Enums.DialogueType
   speakerRole?: $Enums.DialogueSpeakerRole
   characterName?: string | null
@@ -1083,6 +1123,7 @@ export type DialogueCreateManySceneInput = {
 
 export type DialogueUpdateWithoutSceneInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1102,6 +1143,7 @@ export type DialogueUpdateWithoutSceneInput = {
 export type DialogueUncheckedUpdateWithoutSceneInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1121,6 +1163,7 @@ export type DialogueUncheckedUpdateWithoutSceneInput = {
 export type DialogueUncheckedUpdateManyWithoutSceneInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1139,6 +1182,7 @@ export type DialogueCreateManyCharacterInput = {
   id?: number
   sceneId: number
   order: number
+  flowType?: $Enums.DialogueFlowType
   type?: $Enums.DialogueType
   speakerRole?: $Enums.DialogueSpeakerRole
   characterName?: string | null
@@ -1154,6 +1198,7 @@ export type DialogueCreateManyCharacterInput = {
 
 export type DialogueUpdateWithoutCharacterInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1174,6 +1219,7 @@ export type DialogueUncheckedUpdateWithoutCharacterInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sceneId?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1193,6 +1239,7 @@ export type DialogueUncheckedUpdateManyWithoutCharacterInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   sceneId?: Prisma.IntFieldUpdateOperationsInput | number
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
   type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
   speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
   characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1250,6 +1297,7 @@ export type DialogueSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   sceneId?: boolean
   order?: boolean
+  flowType?: boolean
   type?: boolean
   speakerRole?: boolean
   characterName?: boolean
@@ -1273,6 +1321,7 @@ export type DialogueSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   sceneId?: boolean
   order?: boolean
+  flowType?: boolean
   type?: boolean
   speakerRole?: boolean
   characterName?: boolean
@@ -1293,6 +1342,7 @@ export type DialogueSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   sceneId?: boolean
   order?: boolean
+  flowType?: boolean
   type?: boolean
   speakerRole?: boolean
   characterName?: boolean
@@ -1313,6 +1363,7 @@ export type DialogueSelectScalar = {
   id?: boolean
   sceneId?: boolean
   order?: boolean
+  flowType?: boolean
   type?: boolean
   speakerRole?: boolean
   characterName?: boolean
@@ -1327,7 +1378,7 @@ export type DialogueSelectScalar = {
   updatedAt?: boolean
 }
 
-export type DialogueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sceneId" | "order" | "type" | "speakerRole" | "characterName" | "characterId" | "englishText" | "koreanText" | "charImageLabel" | "imageUrl" | "audioUrl" | "data" | "createdAt" | "updatedAt", ExtArgs["result"]["dialogue"]>
+export type DialogueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sceneId" | "order" | "flowType" | "type" | "speakerRole" | "characterName" | "characterId" | "englishText" | "koreanText" | "charImageLabel" | "imageUrl" | "audioUrl" | "data" | "createdAt" | "updatedAt", ExtArgs["result"]["dialogue"]>
 export type DialogueInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   scene?: boolean | Prisma.SceneDefaultArgs<ExtArgs>
   character?: boolean | Prisma.Dialogue$characterArgs<ExtArgs>
@@ -1356,6 +1407,7 @@ export type $DialoguePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: number
     sceneId: number
     order: number
+    flowType: $Enums.DialogueFlowType
     type: $Enums.DialogueType
     speakerRole: $Enums.DialogueSpeakerRole
     characterName: string | null
@@ -1798,6 +1850,7 @@ export interface DialogueFieldRefs {
   readonly id: Prisma.FieldRef<"Dialogue", 'Int'>
   readonly sceneId: Prisma.FieldRef<"Dialogue", 'Int'>
   readonly order: Prisma.FieldRef<"Dialogue", 'Int'>
+  readonly flowType: Prisma.FieldRef<"Dialogue", 'DialogueFlowType'>
   readonly type: Prisma.FieldRef<"Dialogue", 'DialogueType'>
   readonly speakerRole: Prisma.FieldRef<"Dialogue", 'DialogueSpeakerRole'>
   readonly characterName: Prisma.FieldRef<"Dialogue", 'String'>

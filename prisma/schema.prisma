@@ -157,6 +157,8 @@ model Episode {
   koreanDescription String?
   thumbnailUrl      String?
 
+  totalScenes Int? // 메인 경로 씬 수 (NORMAL + 분기당 1개) - 프론트 진행도 표시용
+
   status    PublishStatus @default(DRAFT)
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
@@ -176,18 +178,27 @@ enum SceneType {
   CHAT
 }
 
+enum SceneFlowType {
+  NORMAL // 일반 씬
+  BRANCH // 분기 결과 씬/엔딩 씬 (조건부)
+  BRANCH_TRIGGER // 분기 결정 씬 (씬 완료 시 branch-trigger 호출)
+}
+
 model Scene {
   id        Int @id @default(autoincrement())
   episodeId Int
 
-  type        SceneType @default(VISUAL)
+  type     SceneType     @default(VISUAL) // UI용
+  flowType SceneFlowType @default(NORMAL) // ✅ 로직용
+
   title       String
   koreanTitle String?
   order       Int
   bgImageUrl  String?
   audioUrl    String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  data        Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   episode   Episode    @relation(fields: [episodeId], references: [id])
   dialogues Dialogue[]
@@ -203,7 +214,7 @@ enum DialogueType {
   HEADING
 
   // 분기/선택
-  CHOICE // 선택지 표시
+  CHOICE_SLOT // 선택지 표시
   // AI
   AI_INPUT_SLOT // 텍스트 입력 받기
   AI_SLOT
@@ -216,12 +227,18 @@ enum DialogueSpeakerRole {
   USER
 }
 
+enum DialogueFlowType {
+  NORMAL
+  BRANCH // 선택 종속 대사
+}
+
 model Dialogue {
-  id             Int                   @id @default(autoincrement())
+  id             Int                 @id @default(autoincrement())
   sceneId        Int
   order          Int
-  type           DialogueType          @default(DIALOGUE)
-  speakerRole    DialogueSpeakerRole   @default(SYSTEM)
+  flowType       DialogueFlowType    @default(NORMAL)
+  type           DialogueType        @default(DIALOGUE)
+  speakerRole    DialogueSpeakerRole @default(SYSTEM)
   // characterName은 사실상 중복이라 점진적으로 제거 추천
   characterName  String?
   characterId    Int?
@@ -748,12 +765,19 @@ model UserPlayEpisode {
   @@index([episodeId])
 }
 
-model PlayEpisodeSlot {
-  id            Int @id @default(autoincrement())
-  playEpisodeId Int
+enum PlayEpisodeSlotType {
+  AI_INPUT
+  AI_CALL
+  CHOICE
+}
 
-  dialogueId Int // dialogue.id (USER_INPUT 지점이라고 네가 정의)
-  order      Int?
+model PlayEpisodeSlot {
+  id            Int                 @id @default(autoincrement())
+  playEpisodeId Int
+  type          PlayEpisodeSlotType @default(AI_INPUT)
+
+  dialogueId Int
+  order      Int
 
   status SlotStatus @default(ACTIVE)
   data   Json?
@@ -762,9 +786,10 @@ model PlayEpisodeSlot {
 
   endedAt DateTime? // ai 호출완료 시각
 
-  playEpisode UserPlayEpisode @relation(fields: [playEpisodeId], references: [id])
+  playEpisode UserPlayEpisode @relation(fields: [playEpisodeId], references: [id], onDelete: Cascade)
   dialogue    Dialogue        @relation(fields: [dialogueId], references: [id])
 
+  @@index([playEpisodeId, type])
   @@index([playEpisodeId])
   @@index([dialogueId])
 }
@@ -800,7 +825,7 @@ model SlotDialogue {
   data      Json?
   createdAt DateTime @default(now())
 
-  slot      PlayEpisodeSlot @relation(fields: [slotId], references: [id])
+  slot      PlayEpisodeSlot @relation(fields: [slotId], references: [id], onDelete: Cascade)
   character Character?      @relation(fields: [characterId], references: [id])
 
   @@unique([slotId, order])

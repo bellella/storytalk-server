@@ -188,6 +188,7 @@ export const EpisodeScalarFieldEnum = {
   description: 'description',
   koreanDescription: 'koreanDescription',
   thumbnailUrl: 'thumbnailUrl',
+  totalScenes: 'totalScenes',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -200,11 +201,13 @@ export const SceneScalarFieldEnum = {
   id: 'id',
   episodeId: 'episodeId',
   type: 'type',
+  flowType: 'flowType',
   title: 'title',
   koreanTitle: 'koreanTitle',
   order: 'order',
   bgImageUrl: 'bgImageUrl',
   audioUrl: 'audioUrl',
+  data: 'data',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -216,6 +219,7 @@ export const DialogueScalarFieldEnum = {
   id: 'id',
   sceneId: 'sceneId',
   order: 'order',
+  flowType: 'flowType',
   type: 'type',
   speakerRole: 'speakerRole',
   characterName: 'characterName',
@@ -515,6 +519,7 @@ export type UserPlayEpisodeScalarFieldEnum = (typeof UserPlayEpisodeScalarFieldE
 export const PlayEpisodeSlotScalarFieldEnum = {
   id: 'id',
   playEpisodeId: 'playEpisodeId',
+  type: 'type',
   dialogueId: 'dialogueId',
   order: 'order',
   status: 'status',

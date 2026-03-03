@@ -2,6 +2,8 @@
 import { CursorRequestDto } from '@/common/dtos/cursor-request.dto';
 import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
 import {
+  DialogueFlowType,
+  DialogueType,
   EpisodeStage,
   EpisodeType,
   PublishStatus,
@@ -16,6 +18,7 @@ import { UserEpisodeDto } from '../episode/dto/user-episode.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   CharacterImageDto,
+  ChoiceOptionDto,
   DialogueDto,
   EpisodeDetailDto,
   SceneDto,
@@ -213,6 +216,7 @@ export class StoryService {
             orderBy: { order: 'asc' },
             include: {
               dialogues: {
+                where: { flowType: DialogueFlowType.NORMAL },
                 orderBy: { order: 'asc' },
                 include: {
                   character: true,
@@ -315,12 +319,17 @@ export class StoryService {
           charImageLabel: dialogue.charImageLabel ?? undefined,
           imageUrl,
           audioUrl: dialogue.audioUrl ?? undefined,
+          options:
+            dialogue.type === DialogueType.CHOICE_SLOT
+              ? this.mapChoiceOptions(dialogue.data)
+              : undefined,
         };
       });
       return {
         id: scene.id,
         title: scene.title,
         type: scene.type,
+        flowType: scene.flowType,
         koreanTitle: scene.koreanTitle ?? undefined,
         order: scene.order,
         bgImageUrl: scene.bgImageUrl ?? undefined,
@@ -338,6 +347,7 @@ export class StoryService {
       description: episode.description ?? undefined,
       koreanDescription: episode.koreanDescription ?? undefined,
       thumbnailUrl: episode.thumbnailUrl ?? undefined,
+      totalScenes: episode.totalScenes ?? null,
       scenes,
       characterImages: allCharacterImages,
     };
@@ -507,5 +517,14 @@ export class StoryService {
           completedAt: ue.completedAt?.toISOString() ?? null,
         },
       }));
+  }
+
+  private mapChoiceOptions(data: any): ChoiceOptionDto[] {
+    if (!Array.isArray(data?.options)) return [];
+    return (data.options as any[]).map((opt) => ({
+      key: opt.key,
+      englishText: opt.englishText ?? '',
+      koreanText: opt.koreanText ?? '',
+    }));
   }
 }
