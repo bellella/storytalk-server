@@ -95,10 +95,10 @@ export class ProductsService {
                     id: true,
                     title: true,
                     koreanTitle: true,
+                    thumbnailUrl: true,
                     story: { select: { id: true, title: true } },
                   },
                 },
-                product: { select: { thumbnailUrl: true } },
               },
             },
           },
@@ -206,7 +206,7 @@ export class ProductsService {
       currency: product.currency,
       price: product.price,
       storeSku: product.storeSku,
-      thumbnailUrl: product.thumbnailUrl,
+      thumbnailUrl: product.episodes[0]?.episode?.thumbnailUrl ?? null,
       episode: product.episodes[0]
         ? this.mapEpisode(product.episodes[0])
         : null,

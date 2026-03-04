@@ -35,10 +35,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import {
-  buildCorrectAndDialoguesPrompt,
-  ReplyMode,
-} from './ai/correctAndDialogues.prompt';
+import { buildCorrectAndDialoguesPrompt } from './ai/correctAndDialogues.prompt';
 import { CorrectAndDialoguesResponseZ } from './ai/correctAndDialogues.schema';
 import { buildGenerateDialoguesPrompt } from './ai/generateDialogues.prompt';
 import { GenerateDialoguesResponseZ } from './ai/generateDialogues.schema';
@@ -59,6 +56,7 @@ import {
   SlotDialogueDto,
 } from './dto/play.dto';
 import { UpdatePlayDto } from './dto/update-play.dto';
+import { AiSlotDialogueData, AiSlotDialogueInput } from './types/ai.type';
 
 @Injectable()
 export class PlayService {
@@ -160,8 +158,7 @@ export class PlayService {
     );
     const preloadedScenes = episode.scenes.filter(
       (s) =>
-        s.flowType !== SceneFlowType.BRANCH ||
-        resolvedPickedSceneIds.has(s.id)
+        s.flowType !== SceneFlowType.BRANCH || resolvedPickedSceneIds.has(s.id)
     );
 
     return {
@@ -261,7 +258,8 @@ export class PlayService {
     const allFollowUpIds: number[] = [];
     for (const [dialogueId, slot] of choiceSlotByDialogueId) {
       const optionKey = (slot.data as any)?.optionKey;
-      const options = ((choiceRawDataMap.get(dialogueId) as any)?.options ?? []) as any[];
+      const options = ((choiceRawDataMap.get(dialogueId) as any)?.options ??
+        []) as any[];
       const option = options.find((o: any) => o.key === optionKey);
       const ids: number[] = option?.followUpDialogueIds ?? [];
       choiceFollowUpIdsMap.set(dialogueId, ids);
@@ -331,7 +329,11 @@ export class PlayService {
               ? (user?.selectedCharacterId ?? undefined)
               : (fu.characterId ?? undefined);
             const imageUrl = charId
-              ? (this.characterService.resolveImageUrl(imageMap, charId, fu.charImageLabel) ?? undefined)
+              ? (this.characterService.resolveImageUrl(
+                  imageMap,
+                  charId,
+                  fu.charImageLabel
+                ) ?? undefined)
               : (fu.imageUrl ?? undefined);
             dialogues.push({
               id: fu.id,
@@ -340,7 +342,10 @@ export class PlayService {
               speakerRole: fu.speakerRole,
               characterId: charId,
               characterName: isUserSpeaker
-                ? (user?.name ?? fu.character?.name ?? fu.characterName ?? undefined)
+                ? (user?.name ??
+                  fu.character?.name ??
+                  fu.characterName ??
+                  undefined)
                 : (fu.character?.name ?? fu.characterName ?? undefined),
               englishText: replaceUserName(fu.englishText ?? ''),
               koreanText: replaceUserName(fu.koreanText ?? ''),
@@ -401,33 +406,29 @@ export class PlayService {
   }
 
   /**
-   * USER_INPUT marker에서 유저 캐릭터 + NPC 캐릭터(들)을 resolve.
+   * AI_INPUT_SLOT / AI_SLOT marker에서 유저 캐릭터 + NPC 캐릭터(들)을 resolve.
    *
    * dialogue.data에 저장된 JSON:
-   *   - partnerCharacterIds: number[]  (멀티 캐릭터)
-   *   - partnerCharacterId: number     (레거시 1:1)
-   *   - replyMode?: 'auto' | 'specific' | 'round_robin'
-   *   - responderIds?: number[]        (specific 모드 전용)
+   *   - partnerCharacterIds: number[]  — 대화 상대 NPC 목록
    *   - constraints?: string[]
    *   - situation?: string
+   *   - includeDialogues?: boolean
+   *   - dataTablePrompt?: string
    */
   private async resolveDialogueData(
-    dialogue: any | null,
+    dialogue: AiSlotDialogueInput,
     userInfo?: { selectedCharacterId?: number | null; name?: string | null }
   ) {
-    if (!dialogue) throw new NotFoundException('Dialogue not found');
-    if (!dialogue.characterId && dialogue.speakerRole !== 'USER')
+    if (
+      !dialogue.characterId &&
+      dialogue.speakerRole !== DialogueSpeakerRole.USER
+    )
       throw new BadRequestException('Dialogue must have characterId');
-    const data = dialogue.data as Record<string, any>;
-    const isUserSpeaker = dialogue.speakerRole === 'USER';
-    const includeDialogues =
-      (data.includeDialogues as boolean | undefined) ?? false;
-    // NPC 캐릭터 ID 목록: 멀티 우선, 레거시 폴백
-    const npcCharacterIds: number[] = data.partnerCharacterIds?.length
-      ? data.partnerCharacterIds
-      : data.partnerCharacterId
-        ? [data.partnerCharacterId]
-        : [];
+    const data: AiSlotDialogueData =
+      (dialogue.data as AiSlotDialogueData | null) ?? {};
+    const isUserSpeaker = dialogue.speakerRole === DialogueSpeakerRole.USER;
+    const includeDialogues = data.includeDialogues ?? false;
+    const npcCharacterIds: number[] = data.partnerCharacterIds ?? [];
 
     // USER speakerRole이면 selectedCharacterId, 아니면 dialogue.characterId
     const userCharId = isUserSpeaker
@@ -454,7 +455,10 @@ export class PlayService {
     const npcChars = npcCharacterIds
       .map((id) => charMap.get(id))
       .filter(Boolean) as typeof characters;
-    const dataTablePrompt = data.dataTablePrompt ?? '';
+
+    const replaceUserName = (text: string) =>
+      userInfo?.name ? text.replaceAll('{{userName}}', userInfo.name) : text;
+
     return {
       userCharacter: {
         characterId: userCharId,
@@ -468,14 +472,12 @@ export class PlayService {
         name: c.name,
         personality: c.personality ?? null,
       })),
-      replyMode: (data.replyMode as ReplyMode) ?? 'auto',
-      responderIds: data.responderIds as number[] | undefined,
-      constraints: data.constraints as string[] | undefined,
-      situation: data.situation as string | undefined,
+      constraints: data.constraints?.map((c) => replaceUserName(c)),
+      situation: data.situation ? replaceUserName(data.situation) : undefined,
       sceneId: dialogue.sceneId,
       markerOrder: dialogue.order,
       includeDialogues,
-      dataTablePrompt,
+      dataTablePrompt: data.dataTablePrompt ?? '',
     };
   }
 
@@ -496,7 +498,10 @@ export class PlayService {
     });
     if (!dialogue) throw new NotFoundException('Dialogue not found');
 
-    const dialogueData = await this.resolveDialogueData(dialogue, user ?? undefined);
+    const dialogueData = await this.resolveDialogueData(
+      dialogue,
+      user ?? undefined
+    );
 
     const slotOrder = await this.prisma.playEpisodeSlot.count({
       where: { playEpisodeId },
@@ -668,7 +673,10 @@ export class PlayService {
       }),
     ]);
 
-    const dialogueData = await this.resolveDialogueData(dialogue, user ?? undefined);
+    const dialogueData = await this.resolveDialogueData(
+      dialogue,
+      user ?? undefined
+    );
 
     const slotOrder = await this.prisma.playEpisodeSlot.count({
       where: { playEpisodeId },
@@ -711,8 +719,6 @@ export class PlayService {
           npcCharacters: dialogueData.npcCharacters,
           situation: dialogueData.situation ?? 'Roleplay conversation',
           userText: text,
-          replyMode: dialogueData.replyMode,
-          responderIds: dialogueData.responderIds,
           dataTablePrompt: dialogueData.dataTablePrompt,
           constraints: dialogueData.constraints,
           messagesInTheScene,
@@ -1043,9 +1049,7 @@ export class PlayService {
                   },
                 });
                 grantedRewards.push({ type: reward.type, payload });
-              } else if (
-                existing.status === CharacterRelationStatus.LOCKED
-              ) {
+              } else if (existing.status === CharacterRelationStatus.LOCKED) {
                 await tx.characterFriend.update({
                   where: { userId_characterId: { userId, characterId } },
                   data: { status: CharacterRelationStatus.INVITABLE },
@@ -1352,13 +1356,17 @@ export class PlayService {
         (existingSlot.data as Record<string, any>)?.optionKey ?? optionKey;
       const storedOption = options.find((o) => o.key === storedKey);
       const followUpDialogues = storedOption?.followUpDialogueIds?.length
-        ? await this.fetchFollowUpDialogues(storedOption.followUpDialogueIds, userId)
+        ? await this.fetchFollowUpDialogues(
+            storedOption.followUpDialogueIds,
+            userId
+          )
         : [];
       return { followUpDialogues };
     }
 
     const option = options.find((o) => o.key === optionKey);
-    if (!option) throw new BadRequestException(`Invalid optionKey: ${optionKey}`);
+    if (!option)
+      throw new BadRequestException(`Invalid optionKey: ${optionKey}`);
 
     const followUpDialogues = option.followUpDialogueIds?.length
       ? await this.fetchFollowUpDialogues(option.followUpDialogueIds, userId)
@@ -1384,13 +1392,20 @@ export class PlayService {
       });
 
       // scoreDelta 누적
-      const sceneScores = { ...((playData.sceneScores ?? {}) as Record<string, number>) };
+      const sceneScores = {
+        ...((playData.sceneScores ?? {}) as Record<string, number>),
+      };
       for (const { sceneId, delta } of option.scoreDelta ?? []) {
         sceneScores[sceneId] = (sceneScores[sceneId] ?? 0) + delta;
       }
 
-      const branchResults = { ...((playData.branchResults ?? {}) as Record<string, any>) };
-      branchResults[dialogueId] = { optionKey, createdAt: new Date().toISOString() };
+      const branchResults = {
+        ...((playData.branchResults ?? {}) as Record<string, any>),
+      };
+      branchResults[dialogueId] = {
+        optionKey,
+        createdAt: new Date().toISOString(),
+      };
 
       await tx.userPlayEpisode.update({
         where: { id: playEpisodeId },
@@ -1424,7 +1439,9 @@ export class PlayService {
       .map((d) => d.characterId)
       .filter((id): id is number => id != null);
     if (user?.selectedCharacterId) charIds.push(user.selectedCharacterId);
-    const imageMap = await this.characterService.buildImageMap([...new Set<number>(charIds)]);
+    const imageMap = await this.characterService.buildImageMap([
+      ...new Set<number>(charIds),
+    ]);
 
     const replaceUserName = (text: string) =>
       user?.name ? text.replaceAll('{{userName}}', user.name) : text;
@@ -1438,7 +1455,11 @@ export class PlayService {
           ? (user?.selectedCharacterId ?? undefined)
           : (d.characterId ?? undefined);
         const imageUrl = characterId
-          ? (this.characterService.resolveImageUrl(imageMap, characterId, d.charImageLabel ?? null) ?? undefined)
+          ? (this.characterService.resolveImageUrl(
+              imageMap,
+              characterId,
+              d.charImageLabel ?? null
+            ) ?? undefined)
           : (d.imageUrl ?? undefined);
 
         return {
@@ -1519,7 +1540,9 @@ export class PlayService {
 
     const pickedIdx = episode.scenes.findIndex((s) => s.id === pickedSceneId);
     if (pickedIdx < 0)
-      throw new NotFoundException(`Scene ${pickedSceneId} not found in episode`);
+      throw new NotFoundException(
+        `Scene ${pickedSceneId} not found in episode`
+      );
 
     // nextScenes: pickedScene부터 다음 BRANCH/BRANCH_TRIGGER scene 직전까지
     const tail = episode.scenes.slice(pickedIdx);
@@ -1530,7 +1553,9 @@ export class PlayService {
       nextStopIdx >= 0 ? tail.slice(0, nextStopIdx) : tail;
 
     // 결과 저장 (key: triggerSceneId)
-    const branchResults = { ...((playData.branchResults ?? {}) as Record<string, any>) };
+    const branchResults = {
+      ...((playData.branchResults ?? {}) as Record<string, any>),
+    };
     branchResults[triggerSceneId] = {
       pickedSceneId,
       createdAt: new Date().toISOString(),

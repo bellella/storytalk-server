@@ -1,16 +1,12 @@
 import { CharacterInfo } from '../types/ai.type';
 
-export type ReplyMode = 'auto' | 'specific' | 'round_robin';
-
 export interface CorrectAndDialoguesPromptArgs {
   userCharacter: CharacterInfo;
   npcCharacters: CharacterInfo[];
   situation: string;
   userText: string;
-  replyMode: ReplyMode;
   dataTable?: Record<string, any> | null;
   dataTablePrompt?: string;
-  responderIds?: number[];
   constraints?: string[];
   messagesInTheScene?: {
     characterName: string;
@@ -25,23 +21,12 @@ export function buildCorrectAndDialoguesPrompt(
 
   const npcList = args.npcCharacters
     .map((c) => {
-      const mustReply =
-        args.replyMode === 'specific' &&
-        args.responderIds?.includes(c.characterId)
-          ? ' [MUST REPLY]'
-          : '';
       const personality = c.personality
         ? `, personality="${c.personality}"`
         : '';
-      return `- id=${c.characterId}, name="${c.name}"${personality}${mustReply}`;
+      return `- id=${c.characterId}, name="${c.name}"${personality}`;
     })
     .join('\n');
-
-  const replyInstruction = {
-    auto: 'Choose which NPC(s) reply based on context.',
-    specific: 'Only NPC(s) marked [MUST REPLY] respond.',
-    round_robin: 'Pick the next NPC in order.',
-  }[args.replyMode];
 
   const sceneMessages = args.messagesInTheScene?.length
     ? `\nPrevious messages:\n${args.messagesInTheScene.map((m) => `- ${m.characterName}: ${m.englishText}`).join('\n')}\n`
@@ -53,7 +38,6 @@ User: id=${args.userCharacter.characterId}, name="${args.userCharacter.name}"${a
 NPCs:
 ${npcList}
 Situation: ${args.situation}
-Reply mode: ${replyInstruction}
 ${constraints ? `Constraints:\n${constraints}\n` : ''}${sceneMessages}
 Input: "${args.userText}"
 Step 1 — Detect input language, then branch:
