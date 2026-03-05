@@ -42,16 +42,15 @@ export type AuthProvider = (typeof AuthProvider)[keyof typeof AuthProvider]
 export const StoryType = {
   UNIT: 'UNIT',
   NOVEL: 'NOVEL',
-  PREMIUM: 'PREMIUM'
+  PLAY: 'PLAY'
 } as const
 
 export type StoryType = (typeof StoryType)[keyof typeof StoryType]
 
 
 export const EpisodeType = {
-  STORY: 'STORY',
-  PREMIUM: 'PREMIUM',
-  EVENT: 'EVENT'
+  NOVEL: 'NOVEL',
+  PLAY: 'PLAY'
 } as const
 
 export type EpisodeType = (typeof EpisodeType)[keyof typeof EpisodeType]

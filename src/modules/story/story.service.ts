@@ -453,7 +453,7 @@ export class StoryService {
       where: {
         userId,
         episode: {
-          type: EpisodeType.STORY,
+          type: EpisodeType.NOVEL,
           story: { status: PublishStatus.PUBLISHED },
         },
       },

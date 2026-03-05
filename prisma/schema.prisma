@@ -80,7 +80,7 @@ model User {
 enum StoryType {
   UNIT // 학습 중심 (상황회화/유닛 기반)
   NOVEL // 줄거리/노벨 중심 (스토리 감상 + 대화)
-  PREMIUM //프리미엄 컨텐츠
+  PLAY //프리미엄 컨텐츠
 }
 
 model Story {
@@ -142,15 +142,14 @@ model Unit {
 }
 
 enum EpisodeType {
-  STORY // 스토리 리딩형
-  PREMIUM // 구매 에피소드형
-  EVENT // 이벤트형
+  NOVEL // 스토리 리딩형
+  PLAY // 구매 에피소드형
 }
 
 model Episode {
   id                Int         @id @default(autoincrement())
   storyId           Int?
-  type              EpisodeType @default(STORY)
+  type              EpisodeType @default(NOVEL)
   title             String
   koreanTitle       String?
   order             Int
