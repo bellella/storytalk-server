@@ -50,10 +50,11 @@ Message type rules:
 - type="DIALOGUE": character speaking (has characterId, characterName, charImageLabel).
 - type="NARRATION": narrator action/description (characterId=null, characterName=null).
 
-Rules:
-- koreanText: required for every message.
-- charImageLabel: "default"|"happy"|"angry"|"sad" (DIALOGUE only).
-- characterId: must match IDs above (DIALOGUE only).
+CRITICAL FIELD RULES — never break these:
+- "englishText": ALWAYS written in English, no exceptions. NPC replies must be in English.
+- "koreanText": ALWAYS the Korean translation of englishText.
+- "charImageLabel": "default"|"happy"|"angry"|"sad" (DIALOGUE only).
+- "characterId": must match IDs listed above (DIALOGUE only).
 - No trailing commas.
 
 {
@@ -64,16 +65,16 @@ Rules:
       "characterId": ${args.userCharacter.characterId},
       "characterName": "${args.userCharacter.name}",
       "charImageLabel": "default",
-      "englishText": "<corrected or translated user text>",
-      "koreanText": "<Korean translation>"
+      "englishText": "<English: corrected or translated user sentence>",
+      "koreanText": "<Korean translation of englishText>"
     },
     {
       "type": "DIALOGUE",
-      "characterId": <NPC id>,
+      "characterId": <NPC id (integer)>,
       "characterName": "<NPC name>",
       "charImageLabel": "happy|sad|angry|default",
-      "englishText": "<NPC reply>",
-      "koreanText": "<Korean translation>"
+      "englishText": "<English: NPC reply in English>",
+      "koreanText": "<Korean translation of NPC reply>"
     }
   ],
   "dataTable": {}
