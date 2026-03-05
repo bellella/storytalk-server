@@ -41,32 +41,41 @@ Situation: ${args.situation}
 ${constraints ? `Constraints:\n${constraints}\n` : ''}${sceneMessages}
 Input: "${args.userText}"
 Step 1 — Detect input language, then branch:
-[ENGLISH input]
-- type="correction", correct grammar/naturalness. If already good, keep as-is.
-- "evaluation": REQUIRED object (all fields in Korean).
-[NON-ENGLISH input (Korean etc.)]
-- type="translation", translate to natural English.
-- "evaluation": MUST be null. Do NOT evaluate. Do NOT generate evaluation object.
-Step 2 — messages[0] characterId=${args.userCharacter.characterId}.
-Step 3 — Append 1–4 NPC replies (kind="reply"), matching each NPC's personality.
+[ENGLISH input] type="correction" — fix grammar/naturalness. If already correct, keep as-is.
+[NON-ENGLISH input] type="translation" — translate to natural English.
+Step 2 — messages[0]: user's corrected/translated text (characterId=${args.userCharacter.characterId}).
+Step 3 — Append 1–4 NPC replies matching each NPC's personality.
 ${args.dataTablePrompt ? `DataTable:\n${args.dataTablePrompt}\n` : ''}
 Message type rules:
-- type="DIALOGUE": character is speaking directly (has characterId, characterName, charImageLabel).
-- type="NARRATION": narrator describing a scene/action (no characterId, no characterName, no charImageLabel needed).
+- type="DIALOGUE": character speaking (has characterId, characterName, charImageLabel).
+- type="NARRATION": narrator action/description (characterId=null, characterName=null).
 
 Rules:
 - koreanText: required for every message.
 - charImageLabel: "default"|"happy"|"angry"|"sad" (DIALOGUE only).
 - characterId: must match IDs above (DIALOGUE only).
+- No trailing commas.
 
 {
   "type": "correction|translation",
   "messages": [
-    {"type":"DIALOGUE","characterId":${args.userCharacter.characterId},"characterName":"${args.userCharacter.name}","charImageLabel":"...","kind":"correction|translation","englishText":"...","koreanText":"..."},
-    {"type":"NARRATION","characterId":null,"characterName":null,"charImageLabel":null,"kind":"reply","englishText":"...","koreanText":"..."},
-    {"type":"DIALOGUE","characterId":number,"characterName":"...","charImageLabel":"...","kind":"reply","englishText":"...","koreanText":"..."}
+    {
+      "type": "DIALOGUE",
+      "characterId": ${args.userCharacter.characterId},
+      "characterName": "${args.userCharacter.name}",
+      "charImageLabel": "default",
+      "englishText": "<corrected or translated user text>",
+      "koreanText": "<Korean translation>"
+    },
+    {
+      "type": "DIALOGUE",
+      "characterId": <NPC id>,
+      "characterName": "<NPC name>",
+      "charImageLabel": "happy|sad|angry|default",
+      "englishText": "<NPC reply>",
+      "koreanText": "<Korean translation>"
+    }
   ],
-  "evaluation":{"feedback":"한국어","overallScore":0-100,"grammarScore":0-100,"fluencyScore":0-100,"naturalnessScore":0-100,"cefr":"A1-C2","summary":"한국어"} or null,
   "dataTable": {}
 }`.trim();
 }

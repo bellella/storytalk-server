@@ -184,11 +184,36 @@ export class RewardGrantDto {
   payload: any;
 }
 
+export class EvaluationTurnDto {
+  index: number;
+  overallScore: number | null;
+  grammarScore: number | null;
+  fluencyScore: number | null;
+  naturalnessScore: number | null;
+  cefr: string | null;
+  feedback: string | null;
+}
+
+export class EvaluationAggregateDto {
+  overallScore: number | null;
+  grammarScore: number | null;
+  fluencyScore: number | null;
+  naturalnessScore: number | null;
+  cefr: string | null;
+  summary: string | null;
+}
+
+export class EvaluationResultDto {
+  turns: EvaluationTurnDto[];
+  aggregate: EvaluationAggregateDto;
+  generatedAt: string;
+}
+
 export class CompletePlayResponseDto {
   playEpisodeId: number;
   currentStage: EpisodeStage;
   status: PlayEpisodeStatus;
-  result?: any | null;
+  evaluation: EvaluationResultDto | null;
   xpGained: number;
   rewards: RewardGrantDto[];
 }

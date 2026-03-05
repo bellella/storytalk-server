@@ -93,6 +93,7 @@ RULES — never break these:
 4. Do NOT merge TEXT and STICKER into one object.
 5. "payload" is always an object (empty {} if nothing to fill).
 6. No trailing commas anywhere.
+7. "translated" must always use informal Korean (반말).
     `);
 
     return parts.join('\n');

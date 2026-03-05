@@ -40,6 +40,8 @@ import { buildGenerateDialoguesPrompt } from './ai/generateDialogues.prompt';
 import { GenerateDialoguesResponseZ } from './ai/generateDialogues.schema';
 import { buildPickSentencesForQuizPrompt } from './ai/pickSentencesForQuiz.prompt';
 import { PickSentencesForQuizResponseZ } from './ai/pickSentencesForQuiz.schema';
+import { buildEvaluateSlotsPrompt } from './ai/evaluateSlots.prompt';
+import { EvaluateSlotsResponse, EvaluateSlotsResponseZ } from './ai/evaluateSlots.schema';
 import {
   AiInputSlotDto,
   AiInputSlotResponseDto,
@@ -733,7 +735,7 @@ export class PlayService {
           throw new BadRequestException('AI returned invalid JSON');
         }
 
-        const { messages, evaluation, dataTable } =
+        const { type: inputType, messages, dataTable } =
           CorrectAndDialoguesResponseZ.parse(parsed);
 
         // charImageLabel → imageUrl resolve용 맵
@@ -797,14 +799,18 @@ export class PlayService {
           order++;
         }
 
+        // messages[0]가 유저 교정/번역 텍스트
+        const correctedText = messages[0]?.englishText ?? text;
+
         await tx.playEpisodeSlot.update({
           where: { id: slot.id },
           data: {
             status: SlotStatus.ENDED,
             endedAt: new Date(),
             data: {
-              ...(evaluation ? { evaluation } : {}),
               userInput: text,
+              correctedText,
+              inputType,
             },
           },
         });
@@ -845,11 +851,12 @@ export class PlayService {
 
     // 이미 완료면 그대로 반환
     if (play.status === PlayEpisodeStatus.COMPLETED) {
+      const saved = play.result as Record<string, any> | null;
       return {
         playEpisodeId: play.id,
         currentStage: play.currentStage,
         status: play.status,
-        result: play.result ?? null,
+        evaluation: (saved?.evaluation ?? null) as any,
         xpGained: 0,
         rewards: [],
       };
@@ -870,34 +877,44 @@ export class PlayService {
           },
         });
 
-        // 2) slot에서 evaluation 모아서 간단 결과 만들기(없으면 null)
+        // 2) CHAT_WITH_EVAL 모드면 슬롯 데이터 모아서 AI 평가
         const slots = await tx.playEpisodeSlot.findMany({
           where: { playEpisodeId },
           select: { data: true },
           orderBy: { id: 'asc' },
         });
 
-        // evaluation이 slot.data.evaluation에 있다고 가정
-        const evals = slots
-          .map((s) => (s.data as any)?.evaluation)
-          .filter(Boolean);
+        let evaluation: EvaluateSlotsResponse | null = null;
 
-        const avg = (key: string) => {
-          const nums = evals
-            .map((e: any) => e?.[key])
-            .filter((v: any) => typeof v === 'number');
-          if (!nums.length) return null;
-          const sum = nums.reduce((a: number, b: number) => a + b, 0);
-          return Math.round(sum / nums.length);
-        };
+        if (play.mode === PlayEpisodeMode.CHAT_WITH_EVAL) {
+          const turns = slots
+            .map((s, i) => {
+              const d = s.data as Record<string, any> | null;
+              if (!d?.userInput || !d?.correctedText) return null;
+              return {
+                index: i + 1,
+                userInput: d.userInput as string,
+                correctedText: d.correctedText as string,
+                inputType: (d.inputType ?? 'correction') as 'correction' | 'translation',
+              };
+            })
+            .filter((t): t is NonNullable<typeof t> => t !== null);
 
-        const result = evals.length
+          if (turns.length > 0) {
+            const evalPrompt = buildEvaluateSlotsPrompt({ turns });
+            const evalRaw = await this.openAiService.callApi(evalPrompt);
+            try {
+              const parsed = typeof evalRaw === 'string' ? JSON.parse(evalRaw) : evalRaw;
+              evaluation = EvaluateSlotsResponseZ.parse(parsed);
+            } catch {
+              // 파싱 실패 시 evaluation 없이 진행
+            }
+          }
+        }
+
+        const result = evaluation
           ? {
-              overallScore: avg('overallScore'),
-              grammarScore: avg('grammarScore'),
-              fluencyScore: avg('fluencyScore'),
-              naturalnessScore: avg('naturalnessScore'),
-              turns: evals.length,
+              evaluation,
               generatedAt: now.toISOString(),
             }
           : null;
@@ -1063,7 +1080,7 @@ export class PlayService {
           playEpisodeId: updated.id,
           currentStage: updated.currentStage,
           status: updated.status,
-          result: updated.result ?? null,
+          evaluation: (evaluation?.aggregate ? evaluation : null) as any,
           xpGained,
           rewards: grantedRewards,
         };
