@@ -1,5 +1,5 @@
+import { Prisma } from '@/generated/prisma/client';
 import { DialogueSpeakerRole } from '@/generated/prisma/enums';
-import { Prisma } from '@prisma/client';
 
 export interface CharacterInfo {
   characterId: number | null;
