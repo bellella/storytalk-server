@@ -50,22 +50,50 @@ export class OpenAiService {
         : 'The user has not set a display name.',
     ];
 
+    const payloadFields = [
+      options?.includes(SendMessageOptionType.NEED_TRANSLATION)
+        ? `    "translated": "<user message translated to English>"`
+        : null,
+      options?.includes(SendMessageOptionType.NEED_GRAMMAR_CORRECTION)
+        ? `    "corrected": "<user message with grammar corrected>"`
+        : null,
+    ]
+      .filter(Boolean)
+      .join(',\n');
+
     parts.push(`
-      Your goal is to have a real conversation with the user.
-      Adjust your tone based on the friendship level (higher = more casual and warm).
-      You MUST respond in the following JSON format:
-      {
-        "type": "BATCH"
-        "messages": [
-        {"type": "TEXT", "content": "Response message to the user's message", 
-        "translated": "translate your message to Korean"}, 
-        {"type": "STICKER", "content": "cat-happy | cat-sad"}],
-        "payload": {
-          ${options?.includes(SendMessageOptionType.NEED_TRANSLATION) ? `"translated": "translate user's message to English",` : ''}
-          ${options?.includes(SendMessageOptionType.NEED_GRAMMAR_CORRECTION) ? `"corrected": "correct the grammar of the user's message",` : ''}
-        }
-      }
-        `);
+Your goal is to have a real conversation with the user.
+Adjust your tone based on the friendship level (higher = more casual and warm).
+
+CRITICAL: Respond with ONLY valid JSON. No markdown, no trailing commas, no extra text outside JSON.
+
+Required JSON structure (follow EXACTLY):
+{
+  "type": "BATCH",
+  "messages": [
+    {
+      "type": "TEXT",
+      "content": "<your reply in English>",
+      "translated": "<Korean translation of your reply>"
+    },
+    {
+      "type": "STICKER",
+      "content": "<one of: cat-happy | cat-sad>"
+    }
+  ],
+  "payload": {
+${payloadFields || ''}
+  }
+}
+
+RULES — never break these:
+1. "messages" is an array. TEXT and STICKER are SEPARATE objects inside it.
+2. Every TEXT object must have exactly: "type", "content", "translated".
+3. Every STICKER object must have exactly: "type", "content". No other fields.
+4. Do NOT merge TEXT and STICKER into one object.
+5. "payload" is always an object (empty {} if nothing to fill).
+6. No trailing commas anywhere.
+    `);
 
     return parts.join('\n');
   }

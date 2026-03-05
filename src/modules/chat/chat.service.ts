@@ -159,7 +159,6 @@ export class ChatService {
       userMessage: dto.content,
       options: dto.options,
     });
-    console.log(aiResponse, '조드새끼가 한거 ');
     const messages = aiResponse.messages.map((m) => ({
       chatId: chat.id,
       userId,
@@ -168,10 +167,9 @@ export class ChatService {
       type: m.type as MessageType,
       content: m.content,
       payload: {
-        translated: m.translated,
+        translated: m.type === 'TEXT' ? m.translated : null,
       },
     }));
-    console.log(messages, '저장할 메시지');
     const aiMsgs = await this.saveMessages(messages);
     // payload 에서 original, corrected, translated 를 추출하여 저장
     if (aiResponse.payload) {
