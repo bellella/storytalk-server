@@ -26,7 +26,6 @@ import { QuizService } from '@/modules/quiz/quiz.service';
 import {
   DialogueDto,
   EpisodeDetailDto,
-  SceneDto,
 } from '@/modules/story/dto/episode-detail.dto';
 import { StoryService } from '@/modules/story/story.service';
 import {
@@ -1538,19 +1537,11 @@ export class PlayService {
       userId
     );
 
-    const pickedIdx = episode.scenes.findIndex((s) => s.id === pickedSceneId);
-    if (pickedIdx < 0)
+    const pickedScene = episode.scenes.find((s) => s.id === pickedSceneId);
+    if (!pickedScene)
       throw new NotFoundException(
         `Scene ${pickedSceneId} not found in episode`
       );
-
-    // nextScenes: pickedScene부터 다음 BRANCH/BRANCH_TRIGGER scene 직전까지
-    const tail = episode.scenes.slice(pickedIdx);
-    const nextStopIdx = tail.findIndex(
-      (s, i) => i > 0 && s.flowType !== SceneFlowType.NORMAL
-    );
-    const nextScenes: SceneDto[] =
-      nextStopIdx >= 0 ? tail.slice(0, nextStopIdx) : tail;
 
     // 결과 저장 (key: triggerSceneId)
     const branchResults = {
@@ -1565,7 +1556,7 @@ export class PlayService {
       data: { data: { ...playData, branchResults } },
     });
 
-    return { pickedSceneId, nextScenes };
+    return { pickedSceneId, scene: pickedScene };
   }
 
   private async assertAccessiblePlayEpisode(

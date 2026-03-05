@@ -176,7 +176,7 @@ export class ChoiceSlotResponseDto {
 
 export class BranchTriggerResponseDto {
   pickedSceneId: number;
-  nextScenes: SceneDto[];
+  scene: SceneDto;
 }
 
 export class RewardGrantDto {
