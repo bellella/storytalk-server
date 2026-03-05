@@ -21,6 +21,7 @@ import { PlayModule } from './modules/episode/play/play.module';
 import { ProductsModule } from './modules/products/products.module';
 import { CheckoutModule } from './modules/checkout/checkout.module';
 import { WalletModule } from './modules/wallet/wallet.module';
+import { ReviewModule } from './modules/review/review.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { WalletModule } from './modules/wallet/wallet.module';
     ProductsModule,
     CheckoutModule,
     WalletModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -16,18 +16,6 @@ export const CorrectAndDialoguesResponseZ = z.object({
     .min(2)
     .max(10),
 
-  evaluation: z
-    .object({
-      overallScore: z.number().int().min(0).max(100).nullable().optional(),
-      grammarScore: z.number().int().min(0).max(100).nullable().optional(),
-      fluencyScore: z.number().int().min(0).max(100).nullable().optional(),
-      naturalnessScore: z.number().int().min(0).max(100).nullable().optional(),
-      cefr: z.string().nullable().optional(),
-      summary: z.string().nullable().optional(),
-      feedback: z.string().nullable().optional(),
-    })
-    .nullable()
-    .optional(),
   dataTable: z.record(z.string(), z.any()).optional().default({}),
 });
 

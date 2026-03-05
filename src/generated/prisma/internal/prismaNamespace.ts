@@ -394,6 +394,7 @@ export const ModelName = {
   Dialogue: 'Dialogue',
   StoryProgress: 'StoryProgress',
   ReviewItem: 'ReviewItem',
+  UserReviewItem: 'UserReviewItem',
   Quiz: 'Quiz',
   UserQuizSession: 'UserQuizSession',
   QuizSessionItem: 'QuizSessionItem',
@@ -435,7 +436,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "story" | "tag" | "storyTag" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterChat" | "message" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory" | "userEpisode" | "userPlayEpisode" | "playEpisodeSlot" | "slotDialogue" | "collection" | "collectionProduct" | "product" | "episodeProduct" | "userPurchase" | "coinTransaction" | "userSubscription"
+    modelProps: "user" | "story" | "tag" | "storyTag" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "userReviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterChat" | "message" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory" | "userEpisode" | "userPlayEpisode" | "playEpisodeSlot" | "slotDialogue" | "collection" | "collectionProduct" | "product" | "episodeProduct" | "userPurchase" | "coinTransaction" | "userSubscription"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1176,6 +1177,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ReviewItemCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ReviewItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserReviewItem: {
+      payload: Prisma.$UserReviewItemPayload<ExtArgs>
+      fields: Prisma.UserReviewItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserReviewItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserReviewItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserReviewItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserReviewItemPayload>
+        }
+        findFirst: {
+          args: Prisma.UserReviewItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserReviewItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserReviewItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserReviewItemPayload>
+        }
+        findMany: {
+          args: Prisma.UserReviewItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserReviewItemPayload>[]
+        }
+        create: {
+          args: Prisma.UserReviewItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserReviewItemPayload>
+        }
+        createMany: {
+          args: Prisma.UserReviewItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserReviewItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserReviewItemPayload>[]
+        }
+        delete: {
+          args: Prisma.UserReviewItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserReviewItemPayload>
+        }
+        update: {
+          args: Prisma.UserReviewItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserReviewItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserReviewItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserReviewItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserReviewItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserReviewItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserReviewItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserReviewItemPayload>
+        }
+        aggregate: {
+          args: Prisma.UserReviewItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserReviewItem>
+        }
+        groupBy: {
+          args: Prisma.UserReviewItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserReviewItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserReviewItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserReviewItemCountAggregateOutputType> | number
         }
       }
     }
@@ -3297,6 +3372,16 @@ export const ReviewItemScalarFieldEnum = {
 export type ReviewItemScalarFieldEnum = (typeof ReviewItemScalarFieldEnum)[keyof typeof ReviewItemScalarFieldEnum]
 
 
+export const UserReviewItemScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  reviewItemId: 'reviewItemId',
+  createdAt: 'createdAt'
+} as const
+
+export type UserReviewItemScalarFieldEnum = (typeof UserReviewItemScalarFieldEnum)[keyof typeof UserReviewItemScalarFieldEnum]
+
+
 export const QuizScalarFieldEnum = {
   id: 'id',
   sourceType: 'sourceType',
@@ -4352,6 +4437,7 @@ export type GlobalOmitConfig = {
   dialogue?: Prisma.DialogueOmit
   storyProgress?: Prisma.StoryProgressOmit
   reviewItem?: Prisma.ReviewItemOmit
+  userReviewItem?: Prisma.UserReviewItemOmit
   quiz?: Prisma.QuizOmit
   userQuizSession?: Prisma.UserQuizSessionOmit
   quizSessionItem?: Prisma.QuizSessionItemOmit

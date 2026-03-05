@@ -59,6 +59,7 @@ model User {
   storyProgress     StoryProgress[]
   userEpisodes      UserEpisode[]
   dialogueBookmarks dialogueBookmark[]
+  userReviewItems   UserReviewItem[]
   characterFriends  CharacterFriend[]
   Messages          Message[]
   userQuizSessions  UserQuizSession[]
@@ -287,8 +288,23 @@ model ReviewItem {
   description String?
   order       Int
 
+  userReviewItems UserReviewItem[]
+
   @@unique([episodeId, dialogueId])
   @@index([episodeId])
+}
+
+model UserReviewItem {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  reviewItemId Int
+  createdAt    DateTime @default(now())
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reviewItem ReviewItem @relation(fields: [reviewItemId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, reviewItemId])
+  @@index([userId])
 }
 
 enum QuizType {
@@ -978,7 +994,7 @@ model CoinTransaction {
   relatedPurchaseId Int?
   relatedPurchase   UserPurchase? @relation(fields: [relatedPurchaseId], references: [id], onDelete: SetNull)
 
-  // 인앱 충전이면 storeOrderId/receipt 키도 남기기 좋음
+  // 인앱 충전이면 storeOrdferId/receipt 키도 남기기 좋음
   storeOrderId String?
 
   createdAt DateTime @default(now())

@@ -68,6 +68,11 @@ export type StoryProgress = Prisma.StoryProgressModel
  */
 export type ReviewItem = Prisma.ReviewItemModel
 /**
+ * Model UserReviewItem
+ * 
+ */
+export type UserReviewItem = Prisma.UserReviewItemModel
+/**
  * Model Quiz
  * 
  */

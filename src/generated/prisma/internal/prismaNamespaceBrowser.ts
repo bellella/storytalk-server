@@ -61,6 +61,7 @@ export const ModelName = {
   Dialogue: 'Dialogue',
   StoryProgress: 'StoryProgress',
   ReviewItem: 'ReviewItem',
+  UserReviewItem: 'UserReviewItem',
   Quiz: 'Quiz',
   UserQuizSession: 'UserQuizSession',
   QuizSessionItem: 'QuizSessionItem',
@@ -258,6 +259,16 @@ export const ReviewItemScalarFieldEnum = {
 } as const
 
 export type ReviewItemScalarFieldEnum = (typeof ReviewItemScalarFieldEnum)[keyof typeof ReviewItemScalarFieldEnum]
+
+
+export const UserReviewItemScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  reviewItemId: 'reviewItemId',
+  createdAt: 'createdAt'
+} as const
+
+export type UserReviewItemScalarFieldEnum = (typeof UserReviewItemScalarFieldEnum)[keyof typeof UserReviewItemScalarFieldEnum]
 
 
 export const QuizScalarFieldEnum = {

@@ -228,6 +228,7 @@ export type ReviewItemWhereInput = {
   dialogueId?: Prisma.IntFilter<"ReviewItem"> | number
   description?: Prisma.StringNullableFilter<"ReviewItem"> | string | null
   order?: Prisma.IntFilter<"ReviewItem"> | number
+  userReviewItems?: Prisma.UserReviewItemListRelationFilter
 }
 
 export type ReviewItemOrderByWithRelationInput = {
@@ -236,6 +237,7 @@ export type ReviewItemOrderByWithRelationInput = {
   dialogueId?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrder
+  userReviewItems?: Prisma.UserReviewItemOrderByRelationAggregateInput
 }
 
 export type ReviewItemWhereUniqueInput = Prisma.AtLeast<{
@@ -248,6 +250,7 @@ export type ReviewItemWhereUniqueInput = Prisma.AtLeast<{
   dialogueId?: Prisma.IntFilter<"ReviewItem"> | number
   description?: Prisma.StringNullableFilter<"ReviewItem"> | string | null
   order?: Prisma.IntFilter<"ReviewItem"> | number
+  userReviewItems?: Prisma.UserReviewItemListRelationFilter
 }, "id" | "episodeId_dialogueId">
 
 export type ReviewItemOrderByWithAggregationInput = {
@@ -279,6 +282,7 @@ export type ReviewItemCreateInput = {
   dialogueId: number
   description?: string | null
   order: number
+  userReviewItems?: Prisma.UserReviewItemCreateNestedManyWithoutReviewItemInput
 }
 
 export type ReviewItemUncheckedCreateInput = {
@@ -287,6 +291,7 @@ export type ReviewItemUncheckedCreateInput = {
   dialogueId: number
   description?: string | null
   order: number
+  userReviewItems?: Prisma.UserReviewItemUncheckedCreateNestedManyWithoutReviewItemInput
 }
 
 export type ReviewItemUpdateInput = {
@@ -294,6 +299,7 @@ export type ReviewItemUpdateInput = {
   dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  userReviewItems?: Prisma.UserReviewItemUpdateManyWithoutReviewItemNestedInput
 }
 
 export type ReviewItemUncheckedUpdateInput = {
@@ -302,6 +308,7 @@ export type ReviewItemUncheckedUpdateInput = {
   dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  userReviewItems?: Prisma.UserReviewItemUncheckedUpdateManyWithoutReviewItemNestedInput
 }
 
 export type ReviewItemCreateManyInput = {
@@ -370,6 +377,100 @@ export type ReviewItemSumOrderByAggregateInput = {
   order?: Prisma.SortOrder
 }
 
+export type ReviewItemScalarRelationFilter = {
+  is?: Prisma.ReviewItemWhereInput
+  isNot?: Prisma.ReviewItemWhereInput
+}
+
+export type ReviewItemCreateNestedOneWithoutUserReviewItemsInput = {
+  create?: Prisma.XOR<Prisma.ReviewItemCreateWithoutUserReviewItemsInput, Prisma.ReviewItemUncheckedCreateWithoutUserReviewItemsInput>
+  connectOrCreate?: Prisma.ReviewItemCreateOrConnectWithoutUserReviewItemsInput
+  connect?: Prisma.ReviewItemWhereUniqueInput
+}
+
+export type ReviewItemUpdateOneRequiredWithoutUserReviewItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.ReviewItemCreateWithoutUserReviewItemsInput, Prisma.ReviewItemUncheckedCreateWithoutUserReviewItemsInput>
+  connectOrCreate?: Prisma.ReviewItemCreateOrConnectWithoutUserReviewItemsInput
+  upsert?: Prisma.ReviewItemUpsertWithoutUserReviewItemsInput
+  connect?: Prisma.ReviewItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ReviewItemUpdateToOneWithWhereWithoutUserReviewItemsInput, Prisma.ReviewItemUpdateWithoutUserReviewItemsInput>, Prisma.ReviewItemUncheckedUpdateWithoutUserReviewItemsInput>
+}
+
+export type ReviewItemCreateWithoutUserReviewItemsInput = {
+  episodeId: number
+  dialogueId: number
+  description?: string | null
+  order: number
+}
+
+export type ReviewItemUncheckedCreateWithoutUserReviewItemsInput = {
+  id?: number
+  episodeId: number
+  dialogueId: number
+  description?: string | null
+  order: number
+}
+
+export type ReviewItemCreateOrConnectWithoutUserReviewItemsInput = {
+  where: Prisma.ReviewItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReviewItemCreateWithoutUserReviewItemsInput, Prisma.ReviewItemUncheckedCreateWithoutUserReviewItemsInput>
+}
+
+export type ReviewItemUpsertWithoutUserReviewItemsInput = {
+  update: Prisma.XOR<Prisma.ReviewItemUpdateWithoutUserReviewItemsInput, Prisma.ReviewItemUncheckedUpdateWithoutUserReviewItemsInput>
+  create: Prisma.XOR<Prisma.ReviewItemCreateWithoutUserReviewItemsInput, Prisma.ReviewItemUncheckedCreateWithoutUserReviewItemsInput>
+  where?: Prisma.ReviewItemWhereInput
+}
+
+export type ReviewItemUpdateToOneWithWhereWithoutUserReviewItemsInput = {
+  where?: Prisma.ReviewItemWhereInput
+  data: Prisma.XOR<Prisma.ReviewItemUpdateWithoutUserReviewItemsInput, Prisma.ReviewItemUncheckedUpdateWithoutUserReviewItemsInput>
+}
+
+export type ReviewItemUpdateWithoutUserReviewItemsInput = {
+  episodeId?: Prisma.IntFieldUpdateOperationsInput | number
+  dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type ReviewItemUncheckedUpdateWithoutUserReviewItemsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  episodeId?: Prisma.IntFieldUpdateOperationsInput | number
+  dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+
+/**
+ * Count Type ReviewItemCountOutputType
+ */
+
+export type ReviewItemCountOutputType = {
+  userReviewItems: number
+}
+
+export type ReviewItemCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  userReviewItems?: boolean | ReviewItemCountOutputTypeCountUserReviewItemsArgs
+}
+
+/**
+ * ReviewItemCountOutputType without action
+ */
+export type ReviewItemCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ReviewItemCountOutputType
+   */
+  select?: Prisma.ReviewItemCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ReviewItemCountOutputType without action
+ */
+export type ReviewItemCountOutputTypeCountUserReviewItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserReviewItemWhereInput
+}
 
 
 export type ReviewItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -378,6 +479,8 @@ export type ReviewItemSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   dialogueId?: boolean
   description?: boolean
   order?: boolean
+  userReviewItems?: boolean | Prisma.ReviewItem$userReviewItemsArgs<ExtArgs>
+  _count?: boolean | Prisma.ReviewItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reviewItem"]>
 
 export type ReviewItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -405,10 +508,18 @@ export type ReviewItemSelectScalar = {
 }
 
 export type ReviewItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "episodeId" | "dialogueId" | "description" | "order", ExtArgs["result"]["reviewItem"]>
+export type ReviewItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  userReviewItems?: boolean | Prisma.ReviewItem$userReviewItemsArgs<ExtArgs>
+  _count?: boolean | Prisma.ReviewItemCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type ReviewItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ReviewItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $ReviewItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ReviewItem"
-  objects: {}
+  objects: {
+    userReviewItems: Prisma.$UserReviewItemPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     episodeId: number
@@ -809,6 +920,7 @@ readonly fields: ReviewItemFieldRefs;
  */
 export interface Prisma__ReviewItemClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  userReviewItems<T extends Prisma.ReviewItem$userReviewItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReviewItem$userReviewItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserReviewItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -860,6 +972,10 @@ export type ReviewItemFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.ReviewItemOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewItemInclude<ExtArgs> | null
+  /**
    * Filter, which ReviewItem to fetch.
    */
   where: Prisma.ReviewItemWhereUniqueInput
@@ -878,6 +994,10 @@ export type ReviewItemFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extens
    */
   omit?: Prisma.ReviewItemOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewItemInclude<ExtArgs> | null
+  /**
    * Filter, which ReviewItem to fetch.
    */
   where: Prisma.ReviewItemWhereUniqueInput
@@ -895,6 +1015,10 @@ export type ReviewItemFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Omit specific fields from the ReviewItem
    */
   omit?: Prisma.ReviewItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewItemInclude<ExtArgs> | null
   /**
    * Filter, which ReviewItem to fetch.
    */
@@ -944,6 +1068,10 @@ export type ReviewItemFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.ReviewItemOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewItemInclude<ExtArgs> | null
+  /**
    * Filter, which ReviewItem to fetch.
    */
   where?: Prisma.ReviewItemWhereInput
@@ -992,6 +1120,10 @@ export type ReviewItemFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   omit?: Prisma.ReviewItemOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewItemInclude<ExtArgs> | null
+  /**
    * Filter, which ReviewItems to fetch.
    */
   where?: Prisma.ReviewItemWhereInput
@@ -1034,6 +1166,10 @@ export type ReviewItemCreateArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the ReviewItem
    */
   omit?: Prisma.ReviewItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewItemInclude<ExtArgs> | null
   /**
    * The data needed to create a ReviewItem.
    */
@@ -1082,6 +1218,10 @@ export type ReviewItemUpdateArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the ReviewItem
    */
   omit?: Prisma.ReviewItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewItemInclude<ExtArgs> | null
   /**
    * The data needed to update a ReviewItem.
    */
@@ -1149,6 +1289,10 @@ export type ReviewItemUpsertArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   omit?: Prisma.ReviewItemOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewItemInclude<ExtArgs> | null
+  /**
    * The filter to search for the ReviewItem to update in case it exists.
    */
   where: Prisma.ReviewItemWhereUniqueInput
@@ -1175,6 +1319,10 @@ export type ReviewItemDeleteArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   omit?: Prisma.ReviewItemOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewItemInclude<ExtArgs> | null
+  /**
    * Filter which ReviewItem to delete.
    */
   where: Prisma.ReviewItemWhereUniqueInput
@@ -1195,6 +1343,30 @@ export type ReviewItemDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
+ * ReviewItem.userReviewItems
+ */
+export type ReviewItem$userReviewItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserReviewItem
+   */
+  select?: Prisma.UserReviewItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserReviewItem
+   */
+  omit?: Prisma.UserReviewItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserReviewItemInclude<ExtArgs> | null
+  where?: Prisma.UserReviewItemWhereInput
+  orderBy?: Prisma.UserReviewItemOrderByWithRelationInput | Prisma.UserReviewItemOrderByWithRelationInput[]
+  cursor?: Prisma.UserReviewItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserReviewItemScalarFieldEnum | Prisma.UserReviewItemScalarFieldEnum[]
+}
+
+/**
  * ReviewItem without action
  */
 export type ReviewItemDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1206,4 +1378,8 @@ export type ReviewItemDefaultArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the ReviewItem
    */
   omit?: Prisma.ReviewItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewItemInclude<ExtArgs> | null
 }
