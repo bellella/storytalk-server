@@ -122,7 +122,8 @@ export class StoryService {
       episodes: story.episodes.map((ep, idx) => {
         const prevEp = idx > 0 ? story.episodes[idx - 1] : null;
         const isLocked = prevEp
-          ? userEpisodeMap[prevEp.id]?.currentStage !== EpisodeStage.QUIZ_COMPLETED
+          ? userEpisodeMap[prevEp.id]?.currentStage !==
+            EpisodeStage.QUIZ_COMPLETED
           : false;
         return {
           id: ep.id,
@@ -151,6 +152,7 @@ export class StoryService {
     const stories = await this.prisma.story.findMany({
       where: {
         type: StoryType.NOVEL,
+        status: PublishStatus.PUBLISHED,
         ...(cursorString
           ? {
               id: {
@@ -312,7 +314,10 @@ export class StoryService {
           speakerRole: dialogue.speakerRole,
           characterId,
           characterName: isUserSpeaker
-            ? (userName ?? dialogue.character?.name ?? dialogue.characterName ?? undefined)
+            ? (userName ??
+              dialogue.character?.name ??
+              dialogue.characterName ??
+              undefined)
             : (dialogue.character?.name ?? dialogue.characterName ?? undefined),
           englishText: replaceUserName(dialogue.englishText),
           koreanText: replaceUserName(dialogue.koreanText),
@@ -491,32 +496,34 @@ export class StoryService {
 
     return userEpisodes
       .filter((ue) => ue.episode.story !== null)
-      .map((ue): RecentlyPlayedEpisodeItemDto => ({
-        story: {
-          id: ue.episode.story!.id,
-          title: ue.episode.story!.title,
-          koreanTitle: ue.episode.story!.koreanTitle,
-          type: ue.episode.story!.type,
-          level: ue.episode.story!.level,
-          icon: ue.episode.story!.icon,
-          coverImage: ue.episode.story!.coverImage,
-        },
-        episode: {
-          id: ue.episode.id,
-          title: ue.episode.title,
-          koreanTitle: ue.episode.koreanTitle,
-          order: ue.episode.order,
-          thumbnailUrl: ue.episode.thumbnailUrl ?? null,
-        },
-        userEpisode: {
-          currentStage: ue.currentStage,
-          isCompleted: ue.isCompleted,
-          score: ue.score,
-          lastSceneId: ue.lastSceneId,
-          startedAt: ue.startedAt.toISOString(),
-          completedAt: ue.completedAt?.toISOString() ?? null,
-        },
-      }));
+      .map(
+        (ue): RecentlyPlayedEpisodeItemDto => ({
+          story: {
+            id: ue.episode.story!.id,
+            title: ue.episode.story!.title,
+            koreanTitle: ue.episode.story!.koreanTitle,
+            type: ue.episode.story!.type,
+            level: ue.episode.story!.level,
+            icon: ue.episode.story!.icon,
+            coverImage: ue.episode.story!.coverImage,
+          },
+          episode: {
+            id: ue.episode.id,
+            title: ue.episode.title,
+            koreanTitle: ue.episode.koreanTitle,
+            order: ue.episode.order,
+            thumbnailUrl: ue.episode.thumbnailUrl ?? null,
+          },
+          userEpisode: {
+            currentStage: ue.currentStage,
+            isCompleted: ue.isCompleted,
+            score: ue.score,
+            lastSceneId: ue.lastSceneId,
+            startedAt: ue.startedAt.toISOString(),
+            completedAt: ue.completedAt?.toISOString() ?? null,
+          },
+        })
+      );
   }
 
   private mapChoiceOptions(data: any): ChoiceOptionDto[] {
