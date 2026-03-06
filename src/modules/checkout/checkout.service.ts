@@ -26,7 +26,15 @@ export class CheckoutService {
     // 1. 상품 조회 및 유효성 검증
     const product = await this.prisma.product.findUnique({
       where: { id: productId, isActive: true },
-      include: { episodes: { select: { episodeId: true }, take: 1 } },
+      include: {
+        episodes: {
+          take: 1,
+          select: {
+            episodeId: true,
+            episode: { select: { playMode: true } },
+          },
+        },
+      },
     });
     if (!product) {
       throw new NotFoundException(`Product #${productId} not found`);
@@ -91,7 +99,9 @@ export class CheckoutService {
             episodeId,
             purchaseId: newPurchase.id,
             source: PlayEpisodeSource.PURCHASE,
-            mode: PlayEpisodeMode.CHAT_WITH_QUIZ,
+            mode:
+              product.episodes[0]?.episode?.playMode ??
+              PlayEpisodeMode.ROLEPLAY,
           },
         });
 

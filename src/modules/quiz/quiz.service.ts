@@ -52,13 +52,25 @@ export class QuizService {
       QuizType.SENTENCE_CLOZE_BUILD,
       QuizType.SPEAK_REPEAT,
     ];
-    console.log(sentences);
-    const quizzes = await Promise.all(
-      sentences.map((src, i) => {
+    const newCount = sentences.length;
+
+    await this.prisma.$transaction(async (tx) => {
+      // 기존 퀴즈 order를 뒤로 밀기 (새 퀴즈가 앞에 오도록)
+      if (newCount > 0) {
+        await tx.$executeRaw`
+          UPDATE "Quiz"
+          SET "order" = COALESCE("order", 0) + ${newCount}
+          WHERE "sourceType" = ${sourceType} AND "sourceId" = ${sourceId}
+        `;
+      }
+
+      // 새 퀴즈 생성 (order 1, 2, 3... 으로 앞에 배치)
+      for (let i = 0; i < sentences.length; i++) {
+        const src = sentences[i];
         const type = quizTypes[i % quizTypes.length];
         const data = this.buildQuizData(type, src.englishText, src.koreanText);
 
-        return this.prisma.quiz.create({
+        await tx.quiz.create({
           data: {
             type,
             sourceType,
@@ -70,8 +82,8 @@ export class QuizService {
             data,
           },
         });
-      })
-    );
+      }
+    });
 
     return {
       success: true,

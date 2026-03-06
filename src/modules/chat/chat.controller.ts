@@ -12,7 +12,7 @@ import { ApiBearerAuth, ApiOkResponse, ApiProperty } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ReqUser } from '@/common/decorators/user.decorator';
 import { ChatService } from './chat.service';
-import { ChatRoomListItemDto } from './dto/chat-room-list-item.dto';
+import { ChatRoomInfoDto, ChatRoomListItemDto } from './dto/chat-room-list-item.dto';
 import { ChatMessageDto } from './dto/chat-message.dto';
 import { SendMessageDto } from './dto/send-message.dto';
 import { SendMessageResponseDto } from './dto/send-message-response.dto';
@@ -37,6 +37,15 @@ export class ChatController {
     @ReqUser('id') userId: number
   ): Promise<ChatRoomListItemDto[]> {
     return this.chatService.getChatRooms(userId);
+  }
+
+  @Get(':chatId')
+  @ApiOkResponse({ type: ChatRoomInfoDto })
+  async getChatRoom(
+    @ReqUser('id') userId: number,
+    @Param('chatId', ParseIntPipe) chatId: number
+  ): Promise<ChatRoomInfoDto> {
+    return this.chatService.getChatRoom(chatId, userId);
   }
 
   @Get(':chatId/messages')

@@ -7,7 +7,7 @@ import { forwardRef, Inject } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { OpenAiService } from '../ai/openai.service';
 import { ChatGateway } from './chat.gateway';
-import { ChatRoomListItemDto } from './dto/chat-room-list-item.dto';
+import { ChatRoomInfoDto, ChatRoomListItemDto } from './dto/chat-room-list-item.dto';
 import { ChatMessageDto, MessagePayloadDto } from './dto/chat-message.dto';
 import { SendMessageResponseDto } from './dto/send-message-response.dto';
 import { CursorRequestDto } from '@/common/dtos/cursor-request.dto';
@@ -28,6 +28,37 @@ export class ChatService {
   // ────────────────────────────────────────────
   // Read
   // ────────────────────────────────────────────
+
+  async getChatRoom(chatId: number, userId: number): Promise<ChatRoomInfoDto> {
+    const chat = await this.prisma.characterChat.findUnique({
+      where: { id: chatId },
+      include: {
+        character: {
+          select: {
+            id: true,
+            name: true,
+            koreanName: true,
+            avatarImage: true,
+            mainImage: true,
+            description: true,
+            personality: true,
+            greetingMessage: true,
+          },
+        },
+      },
+    });
+
+    if (!chat) throw new NotFoundException('Chat not found');
+    if (chat.userId !== userId) throw new ForbiddenException('Not your chat');
+
+    return {
+      chatId: chat.id,
+      character: chat.character,
+      unreadCount: chat.unreadCount,
+      isPinned: chat.isPinned,
+      lastMessageAt: chat.lastMessageAt,
+    };
+  }
 
   async getChatRooms(userId: number): Promise<ChatRoomListItemDto[]> {
     const chats = await this.prisma.characterChat.findMany({

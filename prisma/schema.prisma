@@ -147,9 +147,10 @@ enum EpisodeType {
 }
 
 model Episode {
-  id                Int         @id @default(autoincrement())
+  id                Int              @id @default(autoincrement())
   storyId           Int?
-  type              EpisodeType @default(NOVEL)
+  type              EpisodeType      @default(NOVEL)
+  playMode          PlayEpisodeMode? // PLAY 타입인 경우 평가/퀴즈 여부 결정
   title             String
   koreanTitle       String?
   order             Int
@@ -714,9 +715,8 @@ model UserEpisode {
 }
 
 enum PlayEpisodeMode {
-  FREE_CHAT // 자유대화만
-  CHAT_WITH_EVAL // 자유대화 + 교정/평가/점수
-  CHAT_WITH_QUIZ // 대화 + 퀴즈 스테이지
+  ROLEPLAY
+  ROLEPLAY_WITH_EVAL
 }
 
 enum SlotStatus {
@@ -743,7 +743,7 @@ model UserPlayEpisode {
   userId    Int
   episodeId Int
 
-  mode  PlayEpisodeMode @default(FREE_CHAT)
+  mode  PlayEpisodeMode @default(ROLEPLAY)
   title String?
 
   startedAt   DateTime  @default(now())

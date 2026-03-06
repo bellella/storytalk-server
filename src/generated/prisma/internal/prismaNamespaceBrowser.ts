@@ -183,6 +183,7 @@ export const EpisodeScalarFieldEnum = {
   id: 'id',
   storyId: 'storyId',
   type: 'type',
+  playMode: 'playMode',
   title: 'title',
   koreanTitle: 'koreanTitle',
   order: 'order',

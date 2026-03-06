@@ -193,9 +193,8 @@ export type EpisodeStage = (typeof EpisodeStage)[keyof typeof EpisodeStage]
 
 
 export const PlayEpisodeMode = {
-  FREE_CHAT: 'FREE_CHAT',
-  CHAT_WITH_EVAL: 'CHAT_WITH_EVAL',
-  CHAT_WITH_QUIZ: 'CHAT_WITH_QUIZ'
+  ROLEPLAY: 'ROLEPLAY',
+  ROLEPLAY_WITH_EVAL: 'ROLEPLAY_WITH_EVAL'
 } as const
 
 export type PlayEpisodeMode = (typeof PlayEpisodeMode)[keyof typeof PlayEpisodeMode]

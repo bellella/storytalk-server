@@ -41,7 +41,10 @@ import { GenerateDialoguesResponseZ } from './ai/generateDialogues.schema';
 import { buildPickSentencesForQuizPrompt } from './ai/pickSentencesForQuiz.prompt';
 import { PickSentencesForQuizResponseZ } from './ai/pickSentencesForQuiz.schema';
 import { buildEvaluateSlotsPrompt } from './ai/evaluateSlots.prompt';
-import { EvaluateSlotsResponse, EvaluateSlotsResponseZ } from './ai/evaluateSlots.schema';
+import {
+  EvaluateSlotsResponse,
+  EvaluateSlotsResponseZ,
+} from './ai/evaluateSlots.schema';
 import {
   AiInputSlotDto,
   AiInputSlotResponseDto,
@@ -735,8 +738,11 @@ export class PlayService {
           throw new BadRequestException('AI returned invalid JSON');
         }
 
-        const { type: inputType, messages, dataTable } =
-          CorrectAndDialoguesResponseZ.parse(parsed);
+        const {
+          type: inputType,
+          messages,
+          dataTable,
+        } = CorrectAndDialoguesResponseZ.parse(parsed);
 
         // charImageLabel → imageUrl resolve용 맵
         const aiCharIds = messages
@@ -840,13 +846,16 @@ export class PlayService {
    * - 진행중 ACTIVE slot 있으면 ENDED 처리
    * - playEpisode.completedAt / isCompleted / currentStage 업데이트
    * - 결과 요약(result) 생성(최소: evaluation aggregate)해서 play.result에 저장
-   * - mode=CHAT_WITH_QUIZ면 currentStage를 QUIZ_IN_PROGRESS로 넘기거나,
-   *   퀴즈 생성 로직을 호출해서 QUIZ_IN_PROGRESS로 전환
    */
   async completePlayEpisode(
     userId: number,
     playEpisodeId: number
   ): Promise<CompletePlayResponseDto> {
+    console.log(
+      'completePlayEpisode여기맞냐고 시발아아아아아!!',
+      userId,
+      playEpisodeId
+    );
     const play = await this.assertAccessiblePlayEpisode(userId, playEpisodeId);
 
     // 이미 완료면 그대로 반환
@@ -879,23 +888,26 @@ export class PlayService {
 
         // 2) CHAT_WITH_EVAL 모드면 슬롯 데이터 모아서 AI 평가
         const slots = await tx.playEpisodeSlot.findMany({
-          where: { playEpisodeId },
+          where: { playEpisodeId, type: PlayEpisodeSlotType.AI_INPUT },
           select: { data: true },
           orderBy: { id: 'asc' },
         });
 
         let evaluation: EvaluateSlotsResponse | null = null;
 
-        if (play.mode === PlayEpisodeMode.CHAT_WITH_EVAL) {
+        if (play.mode === PlayEpisodeMode.ROLEPLAY_WITH_EVAL) {
           const turns = slots
             .map((s, i) => {
               const d = s.data as Record<string, any> | null;
+              console.log(d, 'slot data' + i);
               if (!d?.userInput || !d?.correctedText) return null;
               return {
                 index: i + 1,
                 userInput: d.userInput as string,
                 correctedText: d.correctedText as string,
-                inputType: (d.inputType ?? 'correction') as 'correction' | 'translation',
+                inputType: (d.inputType ?? 'correction') as
+                  | 'correction'
+                  | 'translation',
               };
             })
             .filter((t): t is NonNullable<typeof t> => t !== null);
@@ -903,8 +915,10 @@ export class PlayService {
           if (turns.length > 0) {
             const evalPrompt = buildEvaluateSlotsPrompt({ turns });
             const evalRaw = await this.openAiService.callApi(evalPrompt);
+            console.log(evalRaw, 'evalRaw');
             try {
-              const parsed = typeof evalRaw === 'string' ? JSON.parse(evalRaw) : evalRaw;
+              const parsed =
+                typeof evalRaw === 'string' ? JSON.parse(evalRaw) : evalRaw;
               evaluation = EvaluateSlotsResponseZ.parse(parsed);
             } catch {
               // 파싱 실패 시 evaluation 없이 진행
@@ -920,10 +934,7 @@ export class PlayService {
           : null;
 
         // 3) 모드에 따른 stage 전환
-        const nextStage =
-          play.mode === PlayEpisodeMode.CHAT_WITH_QUIZ
-            ? EpisodeStage.QUIZ_IN_PROGRESS
-            : EpisodeStage.STORY_COMPLETED;
+        const nextStage = EpisodeStage.QUIZ_IN_PROGRESS;
 
         // 4) play 업데이트
         const updated = await tx.userPlayEpisode.update({
@@ -942,13 +953,10 @@ export class PlayService {
           },
         });
 
-        // 5) 퀴즈가 필요한 모드면 여기서 생성 트리거(너 테이블 있다고 했으니 연결만)
-        // TODO: mode === CHAT_WITH_QUIZ 인 경우:
         // - episode/scene/dialogue 기반으로 퀴즈 생성
         // - UserQuizSession 생성/연결
-        // - nextStage 유지(QUIZ_IN_PROGRESS)
 
-        if (play.mode === PlayEpisodeMode.CHAT_WITH_QUIZ) {
+        if (play.mode === PlayEpisodeMode.ROLEPLAY_WITH_EVAL) {
           const slotData = await this.prisma.playEpisodeSlot.findMany({
             where: { playEpisodeId },
             select: {

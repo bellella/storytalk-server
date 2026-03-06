@@ -277,6 +277,13 @@ export type EnumEpisodeTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumEpisodeTypeFilter<$PrismaModel> | $Enums.EpisodeType
 }
 
+export type EnumPlayEpisodeModeNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayEpisodeMode | Prisma.EnumPlayEpisodeModeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PlayEpisodeMode[] | Prisma.ListEnumPlayEpisodeModeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PlayEpisodeMode[] | Prisma.ListEnumPlayEpisodeModeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPlayEpisodeModeNullableFilter<$PrismaModel> | $Enums.PlayEpisodeMode | null
+}
+
 export type EnumEpisodeTypeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.EpisodeType | Prisma.EnumEpisodeTypeFieldRefInput<$PrismaModel>
   in?: $Enums.EpisodeType[] | Prisma.ListEnumEpisodeTypeFieldRefInput<$PrismaModel>
@@ -285,6 +292,16 @@ export type EnumEpisodeTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumEpisodeTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumEpisodeTypeFilter<$PrismaModel>
+}
+
+export type EnumPlayEpisodeModeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayEpisodeMode | Prisma.EnumPlayEpisodeModeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PlayEpisodeMode[] | Prisma.ListEnumPlayEpisodeModeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PlayEpisodeMode[] | Prisma.ListEnumPlayEpisodeModeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPlayEpisodeModeNullableWithAggregatesFilter<$PrismaModel> | $Enums.PlayEpisodeMode | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPlayEpisodeModeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPlayEpisodeModeNullableFilter<$PrismaModel>
 }
 
 export type EnumSceneTypeFilter<$PrismaModel = never> = {
@@ -1164,6 +1181,13 @@ export type NestedEnumEpisodeTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumEpisodeTypeFilter<$PrismaModel> | $Enums.EpisodeType
 }
 
+export type NestedEnumPlayEpisodeModeNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayEpisodeMode | Prisma.EnumPlayEpisodeModeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PlayEpisodeMode[] | Prisma.ListEnumPlayEpisodeModeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PlayEpisodeMode[] | Prisma.ListEnumPlayEpisodeModeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPlayEpisodeModeNullableFilter<$PrismaModel> | $Enums.PlayEpisodeMode | null
+}
+
 export type NestedEnumEpisodeTypeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.EpisodeType | Prisma.EnumEpisodeTypeFieldRefInput<$PrismaModel>
   in?: $Enums.EpisodeType[] | Prisma.ListEnumEpisodeTypeFieldRefInput<$PrismaModel>
@@ -1172,6 +1196,16 @@ export type NestedEnumEpisodeTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumEpisodeTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumEpisodeTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumPlayEpisodeModeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayEpisodeMode | Prisma.EnumPlayEpisodeModeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PlayEpisodeMode[] | Prisma.ListEnumPlayEpisodeModeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PlayEpisodeMode[] | Prisma.ListEnumPlayEpisodeModeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPlayEpisodeModeNullableWithAggregatesFilter<$PrismaModel> | $Enums.PlayEpisodeMode | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPlayEpisodeModeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPlayEpisodeModeNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumSceneTypeFilter<$PrismaModel = never> = {

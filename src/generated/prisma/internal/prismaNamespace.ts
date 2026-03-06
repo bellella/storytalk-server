@@ -3294,6 +3294,7 @@ export const EpisodeScalarFieldEnum = {
   id: 'id',
   storyId: 'storyId',
   type: 'type',
+  playMode: 'playMode',
   title: 'title',
   koreanTitle: 'koreanTitle',
   order: 'order',
@@ -3944,6 +3945,20 @@ export type ListEnumEpisodeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'PlayEpisodeMode'
+ */
+export type EnumPlayEpisodeModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlayEpisodeMode'>
+    
+
+
+/**
+ * Reference to a field of type 'PlayEpisodeMode[]'
+ */
+export type ListEnumPlayEpisodeModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlayEpisodeMode[]'>
+    
+
+
+/**
  * Reference to a field of type 'SceneType'
  */
 export type EnumSceneTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SceneType'>
@@ -4178,20 +4193,6 @@ export type EnumEpisodeStageFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'EpisodeStage[]'
  */
 export type ListEnumEpisodeStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EpisodeStage[]'>
-    
-
-
-/**
- * Reference to a field of type 'PlayEpisodeMode'
- */
-export type EnumPlayEpisodeModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlayEpisodeMode'>
-    
-
-
-/**
- * Reference to a field of type 'PlayEpisodeMode[]'
- */
-export type ListEnumPlayEpisodeModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlayEpisodeMode[]'>
     
 
 

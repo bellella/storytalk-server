@@ -11,6 +11,49 @@ export class ChatRoomCharacterDto {
   avatarImage?: string | null;
 }
 
+export class ChatRoomCharacterDetailDto {
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  name: string;
+
+  @ApiPropertyOptional()
+  koreanName?: string | null;
+
+  @ApiPropertyOptional()
+  avatarImage?: string | null;
+
+  @ApiPropertyOptional()
+  mainImage?: string | null;
+
+  @ApiPropertyOptional()
+  description?: string | null;
+
+  @ApiPropertyOptional()
+  personality?: string | null;
+
+  @ApiPropertyOptional()
+  greetingMessage?: string | null;
+}
+
+export class ChatRoomInfoDto {
+  @ApiProperty()
+  chatId: number;
+
+  @ApiProperty({ type: ChatRoomCharacterDetailDto })
+  character: ChatRoomCharacterDetailDto;
+
+  @ApiProperty({ default: 0 })
+  unreadCount: number;
+
+  @ApiProperty()
+  isPinned: boolean;
+
+  @ApiPropertyOptional()
+  lastMessageAt?: Date | null;
+}
+
 export class ChatRoomLastMessageDto {
   @ApiProperty()
   id: number;
