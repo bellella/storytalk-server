@@ -107,10 +107,12 @@ export class ChatService {
 
     const take = query.limit + 1;
     const messages = await this.prisma.message.findMany({
-      where: { chatId },
-      ...(query.cursor ? { cursor: { id: query.cursor }, skip: 1 } : {}),
+      where: {
+        chatId,
+        ...(query.cursor ? { id: { lt: query.cursor } } : {}),
+      },
       take,
-      orderBy: { createdAt: 'asc' },
+      orderBy: { id: 'desc' },
       select: {
         id: true,
         type: true,
@@ -122,8 +124,8 @@ export class ChatService {
     });
 
     const hasNext = messages.length > query.limit;
-    const items = hasNext ? messages.slice(0, query.limit) : messages;
-    const nextCursor = hasNext ? items[items.length - 1].id : null;
+    const items = (hasNext ? messages.slice(0, query.limit) : messages).reverse();
+    const nextCursor = hasNext ? items[0].id : null;
 
     return new CursorResponseDto(
       items.map((m) => ({
