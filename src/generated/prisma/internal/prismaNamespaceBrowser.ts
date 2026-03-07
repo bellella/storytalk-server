@@ -72,6 +72,7 @@ export const ModelName = {
   CharacterFriend: 'CharacterFriend',
   CharacterChat: 'CharacterChat',
   Message: 'Message',
+  Sticker: 'Sticker',
   dialogueBookmark: 'dialogueBookmark',
   EpisodeReward: 'EpisodeReward',
   XpLevel: 'XpLevel',
@@ -87,7 +88,8 @@ export const ModelName = {
   EpisodeProduct: 'EpisodeProduct',
   UserPurchase: 'UserPurchase',
   CoinTransaction: 'CoinTransaction',
-  UserSubscription: 'UserSubscription'
+  UserSubscription: 'UserSubscription',
+  PromptTemplate: 'PromptTemplate'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -421,6 +423,19 @@ export const MessageScalarFieldEnum = {
 export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
 
 
+export const StickerScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  imageUrl: 'imageUrl',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StickerScalarFieldEnum = (typeof StickerScalarFieldEnum)[keyof typeof StickerScalarFieldEnum]
+
+
 export const DialogueBookmarkScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -658,6 +673,22 @@ export const UserSubscriptionScalarFieldEnum = {
 } as const
 
 export type UserSubscriptionScalarFieldEnum = (typeof UserSubscriptionScalarFieldEnum)[keyof typeof UserSubscriptionScalarFieldEnum]
+
+
+export const PromptTemplateScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  name: 'name',
+  type: 'type',
+  description: 'description',
+  content: 'content',
+  version: 'version',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PromptTemplateScalarFieldEnum = (typeof PromptTemplateScalarFieldEnum)[keyof typeof PromptTemplateScalarFieldEnum]
 
 
 export const SortOrder = {

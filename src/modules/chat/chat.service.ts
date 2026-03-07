@@ -14,6 +14,7 @@ import { CursorRequestDto } from '@/common/dtos/cursor-request.dto';
 import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
 import { MessageType } from '@/generated/prisma/client';
 import { SendMessageDto, SendMessageOptionType } from './dto/send-message.dto';
+import { StickerDto } from './dto/sticker.dto';
 import { SaveMessageData } from '@/types/ai.type';
 
 @Injectable()
@@ -95,6 +96,20 @@ export class ChatService {
       unreadCount: chat.unreadCount,
       isPinned: chat.isPinned,
       lastMessageAt: chat.lastMessageAt,
+    }));
+  }
+
+  async getStickers(): Promise<StickerDto[]> {
+    const stickers = await this.prisma.sticker.findMany({
+      where: { isActive: true },
+      orderBy: { id: 'asc' },
+      select: { id: true, code: true, name: true, imageUrl: true },
+    });
+    return stickers.map((s) => ({
+      id: s.id,
+      code: s.code,
+      name: s.name,
+      imageUrl: s.imageUrl,
     }));
   }
 

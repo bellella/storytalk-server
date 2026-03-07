@@ -14,6 +14,7 @@ import { ReqUser } from '@/common/decorators/user.decorator';
 import { ChatService } from './chat.service';
 import { ChatRoomInfoDto, ChatRoomListItemDto } from './dto/chat-room-list-item.dto';
 import { ChatMessageDto } from './dto/chat-message.dto';
+import { StickerDto } from './dto/sticker.dto';
 import { SendMessageDto } from './dto/send-message.dto';
 import { SendMessageResponseDto } from './dto/send-message-response.dto';
 import { CursorRequestDto } from '@/common/dtos/cursor-request.dto';
@@ -37,6 +38,12 @@ export class ChatController {
     @ReqUser('id') userId: number
   ): Promise<ChatRoomListItemDto[]> {
     return this.chatService.getChatRooms(userId);
+  }
+
+  @Get('stickers')
+  @ApiOkResponse({ type: [StickerDto] })
+  async getStickers(): Promise<StickerDto[]> {
+    return this.chatService.getStickers();
   }
 
   @Get(':chatId')

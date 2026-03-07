@@ -301,3 +301,15 @@ export const SubscriptionStatus = {
 } as const
 
 export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
+
+
+export const PromptType = {
+  EVALUATION: 'EVALUATION',
+  QUIZ: 'QUIZ',
+  AI_SLOT: 'AI_SLOT',
+  AI_INPUT_SLOT: 'AI_INPUT_SLOT',
+  CHAT: 'CHAT',
+  OTHER: 'OTHER'
+} as const
+
+export type PromptType = (typeof PromptType)[keyof typeof PromptType]

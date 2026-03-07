@@ -905,6 +905,23 @@ export type EnumSubscriptionStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumSubscriptionStatusFilter<$PrismaModel>
 }
 
+export type EnumPromptTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromptType | Prisma.EnumPromptTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.PromptType[] | Prisma.ListEnumPromptTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PromptType[] | Prisma.ListEnumPromptTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPromptTypeFilter<$PrismaModel> | $Enums.PromptType
+}
+
+export type EnumPromptTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromptType | Prisma.EnumPromptTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.PromptType[] | Prisma.ListEnumPromptTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PromptType[] | Prisma.ListEnumPromptTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPromptTypeWithAggregatesFilter<$PrismaModel> | $Enums.PromptType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPromptTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPromptTypeFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -1742,6 +1759,23 @@ export type NestedEnumSubscriptionStatusWithAggregatesFilter<$PrismaModel = neve
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumSubscriptionStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumSubscriptionStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumPromptTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromptType | Prisma.EnumPromptTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.PromptType[] | Prisma.ListEnumPromptTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PromptType[] | Prisma.ListEnumPromptTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPromptTypeFilter<$PrismaModel> | $Enums.PromptType
+}
+
+export type NestedEnumPromptTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PromptType | Prisma.EnumPromptTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.PromptType[] | Prisma.ListEnumPromptTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PromptType[] | Prisma.ListEnumPromptTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPromptTypeWithAggregatesFilter<$PrismaModel> | $Enums.PromptType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPromptTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPromptTypeFilter<$PrismaModel>
 }
 
 

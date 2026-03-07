@@ -571,6 +571,16 @@ model Message {
   @@index([characterId, createdAt])
 }
 
+model Sticker {
+  id          Int      @id @default(autoincrement())
+  code        String   @unique
+  name        String
+  imageUrl    String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 //////////////////////////////////////////////////////
 // dialogue BOOKMARK SYSTEM
 //////////////////////////////////////////////////////
@@ -1037,4 +1047,28 @@ model UserSubscription {
   product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
 
   @@index([userId, status])
+}
+
+enum PromptType {
+  EVALUATION
+  QUIZ
+  AI_SLOT
+  AI_INPUT_SLOT
+  CHAT
+  OTHER
+}
+
+model PromptTemplate {
+  id           Int         @id @default(autoincrement())
+  key          String      @unique
+  name         String
+  type         PromptType
+  description  String?
+  content      String      @db.Text
+  variables    Json?
+  version      Int         @default(1)
+  isActive     Boolean     @default(true)
+
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 }

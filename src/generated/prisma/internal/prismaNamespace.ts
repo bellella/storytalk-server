@@ -405,6 +405,7 @@ export const ModelName = {
   CharacterFriend: 'CharacterFriend',
   CharacterChat: 'CharacterChat',
   Message: 'Message',
+  Sticker: 'Sticker',
   dialogueBookmark: 'dialogueBookmark',
   EpisodeReward: 'EpisodeReward',
   XpLevel: 'XpLevel',
@@ -420,7 +421,8 @@ export const ModelName = {
   EpisodeProduct: 'EpisodeProduct',
   UserPurchase: 'UserPurchase',
   CoinTransaction: 'CoinTransaction',
-  UserSubscription: 'UserSubscription'
+  UserSubscription: 'UserSubscription',
+  PromptTemplate: 'PromptTemplate'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -436,7 +438,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "story" | "tag" | "storyTag" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "userReviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterChat" | "message" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory" | "userEpisode" | "userPlayEpisode" | "playEpisodeSlot" | "slotDialogue" | "collection" | "collectionProduct" | "product" | "episodeProduct" | "userPurchase" | "coinTransaction" | "userSubscription"
+    modelProps: "user" | "story" | "tag" | "storyTag" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "userReviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterChat" | "message" | "sticker" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory" | "userEpisode" | "userPlayEpisode" | "playEpisodeSlot" | "slotDialogue" | "collection" | "collectionProduct" | "product" | "episodeProduct" | "userPurchase" | "coinTransaction" | "userSubscription" | "promptTemplate"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1994,6 +1996,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Sticker: {
+      payload: Prisma.$StickerPayload<ExtArgs>
+      fields: Prisma.StickerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StickerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StickerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickerPayload>
+        }
+        findFirst: {
+          args: Prisma.StickerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StickerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickerPayload>
+        }
+        findMany: {
+          args: Prisma.StickerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickerPayload>[]
+        }
+        create: {
+          args: Prisma.StickerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickerPayload>
+        }
+        createMany: {
+          args: Prisma.StickerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StickerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickerPayload>[]
+        }
+        delete: {
+          args: Prisma.StickerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickerPayload>
+        }
+        update: {
+          args: Prisma.StickerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickerPayload>
+        }
+        deleteMany: {
+          args: Prisma.StickerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StickerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StickerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickerPayload>[]
+        }
+        upsert: {
+          args: Prisma.StickerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickerPayload>
+        }
+        aggregate: {
+          args: Prisma.StickerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSticker>
+        }
+        groupBy: {
+          args: Prisma.StickerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StickerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StickerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StickerCountAggregateOutputType> | number
+        }
+      }
+    }
     dialogueBookmark: {
       payload: Prisma.$dialogueBookmarkPayload<ExtArgs>
       fields: Prisma.dialogueBookmarkFieldRefs
@@ -3178,6 +3254,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PromptTemplate: {
+      payload: Prisma.$PromptTemplatePayload<ExtArgs>
+      fields: Prisma.PromptTemplateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PromptTemplateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromptTemplatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PromptTemplateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromptTemplatePayload>
+        }
+        findFirst: {
+          args: Prisma.PromptTemplateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromptTemplatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PromptTemplateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromptTemplatePayload>
+        }
+        findMany: {
+          args: Prisma.PromptTemplateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromptTemplatePayload>[]
+        }
+        create: {
+          args: Prisma.PromptTemplateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromptTemplatePayload>
+        }
+        createMany: {
+          args: Prisma.PromptTemplateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PromptTemplateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromptTemplatePayload>[]
+        }
+        delete: {
+          args: Prisma.PromptTemplateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromptTemplatePayload>
+        }
+        update: {
+          args: Prisma.PromptTemplateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromptTemplatePayload>
+        }
+        deleteMany: {
+          args: Prisma.PromptTemplateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PromptTemplateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PromptTemplateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromptTemplatePayload>[]
+        }
+        upsert: {
+          args: Prisma.PromptTemplateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PromptTemplatePayload>
+        }
+        aggregate: {
+          args: Prisma.PromptTemplateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePromptTemplate>
+        }
+        groupBy: {
+          args: Prisma.PromptTemplateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PromptTemplateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PromptTemplateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PromptTemplateCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3532,6 +3682,19 @@ export const MessageScalarFieldEnum = {
 export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
 
 
+export const StickerScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  imageUrl: 'imageUrl',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StickerScalarFieldEnum = (typeof StickerScalarFieldEnum)[keyof typeof StickerScalarFieldEnum]
+
+
 export const DialogueBookmarkScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -3769,6 +3932,22 @@ export const UserSubscriptionScalarFieldEnum = {
 } as const
 
 export type UserSubscriptionScalarFieldEnum = (typeof UserSubscriptionScalarFieldEnum)[keyof typeof UserSubscriptionScalarFieldEnum]
+
+
+export const PromptTemplateScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  name: 'name',
+  type: 'type',
+  description: 'description',
+  content: 'content',
+  version: 'version',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PromptTemplateScalarFieldEnum = (typeof PromptTemplateScalarFieldEnum)[keyof typeof PromptTemplateScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -4349,6 +4528,20 @@ export type EnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
 export type ListEnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionStatus[]'>
     
 
+
+/**
+ * Reference to a field of type 'PromptType'
+ */
+export type EnumPromptTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PromptType'>
+    
+
+
+/**
+ * Reference to a field of type 'PromptType[]'
+ */
+export type ListEnumPromptTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PromptType[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -4449,6 +4642,7 @@ export type GlobalOmitConfig = {
   characterFriend?: Prisma.CharacterFriendOmit
   characterChat?: Prisma.CharacterChatOmit
   message?: Prisma.MessageOmit
+  sticker?: Prisma.StickerOmit
   dialogueBookmark?: Prisma.dialogueBookmarkOmit
   episodeReward?: Prisma.EpisodeRewardOmit
   xpLevel?: Prisma.XpLevelOmit
@@ -4465,6 +4659,7 @@ export type GlobalOmitConfig = {
   userPurchase?: Prisma.UserPurchaseOmit
   coinTransaction?: Prisma.CoinTransactionOmit
   userSubscription?: Prisma.UserSubscriptionOmit
+  promptTemplate?: Prisma.PromptTemplateOmit
 }
 
 /* Types for Logging */
