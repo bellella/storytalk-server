@@ -1,3 +1,12 @@
+/** PromptTemplate용 변수 객체 생성 */
+export function preparePickSentencesForQuizVariables(
+  sentences: string[]
+): Record<string, string> {
+  return {
+    sentencesList: sentences.map((d) => `- ${d}`).join('\n'),
+  };
+}
+
 export function buildPickSentencesForQuizPrompt(sentences: string[]) {
   return `
 # Role

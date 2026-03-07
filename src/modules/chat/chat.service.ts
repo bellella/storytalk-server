@@ -7,7 +7,10 @@ import { forwardRef, Inject } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { OpenAiService } from '../ai/openai.service';
 import { ChatGateway } from './chat.gateway';
-import { ChatRoomInfoDto, ChatRoomListItemDto } from './dto/chat-room-list-item.dto';
+import {
+  ChatRoomInfoDto,
+  ChatRoomListItemDto,
+} from './dto/chat-room-list-item.dto';
 import { ChatMessageDto, MessagePayloadDto } from './dto/chat-message.dto';
 import { SendMessageResponseDto } from './dto/send-message-response.dto';
 import { CursorRequestDto } from '@/common/dtos/cursor-request.dto';
@@ -16,12 +19,18 @@ import { MessageType } from '@/generated/prisma/client';
 import { SendMessageDto, SendMessageOptionType } from './dto/send-message.dto';
 import { StickerDto } from './dto/sticker.dto';
 import { SaveMessageData } from '@/types/ai.type';
+import { PromptTemplateService } from '@/modules/prompt-template/prompt-template.service';
+import { prepareChatPromptVariables } from '@/modules/ai/chat.prompt';
+import { formatCreatedAtDisplay } from '@/common/utils/date.util';
+
+const CHAT_PROMPT_KEY = 'CHAT_PROMPT_KEY';
 
 @Injectable()
 export class ChatService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly openAiService: OpenAiService,
+    private readonly promptTemplateService: PromptTemplateService,
     @Inject(forwardRef(() => ChatGateway))
     private readonly chatGateway: ChatGateway
   ) {}
@@ -90,7 +99,7 @@ export class ChatService {
             type: chat.lastMessage.type,
             content: this.truncate(chat.lastMessage.content, 60),
             isFromUser: chat.lastMessage.isFromUser,
-            createdAt: chat.lastMessage.createdAt,
+            createdAt: formatCreatedAtDisplay(chat.lastMessage.createdAt),
           }
         : null,
       unreadCount: chat.unreadCount,
@@ -139,7 +148,9 @@ export class ChatService {
     });
 
     const hasNext = messages.length > query.limit;
-    const items = (hasNext ? messages.slice(0, query.limit) : messages).reverse();
+    const items = (
+      hasNext ? messages.slice(0, query.limit) : messages
+    ).reverse();
     const nextCursor = hasNext ? items[0].id : null;
 
     return new CursorResponseDto(
@@ -149,7 +160,7 @@ export class ChatService {
         content: m.content,
         payload: m.payload as unknown as MessagePayloadDto,
         isFromUser: m.isFromUser,
-        createdAt: m.createdAt,
+        createdAt: formatCreatedAtDisplay(m.createdAt),
       })),
       nextCursor
     );
@@ -193,6 +204,19 @@ export class ChatService {
 
     const affinity = await this.getAffinity(userId, characterId);
 
+    const promptOptions = {
+      type: dto.type,
+      aiPrompt: character.aiPrompt || '',
+      affinity,
+      userName: user?.name ?? null,
+      options: dto.options,
+    };
+    const templatePrompt =
+      await this.promptTemplateService.getPromptContentOrNull(
+        CHAT_PROMPT_KEY,
+        prepareChatPromptVariables(promptOptions)
+      );
+
     // AI 응답 생성
     const aiResponse = await this.openAiService.generateCharacterResponse({
       type: dto.type,
@@ -206,6 +230,7 @@ export class ChatService {
       })),
       userMessage: dto.content,
       options: dto.options,
+      systemPrompt: templatePrompt ?? undefined,
     });
     const messages = aiResponse.messages.map((m) => ({
       chatId: chat.id,
@@ -379,7 +404,7 @@ export class ChatService {
       content: msg.content,
       payload: msg.payload ?? null,
       isFromUser: msg.isFromUser,
-      createdAt: msg.createdAt,
+      createdAt: formatCreatedAtDisplay(msg.createdAt),
     };
   }
 

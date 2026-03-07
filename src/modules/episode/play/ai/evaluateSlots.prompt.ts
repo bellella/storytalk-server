@@ -7,6 +7,20 @@ export interface EvaluateSlotsPromptArgs {
   }[];
 }
 
+/** PromptTemplate용 변수 객체 생성 */
+export function prepareEvaluateSlotsVariables(
+  args: EvaluateSlotsPromptArgs
+): Record<string, string> {
+  const turnList = args.turns
+    .map((t) =>
+      t.inputType === 'correction'
+        ? `Turn ${t.index}: original="${t.userInput}" → corrected="${t.correctedText}"`
+        : `Turn ${t.index}: (Korean input, translated to) "${t.correctedText}"`
+    )
+    .join('\n');
+  return { turnList };
+}
+
 export function buildEvaluateSlotsPrompt(args: EvaluateSlotsPromptArgs): string {
   const turnList = args.turns
     .map((t) =>

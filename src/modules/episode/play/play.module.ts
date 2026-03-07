@@ -5,9 +5,16 @@ import { PlayController } from './play.controller';
 import { QuizModule } from '@/modules/quiz/quiz.module';
 import { StoryModule } from '@/modules/story/story.module';
 import { CharacterModule } from '@/modules/character/character.module';
+import { PromptTemplateModule } from '@/modules/prompt-template/prompt-template.module';
 
 @Module({
-  imports: [AiModule, QuizModule, StoryModule, CharacterModule],
+  imports: [
+    AiModule,
+    QuizModule,
+    StoryModule,
+    CharacterModule,
+    PromptTemplateModule,
+  ],
   controllers: [PlayController],
   providers: [PlayService],
 })

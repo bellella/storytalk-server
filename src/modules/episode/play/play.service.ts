@@ -34,13 +34,25 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { buildCorrectAndDialoguesPrompt } from './ai/correctAndDialogues.prompt';
+import {
+  buildCorrectAndDialoguesPrompt,
+  prepareCorrectAndDialoguesVariables,
+} from './ai/correctAndDialogues.prompt';
 import { CorrectAndDialoguesResponseZ } from './ai/correctAndDialogues.schema';
-import { buildGenerateDialoguesPrompt } from './ai/generateDialogues.prompt';
+import {
+  buildGenerateDialoguesPrompt,
+  prepareGenerateDialoguesVariables,
+} from './ai/generateDialogues.prompt';
 import { GenerateDialoguesResponseZ } from './ai/generateDialogues.schema';
-import { buildPickSentencesForQuizPrompt } from './ai/pickSentencesForQuiz.prompt';
+import {
+  buildPickSentencesForQuizPrompt,
+  preparePickSentencesForQuizVariables,
+} from './ai/pickSentencesForQuiz.prompt';
 import { PickSentencesForQuizResponseZ } from './ai/pickSentencesForQuiz.schema';
-import { buildEvaluateSlotsPrompt } from './ai/evaluateSlots.prompt';
+import {
+  buildEvaluateSlotsPrompt,
+  prepareEvaluateSlotsVariables,
+} from './ai/evaluateSlots.prompt';
 import {
   EvaluateSlotsResponse,
   EvaluateSlotsResponseZ,
@@ -61,6 +73,14 @@ import {
 } from './dto/play.dto';
 import { UpdatePlayDto } from './dto/update-play.dto';
 import { AiSlotDialogueData, AiSlotDialogueInput } from './types/ai.type';
+import { PromptTemplateService } from '@/modules/prompt-template/prompt-template.service';
+
+const PROMPT_KEYS = {
+  AI_SLOT_GENERATE_DIALOGUES: 'AI_SLOT_GENERATE_DIALOGUES',
+  AI_INPUT_SLOT_CORRECT_AND_DIALOGUES: 'AI_INPUT_SLOT_CORRECT_AND_DIALOGUES',
+  AI_INPUT_SLOT_EVALUATE: 'AI_INPUT_SLOT_EVALUATE',
+  AI_INPUT_SLOT_PICK_DIALOGUES_FOR_QUIZ: 'AI_INPUT_SLOT_PICK_DIALOGUES_FOR_QUIZ',
+} as const;
 
 @Injectable()
 export class PlayService {
@@ -69,7 +89,8 @@ export class PlayService {
     private openAiService: OpenAiService,
     private quizService: QuizService,
     private storyService: StoryService,
-    private characterService: CharacterService
+    private characterService: CharacterService,
+    private promptTemplateService: PromptTemplateService
   ) {}
 
   async getMyPlayEpisodes(
@@ -522,13 +543,18 @@ export class PlayService {
           select: { id: true, dialogueId: true },
         });
 
-        const prompt = buildGenerateDialoguesPrompt({
+        const genArgs = {
           userCharacter: dialogueData.userCharacter,
           npcCharacters: dialogueData.npcCharacters,
           situation: dialogueData.situation ?? 'Roleplay conversation',
           constraints: dialogueData.constraints,
           dataTable: playEpisode.data as Record<string, any>,
-        });
+        };
+        const prompt =
+          (await this.promptTemplateService.getPromptContentOrNull(
+            PROMPT_KEYS.AI_SLOT_GENERATE_DIALOGUES,
+            prepareGenerateDialoguesVariables(genArgs)
+          )) ?? buildGenerateDialoguesPrompt(genArgs);
         const rawText = await this.openAiService.callApi(prompt);
         console.log(prompt);
         console.log(rawText);
@@ -718,7 +744,7 @@ export class PlayService {
           }));
         }
 
-        const prompt = buildCorrectAndDialoguesPrompt({
+        const correctArgs = {
           userCharacter: dialogueData.userCharacter,
           npcCharacters: dialogueData.npcCharacters,
           situation: dialogueData.situation ?? 'Roleplay conversation',
@@ -727,7 +753,12 @@ export class PlayService {
           constraints: dialogueData.constraints,
           messagesInTheScene,
           dataTable: play.data as Record<string, any>,
-        });
+        };
+        const prompt =
+          (await this.promptTemplateService.getPromptContentOrNull(
+            PROMPT_KEYS.AI_INPUT_SLOT_CORRECT_AND_DIALOGUES,
+            prepareCorrectAndDialoguesVariables(correctArgs)
+          )) ?? buildCorrectAndDialoguesPrompt(correctArgs);
         const rawText = await this.openAiService.callApi(prompt);
         console.log(prompt);
         console.log(rawText);
@@ -913,7 +944,11 @@ export class PlayService {
             .filter((t): t is NonNullable<typeof t> => t !== null);
 
           if (turns.length > 0) {
-            const evalPrompt = buildEvaluateSlotsPrompt({ turns });
+            const evalPrompt =
+              (await this.promptTemplateService.getPromptContentOrNull(
+                PROMPT_KEYS.AI_INPUT_SLOT_EVALUATE,
+                prepareEvaluateSlotsVariables({ turns })
+              )) ?? buildEvaluateSlotsPrompt({ turns });
             const evalRaw = await this.openAiService.callApi(evalPrompt);
             console.log(evalRaw, 'evalRaw');
             try {
@@ -972,7 +1007,11 @@ export class PlayService {
             s.slotDialogues.map((d) => d.englishText ?? '')
           );
 
-          const prompt = buildPickSentencesForQuizPrompt(slotSentences);
+          const prompt =
+            (await this.promptTemplateService.getPromptContentOrNull(
+              PROMPT_KEYS.AI_INPUT_SLOT_PICK_DIALOGUES_FOR_QUIZ,
+              preparePickSentencesForQuizVariables(slotSentences)
+            )) ?? buildPickSentencesForQuizPrompt(slotSentences);
           const rawText = await this.openAiService.callApi(prompt);
           console.log(prompt);
           console.log(rawText);

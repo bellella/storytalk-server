@@ -28,6 +28,8 @@ export class GenerateCharacterResponseOptions {
   recentMessages: MessageContext[];
   userMessage: string;
   options?: SendMessageOptionType[];
+  /** PromptTemplate에서 가져온 시스템 프롬프트 (있으면 buildSystemPrompt 대신 사용) */
+  systemPrompt?: string;
 }
 
 export class BuildSystemPromptData {

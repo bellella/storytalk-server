@@ -24,6 +24,6 @@ export class ChatMessageDto {
   @ApiProperty()
   isFromUser: boolean;
 
-  @ApiProperty()
-  createdAt: Date;
+  @ApiProperty({ description: '표시용 시간 (예: 오후 3:58)' })
+  createdAt: string;
 }

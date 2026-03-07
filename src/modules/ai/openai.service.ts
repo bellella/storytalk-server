@@ -24,13 +24,15 @@ export class OpenAiService {
   async generateCharacterResponse(
     options: GenerateCharacterResponseOptions
   ): Promise<AiResponse> {
-    const systemPrompt = this.buildSystemPrompt({
-      type: options.type,
-      aiPrompt: options.aiPrompt,
-      affinity: options.affinity,
-      userName: options.userName,
-      options: options.options,
-    });
+    const systemPrompt =
+      options.systemPrompt ??
+      this.buildSystemPrompt({
+        type: options.type,
+        aiPrompt: options.aiPrompt,
+        affinity: options.affinity,
+        userName: options.userName,
+        options: options.options,
+      });
     const messages = this.buildMessageHistory(
       options.recentMessages,
       options.userMessage

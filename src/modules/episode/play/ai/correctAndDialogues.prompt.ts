@@ -14,6 +14,35 @@ export interface CorrectAndDialoguesPromptArgs {
   }[];
 }
 
+/** PromptTemplate용 변수 객체 생성 */
+export function prepareCorrectAndDialoguesVariables(
+  args: CorrectAndDialoguesPromptArgs
+): Record<string, string> {
+  const constraints = (args.constraints ?? []).map((c) => `- ${c}`).join('\n');
+  const npcList = args.npcCharacters
+    .map((c) => {
+      const personality = c.personality
+        ? `, personality="${c.personality}"`
+        : '';
+      return `- id=${c.characterId}, name="${c.name}"${personality}`;
+    })
+    .join('\n');
+  const sceneMessages = args.messagesInTheScene?.length
+    ? `\nPrevious messages:\n${args.messagesInTheScene.map((m) => `- ${m.characterName}: ${m.englishText}`).join('\n')}\n`
+    : '';
+  return {
+    userCharacterLine: `id=${args.userCharacter.characterId}, name="${args.userCharacter.name}"${args.userCharacter.personality ? `, personality="${args.userCharacter.personality}"` : ''}`,
+    npcList,
+    situation: args.situation,
+    constraints: constraints ? `Constraints:\n${constraints}\n` : '',
+    sceneMessages,
+    userText: args.userText,
+    dataTablePrompt: args.dataTablePrompt ? `DataTable:\n${args.dataTablePrompt}\n` : '',
+    userCharacterId: String(args.userCharacter.characterId),
+    userCharacterName: args.userCharacter.name,
+  };
+}
+
 export function buildCorrectAndDialoguesPrompt(
   args: CorrectAndDialoguesPromptArgs
 ) {
