@@ -38,6 +38,7 @@ export type CollectionSumAggregateOutputType = {
 
 export type CollectionMinAggregateOutputType = {
   id: number | null
+  key: $Enums.CollectionKey | null
   title: string | null
   description: string | null
   thumbnailUrl: string | null
@@ -51,6 +52,7 @@ export type CollectionMinAggregateOutputType = {
 
 export type CollectionMaxAggregateOutputType = {
   id: number | null
+  key: $Enums.CollectionKey | null
   title: string | null
   description: string | null
   thumbnailUrl: string | null
@@ -64,6 +66,7 @@ export type CollectionMaxAggregateOutputType = {
 
 export type CollectionCountAggregateOutputType = {
   id: number
+  key: number
   title: number
   description: number
   thumbnailUrl: number
@@ -89,6 +92,7 @@ export type CollectionSumAggregateInputType = {
 
 export type CollectionMinAggregateInputType = {
   id?: true
+  key?: true
   title?: true
   description?: true
   thumbnailUrl?: true
@@ -102,6 +106,7 @@ export type CollectionMinAggregateInputType = {
 
 export type CollectionMaxAggregateInputType = {
   id?: true
+  key?: true
   title?: true
   description?: true
   thumbnailUrl?: true
@@ -115,6 +120,7 @@ export type CollectionMaxAggregateInputType = {
 
 export type CollectionCountAggregateInputType = {
   id?: true
+  key?: true
   title?: true
   description?: true
   thumbnailUrl?: true
@@ -215,6 +221,7 @@ export type CollectionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 
 export type CollectionGroupByOutputType = {
   id: number
+  key: $Enums.CollectionKey
   title: string
   description: string | null
   thumbnailUrl: string | null
@@ -251,6 +258,7 @@ export type CollectionWhereInput = {
   OR?: Prisma.CollectionWhereInput[]
   NOT?: Prisma.CollectionWhereInput | Prisma.CollectionWhereInput[]
   id?: Prisma.IntFilter<"Collection"> | number
+  key?: Prisma.EnumCollectionKeyFilter<"Collection"> | $Enums.CollectionKey
   title?: Prisma.StringFilter<"Collection"> | string
   description?: Prisma.StringNullableFilter<"Collection"> | string | null
   thumbnailUrl?: Prisma.StringNullableFilter<"Collection"> | string | null
@@ -265,6 +273,7 @@ export type CollectionWhereInput = {
 
 export type CollectionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  key?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -282,6 +291,7 @@ export type CollectionWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.CollectionWhereInput | Prisma.CollectionWhereInput[]
   OR?: Prisma.CollectionWhereInput[]
   NOT?: Prisma.CollectionWhereInput | Prisma.CollectionWhereInput[]
+  key?: Prisma.EnumCollectionKeyFilter<"Collection"> | $Enums.CollectionKey
   title?: Prisma.StringFilter<"Collection"> | string
   description?: Prisma.StringNullableFilter<"Collection"> | string | null
   thumbnailUrl?: Prisma.StringNullableFilter<"Collection"> | string | null
@@ -296,6 +306,7 @@ export type CollectionWhereUniqueInput = Prisma.AtLeast<{
 
 export type CollectionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  key?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -317,6 +328,7 @@ export type CollectionScalarWhereWithAggregatesInput = {
   OR?: Prisma.CollectionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CollectionScalarWhereWithAggregatesInput | Prisma.CollectionScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Collection"> | number
+  key?: Prisma.EnumCollectionKeyWithAggregatesFilter<"Collection"> | $Enums.CollectionKey
   title?: Prisma.StringWithAggregatesFilter<"Collection"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Collection"> | string | null
   thumbnailUrl?: Prisma.StringNullableWithAggregatesFilter<"Collection"> | string | null
@@ -329,6 +341,7 @@ export type CollectionScalarWhereWithAggregatesInput = {
 }
 
 export type CollectionCreateInput = {
+  key?: $Enums.CollectionKey
   title: string
   description?: string | null
   thumbnailUrl?: string | null
@@ -343,6 +356,7 @@ export type CollectionCreateInput = {
 
 export type CollectionUncheckedCreateInput = {
   id?: number
+  key?: $Enums.CollectionKey
   title: string
   description?: string | null
   thumbnailUrl?: string | null
@@ -356,6 +370,7 @@ export type CollectionUncheckedCreateInput = {
 }
 
 export type CollectionUpdateInput = {
+  key?: Prisma.EnumCollectionKeyFieldUpdateOperationsInput | $Enums.CollectionKey
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -370,6 +385,7 @@ export type CollectionUpdateInput = {
 
 export type CollectionUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  key?: Prisma.EnumCollectionKeyFieldUpdateOperationsInput | $Enums.CollectionKey
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -384,6 +400,7 @@ export type CollectionUncheckedUpdateInput = {
 
 export type CollectionCreateManyInput = {
   id?: number
+  key?: $Enums.CollectionKey
   title: string
   description?: string | null
   thumbnailUrl?: string | null
@@ -396,6 +413,7 @@ export type CollectionCreateManyInput = {
 }
 
 export type CollectionUpdateManyMutationInput = {
+  key?: Prisma.EnumCollectionKeyFieldUpdateOperationsInput | $Enums.CollectionKey
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -409,6 +427,7 @@ export type CollectionUpdateManyMutationInput = {
 
 export type CollectionUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  key?: Prisma.EnumCollectionKeyFieldUpdateOperationsInput | $Enums.CollectionKey
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -422,6 +441,7 @@ export type CollectionUncheckedUpdateManyInput = {
 
 export type CollectionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  key?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrder
@@ -440,6 +460,7 @@ export type CollectionAvgOrderByAggregateInput = {
 
 export type CollectionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  key?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrder
@@ -453,6 +474,7 @@ export type CollectionMaxOrderByAggregateInput = {
 
 export type CollectionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  key?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   thumbnailUrl?: Prisma.SortOrder
@@ -474,6 +496,10 @@ export type CollectionScalarRelationFilter = {
   isNot?: Prisma.CollectionWhereInput
 }
 
+export type EnumCollectionKeyFieldUpdateOperationsInput = {
+  set?: $Enums.CollectionKey
+}
+
 export type CollectionCreateNestedOneWithoutProductsInput = {
   create?: Prisma.XOR<Prisma.CollectionCreateWithoutProductsInput, Prisma.CollectionUncheckedCreateWithoutProductsInput>
   connectOrCreate?: Prisma.CollectionCreateOrConnectWithoutProductsInput
@@ -489,6 +515,7 @@ export type CollectionUpdateOneRequiredWithoutProductsNestedInput = {
 }
 
 export type CollectionCreateWithoutProductsInput = {
+  key?: $Enums.CollectionKey
   title: string
   description?: string | null
   thumbnailUrl?: string | null
@@ -502,6 +529,7 @@ export type CollectionCreateWithoutProductsInput = {
 
 export type CollectionUncheckedCreateWithoutProductsInput = {
   id?: number
+  key?: $Enums.CollectionKey
   title: string
   description?: string | null
   thumbnailUrl?: string | null
@@ -530,6 +558,7 @@ export type CollectionUpdateToOneWithWhereWithoutProductsInput = {
 }
 
 export type CollectionUpdateWithoutProductsInput = {
+  key?: Prisma.EnumCollectionKeyFieldUpdateOperationsInput | $Enums.CollectionKey
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -543,6 +572,7 @@ export type CollectionUpdateWithoutProductsInput = {
 
 export type CollectionUncheckedUpdateWithoutProductsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  key?: Prisma.EnumCollectionKeyFieldUpdateOperationsInput | $Enums.CollectionKey
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -587,6 +617,7 @@ export type CollectionCountOutputTypeCountProductsArgs<ExtArgs extends runtime.T
 
 export type CollectionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  key?: boolean
   title?: boolean
   description?: boolean
   thumbnailUrl?: boolean
@@ -602,6 +633,7 @@ export type CollectionSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
 
 export type CollectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  key?: boolean
   title?: boolean
   description?: boolean
   thumbnailUrl?: boolean
@@ -615,6 +647,7 @@ export type CollectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
 
 export type CollectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  key?: boolean
   title?: boolean
   description?: boolean
   thumbnailUrl?: boolean
@@ -628,6 +661,7 @@ export type CollectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
 
 export type CollectionSelectScalar = {
   id?: boolean
+  key?: boolean
   title?: boolean
   description?: boolean
   thumbnailUrl?: boolean
@@ -639,7 +673,7 @@ export type CollectionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type CollectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "thumbnailUrl" | "order" | "isActive" | "startsAt" | "endsAt" | "createdAt" | "updatedAt", ExtArgs["result"]["collection"]>
+export type CollectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "key" | "title" | "description" | "thumbnailUrl" | "order" | "isActive" | "startsAt" | "endsAt" | "createdAt" | "updatedAt", ExtArgs["result"]["collection"]>
 export type CollectionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | Prisma.Collection$productsArgs<ExtArgs>
   _count?: boolean | Prisma.CollectionCountOutputTypeDefaultArgs<ExtArgs>
@@ -654,6 +688,7 @@ export type $CollectionPayload<ExtArgs extends runtime.Types.Extensions.Internal
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
+    key: $Enums.CollectionKey
     title: string
     description: string | null
     thumbnailUrl: string | null
@@ -1088,6 +1123,7 @@ export interface Prisma__CollectionClient<T, Null = never, ExtArgs extends runti
  */
 export interface CollectionFieldRefs {
   readonly id: Prisma.FieldRef<"Collection", 'Int'>
+  readonly key: Prisma.FieldRef<"Collection", 'CollectionKey'>
   readonly title: Prisma.FieldRef<"Collection", 'String'>
   readonly description: Prisma.FieldRef<"Collection", 'String'>
   readonly thumbnailUrl: Prisma.FieldRef<"Collection", 'String'>

@@ -3838,6 +3838,7 @@ export type SlotDialogueScalarFieldEnum = (typeof SlotDialogueScalarFieldEnum)[k
 
 export const CollectionScalarFieldEnum = {
   id: 'id',
+  key: 'key',
   title: 'title',
   description: 'description',
   thumbnailUrl: 'thumbnailUrl',
@@ -3941,6 +3942,7 @@ export const PromptTemplateScalarFieldEnum = {
   type: 'type',
   description: 'description',
   content: 'content',
+  variables: 'variables',
   version: 'version',
   isActive: 'isActive',
   createdAt: 'createdAt',
@@ -4456,6 +4458,20 @@ export type EnumSlotMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'SlotMessageType[]'
  */
 export type ListEnumSlotMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SlotMessageType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CollectionKey'
+ */
+export type EnumCollectionKeyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CollectionKey'>
+    
+
+
+/**
+ * Reference to a field of type 'CollectionKey[]'
+ */
+export type ListEnumCollectionKeyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CollectionKey[]'>
     
 
 

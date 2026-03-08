@@ -69,6 +69,7 @@ export type PromptTemplateCountAggregateOutputType = {
   type: number
   description: number
   content: number
+  variables: number
   version: number
   isActive: number
   createdAt: number
@@ -120,6 +121,7 @@ export type PromptTemplateCountAggregateInputType = {
   type?: true
   description?: true
   content?: true
+  variables?: true
   version?: true
   isActive?: true
   createdAt?: true
@@ -220,6 +222,7 @@ export type PromptTemplateGroupByOutputType = {
   type: $Enums.PromptType
   description: string | null
   content: string
+  variables: runtime.JsonValue | null
   version: number
   isActive: boolean
   createdAt: Date
@@ -256,6 +259,7 @@ export type PromptTemplateWhereInput = {
   type?: Prisma.EnumPromptTypeFilter<"PromptTemplate"> | $Enums.PromptType
   description?: Prisma.StringNullableFilter<"PromptTemplate"> | string | null
   content?: Prisma.StringFilter<"PromptTemplate"> | string
+  variables?: Prisma.JsonNullableFilter<"PromptTemplate">
   version?: Prisma.IntFilter<"PromptTemplate"> | number
   isActive?: Prisma.BoolFilter<"PromptTemplate"> | boolean
   createdAt?: Prisma.DateTimeFilter<"PromptTemplate"> | Date | string
@@ -269,6 +273,7 @@ export type PromptTemplateOrderByWithRelationInput = {
   type?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrder
+  variables?: Prisma.SortOrderInput | Prisma.SortOrder
   version?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -285,6 +290,7 @@ export type PromptTemplateWhereUniqueInput = Prisma.AtLeast<{
   type?: Prisma.EnumPromptTypeFilter<"PromptTemplate"> | $Enums.PromptType
   description?: Prisma.StringNullableFilter<"PromptTemplate"> | string | null
   content?: Prisma.StringFilter<"PromptTemplate"> | string
+  variables?: Prisma.JsonNullableFilter<"PromptTemplate">
   version?: Prisma.IntFilter<"PromptTemplate"> | number
   isActive?: Prisma.BoolFilter<"PromptTemplate"> | boolean
   createdAt?: Prisma.DateTimeFilter<"PromptTemplate"> | Date | string
@@ -298,6 +304,7 @@ export type PromptTemplateOrderByWithAggregationInput = {
   type?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrder
+  variables?: Prisma.SortOrderInput | Prisma.SortOrder
   version?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -319,6 +326,7 @@ export type PromptTemplateScalarWhereWithAggregatesInput = {
   type?: Prisma.EnumPromptTypeWithAggregatesFilter<"PromptTemplate"> | $Enums.PromptType
   description?: Prisma.StringNullableWithAggregatesFilter<"PromptTemplate"> | string | null
   content?: Prisma.StringWithAggregatesFilter<"PromptTemplate"> | string
+  variables?: Prisma.JsonNullableWithAggregatesFilter<"PromptTemplate">
   version?: Prisma.IntWithAggregatesFilter<"PromptTemplate"> | number
   isActive?: Prisma.BoolWithAggregatesFilter<"PromptTemplate"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PromptTemplate"> | Date | string
@@ -331,6 +339,7 @@ export type PromptTemplateCreateInput = {
   type: $Enums.PromptType
   description?: string | null
   content: string
+  variables?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   version?: number
   isActive?: boolean
   createdAt?: Date | string
@@ -344,6 +353,7 @@ export type PromptTemplateUncheckedCreateInput = {
   type: $Enums.PromptType
   description?: string | null
   content: string
+  variables?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   version?: number
   isActive?: boolean
   createdAt?: Date | string
@@ -356,6 +366,7 @@ export type PromptTemplateUpdateInput = {
   type?: Prisma.EnumPromptTypeFieldUpdateOperationsInput | $Enums.PromptType
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  variables?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   version?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -369,6 +380,7 @@ export type PromptTemplateUncheckedUpdateInput = {
   type?: Prisma.EnumPromptTypeFieldUpdateOperationsInput | $Enums.PromptType
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  variables?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   version?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -382,6 +394,7 @@ export type PromptTemplateCreateManyInput = {
   type: $Enums.PromptType
   description?: string | null
   content: string
+  variables?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   version?: number
   isActive?: boolean
   createdAt?: Date | string
@@ -394,6 +407,7 @@ export type PromptTemplateUpdateManyMutationInput = {
   type?: Prisma.EnumPromptTypeFieldUpdateOperationsInput | $Enums.PromptType
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  variables?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   version?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -407,6 +421,7 @@ export type PromptTemplateUncheckedUpdateManyInput = {
   type?: Prisma.EnumPromptTypeFieldUpdateOperationsInput | $Enums.PromptType
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  variables?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   version?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -420,6 +435,7 @@ export type PromptTemplateCountOrderByAggregateInput = {
   type?: Prisma.SortOrder
   description?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  variables?: Prisma.SortOrder
   version?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -475,6 +491,7 @@ export type PromptTemplateSelect<ExtArgs extends runtime.Types.Extensions.Intern
   type?: boolean
   description?: boolean
   content?: boolean
+  variables?: boolean
   version?: boolean
   isActive?: boolean
   createdAt?: boolean
@@ -488,6 +505,7 @@ export type PromptTemplateSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   type?: boolean
   description?: boolean
   content?: boolean
+  variables?: boolean
   version?: boolean
   isActive?: boolean
   createdAt?: boolean
@@ -501,6 +519,7 @@ export type PromptTemplateSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   type?: boolean
   description?: boolean
   content?: boolean
+  variables?: boolean
   version?: boolean
   isActive?: boolean
   createdAt?: boolean
@@ -514,13 +533,14 @@ export type PromptTemplateSelectScalar = {
   type?: boolean
   description?: boolean
   content?: boolean
+  variables?: boolean
   version?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PromptTemplateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "key" | "name" | "type" | "description" | "content" | "version" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["promptTemplate"]>
+export type PromptTemplateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "key" | "name" | "type" | "description" | "content" | "variables" | "version" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["promptTemplate"]>
 
 export type $PromptTemplatePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PromptTemplate"
@@ -532,6 +552,7 @@ export type $PromptTemplatePayload<ExtArgs extends runtime.Types.Extensions.Inte
     type: $Enums.PromptType
     description: string | null
     content: string
+    variables: runtime.JsonValue | null
     version: number
     isActive: boolean
     createdAt: Date
@@ -965,6 +986,7 @@ export interface PromptTemplateFieldRefs {
   readonly type: Prisma.FieldRef<"PromptTemplate", 'PromptType'>
   readonly description: Prisma.FieldRef<"PromptTemplate", 'String'>
   readonly content: Prisma.FieldRef<"PromptTemplate", 'String'>
+  readonly variables: Prisma.FieldRef<"PromptTemplate", 'Json'>
   readonly version: Prisma.FieldRef<"PromptTemplate", 'Int'>
   readonly isActive: Prisma.FieldRef<"PromptTemplate", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"PromptTemplate", 'DateTime'>

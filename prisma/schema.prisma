@@ -858,8 +858,14 @@ model SlotDialogue {
   @@index([playEpisodeId, sceneId])
 }
 
+enum CollectionKey {
+  TOP   // 상단 노출
+  OTHER // 기타 (안정화 전)
+}
+
 model Collection {
   id           Int     @id @default(autoincrement())
+  key          CollectionKey @default(OTHER)
   title        String
   description  String?
   thumbnailUrl String?

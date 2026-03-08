@@ -820,6 +820,23 @@ export type EnumSlotMessageTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumSlotMessageTypeFilter<$PrismaModel>
 }
 
+export type EnumCollectionKeyFilter<$PrismaModel = never> = {
+  equals?: $Enums.CollectionKey | Prisma.EnumCollectionKeyFieldRefInput<$PrismaModel>
+  in?: $Enums.CollectionKey[] | Prisma.ListEnumCollectionKeyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CollectionKey[] | Prisma.ListEnumCollectionKeyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCollectionKeyFilter<$PrismaModel> | $Enums.CollectionKey
+}
+
+export type EnumCollectionKeyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CollectionKey | Prisma.EnumCollectionKeyFieldRefInput<$PrismaModel>
+  in?: $Enums.CollectionKey[] | Prisma.ListEnumCollectionKeyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CollectionKey[] | Prisma.ListEnumCollectionKeyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCollectionKeyWithAggregatesFilter<$PrismaModel> | $Enums.CollectionKey
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCollectionKeyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCollectionKeyFilter<$PrismaModel>
+}
+
 export type EnumProductTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.ProductType | Prisma.EnumProductTypeFieldRefInput<$PrismaModel>
   in?: $Enums.ProductType[] | Prisma.ListEnumProductTypeFieldRefInput<$PrismaModel>
@@ -1674,6 +1691,23 @@ export type NestedEnumSlotMessageTypeWithAggregatesFilter<$PrismaModel = never> 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumSlotMessageTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumSlotMessageTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumCollectionKeyFilter<$PrismaModel = never> = {
+  equals?: $Enums.CollectionKey | Prisma.EnumCollectionKeyFieldRefInput<$PrismaModel>
+  in?: $Enums.CollectionKey[] | Prisma.ListEnumCollectionKeyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CollectionKey[] | Prisma.ListEnumCollectionKeyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCollectionKeyFilter<$PrismaModel> | $Enums.CollectionKey
+}
+
+export type NestedEnumCollectionKeyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CollectionKey | Prisma.EnumCollectionKeyFieldRefInput<$PrismaModel>
+  in?: $Enums.CollectionKey[] | Prisma.ListEnumCollectionKeyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CollectionKey[] | Prisma.ListEnumCollectionKeyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCollectionKeyWithAggregatesFilter<$PrismaModel> | $Enums.CollectionKey
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCollectionKeyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCollectionKeyFilter<$PrismaModel>
 }
 
 export type NestedEnumProductTypeFilter<$PrismaModel = never> = {

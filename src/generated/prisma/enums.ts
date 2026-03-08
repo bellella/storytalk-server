@@ -254,6 +254,14 @@ export const SlotDialogueType = {
 export type SlotDialogueType = (typeof SlotDialogueType)[keyof typeof SlotDialogueType]
 
 
+export const CollectionKey = {
+  TOP: 'TOP',
+  OTHER: 'OTHER'
+} as const
+
+export type CollectionKey = (typeof CollectionKey)[keyof typeof CollectionKey]
+
+
 export const ProductType = {
   PLAY_EPISODE: 'PLAY_EPISODE',
   COIN_PACK: 'COIN_PACK',

@@ -40,6 +40,9 @@ export class CollectionItemDto {
 }
 
 export class CollectionsResponseDto {
+  /** key가 TOP인 컬렉션 (최대 1개) */
+  top: CollectionItemDto | null;
+  /** TOP가 아닌 컬렉션들 */
   collections: CollectionItemDto[];
 }
 

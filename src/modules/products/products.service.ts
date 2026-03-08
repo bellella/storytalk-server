@@ -9,6 +9,7 @@ import {
   ProductDetailDto,
   ProductItemDto,
 } from './dto/product.dto';
+import { CollectionKey } from '@/generated/prisma/enums';
 
 @Injectable()
 export class ProductsService {
@@ -26,7 +27,7 @@ export class ProductsService {
       include: {
         products: {
           orderBy: { order: 'asc' },
-          take: 7,
+          take: 6,
           include: {
             product: {
               include: {
@@ -56,19 +57,27 @@ export class ProductsService {
       collections.flatMap((c) => c.products.map((cp) => cp.productId))
     );
 
+    const mapCollection = (c: (typeof collections)[0]): CollectionItemDto => ({
+      id: c.id,
+      title: c.title,
+      description: c.description,
+      thumbnailUrl: c.thumbnailUrl,
+      order: c.order,
+      startsAt: c.startsAt?.toISOString() ?? null,
+      endsAt: c.endsAt?.toISOString() ?? null,
+      products: c.products.map((cp) =>
+        this.mapProduct(cp.product, purchasedProductIds, userId)
+      ),
+    });
+
+    const topCollection = collections.find((c) => c.key === CollectionKey.TOP);
+    const otherCollections = collections.filter(
+      (c) => c.key !== CollectionKey.TOP
+    );
+
     return {
-      collections: collections.map((c) => ({
-        id: c.id,
-        title: c.title,
-        description: c.description,
-        thumbnailUrl: c.thumbnailUrl,
-        order: c.order,
-        startsAt: c.startsAt?.toISOString() ?? null,
-        endsAt: c.endsAt?.toISOString() ?? null,
-        products: c.products.map((cp) =>
-          this.mapProduct(cp.product, purchasedProductIds, userId)
-        ),
-      })) satisfies CollectionItemDto[],
+      top: topCollection ? mapCollection(topCollection) : null,
+      collections: otherCollections.map(mapCollection),
     };
   }
 
