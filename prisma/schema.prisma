@@ -525,11 +525,9 @@ model CharacterChat {
   user      User      @relation(fields: [userId], references: [id])
   character Character @relation(fields: [characterId], references: [id])
 
-  // ✅ 추가 1) 일반 메시지 목록 관계(반대편)
-  messages Message[] @relation("CharacterChatMessages")
-
-  // ✅ 추가 2) lastMessageId 관계(반대편)
-  lastMessage Message? @relation("CharacterChatLastMessage", fields: [lastMessageId], references: [id])
+  messages         Message[]         @relation("CharacterChatMessages")
+  lastMessage      Message?          @relation("CharacterChatLastMessage", fields: [lastMessageId], references: [id])
+  faceTalkSessions FaceTalkSession[]
 
   @@unique([userId, characterId])
   @@index([userId, lastMessageAt])
@@ -539,6 +537,13 @@ enum MessageType {
   TEXT
   SYSTEM
   STICKER
+  FACETALK
+}
+
+enum MessageSenderType {
+  USER
+  CHARACTER
+  SYSTEM
 }
 
 model Message {
@@ -549,7 +554,8 @@ model Message {
   characterId Int
 
   isFromUser Boolean
-  type       MessageType @default(TEXT)
+  type       MessageType       @default(TEXT)
+  senderType MessageSenderType @default(CHARACTER)
 
   content String
   payload Json?
@@ -572,13 +578,44 @@ model Message {
 }
 
 model Sticker {
-  id          Int      @id @default(autoincrement())
-  code        String   @unique
-  name        String
-  imageUrl    String
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  name      String
+  imageUrl  String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum FaceTalkStatus {
+  STARTED
+  ENDED
+  MISSED
+  FAILED
+  CANCELLED
+}
+
+model FaceTalkSession {
+  id          Int @id @default(autoincrement())
+  chatId      Int
+  userId      Int
+  characterId Int
+
+  status FaceTalkStatus @default(STARTED)
+
+  startedAt       DateTime  @default(now())
+  connectedAt     DateTime?
+  endedAt         DateTime?
+  durationSeconds Int?
+  totalTurns      Int       @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  chat CharacterChat @relation(fields: [chatId], references: [id])
+
+  @@index([chatId, startedAt])
+  @@index([userId, characterId, startedAt])
 }
 
 //////////////////////////////////////////////////////
@@ -859,12 +896,12 @@ model SlotDialogue {
 }
 
 enum CollectionKey {
-  TOP   // 상단 노출
+  TOP // 상단 노출
   OTHER // 기타 (안정화 전)
 }
 
 model Collection {
-  id           Int     @id @default(autoincrement())
+  id           Int           @id @default(autoincrement())
   key          CollectionKey @default(OTHER)
   title        String
   description  String?
@@ -1065,16 +1102,16 @@ enum PromptType {
 }
 
 model PromptTemplate {
-  id           Int         @id @default(autoincrement())
-  key          String      @unique
-  name         String
-  type         PromptType
-  description  String?
-  content      String      @db.Text
-  variables    Json?
-  version      Int         @default(1)
-  isActive     Boolean     @default(true)
+  id          Int        @id @default(autoincrement())
+  key         String     @unique
+  name        String
+  type        PromptType
+  description String?
+  content     String     @db.Text
+  variables   Json?
+  version     Int        @default(1)
+  isActive    Boolean    @default(true)
 
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

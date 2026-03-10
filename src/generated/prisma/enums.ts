@@ -151,10 +151,31 @@ export type CharacterRelationStatus = (typeof CharacterRelationStatus)[keyof typ
 export const MessageType = {
   TEXT: 'TEXT',
   SYSTEM: 'SYSTEM',
-  STICKER: 'STICKER'
+  STICKER: 'STICKER',
+  FACETALK: 'FACETALK'
 } as const
 
 export type MessageType = (typeof MessageType)[keyof typeof MessageType]
+
+
+export const MessageSenderType = {
+  USER: 'USER',
+  CHARACTER: 'CHARACTER',
+  SYSTEM: 'SYSTEM'
+} as const
+
+export type MessageSenderType = (typeof MessageSenderType)[keyof typeof MessageSenderType]
+
+
+export const FaceTalkStatus = {
+  STARTED: 'STARTED',
+  ENDED: 'ENDED',
+  MISSED: 'MISSED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type FaceTalkStatus = (typeof FaceTalkStatus)[keyof typeof FaceTalkStatus]
 
 
 export const RewardType = {

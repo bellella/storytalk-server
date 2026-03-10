@@ -22,6 +22,7 @@ import { ProductsModule } from './modules/products/products.module';
 import { CheckoutModule } from './modules/checkout/checkout.module';
 import { WalletModule } from './modules/wallet/wallet.module';
 import { ReviewModule } from './modules/review/review.module';
+import { FaceTalkModule } from './modules/facetalk/facetalk.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { ReviewModule } from './modules/review/review.module';
     CheckoutModule,
     WalletModule,
     ReviewModule,
+    FaceTalkModule,
   ],
   controllers: [AppController],
   providers: [AppService],

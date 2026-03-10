@@ -26,7 +26,7 @@ class ChatMessagesResponseDto implements CursorResponseDto<ChatMessageDto> {
   items: ChatMessageDto[];
 }
 
-@Controller('v1/chats/characters')
+@Controller('chats/characters')
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth('access-token')
 export class ChatController {

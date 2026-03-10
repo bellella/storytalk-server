@@ -148,6 +148,11 @@ export type Message = Prisma.MessageModel
  */
 export type Sticker = Prisma.StickerModel
 /**
+ * Model FaceTalkSession
+ * 
+ */
+export type FaceTalkSession = Prisma.FaceTalkSessionModel
+/**
  * Model dialogueBookmark
  * 
  */
