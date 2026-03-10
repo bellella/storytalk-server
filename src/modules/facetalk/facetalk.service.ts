@@ -13,6 +13,7 @@ import {
   FaceTalkTurnResponseDto,
   StartFaceTalkResponseDto,
 } from './dto/facetalk.dto';
+import { buildFaceTalkPrompt } from './ai/facetalk.prompt';
 
 const FACETALK_PROMPT_KEY = 'FACETALK_PROMPT_KEY';
 
@@ -38,20 +39,27 @@ export class FaceTalkService {
     if (!chat) throw new NotFoundException('Chat not found');
     if (chat.userId !== userId) throw new ForbiddenException('Not your chat');
 
-    const session = await this.prisma.faceTalkSession.create({
-      data: {
-        chatId,
-        userId,
-        characterId: chat.characterId,
-        status: FaceTalkStatus.STARTED,
-      },
-    });
+    const [session, characterImages] = await Promise.all([
+      this.prisma.faceTalkSession.create({
+        data: {
+          chatId,
+          userId,
+          characterId: chat.characterId,
+          status: FaceTalkStatus.STARTED,
+        },
+      }),
+      this.prisma.characterImage.findMany({
+        where: { characterId: chat.characterId },
+        select: { id: true, characterId: true, imageUrl: true, label: true, isDefault: true },
+      }),
+    ]);
 
     return {
       sessionId: session.id,
       chatId: session.chatId,
       status: session.status,
       startedAt: session.startedAt,
+      characterImages,
     };
   }
 
@@ -218,14 +226,7 @@ export class FaceTalkService {
 
     if (templatePrompt) return templatePrompt;
 
-    return `You are ${characterName}. ${aiPrompt}
-This is a face-to-face video call. Keep responses natural, conversational, and brief (1-3 sentences).
-
-Respond ONLY with valid JSON:
-{
-  "content": "<your reply in English>",
-  "translated": "<Korean translation in informal speech (반말)>"
-}`;
+    return buildFaceTalkPrompt({ characterName, aiPrompt });
   }
 
   private parseTurnResponse(raw: string): FaceTalkTurnResponseDto {
@@ -234,9 +235,10 @@ Respond ONLY with valid JSON:
       return {
         content: parsed.content ?? '',
         translated: parsed.translated ?? '',
+        charImageLabel: parsed.charImageLabel ?? 'default',
       };
     } catch {
-      return { content: raw, translated: '' };
+      return { content: raw, translated: '', charImageLabel: 'default' };
     }
   }
 

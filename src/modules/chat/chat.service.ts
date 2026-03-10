@@ -23,7 +23,7 @@ import { PromptTemplateService } from '@/modules/prompt-template/prompt-template
 import { prepareChatPromptVariables } from '@/modules/ai/chat.prompt';
 import { formatCreatedAtDisplay } from '@/common/utils/date.util';
 
-const CHAT_PROMPT_KEY = 'CHAT_PROMPT_KEY';
+const CHAT_PROMPT_KEY = 'CHAT_PROMPT';
 
 @Injectable()
 export class ChatService {

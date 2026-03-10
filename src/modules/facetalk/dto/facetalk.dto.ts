@@ -1,6 +1,23 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsInt, IsString } from 'class-validator';
 
+export class FaceTalkCharacterImageDto {
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  characterId: number;
+
+  @ApiProperty()
+  imageUrl: string;
+
+  @ApiPropertyOptional()
+  label?: string | null;
+
+  @ApiProperty()
+  isDefault: boolean;
+}
+
 export class StartFaceTalkResponseDto {
   @ApiProperty()
   sessionId: number;
@@ -13,6 +30,9 @@ export class StartFaceTalkResponseDto {
 
   @ApiProperty()
   startedAt: Date;
+
+  @ApiProperty({ type: [FaceTalkCharacterImageDto] })
+  characterImages: FaceTalkCharacterImageDto[];
 }
 
 export class FaceTalkSessionDto {
@@ -62,4 +82,7 @@ export class FaceTalkTurnResponseDto {
 
   @ApiProperty()
   translated: string;
+
+  @ApiProperty({ description: 'default | happy | sad | angry' })
+  charImageLabel: string;
 }
