@@ -27,5 +27,6 @@ export function prepareChatPromptVariables(
     affinity: String(affinity),
     userNameLine,
     payloadFields: payloadFields || '',
+    summary: data.summary ?? '',
   };
 }

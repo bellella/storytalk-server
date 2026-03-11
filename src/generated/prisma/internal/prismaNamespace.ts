@@ -3733,6 +3733,9 @@ export const CharacterChatScalarFieldEnum = {
   unreadCount: 'unreadCount',
   lastReadMessageId: 'lastReadMessageId',
   lastReadAt: 'lastReadAt',
+  summary: 'summary',
+  lastSummarizedMessageId: 'lastSummarizedMessageId',
+  lastSummarizedAt: 'lastSummarizedAt',
   isPinned: 'isPinned',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -3777,6 +3780,7 @@ export const FaceTalkSessionScalarFieldEnum = {
   userId: 'userId',
   characterId: 'characterId',
   status: 'status',
+  sessionMessages: 'sessionMessages',
   startedAt: 'startedAt',
   connectedAt: 'connectedAt',
   endedAt: 'endedAt',

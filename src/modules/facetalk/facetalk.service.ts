@@ -14,14 +14,16 @@ import {
   StartFaceTalkResponseDto,
 } from './dto/facetalk.dto';
 import { buildFaceTalkPrompt } from './ai/facetalk.prompt';
+import { ChatService } from '../chat/chat.service';
 
-const FACETALK_PROMPT_KEY = 'FACETALK_PROMPT_KEY';
+const FACETALK_PROMPT_KEY = 'FACETALK_PROMPT';
 
 @Injectable()
 export class FaceTalkService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly openAiService: OpenAiService,
+    private readonly chatService: ChatService,
     private readonly promptTemplateService: PromptTemplateService
   ) {}
 
@@ -50,7 +52,13 @@ export class FaceTalkService {
       }),
       this.prisma.characterImage.findMany({
         where: { characterId: chat.characterId },
-        select: { id: true, characterId: true, imageUrl: true, label: true, isDefault: true },
+        select: {
+          id: true,
+          characterId: true,
+          imageUrl: true,
+          label: true,
+          isDefault: true,
+        },
       }),
     ]);
 
@@ -71,7 +79,8 @@ export class FaceTalkService {
       where: { id: sessionId },
     });
     if (!session) throw new NotFoundException('Session not found');
-    if (session.userId !== userId) throw new ForbiddenException('Not your session');
+    if (session.userId !== userId)
+      throw new ForbiddenException('Not your session');
 
     return this.toSessionDto(session);
   }
@@ -96,9 +105,7 @@ export class FaceTalkService {
     const minutes = Math.floor(durationSeconds / 60);
     const seconds = durationSeconds % 60;
     const durationText =
-      minutes > 0
-        ? `${minutes}분 ${seconds}초`
-        : `${seconds}초`;
+      minutes > 0 ? `${minutes}분 ${seconds}초` : `${seconds}초`;
 
     await this.prisma.message.create({
       data: {
@@ -136,7 +143,8 @@ export class FaceTalkService {
       where: { id: sessionId },
     });
     if (!session) throw new NotFoundException('Session not found');
-    if (session.userId !== userId) throw new ForbiddenException('Not your session');
+    if (session.userId !== userId)
+      throw new ForbiddenException('Not your session');
 
     const updated = await this.prisma.faceTalkSession.update({
       where: { id: sessionId },
@@ -170,30 +178,71 @@ export class FaceTalkService {
       where: { id: sessionId },
     });
     if (!session) throw new NotFoundException('Session not found');
-    if (session.userId !== userId) throw new ForbiddenException('Not your session');
+    if (session.userId !== userId)
+      throw new ForbiddenException('Not your session');
     if (session.status !== FaceTalkStatus.STARTED) {
       throw new BadRequestException('Session is not active');
     }
 
-    const character = await this.prisma.character.findUniqueOrThrow({
-      where: { id: session.characterId },
-      select: { aiPrompt: true, name: true },
-    });
+    const [affinity, character, chat, recentChatMessages] = await Promise.all([
+      this.chatService.getAffinity(userId, session.characterId),
+      this.prisma.character.findUniqueOrThrow({
+        where: { id: session.characterId },
+        select: { aiPrompt: true, name: true },
+      }),
+      this.prisma.characterChat.findUnique({
+        where: { id: session.chatId },
+        select: { summary: true },
+      }),
+      this.prisma.message.findMany({
+        where: { chatId: session.chatId, type: MessageType.TEXT },
+        orderBy: { id: 'desc' },
+        take: 10,
+        select: { isFromUser: true, content: true },
+      }),
+    ]);
 
     const systemPrompt = await this.buildFaceTalkPrompt(
       character.aiPrompt ?? '',
-      character.name
+      character.name,
+      affinity,
+      chat?.summary
     );
 
+    type SessionMessage = { role: 'user' | 'assistant'; content: string };
+    const chatHistory: SessionMessage[] = recentChatMessages
+      .reverse()
+      .map((m) => ({
+        role: m.isFromUser ? 'user' : 'assistant',
+        content: m.content,
+      }));
+    const sessionHistory: SessionMessage[] = Array.isArray(
+      session.sessionMessages
+    )
+      ? (session.sessionMessages as SessionMessage[])
+      : [];
+    const history: SessionMessage[] = [...chatHistory, ...sessionHistory];
+    console.log(systemPrompt, 'systemPrompt');
+    console.log(history, 'history');
     const rawText = await this.openAiService.callApi(systemPrompt, [
+      ...history,
       { role: 'user', content: userInput },
     ]);
 
     const parsed = this.parseTurnResponse(rawText);
 
+    const updatedMessages: SessionMessage[] = [
+      ...history,
+      { role: 'user', content: userInput },
+      { role: 'assistant', content: parsed.content },
+    ];
+
     await this.prisma.faceTalkSession.update({
       where: { id: sessionId },
-      data: { totalTurns: { increment: 1 } },
+      data: {
+        sessionMessages: updatedMessages,
+        totalTurns: { increment: 1 },
+      },
     });
 
     return parsed;
@@ -208,7 +257,8 @@ export class FaceTalkService {
       where: { id: sessionId },
     });
     if (!session) throw new NotFoundException('Session not found');
-    if (session.userId !== userId) throw new ForbiddenException('Not your session');
+    if (session.userId !== userId)
+      throw new ForbiddenException('Not your session');
     if (session.status !== FaceTalkStatus.STARTED) {
       throw new BadRequestException('Session is already ended or cancelled');
     }
@@ -216,17 +266,25 @@ export class FaceTalkService {
   }
 
   private async buildFaceTalkPrompt(
-    aiPrompt: string,
-    characterName: string
+    characterPrompt: string,
+    characterName: string,
+    affinity: number,
+    summary?: string | null
   ): Promise<string> {
-    const templatePrompt = await this.promptTemplateService.getPromptContentOrNull(
-      FACETALK_PROMPT_KEY,
-      { characterName, aiPrompt }
-    );
+    const templatePrompt =
+      await this.promptTemplateService.getPromptContentOrNull(
+        FACETALK_PROMPT_KEY,
+        { characterName, characterPrompt, affinity, summary: summary ?? '' }
+      );
 
     if (templatePrompt) return templatePrompt;
 
-    return buildFaceTalkPrompt({ characterName, aiPrompt });
+    return buildFaceTalkPrompt({
+      characterName,
+      characterPrompt,
+      affinity,
+      summary,
+    });
   }
 
   private parseTurnResponse(raw: string): FaceTalkTurnResponseDto {

@@ -517,6 +517,10 @@ model CharacterChat {
   lastReadMessageId Int?
   lastReadAt        DateTime?
 
+  summary                 String?   @db.Text
+  lastSummarizedMessageId Int?
+  lastSummarizedAt        DateTime?
+
   isPinned Boolean @default(false)
 
   createdAt DateTime @default(now())
@@ -601,7 +605,8 @@ model FaceTalkSession {
   userId      Int
   characterId Int
 
-  status FaceTalkStatus @default(STARTED)
+  status          FaceTalkStatus @default(STARTED)
+  sessionMessages Json?
 
   startedAt       DateTime  @default(now())
   connectedAt     DateTime?

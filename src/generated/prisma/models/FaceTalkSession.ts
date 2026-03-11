@@ -80,6 +80,7 @@ export type FaceTalkSessionCountAggregateOutputType = {
   userId: number
   characterId: number
   status: number
+  sessionMessages: number
   startedAt: number
   connectedAt: number
   endedAt: number
@@ -145,6 +146,7 @@ export type FaceTalkSessionCountAggregateInputType = {
   userId?: true
   characterId?: true
   status?: true
+  sessionMessages?: true
   startedAt?: true
   connectedAt?: true
   endedAt?: true
@@ -247,6 +249,7 @@ export type FaceTalkSessionGroupByOutputType = {
   userId: number
   characterId: number
   status: $Enums.FaceTalkStatus
+  sessionMessages: runtime.JsonValue | null
   startedAt: Date
   connectedAt: Date | null
   endedAt: Date | null
@@ -285,6 +288,7 @@ export type FaceTalkSessionWhereInput = {
   userId?: Prisma.IntFilter<"FaceTalkSession"> | number
   characterId?: Prisma.IntFilter<"FaceTalkSession"> | number
   status?: Prisma.EnumFaceTalkStatusFilter<"FaceTalkSession"> | $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.JsonNullableFilter<"FaceTalkSession">
   startedAt?: Prisma.DateTimeFilter<"FaceTalkSession"> | Date | string
   connectedAt?: Prisma.DateTimeNullableFilter<"FaceTalkSession"> | Date | string | null
   endedAt?: Prisma.DateTimeNullableFilter<"FaceTalkSession"> | Date | string | null
@@ -301,6 +305,7 @@ export type FaceTalkSessionOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  sessionMessages?: Prisma.SortOrderInput | Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   connectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -320,6 +325,7 @@ export type FaceTalkSessionWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.IntFilter<"FaceTalkSession"> | number
   characterId?: Prisma.IntFilter<"FaceTalkSession"> | number
   status?: Prisma.EnumFaceTalkStatusFilter<"FaceTalkSession"> | $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.JsonNullableFilter<"FaceTalkSession">
   startedAt?: Prisma.DateTimeFilter<"FaceTalkSession"> | Date | string
   connectedAt?: Prisma.DateTimeNullableFilter<"FaceTalkSession"> | Date | string | null
   endedAt?: Prisma.DateTimeNullableFilter<"FaceTalkSession"> | Date | string | null
@@ -336,6 +342,7 @@ export type FaceTalkSessionOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  sessionMessages?: Prisma.SortOrderInput | Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   connectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -359,6 +366,7 @@ export type FaceTalkSessionScalarWhereWithAggregatesInput = {
   userId?: Prisma.IntWithAggregatesFilter<"FaceTalkSession"> | number
   characterId?: Prisma.IntWithAggregatesFilter<"FaceTalkSession"> | number
   status?: Prisma.EnumFaceTalkStatusWithAggregatesFilter<"FaceTalkSession"> | $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.JsonNullableWithAggregatesFilter<"FaceTalkSession">
   startedAt?: Prisma.DateTimeWithAggregatesFilter<"FaceTalkSession"> | Date | string
   connectedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"FaceTalkSession"> | Date | string | null
   endedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"FaceTalkSession"> | Date | string | null
@@ -372,6 +380,7 @@ export type FaceTalkSessionCreateInput = {
   userId: number
   characterId: number
   status?: $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string
   connectedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -388,6 +397,7 @@ export type FaceTalkSessionUncheckedCreateInput = {
   userId: number
   characterId: number
   status?: $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string
   connectedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -401,6 +411,7 @@ export type FaceTalkSessionUpdateInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   characterId?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumFaceTalkStatusFieldUpdateOperationsInput | $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   connectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -417,6 +428,7 @@ export type FaceTalkSessionUncheckedUpdateInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   characterId?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumFaceTalkStatusFieldUpdateOperationsInput | $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   connectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -432,6 +444,7 @@ export type FaceTalkSessionCreateManyInput = {
   userId: number
   characterId: number
   status?: $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string
   connectedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -445,6 +458,7 @@ export type FaceTalkSessionUpdateManyMutationInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   characterId?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumFaceTalkStatusFieldUpdateOperationsInput | $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   connectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -460,6 +474,7 @@ export type FaceTalkSessionUncheckedUpdateManyInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   characterId?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumFaceTalkStatusFieldUpdateOperationsInput | $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   connectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -485,6 +500,7 @@ export type FaceTalkSessionCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  sessionMessages?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   connectedAt?: Prisma.SortOrder
   endedAt?: Prisma.SortOrder
@@ -592,6 +608,7 @@ export type FaceTalkSessionCreateWithoutChatInput = {
   userId: number
   characterId: number
   status?: $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string
   connectedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -606,6 +623,7 @@ export type FaceTalkSessionUncheckedCreateWithoutChatInput = {
   userId: number
   characterId: number
   status?: $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string
   connectedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -650,6 +668,7 @@ export type FaceTalkSessionScalarWhereInput = {
   userId?: Prisma.IntFilter<"FaceTalkSession"> | number
   characterId?: Prisma.IntFilter<"FaceTalkSession"> | number
   status?: Prisma.EnumFaceTalkStatusFilter<"FaceTalkSession"> | $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.JsonNullableFilter<"FaceTalkSession">
   startedAt?: Prisma.DateTimeFilter<"FaceTalkSession"> | Date | string
   connectedAt?: Prisma.DateTimeNullableFilter<"FaceTalkSession"> | Date | string | null
   endedAt?: Prisma.DateTimeNullableFilter<"FaceTalkSession"> | Date | string | null
@@ -664,6 +683,7 @@ export type FaceTalkSessionCreateManyChatInput = {
   userId: number
   characterId: number
   status?: $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string
   connectedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -677,6 +697,7 @@ export type FaceTalkSessionUpdateWithoutChatInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   characterId?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumFaceTalkStatusFieldUpdateOperationsInput | $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   connectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -691,6 +712,7 @@ export type FaceTalkSessionUncheckedUpdateWithoutChatInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   characterId?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumFaceTalkStatusFieldUpdateOperationsInput | $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   connectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -705,6 +727,7 @@ export type FaceTalkSessionUncheckedUpdateManyWithoutChatInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   characterId?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumFaceTalkStatusFieldUpdateOperationsInput | $Enums.FaceTalkStatus
+  sessionMessages?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   connectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -722,6 +745,7 @@ export type FaceTalkSessionSelect<ExtArgs extends runtime.Types.Extensions.Inter
   userId?: boolean
   characterId?: boolean
   status?: boolean
+  sessionMessages?: boolean
   startedAt?: boolean
   connectedAt?: boolean
   endedAt?: boolean
@@ -738,6 +762,7 @@ export type FaceTalkSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   userId?: boolean
   characterId?: boolean
   status?: boolean
+  sessionMessages?: boolean
   startedAt?: boolean
   connectedAt?: boolean
   endedAt?: boolean
@@ -754,6 +779,7 @@ export type FaceTalkSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   userId?: boolean
   characterId?: boolean
   status?: boolean
+  sessionMessages?: boolean
   startedAt?: boolean
   connectedAt?: boolean
   endedAt?: boolean
@@ -770,6 +796,7 @@ export type FaceTalkSessionSelectScalar = {
   userId?: boolean
   characterId?: boolean
   status?: boolean
+  sessionMessages?: boolean
   startedAt?: boolean
   connectedAt?: boolean
   endedAt?: boolean
@@ -779,7 +806,7 @@ export type FaceTalkSessionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type FaceTalkSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chatId" | "userId" | "characterId" | "status" | "startedAt" | "connectedAt" | "endedAt" | "durationSeconds" | "totalTurns" | "createdAt" | "updatedAt", ExtArgs["result"]["faceTalkSession"]>
+export type FaceTalkSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chatId" | "userId" | "characterId" | "status" | "sessionMessages" | "startedAt" | "connectedAt" | "endedAt" | "durationSeconds" | "totalTurns" | "createdAt" | "updatedAt", ExtArgs["result"]["faceTalkSession"]>
 export type FaceTalkSessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   chat?: boolean | Prisma.CharacterChatDefaultArgs<ExtArgs>
 }
@@ -801,6 +828,7 @@ export type $FaceTalkSessionPayload<ExtArgs extends runtime.Types.Extensions.Int
     userId: number
     characterId: number
     status: $Enums.FaceTalkStatus
+    sessionMessages: runtime.JsonValue | null
     startedAt: Date
     connectedAt: Date | null
     endedAt: Date | null
@@ -1237,6 +1265,7 @@ export interface FaceTalkSessionFieldRefs {
   readonly userId: Prisma.FieldRef<"FaceTalkSession", 'Int'>
   readonly characterId: Prisma.FieldRef<"FaceTalkSession", 'Int'>
   readonly status: Prisma.FieldRef<"FaceTalkSession", 'FaceTalkStatus'>
+  readonly sessionMessages: Prisma.FieldRef<"FaceTalkSession", 'Json'>
   readonly startedAt: Prisma.FieldRef<"FaceTalkSession", 'DateTime'>
   readonly connectedAt: Prisma.FieldRef<"FaceTalkSession", 'DateTime'>
   readonly endedAt: Prisma.FieldRef<"FaceTalkSession", 'DateTime'>

@@ -210,6 +210,7 @@ export class ChatService {
       affinity,
       userName: user?.name ?? null,
       options: dto.options,
+      summary: chat.summary,
     };
     const templatePrompt =
       await this.promptTemplateService.getPromptContentOrNull(
@@ -224,6 +225,7 @@ export class ChatService {
       userName: user?.name ?? null,
       aiPrompt: character.aiPrompt || '',
       affinity,
+      summary: chat.summary,
       recentMessages: recentMessages.map((m) => ({
         isFromUser: m.isFromUser,
         content: m.content,
@@ -269,6 +271,9 @@ export class ChatService {
     const aiMessages = aiMsgs.map((m) => this.toMessageDto(m));
     // 5) WebSocket으로 AI 메시지 전송
     this.chatGateway.emitNewMessages(userId, aiMessages);
+
+    // 6) 20개마다 summary (fire-and-forget)
+    this.triggerSummaryIfNeeded(chat.id).catch(() => {});
 
     return {
       userMessage: this.toMessageDto(userMsg),
@@ -379,15 +384,65 @@ export class ChatService {
     });
   }
 
-  private async getAffinity(
-    userId: number,
-    characterId: number
-  ): Promise<number> {
+  async getAffinity(userId: number, characterId: number): Promise<number> {
     const friend = await this.prisma.characterFriend.findUnique({
       where: { userId_characterId: { userId, characterId } },
       select: { affinity: true },
     });
     return friend?.affinity ?? 0;
+  }
+
+  private async triggerSummaryIfNeeded(chatId: number): Promise<void> {
+    const chat = await this.prisma.characterChat.findUnique({
+      where: { id: chatId },
+      select: { lastSummarizedMessageId: true, summary: true },
+    });
+    if (!chat) return;
+
+    const count = await this.prisma.message.count({
+      where: {
+        chatId,
+        ...(chat.lastSummarizedMessageId
+          ? { id: { gt: chat.lastSummarizedMessageId } }
+          : {}),
+      },
+    });
+    if (count < 20) return;
+
+    const messages = await this.prisma.message.findMany({
+      where: {
+        chatId,
+        ...(chat.lastSummarizedMessageId
+          ? { id: { gt: chat.lastSummarizedMessageId } }
+          : {}),
+      },
+      orderBy: { id: 'asc' },
+      select: { id: true, content: true, isFromUser: true },
+    });
+
+    const history = messages
+      .map((m) => `${m.isFromUser ? 'User' : 'Character'}: ${m.content}`)
+      .join('\n');
+
+    const systemPrompt =
+      (await this.promptTemplateService.getPromptContentOrNull(
+        'CHAT_SUMMARY_PROMPT',
+        { previousSummary: chat.summary ?? '' }
+      )) ??
+      `Summarize the following conversation concisely in Korean (3-5 sentences).${chat.summary ? `\n\nPrevious summary: ${chat.summary}` : ''}`;
+
+    const summary = await this.openAiService.callApi(systemPrompt, [
+      { role: 'user', content: history },
+    ]);
+
+    await this.prisma.characterChat.update({
+      where: { id: chatId },
+      data: {
+        summary,
+        lastSummarizedMessageId: messages[messages.length - 1].id,
+        lastSummarizedAt: new Date(),
+      },
+    });
   }
 
   private toMessageDto(msg: {
