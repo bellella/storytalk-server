@@ -43,7 +43,7 @@ export class StoryService {
   ): Promise<StoryDetailDto> {
     // 1️⃣ 스토리 기본 조회 (에피소드, 캐릭터 포함)
     const story = await this.prisma.story.findUnique({
-      where: { id: storyId, type: StoryType.NOVEL },
+      where: { id: storyId, type: { in: [StoryType.NOVEL, StoryType.UNIT] } },
       include: {
         episodes: {
           orderBy: { order: 'asc' },
@@ -64,6 +64,11 @@ export class StoryService {
                 avatarImage: true,
               },
             },
+          },
+        },
+        storyTags: {
+          include: {
+            tag: { select: { id: true, slug: true, color: true, icon: true } },
           },
         },
       },
@@ -119,6 +124,13 @@ export class StoryService {
       totalEpisodes: story.episodes.length,
       status: story.status === PublishStatus.PUBLISHED ? '연재중' : '준비중',
       likeCount: 123, // TODO: 실제 좋아요 카운트 로직으로 교체
+      tags:
+        story.storyTags?.map((st) => ({
+          id: st.tag.id,
+          slug: st.tag.slug,
+          color: st.tag.color ?? undefined,
+          icon: st.tag.icon ?? undefined,
+        })) ?? [],
       episodes: story.episodes.map((ep, idx) => {
         const prevEp = idx > 0 ? story.episodes[idx - 1] : null;
         const isLocked = prevEp
@@ -182,6 +194,11 @@ export class StoryService {
             episodes: true,
           },
         },
+        storyTags: {
+          include: {
+            tag: { select: { id: true, slug: true, color: true, icon: true } },
+          },
+        },
       },
     });
 
@@ -197,6 +214,13 @@ export class StoryService {
       status: story.status === PublishStatus.PUBLISHED ? '연재중' : '준비중',
       totalEpisodes: story._count.episodes,
       likeCount: 123, // TODO: DB에 likeCount 필드 추가 필요
+      tags:
+        story.storyTags?.map((st) => ({
+          id: st.tag.id,
+          slug: st.tag.slug,
+          color: st.tag.color ?? undefined,
+          icon: st.tag.icon ?? undefined,
+        })) ?? [],
       type: story.type,
     }));
 

@@ -1,5 +1,6 @@
 import { Level } from '@/generated/prisma/client';
 import { UserEpisodeDto } from '@/modules/episode/dto/user-episode.dto';
+import { TagItemDto } from './tag-item.dto';
 
 export class StoryDetailDto {
   id: number;
@@ -10,6 +11,7 @@ export class StoryDetailDto {
   status: string; // '연재중' 등
   totalEpisodes: number;
   likeCount: number; // 임시 필드 (필요시 DB 추가)
+  tags: TagItemDto[];
   characters: {
     id: number;
     name: string;

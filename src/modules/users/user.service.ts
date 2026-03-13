@@ -78,7 +78,6 @@ export class UserService {
       xpLevel: user.XpLevel,
       xp: user.xp,
       xpToNextLevel,
-      streakDays: user.streakDays,
       dailyStatus: {
         quizCompleted: !!dailySession?.completedAt,
       },
