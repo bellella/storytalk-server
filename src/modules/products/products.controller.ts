@@ -17,6 +17,8 @@ import {
   CollectionsResponseDto,
   ProductDetailDto,
   ProductItemDto,
+  ProductsListResponseDto,
+  TopCollectionResponseDto,
 } from './dto/product.dto';
 import { ProductsService } from './products.service';
 
@@ -35,6 +37,31 @@ export class ProductsController {
   ): Promise<CollectionsResponseDto> {
     return this.productsService.getCollections(user?.id);
   }
+
+  /**
+   * TOP 컬렉션 단일 조회
+   */
+  @Get('collections/top')
+  @UseGuards(OptionalJwtAuthGuard)
+  @ApiOkResponse({ type: TopCollectionResponseDto })
+  async getTopCollection(
+    @ReqUser() user?: CurrentUser
+  ): Promise<TopCollectionResponseDto> {
+    return this.productsService.getTopCollection(user?.id);
+  }
+
+  /**
+   * 전체 상품 목록
+   */
+  @Get('items')
+  @UseGuards(OptionalJwtAuthGuard)
+  @ApiOkResponse({ type: ProductsListResponseDto })
+  async getAllProducts(
+    @ReqUser() user?: CurrentUser
+  ): Promise<ProductsListResponseDto> {
+    return this.productsService.getAllProducts(user?.id);
+  }
+
   /**
    * 컬렉션 상품 목록 (cursor 페이지네이션)
    */

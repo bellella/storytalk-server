@@ -38,28 +38,37 @@ export class UserService {
    */
   async findOne(id: number): Promise<UserProfileDto> {
     const { start: todayStart, end: todayEnd } = getTodayRange();
-    const user = await this.prisma.user.findUnique({
-      where: { id },
-      include: {
-        selectedCharacter: {
-          select: { id: true, avatarImage: true },
+    const [user, dailySession] = await Promise.all([
+      this.prisma.user.findUnique({
+        where: { id },
+        include: {
+          selectedCharacter: {
+            select: { id: true, avatarImage: true },
+          },
         },
-      },
-    });
-    // 오늘의 퀴즈 완료 여부
-    const dailySession = await this.prisma.userQuizSession.findFirst({
-      select: {
-        completedAt: true,
-      },
-      where: {
-        userId: id,
-        type: QuizSessionType.DAILY_QUIZ,
-        startedAt: { gte: todayStart, lte: todayEnd },
-      },
-    });
+      }),
+      this.prisma.userQuizSession.findFirst({
+        select: { completedAt: true },
+        where: {
+          userId: id,
+          type: QuizSessionType.DAILY_QUIZ,
+          startedAt: { gte: todayStart, lte: todayEnd },
+        },
+      }),
+    ]);
     if (!user) {
       throw new NotFoundException('User not found');
     }
+
+    const nextLevelRow = await this.prisma.xpLevel.findFirst({
+      where: { level: { gt: user.XpLevel }, isActive: true },
+      orderBy: { requiredTotalXp: 'asc' },
+      select: { requiredTotalXp: true },
+    });
+    const xpToNextLevel = nextLevelRow
+      ? nextLevelRow.requiredTotalXp - user.xp
+      : null;
+
     return {
       id: user.id,
       email: user.email,
@@ -68,6 +77,7 @@ export class UserService {
       level: user.level,
       xpLevel: user.XpLevel,
       xp: user.xp,
+      xpToNextLevel,
       streakDays: user.streakDays,
       dailyStatus: {
         quizCompleted: !!dailySession?.completedAt,

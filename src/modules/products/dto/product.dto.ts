@@ -46,6 +46,16 @@ export class CollectionsResponseDto {
   collections: CollectionItemDto[];
 }
 
+/** TOP 컬렉션 단일 조회 */
+export class TopCollectionResponseDto {
+  top: CollectionItemDto | null;
+}
+
+/** 전체 상품 목록 */
+export class ProductsListResponseDto {
+  items: ProductItemDto[];
+}
+
 // ---------- Collection Products (cursor) ----------
 
 // ---------- Product Detail ----------

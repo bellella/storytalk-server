@@ -8,6 +8,8 @@ import {
   EpisodeInProductDto,
   ProductDetailDto,
   ProductItemDto,
+  ProductsListResponseDto,
+  TopCollectionResponseDto,
 } from './dto/product.dto';
 import { CollectionKey } from '@/generated/prisma/enums';
 
@@ -78,6 +80,49 @@ export class ProductsService {
     return {
       top: topCollection ? mapCollection(topCollection) : null,
       collections: otherCollections.map(mapCollection),
+    };
+  }
+
+  /** CollectionKey.TOP인 컬렉션 하나 */
+  async getTopCollection(
+    userId?: number
+  ): Promise<TopCollectionResponseDto> {
+    const result = await this.getCollections(userId);
+    return { top: result.top };
+  }
+
+  /** 전체 상품 목록 */
+  async getAllProducts(userId?: number): Promise<ProductsListResponseDto> {
+    const products = await this.prisma.product.findMany({
+      where: { isActive: true },
+      orderBy: { id: 'asc' },
+      include: {
+        episodes: {
+          take: 1,
+          include: {
+            episode: {
+              select: {
+                id: true,
+                title: true,
+                koreanTitle: true,
+                thumbnailUrl: true,
+                story: { select: { id: true, title: true } },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const purchasedProductIds = await this.getPurchasedProductIds(
+      userId,
+      products.map((p) => p.id)
+    );
+
+    return {
+      items: products.map((p) =>
+        this.mapProduct(p, purchasedProductIds, userId)
+      ),
     };
   }
 

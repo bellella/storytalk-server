@@ -1,4 +1,5 @@
-import { Level } from '@/generated/prisma/client';
+import { Level, StoryType } from '@/generated/prisma/client';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class StoryListItemDto {
   id: number;
@@ -9,4 +10,6 @@ export class StoryListItemDto {
   status: string; // '연재중' 등
   totalEpisodes: number;
   likeCount: number;
+  @ApiProperty({ enum: StoryType })
+  type: StoryType;
 }

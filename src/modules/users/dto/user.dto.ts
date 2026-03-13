@@ -16,7 +16,7 @@ export class UserProfileDto extends UserDto {
   level: Level;
   xpLevel: number;
   xp: number;
-  streakDays: number;
+  xpToNextLevel: number | null;
   dailyStatus: DailyStatusDto;
   selectedCharacter: SelectedCharacterDto | null;
 }

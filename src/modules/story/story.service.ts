@@ -151,7 +151,7 @@ export class StoryService {
 
     const stories = await this.prisma.story.findMany({
       where: {
-        type: StoryType.NOVEL,
+        type: { in: [StoryType.NOVEL, StoryType.UNIT] },
         status: PublishStatus.PUBLISHED,
         ...(cursorString
           ? {
@@ -197,6 +197,7 @@ export class StoryService {
       status: story.status === PublishStatus.PUBLISHED ? '연재중' : '준비중',
       totalEpisodes: story._count.episodes,
       likeCount: 123, // TODO: DB에 likeCount 필드 추가 필요
+      type: story.type,
     }));
 
     const nextCursor = hasNextPage
