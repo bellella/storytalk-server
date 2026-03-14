@@ -15,7 +15,7 @@ export enum SendMessageOptionType {
 
 export class SendMessageDto {
   @IsEnum(MessageType)
-  @ApiProperty({ enum: MessageType })
+  @ApiProperty({ enum: MessageType, enumName: 'MessageType' })
   type: MessageType = MessageType.TEXT;
 
   @IsString()

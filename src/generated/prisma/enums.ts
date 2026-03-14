@@ -67,7 +67,8 @@ export type SceneType = (typeof SceneType)[keyof typeof SceneType]
 export const SceneFlowType = {
   NORMAL: 'NORMAL',
   BRANCH: 'BRANCH',
-  BRANCH_TRIGGER: 'BRANCH_TRIGGER'
+  BRANCH_TRIGGER: 'BRANCH_TRIGGER',
+  BRANCH_AND_TRIGGER: 'BRANCH_AND_TRIGGER'
 } as const
 
 export type SceneFlowType = (typeof SceneFlowType)[keyof typeof SceneFlowType]

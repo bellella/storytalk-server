@@ -11,7 +11,7 @@ export class FriendListItemDto {
   @ApiPropertyOptional()
   avatarImage: string | null;
 
-  @ApiProperty({ enum: CharacterRelationStatus })
+  @ApiProperty({ enum: CharacterRelationStatus, enumName: 'CharacterRelationStatus' })
   status: CharacterRelationStatus;
 }
 

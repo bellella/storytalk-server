@@ -15,7 +15,7 @@ export class UpdatePlayDto {
 
   @IsOptional()
   @IsEnum(EpisodeStage)
-  @ApiPropertyOptional({ enum: Object.values(EpisodeStage) })
+  @ApiPropertyOptional({ enum: EpisodeStage, enumName: 'EpisodeStage' })
   currentStage?: EpisodeStage;
 
   @IsOptional()

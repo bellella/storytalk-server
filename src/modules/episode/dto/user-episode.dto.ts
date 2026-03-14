@@ -1,4 +1,5 @@
 import { EpisodeStage } from '@/generated/prisma/client';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UserEpisodeDto {
   id: number;
@@ -7,6 +8,7 @@ export class UserEpisodeDto {
   startedAt: Date;
   completedAt: Date | null;
   lastSceneId: number | null;
+  @ApiProperty({ enum: EpisodeStage, enumName: 'EpisodeStage' })
   currentStage: EpisodeStage;
   score: number | null;
   isCompleted: boolean;

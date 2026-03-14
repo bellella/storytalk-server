@@ -119,12 +119,12 @@ export class QuizOptionDto {
 export class QuizDto {
   id: number;
 
-  @ApiProperty({ enum: Object.values(QuizSourceType) })
+  @ApiProperty({ enum: QuizSourceType, enumName: 'QuizSourceType' })
   sourceType: QuizSourceType;
 
   sourceId: number;
 
-  @ApiProperty({ enum: Object.values(QuizType) })
+  @ApiProperty({ enum: QuizType, enumName: 'QuizType' })
   type: QuizType;
 
   questionEnglish: string;

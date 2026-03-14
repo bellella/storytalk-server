@@ -12,6 +12,6 @@ export class StoryListItemDto {
   totalEpisodes: number;
   likeCount: number;
   tags: TagItemDto[];
-  @ApiProperty({ enum: StoryType })
+  @ApiProperty({ enum: StoryType, enumName: 'StoryType' })
   type: StoryType;
 }

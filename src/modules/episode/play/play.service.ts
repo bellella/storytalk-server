@@ -183,7 +183,9 @@ export class PlayService {
     );
     const preloadedScenes = episode.scenes.filter(
       (s) =>
-        s.flowType !== SceneFlowType.BRANCH || resolvedPickedSceneIds.has(s.id)
+        (s.flowType !== SceneFlowType.BRANCH &&
+          s.flowType !== SceneFlowType.BRANCH_AND_TRIGGER) ||
+          resolvedPickedSceneIds.has(s.id)
     );
 
     return {
@@ -1556,7 +1558,10 @@ export class PlayService {
       select: { id: true, flowType: true, data: true },
     });
     if (!scene) throw new NotFoundException('Scene not found');
-    if (scene.flowType !== SceneFlowType.BRANCH_TRIGGER)
+    if (
+      scene.flowType !== SceneFlowType.BRANCH_TRIGGER &&
+      scene.flowType !== SceneFlowType.BRANCH_AND_TRIGGER
+    )
       throw new BadRequestException('Scene is not a BRANCH_TRIGGER');
 
     const sceneData = scene.data as Record<string, any>;

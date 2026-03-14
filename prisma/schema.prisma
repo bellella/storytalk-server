@@ -183,6 +183,7 @@ enum SceneFlowType {
   NORMAL // 일반 씬
   BRANCH // 분기 결과 씬/엔딩 씬 (조건부)
   BRANCH_TRIGGER // 분기 결정 씬 (씬 완료 시 branch-trigger 호출)
+  BRANCH_AND_TRIGGER // 분기 결과 씬이면서 또 다른 분기 결정을 트리거 (중첩 엔딩)
 }
 
 model Scene {

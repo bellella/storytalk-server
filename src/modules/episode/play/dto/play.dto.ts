@@ -6,7 +6,11 @@ import {
   SlotDialogueType,
   SlotMessageType,
 } from '@/generated/prisma/enums';
-import { DialogueDto, EpisodeDetailDto, SceneDto } from '@/modules/story/dto/episode-detail.dto';
+import {
+  DialogueDto,
+  EpisodeDetailDto,
+  SceneDto,
+} from '@/modules/story/dto/episode-detail.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEnum,
@@ -81,7 +85,7 @@ export class BranchTriggerDto {
  * ApiProperty 안 씀(너 설정으로 자동)
  */
 
-export class EpisodeMetaDto {
+export class PlayEpisodeMetaDto {
   id: number;
   title: string;
   koreanTitle?: string | null;
@@ -100,11 +104,11 @@ export class PlayLinksDto {
 export class MyPlayEpisodeItemDto {
   playEpisodeId: number;
   episode: EpisodeDto;
-  @ApiProperty({ enum: Object.values(PlayEpisodeMode) })
+  @ApiProperty({ enum: PlayEpisodeMode, enumName: 'PlayEpisodeMode' })
   mode: PlayEpisodeMode;
-  @ApiProperty({ enum: Object.values(PlayEpisodeStatus) })
+  @ApiProperty({ enum: PlayEpisodeStatus, enumName: 'PlayEpisodeStatus' })
   status: PlayEpisodeStatus;
-  @ApiProperty({ enum: Object.values(EpisodeStage) })
+  @ApiProperty({ enum: EpisodeStage, enumName: 'EpisodeStage' })
   currentStage: EpisodeStage;
   startedAt: string;
   completedAt?: string | null;
@@ -123,6 +127,7 @@ export class EpisodeDto {
 export class StartPlayEpisodeResponseDto {
   playEpisodeId: number;
   mode: PlayEpisodeMode;
+  @ApiProperty({ enum: EpisodeStage, enumName: 'EpisodeStage' })
   currentStage: EpisodeStage;
   startedAt: string;
   links: { play: string };
@@ -137,12 +142,13 @@ export class PlayEpisodeDetailDto {
   id: number;
   episodeId: number;
   mode: PlayEpisodeMode;
-  @ApiProperty({ enum: Object.values(PlayEpisodeStatus) })
+  @ApiProperty({ enum: PlayEpisodeStatus, enumName: 'PlayEpisodeStatus' })
   status: PlayEpisodeStatus;
   startedAt: string;
   completedAt?: string | null;
   lastSceneId?: number | null;
   lastSlotId?: number | null;
+  @ApiProperty({ enum: EpisodeStage, enumName: 'EpisodeStage' })
   currentStage: EpisodeStage;
 }
 
@@ -211,6 +217,7 @@ export class EvaluationResultDto {
 
 export class CompletePlayResponseDto {
   playEpisodeId: number;
+  @ApiProperty({ enum: EpisodeStage, enumName: 'EpisodeStage' })
   currentStage: EpisodeStage;
   status: PlayEpisodeStatus;
   evaluation: EvaluationResultDto | null;
@@ -235,9 +242,10 @@ export class ReplayResponseDto {
 
 export class ResultResponseDto {
   playEpisodeId: number;
-  episode: EpisodeMetaDto;
+  episode: PlayEpisodeMetaDto;
+  @ApiProperty({ enum: EpisodeStage, enumName: 'EpisodeStage' })
   currentStage: EpisodeStage;
-  @ApiProperty({ enum: Object.values(PlayEpisodeStatus) })
+  @ApiProperty({ enum: PlayEpisodeStatus, enumName: 'PlayEpisodeStatus' })
   status: PlayEpisodeStatus;
   result: any | null;
   correctedDialogues: {

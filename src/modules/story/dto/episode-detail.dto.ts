@@ -10,9 +10,9 @@ export class ChoiceOptionDto {
 export class DialogueDto {
   id: number;
   order: number;
-  @ApiProperty({ enum: DialogueType })
+  @ApiProperty({ enum: DialogueType, enumName: 'DialogueType' })
   type: DialogueType;
-  @ApiProperty({ enum: DialogueSpeakerRole })
+  @ApiProperty({ enum: DialogueSpeakerRole, enumName: 'DialogueSpeakerRole' })
   speakerRole: DialogueSpeakerRole;
   characterName?: string;
   characterId?: number;
@@ -27,9 +27,9 @@ export class DialogueDto {
 export class SceneDto {
   id: number;
   title: string;
-  @ApiProperty({ enum: SceneType })
+  @ApiProperty({ enum: SceneType, enumName: 'SceneType' })
   type: SceneType;
-  @ApiProperty({ enum: SceneFlowType })
+  @ApiProperty({ enum: SceneFlowType, enumName: 'SceneFlowType' })
   flowType: SceneFlowType;
   koreanTitle?: string;
   order: number;

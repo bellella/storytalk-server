@@ -3,7 +3,7 @@ import { QuizSessionType } from '@/generated/prisma/client';
 import { IsEnum, IsInt, IsOptional } from 'class-validator';
 
 export class StartQuizSessionDto {
-  @ApiProperty({ enum: QuizSessionType })
+  @ApiProperty({ enum: QuizSessionType, enumName: 'QuizSessionType' })
   @IsEnum(QuizSessionType)
   type: QuizSessionType;
 

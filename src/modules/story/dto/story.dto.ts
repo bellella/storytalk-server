@@ -26,6 +26,7 @@ export class RecentlyPlayedEpisodeDto {
 }
 
 export class UserEpisodeProgressDto {
+  @ApiProperty({ enum: EpisodeStage, enumName: 'EpisodeStage' })
   currentStage: EpisodeStage;
   isCompleted: boolean;
   score: number | null;

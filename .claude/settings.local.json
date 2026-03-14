@@ -10,7 +10,9 @@
       "Bash(/Users/miinaa/projects/storytalk-server/src/modules/wallet/wallet.controller.ts:*)",
       "Bash(grep:*)",
       "Bash(psql \"postgresql://postgres.vlwvbqcwairhtizxamcd:cmnmina2015^^@aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres\" -c \"SELECT setval\\(pg_get_serial_sequence\\(''\"\"UserPlayEpisode\"\"'', ''id''\\), COALESCE\\(\\(SELECT MAX\\(id\\) FROM \"\"UserPlayEpisode\"\"\\), 0\\) + 1, false\\);\")",
-      "Bash(DATABASE_URL=\"postgresql://postgres.vlwvbqcwairhtizxamcd:cmnmina2015^^@aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres\" npx prisma migrate dev:*)"
+      "Bash(DATABASE_URL=\"postgresql://postgres.vlwvbqcwairhtizxamcd:cmnmina2015^^@aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres\" npx prisma migrate dev:*)",
+      "WebFetch(domain:www.orval.dev)",
+      "Bash(npx prisma migrate dev:*)"
     ],
     "deny": [],
     "ask": []

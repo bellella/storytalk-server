@@ -17,7 +17,7 @@ export class EpisodeRewardDto {
   @ApiProperty()
   id: number;
 
-  @ApiProperty({ enum: RewardType })
+  @ApiProperty({ enum: RewardType, enumName: 'RewardType' })
   type: RewardType;
 
   @ApiProperty({ description: '리워드 상세 정보(JSON)' })

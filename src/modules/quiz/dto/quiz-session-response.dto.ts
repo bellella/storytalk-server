@@ -8,7 +8,7 @@ export class QuizSessionResponseDto {
   @ApiProperty()
   userId: number;
 
-  @ApiProperty({ enum: QuizSessionType })
+  @ApiProperty({ enum: QuizSessionType, enumName: 'QuizSessionType' })
   type: QuizSessionType;
 
   @ApiPropertyOptional()
