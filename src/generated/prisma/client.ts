@@ -237,3 +237,8 @@ export type UserSubscription = Prisma.UserSubscriptionModel
  * 
  */
 export type PromptTemplate = Prisma.PromptTemplateModel
+/**
+ * Model Image
+ * 
+ */
+export type Image = Prisma.ImageModel

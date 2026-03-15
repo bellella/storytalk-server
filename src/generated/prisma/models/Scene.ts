@@ -50,6 +50,7 @@ export type SceneMinAggregateOutputType = {
   audioUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  status: $Enums.PublishStatus | null
 }
 
 export type SceneMaxAggregateOutputType = {
@@ -64,6 +65,7 @@ export type SceneMaxAggregateOutputType = {
   audioUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  status: $Enums.PublishStatus | null
 }
 
 export type SceneCountAggregateOutputType = {
@@ -79,6 +81,7 @@ export type SceneCountAggregateOutputType = {
   data: number
   createdAt: number
   updatedAt: number
+  status: number
   _all: number
 }
 
@@ -107,6 +110,7 @@ export type SceneMinAggregateInputType = {
   audioUrl?: true
   createdAt?: true
   updatedAt?: true
+  status?: true
 }
 
 export type SceneMaxAggregateInputType = {
@@ -121,6 +125,7 @@ export type SceneMaxAggregateInputType = {
   audioUrl?: true
   createdAt?: true
   updatedAt?: true
+  status?: true
 }
 
 export type SceneCountAggregateInputType = {
@@ -136,6 +141,7 @@ export type SceneCountAggregateInputType = {
   data?: true
   createdAt?: true
   updatedAt?: true
+  status?: true
   _all?: true
 }
 
@@ -238,6 +244,7 @@ export type SceneGroupByOutputType = {
   data: runtime.JsonValue | null
   createdAt: Date
   updatedAt: Date
+  status: $Enums.PublishStatus
   _count: SceneCountAggregateOutputType | null
   _avg: SceneAvgAggregateOutputType | null
   _sum: SceneSumAggregateOutputType | null
@@ -276,6 +283,7 @@ export type SceneWhereInput = {
   data?: Prisma.JsonNullableFilter<"Scene">
   createdAt?: Prisma.DateTimeFilter<"Scene"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Scene"> | Date | string
+  status?: Prisma.EnumPublishStatusFilter<"Scene"> | $Enums.PublishStatus
   episode?: Prisma.XOR<Prisma.EpisodeScalarRelationFilter, Prisma.EpisodeWhereInput>
   dialogues?: Prisma.DialogueListRelationFilter
 }
@@ -293,6 +301,7 @@ export type SceneOrderByWithRelationInput = {
   data?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   episode?: Prisma.EpisodeOrderByWithRelationInput
   dialogues?: Prisma.DialogueOrderByRelationAggregateInput
 }
@@ -314,6 +323,7 @@ export type SceneWhereUniqueInput = Prisma.AtLeast<{
   data?: Prisma.JsonNullableFilter<"Scene">
   createdAt?: Prisma.DateTimeFilter<"Scene"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Scene"> | Date | string
+  status?: Prisma.EnumPublishStatusFilter<"Scene"> | $Enums.PublishStatus
   episode?: Prisma.XOR<Prisma.EpisodeScalarRelationFilter, Prisma.EpisodeWhereInput>
   dialogues?: Prisma.DialogueListRelationFilter
 }, "id" | "episodeId_order">
@@ -331,6 +341,7 @@ export type SceneOrderByWithAggregationInput = {
   data?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   _count?: Prisma.SceneCountOrderByAggregateInput
   _avg?: Prisma.SceneAvgOrderByAggregateInput
   _max?: Prisma.SceneMaxOrderByAggregateInput
@@ -354,6 +365,7 @@ export type SceneScalarWhereWithAggregatesInput = {
   data?: Prisma.JsonNullableWithAggregatesFilter<"Scene">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Scene"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Scene"> | Date | string
+  status?: Prisma.EnumPublishStatusWithAggregatesFilter<"Scene"> | $Enums.PublishStatus
 }
 
 export type SceneCreateInput = {
@@ -367,6 +379,7 @@ export type SceneCreateInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.PublishStatus
   episode: Prisma.EpisodeCreateNestedOneWithoutScenesInput
   dialogues?: Prisma.DialogueCreateNestedManyWithoutSceneInput
 }
@@ -384,6 +397,7 @@ export type SceneUncheckedCreateInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.PublishStatus
   dialogues?: Prisma.DialogueUncheckedCreateNestedManyWithoutSceneInput
 }
 
@@ -398,6 +412,7 @@ export type SceneUpdateInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   episode?: Prisma.EpisodeUpdateOneRequiredWithoutScenesNestedInput
   dialogues?: Prisma.DialogueUpdateManyWithoutSceneNestedInput
 }
@@ -415,6 +430,7 @@ export type SceneUncheckedUpdateInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   dialogues?: Prisma.DialogueUncheckedUpdateManyWithoutSceneNestedInput
 }
 
@@ -431,6 +447,7 @@ export type SceneCreateManyInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.PublishStatus
 }
 
 export type SceneUpdateManyMutationInput = {
@@ -444,6 +461,7 @@ export type SceneUpdateManyMutationInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
 }
 
 export type SceneUncheckedUpdateManyInput = {
@@ -459,6 +477,7 @@ export type SceneUncheckedUpdateManyInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
 }
 
 export type SceneListRelationFilter = {
@@ -489,6 +508,7 @@ export type SceneCountOrderByAggregateInput = {
   data?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type SceneAvgOrderByAggregateInput = {
@@ -509,6 +529,7 @@ export type SceneMaxOrderByAggregateInput = {
   audioUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type SceneMinOrderByAggregateInput = {
@@ -523,6 +544,7 @@ export type SceneMinOrderByAggregateInput = {
   audioUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type SceneSumOrderByAggregateInput = {
@@ -611,6 +633,7 @@ export type SceneCreateWithoutEpisodeInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.PublishStatus
   dialogues?: Prisma.DialogueCreateNestedManyWithoutSceneInput
 }
 
@@ -626,6 +649,7 @@ export type SceneUncheckedCreateWithoutEpisodeInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.PublishStatus
   dialogues?: Prisma.DialogueUncheckedCreateNestedManyWithoutSceneInput
 }
 
@@ -671,6 +695,7 @@ export type SceneScalarWhereInput = {
   data?: Prisma.JsonNullableFilter<"Scene">
   createdAt?: Prisma.DateTimeFilter<"Scene"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Scene"> | Date | string
+  status?: Prisma.EnumPublishStatusFilter<"Scene"> | $Enums.PublishStatus
 }
 
 export type SceneCreateWithoutDialoguesInput = {
@@ -684,6 +709,7 @@ export type SceneCreateWithoutDialoguesInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.PublishStatus
   episode: Prisma.EpisodeCreateNestedOneWithoutScenesInput
 }
 
@@ -700,6 +726,7 @@ export type SceneUncheckedCreateWithoutDialoguesInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.PublishStatus
 }
 
 export type SceneCreateOrConnectWithoutDialoguesInput = {
@@ -729,6 +756,7 @@ export type SceneUpdateWithoutDialoguesInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   episode?: Prisma.EpisodeUpdateOneRequiredWithoutScenesNestedInput
 }
 
@@ -745,6 +773,7 @@ export type SceneUncheckedUpdateWithoutDialoguesInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
 }
 
 export type SceneCreateManyEpisodeInput = {
@@ -759,6 +788,7 @@ export type SceneCreateManyEpisodeInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  status?: $Enums.PublishStatus
 }
 
 export type SceneUpdateWithoutEpisodeInput = {
@@ -772,6 +802,7 @@ export type SceneUpdateWithoutEpisodeInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   dialogues?: Prisma.DialogueUpdateManyWithoutSceneNestedInput
 }
 
@@ -787,6 +818,7 @@ export type SceneUncheckedUpdateWithoutEpisodeInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   dialogues?: Prisma.DialogueUncheckedUpdateManyWithoutSceneNestedInput
 }
 
@@ -802,6 +834,7 @@ export type SceneUncheckedUpdateManyWithoutEpisodeInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
 }
 
 
@@ -848,6 +881,7 @@ export type SceneSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   data?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
   episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
   dialogues?: boolean | Prisma.Scene$dialoguesArgs<ExtArgs>
   _count?: boolean | Prisma.SceneCountOutputTypeDefaultArgs<ExtArgs>
@@ -866,6 +900,7 @@ export type SceneSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   data?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
   episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["scene"]>
 
@@ -882,6 +917,7 @@ export type SceneSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   data?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
   episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["scene"]>
 
@@ -898,9 +934,10 @@ export type SceneSelectScalar = {
   data?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
 }
 
-export type SceneOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "episodeId" | "type" | "flowType" | "title" | "koreanTitle" | "order" | "bgImageUrl" | "audioUrl" | "data" | "createdAt" | "updatedAt", ExtArgs["result"]["scene"]>
+export type SceneOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "episodeId" | "type" | "flowType" | "title" | "koreanTitle" | "order" | "bgImageUrl" | "audioUrl" | "data" | "createdAt" | "updatedAt" | "status", ExtArgs["result"]["scene"]>
 export type SceneInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
   dialogues?: boolean | Prisma.Scene$dialoguesArgs<ExtArgs>
@@ -932,6 +969,7 @@ export type $ScenePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     data: runtime.JsonValue | null
     createdAt: Date
     updatedAt: Date
+    status: $Enums.PublishStatus
   }, ExtArgs["result"]["scene"]>
   composites: {}
 }
@@ -1369,6 +1407,7 @@ export interface SceneFieldRefs {
   readonly data: Prisma.FieldRef<"Scene", 'Json'>
   readonly createdAt: Prisma.FieldRef<"Scene", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Scene", 'DateTime'>
+  readonly status: Prisma.FieldRef<"Scene", 'PublishStatus'>
 }
     
 

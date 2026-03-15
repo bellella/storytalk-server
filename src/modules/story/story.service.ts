@@ -240,6 +240,7 @@ export class StoryService {
         where: { id: episodeId },
         include: {
           scenes: {
+            where: { status: PublishStatus.PUBLISHED },
             orderBy: { order: 'asc' },
             include: {
               dialogues: {

@@ -90,7 +90,8 @@ export const ModelName = {
   UserPurchase: 'UserPurchase',
   CoinTransaction: 'CoinTransaction',
   UserSubscription: 'UserSubscription',
-  PromptTemplate: 'PromptTemplate'
+  PromptTemplate: 'PromptTemplate',
+  Image: 'Image'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -214,7 +215,8 @@ export const SceneScalarFieldEnum = {
   audioUrl: 'audioUrl',
   data: 'data',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  status: 'status'
 } as const
 
 export type SceneScalarFieldEnum = (typeof SceneScalarFieldEnum)[keyof typeof SceneScalarFieldEnum]
@@ -715,6 +717,18 @@ export const PromptTemplateScalarFieldEnum = {
 } as const
 
 export type PromptTemplateScalarFieldEnum = (typeof PromptTemplateScalarFieldEnum)[keyof typeof PromptTemplateScalarFieldEnum]
+
+
+export const ImageScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  url: 'url',
+  type: 'type',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ImageScalarFieldEnum = (typeof ImageScalarFieldEnum)[keyof typeof ImageScalarFieldEnum]
 
 
 export const SortOrder = {

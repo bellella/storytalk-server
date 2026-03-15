@@ -201,6 +201,7 @@ model Scene {
   data        Json?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  status      PublishStatus @default(PUBLISHED)
 
   episode   Episode    @relation(fields: [episodeId], references: [id])
   dialogues Dialogue[]
@@ -1120,4 +1121,15 @@ model PromptTemplate {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+///// ADMIN
+
+model Image {
+  id          Int      @id @default(autoincrement())
+  name        String?
+  url         String   @db.Text
+  type        String?  // background, character, cover, icon 같은 용도
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
