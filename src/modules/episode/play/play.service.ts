@@ -79,7 +79,8 @@ const PROMPT_KEYS = {
   AI_SLOT_GENERATE_DIALOGUES: 'AI_SLOT_GENERATE_DIALOGUES',
   AI_INPUT_SLOT_CORRECT_AND_DIALOGUES: 'AI_INPUT_SLOT_CORRECT_AND_DIALOGUES',
   AI_INPUT_SLOT_EVALUATE: 'AI_INPUT_SLOT_EVALUATE',
-  AI_INPUT_SLOT_PICK_DIALOGUES_FOR_QUIZ: 'AI_INPUT_SLOT_PICK_DIALOGUES_FOR_QUIZ',
+  AI_INPUT_SLOT_PICK_DIALOGUES_FOR_QUIZ:
+    'AI_INPUT_SLOT_PICK_DIALOGUES_FOR_QUIZ',
 } as const;
 
 @Injectable()
@@ -185,7 +186,7 @@ export class PlayService {
       (s) =>
         (s.flowType !== SceneFlowType.BRANCH &&
           s.flowType !== SceneFlowType.BRANCH_AND_TRIGGER) ||
-          resolvedPickedSceneIds.has(s.id)
+        resolvedPickedSceneIds.has(s.id)
     );
 
     return {
@@ -854,11 +855,24 @@ export class PlayService {
           },
         });
 
+        const currentPlayData = (play.data as Record<string, any>) ?? {};
+        const mergedData = { ...currentPlayData, ...dataTable };
+
+        // sceneScoreDelta 처리: 기존 sceneScores에 delta 누적
+        if (dataTable?.sceneScoreDelta) {
+          const sceneScores = { ...(currentPlayData.sceneScores ?? {}) } as Record<string, number>;
+          for (const [sceneId, delta] of Object.entries(dataTable.sceneScoreDelta as Record<string, number>)) {
+            sceneScores[sceneId] = (sceneScores[sceneId] ?? 0) + delta;
+          }
+          mergedData.sceneScores = sceneScores;
+          delete mergedData.sceneScoreDelta;
+        }
+
         await tx.userPlayEpisode.update({
           where: { id: playEpisodeId },
           data: {
             lastSlotId: slot.id,
-            data: { ...(play.data as Record<string, any>), ...dataTable },
+            data: mergedData,
           },
         });
 
