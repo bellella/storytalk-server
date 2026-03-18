@@ -31,6 +31,7 @@ export class SceneDto {
   type: SceneType;
   @ApiProperty({ enum: SceneFlowType, enumName: 'SceneFlowType' })
   flowType: SceneFlowType;
+  branchKey?: string; // BRANCH 씬의 라우트 키 (branch-trigger에서 매칭용)
   koreanTitle?: string;
   order: number;
   bgImageUrl?: string;

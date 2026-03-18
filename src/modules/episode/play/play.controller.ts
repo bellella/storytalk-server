@@ -29,11 +29,10 @@ import {
   BranchTriggerResponseDto,
   ChoiceSlotDto,
   ChoiceSlotResponseDto,
-  CompletePlayResponseDto,
   MyPlayEpisodeItemDto,
   PlayEpisodeDetailResponseDto,
-  ReplayResponseDto,
   ResultResponseDto,
+  UserEndingItemDto,
 } from './dto/play.dto';
 import { UpdatePlayDto } from './dto/update-play.dto';
 import { PlayService } from './play.service';
@@ -49,6 +48,15 @@ class MyPlayEpisodesResponseDto implements CursorResponseDto<MyPlayEpisodeItemDt
 @Controller('play-episodes')
 export class PlayController {
   constructor(private readonly playService: PlayService) {}
+
+  /**
+   * 내 엔딩 리스트 (해금한 엔딩 + 에피소드 간략 정보)
+   */
+  @Get('/me/endings')
+  @ApiOkResponse({ type: [UserEndingItemDto] })
+  getMyEndings(@ReqUser('id') userId: number): Promise<UserEndingItemDto[]> {
+    return this.playService.getMyEndings(userId);
+  }
 
   /**
    * 1️⃣ 내 플레이 리스트
@@ -150,11 +158,11 @@ export class PlayController {
    * POST /play-episodes/:playEpisodeId/complete
    */
   @Post('/:playEpisodeId/complete')
-  @ApiOkResponse({ type: CompletePlayResponseDto })
+  @ApiOkResponse({ type: ResultResponseDto })
   completePlayEpisode(
     @ReqUser('id') userId: number,
     @Param('playEpisodeId', ParseIntPipe) playEpisodeId: number
-  ): Promise<CompletePlayResponseDto> {
+  ): Promise<ResultResponseDto> {
     return this.playService.completePlayEpisode(userId, playEpisodeId);
   }
 

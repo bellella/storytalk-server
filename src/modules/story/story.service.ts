@@ -361,6 +361,7 @@ export class StoryService {
         title: scene.title,
         type: scene.type,
         flowType: scene.flowType,
+        branchKey: scene.branchKey ?? undefined,
         koreanTitle: scene.koreanTitle ?? undefined,
         order: scene.order,
         bgImageUrl: scene.bgImageUrl ?? undefined,

@@ -65,14 +65,18 @@ import {
   BranchTriggerResponseDto,
   ChoiceSlotDto,
   ChoiceSlotResponseDto,
-  CompletePlayResponseDto,
+  EndingInfoDto,
+  EvaluationResultDto,
   MyPlayEpisodeItemDto,
   PlayEpisodeDetailResponseDto,
+  PlayResultDto,
   ResultResponseDto,
   SlotDialogueDto,
+  UserEndingItemDto,
 } from './dto/play.dto';
 import { UpdatePlayDto } from './dto/update-play.dto';
 import { AiSlotDialogueData, AiSlotDialogueInput } from './types/ai.type';
+import { BranchTriggerSceneData } from './types/scene-data.type';
 import { PromptTemplateService } from '@/modules/prompt-template/prompt-template.service';
 
 const PROMPT_KEYS = {
@@ -133,6 +137,58 @@ export class PlayService {
     return new CursorResponseDto(items, nextCursor);
   }
 
+  async getMyEndings(userId: number): Promise<UserEndingItemDto[]> {
+    const unlocks = await this.prisma.userEnding.findMany({
+      where: { userId, isActive: true },
+      orderBy: { reachedAt: 'desc' },
+      include: {
+        episode: {
+          select: {
+            id: true,
+            title: true,
+            koreanTitle: true,
+            thumbnailUrl: true,
+            storyId: true,
+            story: { select: { id: true, title: true } },
+          },
+        },
+      },
+    });
+
+    const endings = await this.prisma.ending.findMany({
+      where: {
+        OR: unlocks.map((u) => ({
+          episodeId: u.episodeId,
+          key: u.endingKey,
+        })),
+      },
+      select: { id: true, key: true, name: true, imageUrl: true, episodeId: true },
+    });
+    const endingMap = new Map(
+      endings.map((e) => [`${e.episodeId}:${e.key}`, e])
+    );
+
+    return unlocks.map((u) => {
+      const ending = endingMap.get(`${u.episodeId}:${u.endingKey}`);
+      return {
+        id: ending?.id ?? u.id,
+        key: u.endingKey,
+        name: ending?.name ?? u.endingKey,
+        imageUrl: ending?.imageUrl ?? null,
+        reachedCount: u.reachedCount,
+        reachedAt: u.reachedAt.toISOString(),
+        episode: {
+          id: u.episode.id,
+          title: u.episode.title,
+          koreanTitle: u.episode.koreanTitle,
+          thumbnailUrl: u.episode.thumbnailUrl,
+          storyId: u.episode.storyId,
+          storyTitle: u.episode.story?.title ?? null,
+        },
+      };
+    });
+  }
+
   async updateProgress(
     userId: number,
     playEpisodeId: number,
@@ -177,10 +233,12 @@ export class PlayService {
     const playData = (play.data as Record<string, any>) ?? {};
     const branchResults = (playData.branchResults ?? {}) as Record<
       string,
-      { pickedSceneId: number }
+      { pickedSceneId?: number; pickedSceneIds?: number[] }
     >;
     const resolvedPickedSceneIds = new Set(
-      Object.values(branchResults).map((r) => r.pickedSceneId)
+      Object.values(branchResults).flatMap((r) =>
+        r.pickedSceneIds ?? (r.pickedSceneId != null ? [r.pickedSceneId] : [])
+      )
     );
     const preloadedScenes = episode.scenes.filter(
       (s) =>
@@ -897,25 +955,12 @@ export class PlayService {
   async completePlayEpisode(
     userId: number,
     playEpisodeId: number
-  ): Promise<CompletePlayResponseDto> {
-    console.log(
-      'completePlayEpisode여기맞냐고 시발아아아아아!!',
-      userId,
-      playEpisodeId
-    );
+  ): Promise<ResultResponseDto> {
     const play = await this.assertAccessiblePlayEpisode(userId, playEpisodeId);
 
-    // 이미 완료면 그대로 반환
+    // 이미 완료면 getResult와 동일 포맷으로 반환
     if (play.status === PlayEpisodeStatus.COMPLETED) {
-      const saved = play.result as Record<string, any> | null;
-      return {
-        playEpisodeId: play.id,
-        currentStage: play.currentStage,
-        status: play.status,
-        evaluation: (saved?.evaluation ?? null) as any,
-        xpGained: 0,
-        rewards: [],
-      };
+      return this.getResult(userId, playEpisodeId);
     }
 
     return this.prisma.$transaction(
@@ -977,32 +1022,107 @@ export class PlayService {
           }
         }
 
-        const result = evaluation
-          ? {
-              evaluation,
-              generatedAt: now.toISOString(),
-            }
-          : null;
+        // 2.5) lastSceneId로 endingId 조회 (엔딩 연결된 씬이면)
+        let endingId: number | null = null;
+        if (play.lastSceneId) {
+          const scene = await tx.scene.findUnique({
+            where: {
+              id: play.lastSceneId,
+              episodeId: play.episodeId,
+            },
+            select: { endingId: true },
+          });
+          endingId = scene?.endingId ?? null;
+        }
 
         // 3) 모드에 따른 stage 전환
         const nextStage = EpisodeStage.QUIZ_IN_PROGRESS;
 
-        // 4) play 업데이트
-        const updated = await tx.userPlayEpisode.update({
-          where: { id: playEpisodeId },
-          data: {
-            completedAt: now,
-            status: PlayEpisodeStatus.COMPLETED,
-            currentStage: nextStage,
-            result: result ?? undefined,
-          },
-          select: {
-            id: true,
-            currentStage: true,
-            status: true,
-            result: true,
-          },
-        });
+        // 4) 엔딩 리워드 지급 (endingId 있을 때, 중복 방지)
+        const grantedRewards: { type: string; payload: any }[] = [];
+        let rewardsGranted = false;
+
+        if (endingId && !play.rewardsGranted) {
+          const ending = await tx.ending.findUnique({
+            where: { id: endingId },
+            include: {
+              rewards: { where: { isActive: true } },
+            },
+          });
+
+          if (ending) {
+            // UserEnding 조회: 없거나 isActive=false면 리워드 지급 가능 (유효하지 않으면 다시 지급)
+            const existing = await tx.userEnding.findUnique({
+              where: {
+                userId_episodeId_endingKey: {
+                  userId,
+                  episodeId: play.episodeId,
+                  endingKey: ending.key,
+                },
+              },
+            });
+            const shouldGrantRewards = !existing || !existing.isActive;
+
+            if (shouldGrantRewards) {
+              for (const reward of ending.rewards) {
+                const payload = reward.payload as Record<string, any>;
+                if (reward.type === RewardType.CHARACTER_INVITE) {
+                  const characterId = payload.characterId as number;
+                  if (characterId) {
+                    const existing = await tx.characterFriend.findUnique({
+                      where: {
+                        userId_characterId: { userId, characterId },
+                      },
+                    });
+                    if (!existing) {
+                      await tx.characterFriend.create({
+                        data: {
+                          userId,
+                          characterId,
+                          status: CharacterRelationStatus.INVITABLE,
+                        },
+                      });
+                      grantedRewards.push({ type: reward.type, payload });
+                    } else if (
+                      existing.status === CharacterRelationStatus.LOCKED
+                    ) {
+                      await tx.characterFriend.update({
+                        where: {
+                          userId_characterId: { userId, characterId },
+                        },
+                        data: { status: CharacterRelationStatus.INVITABLE },
+                      });
+                      grantedRewards.push({ type: reward.type, payload });
+                    }
+                  }
+                }
+              }
+            }
+
+            // 엔딩 도달 기록: count 증가, 지급 시 isActive=true
+            await tx.userEnding.upsert({
+              where: {
+                userId_episodeId_endingKey: {
+                  userId,
+                  episodeId: play.episodeId,
+                  endingKey: ending.key,
+                },
+              },
+              create: {
+                userId,
+                episodeId: play.episodeId,
+                endingKey: ending.key,
+                reachedCount: 1,
+                isActive: true,
+              },
+              update: {
+                reachedCount: { increment: 1 },
+                ...(shouldGrantRewards ? { isActive: true } : {}),
+              },
+            });
+            rewardsGranted = true;
+          }
+        }
 
         // - episode/scene/dialogue 기반으로 퀴즈 생성
         // - UserQuizSession 생성/연결
@@ -1105,7 +1225,6 @@ export class PlayService {
         }
 
         // 7) EpisodeReward 지급
-        const grantedRewards: { type: string; payload: any }[] = [];
         const episodeRewards = await tx.episodeReward.findMany({
           where: { episodeId: play.episodeId, isActive: true },
         });
@@ -1139,16 +1258,136 @@ export class PlayService {
           }
         }
 
-        return {
-          playEpisodeId: updated.id,
-          currentStage: updated.currentStage,
-          status: updated.status,
-          evaluation: (evaluation?.aggregate ? evaluation : null) as any,
+        // 8) play 업데이트 (result에 evaluation, xpGained, rewards 저장)
+        const resultToSave = {
+          ...(evaluation ? { evaluation, generatedAt: now.toISOString() } : {}),
           xpGained,
           rewards: grantedRewards,
         };
+        const updated = await tx.userPlayEpisode.update({
+          where: { id: playEpisodeId },
+          data: {
+            completedAt: now,
+            status: PlayEpisodeStatus.COMPLETED,
+            currentStage: nextStage,
+            result: resultToSave,
+            endingId: endingId ?? undefined,
+            rewardsGranted,
+          },
+          select: {
+            id: true,
+            currentStage: true,
+            status: true,
+            result: true,
+            endingId: true,
+          },
+        });
+
+        // ending 정보 (프론트 표시용)
+        let endingInfo: {
+          id: number;
+          key: string;
+          name: string;
+          imageUrl: string | null;
+          episodeId: number;
+          episodeTitle: string;
+          episodeKoreanTitle: string | null;
+        } | null = null;
+        if (endingId) {
+          const endingRow = await tx.ending.findUnique({
+            where: { id: endingId },
+            select: {
+              id: true,
+              key: true,
+              name: true,
+              imageUrl: true,
+              episodeId: true,
+              episode: { select: { title: true, koreanTitle: true } },
+            },
+          });
+          if (endingRow) {
+            endingInfo = {
+              id: endingRow.id,
+              key: endingRow.key,
+              name: endingRow.name,
+              imageUrl: endingRow.imageUrl,
+              episodeId: endingRow.episodeId,
+              episodeTitle: endingRow.episode.title,
+              episodeKoreanTitle: endingRow.episode.koreanTitle,
+            };
+          }
+        }
+
+        // slots 조회 (getResult와 동일 포맷)
+        const [slotRows, allSlotDialogues] = await Promise.all([
+          tx.playEpisodeSlot.findMany({
+            where: {
+              playEpisodeId,
+              type: PlayEpisodeSlotType.AI_INPUT,
+            },
+            select: { id: true, data: true },
+            orderBy: { order: 'asc' },
+          }),
+          tx.slotDialogue.findMany({
+            where: {
+              slot: { playEpisodeId },
+              messageType: SlotMessageType.USER,
+            },
+            select: { slotId: true, englishText: true, koreanText: true },
+          }),
+        ]);
+        const slotDialoguesBySlotId = new Map<
+          number,
+          { englishText: string; koreanText: string }
+        >();
+        for (const d of allSlotDialogues) {
+          slotDialoguesBySlotId.set(d.slotId, {
+            englishText: d.englishText ?? '',
+            koreanText: d.koreanText ?? '',
+          });
+        }
+        const slotsForResult = slotRows.map((s) => {
+          const slotData = (s.data ?? {}) as Record<string, any>;
+          const userDialogue = slotDialoguesBySlotId.get(s.id);
+          return {
+            type: (slotData.type ?? 'correction') as 'correction' | 'translation',
+            userInput: slotData.userInput ?? '',
+            englishText: userDialogue?.englishText ?? '',
+            koreanText: userDialogue?.koreanText ?? '',
+            evaluation: slotData.evaluation ?? null,
+          };
+        });
+
+        const episodeRow = await tx.episode.findUnique({
+          where: { id: play.episodeId },
+          select: { id: true, title: true, koreanTitle: true },
+        });
+        if (!episodeRow) throw new NotFoundException('Episode not found');
+
+        const result: PlayResultDto = {
+          evaluation: (evaluation?.aggregate ? evaluation : null) as any,
+          ending: endingInfo,
+          slots: slotsForResult,
+          xpGained,
+          rewards: grantedRewards,
+        };
+
+        return {
+          playEpisodeId: updated.id,
+          episode: {
+            id: episodeRow.id,
+            title: episodeRow.title,
+            koreanTitle: episodeRow.koreanTitle ?? null,
+            description: null,
+            koreanDescription: null,
+            thumbnailUrl: null,
+          },
+          currentStage: updated.currentStage,
+          status: updated.status,
+          result,
+        };
       },
-      { timeout: 15000 }
+      { timeout: 60000 }
     );
   }
 
@@ -1358,45 +1597,99 @@ export class PlayService {
       },
     });
 
-    const slots = await this.prisma.playEpisodeSlot.findMany({
-      where: { playEpisodeId },
-      select: {
-        data: true,
-        slotDialogues: {
-          select: {
-            type: true,
-            messageType: true,
-            englishText: true,
-            koreanText: true,
-            data: true,
-          },
+    // N+1 방지: slots + slotDialogues 한 번에 조회 (include 대신 병렬 2쿼리)
+    const [slots, allSlotDialogues] = await Promise.all([
+      this.prisma.playEpisodeSlot.findMany({
+        where: {
+          playEpisodeId,
+          type: PlayEpisodeSlotType.AI_INPUT,
         },
-      },
-    });
+        select: { id: true, data: true },
+        orderBy: { order: 'asc' },
+      }),
+      this.prisma.slotDialogue.findMany({
+        where: {
+          slot: { playEpisodeId },
+          messageType: SlotMessageType.USER,
+        },
+        select: {
+          slotId: true,
+          englishText: true,
+          koreanText: true,
+        },
+      }),
+    ]);
 
-    const correctedDialogues = slots.map((s) => {
-      const slotData = s.data as any;
-      const userDialogue = s.slotDialogues.find(
-        (d) => d.messageType === SlotMessageType.USER
-      );
+    const slotDialoguesBySlotId = new Map<number, { englishText: string; koreanText: string }>();
+    for (const d of allSlotDialogues) {
+      slotDialoguesBySlotId.set(d.slotId, {
+        englishText: d.englishText ?? '',
+        koreanText: d.koreanText ?? '',
+      });
+    }
+
+    const slotsForResult = slots.map((s) => {
+      const slotData = (s.data ?? {}) as Record<string, any>;
+      const userDialogue = slotDialoguesBySlotId.get(s.id);
       return {
-        userInput: slotData?.userInput ?? '',
+        type: (slotData.type ?? 'correction') as 'correction' | 'translation',
+        userInput: slotData.userInput ?? '',
         englishText: userDialogue?.englishText ?? '',
         koreanText: userDialogue?.koreanText ?? '',
-        evaluation: slotData?.evaluation ?? null,
-        type: slotData?.type ?? 'correction',
+        evaluation: slotData.evaluation ?? null,
       };
     });
 
     if (!episode) throw new NotFoundException('Episode not found');
 
+    const savedResult = (play.result ?? {}) as Record<string, any>;
+    let endingInfo: EndingInfoDto | null = null;
+    if (play.endingId) {
+      const endingRow = await this.prisma.ending.findUnique({
+        where: { id: play.endingId },
+        select: {
+          id: true,
+          key: true,
+          name: true,
+          imageUrl: true,
+          episodeId: true,
+          episode: { select: { title: true, koreanTitle: true } },
+        },
+      });
+      if (endingRow) {
+        endingInfo = {
+          id: endingRow.id,
+          key: endingRow.key,
+          name: endingRow.name,
+          imageUrl: endingRow.imageUrl,
+          episodeId: endingRow.episodeId,
+          episodeTitle: endingRow.episode.title,
+          episodeKoreanTitle: endingRow.episode.koreanTitle,
+        };
+      }
+    }
+
+    const result: PlayResultDto = {
+      evaluation: (savedResult.evaluation ?? null) as EvaluationResultDto | null,
+      ending: endingInfo,
+      slots: slotsForResult,
+      xpGained: savedResult.xpGained ?? 0,
+      rewards: Array.isArray(savedResult.rewards) ? savedResult.rewards : [],
+    };
+
     return {
       playEpisodeId: play.id,
-      episode,
+      episode: {
+        id: episode.id,
+        title: episode.title,
+        koreanTitle: episode.koreanTitle ?? null,
+        description: null,
+        koreanDescription: null,
+        thumbnailUrl: null,
+      },
       currentStage: play.currentStage,
       status: play.status,
-      result: play.result ?? null,
-      correctedDialogues,
+      result,
     };
   }
 
@@ -1422,7 +1715,7 @@ export class PlayService {
       englishText: string;
       koreanText: string;
       followUpDialogueIds: number[];
-      scoreDelta: { sceneId: number; delta: number }[];
+      scoreDelta?: { key: string; delta: number }[];
     }>;
 
     // Idempotency: slot already exists → return stored result
@@ -1470,12 +1763,12 @@ export class PlayService {
         select: { id: true },
       });
 
-      // scoreDelta 누적
+      // scoreDelta 누적 (key 기준으로 sceneScores에 반영)
       const sceneScores = {
         ...((playData.sceneScores ?? {}) as Record<string, number>),
       };
-      for (const { sceneId, delta } of option.scoreDelta ?? []) {
-        sceneScores[sceneId] = (sceneScores[sceneId] ?? 0) + delta;
+      for (const { key, delta } of option.scoreDelta ?? []) {
+        sceneScores[key] = (sceneScores[key] ?? 0) + delta;
       }
 
       const branchResults = {
@@ -1578,60 +1871,65 @@ export class PlayService {
     )
       throw new BadRequestException('Scene is not a BRANCH_TRIGGER');
 
-    const sceneData = scene.data as Record<string, any>;
-    const selectionMode: string = sceneData.selectionMode ?? 'TOP';
-    const candidates = (sceneData.candidates ?? []) as Array<{
-      sceneId: number;
-    }>;
-    const threshold: number = sceneData.threshold ?? 0;
-    const fallbackSceneIds: number[] = sceneData.fallbackSceneIds ?? [];
+    const sceneData = (scene.data ?? {}) as unknown as BranchTriggerSceneData;
+    const candidateKeys = sceneData.candidateKeys ?? [];
+    const selectionMode = sceneData.selectionMode ?? 'TOP';
+    const threshold = sceneData.threshold ?? 0;
+    const fallbackKeys = sceneData.fallbackKeys ?? [];
 
-    if (!candidates.length)
-      throw new BadRequestException('BRANCH_TRIGGER scene has no candidates');
+    if (!candidateKeys.length)
+      throw new BadRequestException(
+        'BRANCH_TRIGGER scene has no candidateKeys'
+      );
 
     const playData = (play.data as Record<string, any>) ?? {};
     const sceneScores = (playData.sceneScores ?? {}) as Record<string, number>;
 
-    // pickedSceneId 결정
-    let pickedSceneId: number | undefined;
+    // winningKey 결정: sceneScores[key] 기준으로 선택
+    let winningKey: string | undefined;
 
     if (selectionMode === 'TOP') {
-      // threshold 이상인 candidates 중 가장 높은 점수 선택
+      // threshold 이상인 candidateKeys 중 가장 높은 점수 선택
       let best = -Infinity;
-      for (const c of candidates) {
-        const score = sceneScores[c.sceneId] ?? 0;
+      for (const key of candidateKeys) {
+        const score = sceneScores[key] ?? 0;
         if (score >= threshold && score > best) {
           best = score;
-          pickedSceneId = c.sceneId;
+          winningKey = key;
         }
       }
-      // threshold 이상인 게 없으면 fallbackSceneIds 사용
-      if (pickedSceneId == null && fallbackSceneIds.length > 0) {
-        pickedSceneId = fallbackSceneIds[0];
+      // threshold 이상인 게 없으면 fallbackKeys 사용
+      if (winningKey == null && fallbackKeys.length > 0) {
+        winningKey = fallbackKeys[0];
       }
     }
 
     // 최종 폴백: 첫 번째 candidate
-    if (pickedSceneId == null) pickedSceneId = candidates[0].sceneId;
+    if (winningKey == null) winningKey = candidateKeys[0];
 
-    // Load full episode scenes
+    // Load full episode scenes (branchKey 포함)
     const episode = await this.storyService.getEpisodeDetail(
       play.episodeId,
       userId
     );
 
-    const pickedScene = episode.scenes.find((s) => s.id === pickedSceneId);
-    if (!pickedScene)
+    const pickedScenes = episode.scenes
+      .filter((s) => s.branchKey === winningKey)
+      .sort((a, b) => a.order - b.order);
+    if (!pickedScenes.length)
       throw new NotFoundException(
-        `Scene ${pickedSceneId} not found in episode`
+        `Scene with branchKey ${winningKey} not found in episode`
       );
+
+    const pickedSceneIds = pickedScenes.map((s) => s.id);
 
     // 결과 저장 (key: triggerSceneId)
     const branchResults = {
       ...((playData.branchResults ?? {}) as Record<string, any>),
     };
     branchResults[triggerSceneId] = {
-      pickedSceneId,
+      winningKey,
+      pickedSceneIds,
       createdAt: new Date().toISOString(),
     };
     await this.prisma.userPlayEpisode.update({
@@ -1639,7 +1937,11 @@ export class PlayService {
       data: { data: { ...playData, branchResults } },
     });
 
-    return { pickedSceneId, scene: pickedScene };
+    return {
+      winningKey,
+      pickedSceneIds,
+      scenes: pickedScenes,
+    };
   }
 
   private async assertAccessiblePlayEpisode(
@@ -1668,6 +1970,8 @@ export class PlayService {
         data: true,
         lastSceneId: true,
         lastSlotId: true,
+        rewardsGranted: true,
+        endingId: true,
       },
     });
 

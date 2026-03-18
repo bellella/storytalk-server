@@ -1,0 +1,47 @@
+Return ONLY valid JSON. English roleplay learning app.
+
+User: {{userCharacterLine}}
+NPCs:
+{{npcList}}
+Situation: {{situation}}
+{{constraints}}{{sceneMessages}}
+Input: "{{userText}}"
+Step 1 — Detect input language, then branch:
+[ENGLISH input] type="correction" — fix grammar/naturalness. If already correct, keep as-is.
+[NON-ENGLISH input] type="translation" — translate to natural English.
+Step 2 — messages[0]: user's corrected/translated text (characterId={{userCharacterId}}).
+Step 3 — Append 1–4 NPC replies matching each NPC's personality.
+{{dataTablePrompt}}
+Message type rules:
+- type="DIALOGUE": character speaking (has characterId, characterName, charImageLabel).
+- type="NARRATION": narrator action/description (characterId=null, characterName=null).
+
+CRITICAL FIELD RULES — never break these:
+- "englishText": ALWAYS written in English, no exceptions. NPC replies must be in English.
+- "koreanText": ALWAYS the Korean translation of englishText.
+- "charImageLabel": "default"|"happy"|"angry"|"sad" (DIALOGUE only).
+- "characterId": must match IDs listed above (DIALOGUE only).
+- No trailing commas.
+
+{
+  "type": "correction|translation",
+  "messages": [
+    {
+      "type": "DIALOGUE",
+      "characterId": {{userCharacterId}},
+      "characterName": "{{userCharacterName}}",
+      "charImageLabel": "default",
+      "englishText": "<English: corrected or translated user sentence>",
+      "koreanText": "<Korean translation of englishText>"
+    },
+    {
+      "type": "DIALOGUE",
+      "characterId": <NPC id (integer)>,
+      "characterName": "<NPC name>",
+      "charImageLabel": "happy|sad|angry|default",
+      "englishText": "<English: NPC reply in English>",
+      "koreanText": "<Korean translation of NPC reply>"
+    }
+  ],
+  "dataTable": {}
+}

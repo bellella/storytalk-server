@@ -83,6 +83,9 @@ export const ModelName = {
   UserPlayEpisode: 'UserPlayEpisode',
   PlayEpisodeSlot: 'PlayEpisodeSlot',
   SlotDialogue: 'SlotDialogue',
+  Ending: 'Ending',
+  EndingReward: 'EndingReward',
+  UserEnding: 'UserEnding',
   Collection: 'Collection',
   CollectionProduct: 'CollectionProduct',
   Product: 'Product',
@@ -194,6 +197,7 @@ export const EpisodeScalarFieldEnum = {
   description: 'description',
   koreanDescription: 'koreanDescription',
   thumbnailUrl: 'thumbnailUrl',
+  data: 'data',
   totalScenes: 'totalScenes',
   status: 'status',
   createdAt: 'createdAt',
@@ -208,6 +212,8 @@ export const SceneScalarFieldEnum = {
   episodeId: 'episodeId',
   type: 'type',
   flowType: 'flowType',
+  branchKey: 'branchKey',
+  endingId: 'endingId',
   title: 'title',
   koreanTitle: 'koreanTitle',
   order: 'order',
@@ -559,6 +565,8 @@ export const UserPlayEpisodeScalarFieldEnum = {
   version: 'version',
   result: 'result',
   data: 'data',
+  rewardsGranted: 'rewardsGranted',
+  endingId: 'endingId',
   source: 'source',
   deletedAt: 'deletedAt',
   archivedAt: 'archivedAt',
@@ -601,6 +609,46 @@ export const SlotDialogueScalarFieldEnum = {
 } as const
 
 export type SlotDialogueScalarFieldEnum = (typeof SlotDialogueScalarFieldEnum)[keyof typeof SlotDialogueScalarFieldEnum]
+
+
+export const EndingScalarFieldEnum = {
+  id: 'id',
+  episodeId: 'episodeId',
+  key: 'key',
+  name: 'name',
+  imageUrl: 'imageUrl',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EndingScalarFieldEnum = (typeof EndingScalarFieldEnum)[keyof typeof EndingScalarFieldEnum]
+
+
+export const EndingRewardScalarFieldEnum = {
+  id: 'id',
+  endingId: 'endingId',
+  type: 'type',
+  payload: 'payload',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EndingRewardScalarFieldEnum = (typeof EndingRewardScalarFieldEnum)[keyof typeof EndingRewardScalarFieldEnum]
+
+
+export const UserEndingScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  episodeId: 'episodeId',
+  endingKey: 'endingKey',
+  reachedCount: 'reachedCount',
+  isActive: 'isActive',
+  reachedAt: 'reachedAt'
+} as const
+
+export type UserEndingScalarFieldEnum = (typeof UserEndingScalarFieldEnum)[keyof typeof UserEndingScalarFieldEnum]
 
 
 export const CollectionScalarFieldEnum = {

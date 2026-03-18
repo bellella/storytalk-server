@@ -198,6 +198,21 @@ export type PlayEpisodeSlot = Prisma.PlayEpisodeSlotModel
  */
 export type SlotDialogue = Prisma.SlotDialogueModel
 /**
+ * Model Ending
+ * 
+ */
+export type Ending = Prisma.EndingModel
+/**
+ * Model EndingReward
+ * 
+ */
+export type EndingReward = Prisma.EndingRewardModel
+/**
+ * Model UserEnding
+ * 
+ */
+export type UserEnding = Prisma.UserEndingModel
+/**
  * Model Collection
  * 
  */

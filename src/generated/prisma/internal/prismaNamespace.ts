@@ -416,6 +416,9 @@ export const ModelName = {
   UserPlayEpisode: 'UserPlayEpisode',
   PlayEpisodeSlot: 'PlayEpisodeSlot',
   SlotDialogue: 'SlotDialogue',
+  Ending: 'Ending',
+  EndingReward: 'EndingReward',
+  UserEnding: 'UserEnding',
   Collection: 'Collection',
   CollectionProduct: 'CollectionProduct',
   Product: 'Product',
@@ -440,7 +443,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "story" | "tag" | "storyTag" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "userReviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterChat" | "message" | "sticker" | "faceTalkSession" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory" | "userEpisode" | "userPlayEpisode" | "playEpisodeSlot" | "slotDialogue" | "collection" | "collectionProduct" | "product" | "episodeProduct" | "userPurchase" | "coinTransaction" | "userSubscription" | "promptTemplate" | "image"
+    modelProps: "user" | "story" | "tag" | "storyTag" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "userReviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterChat" | "message" | "sticker" | "faceTalkSession" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory" | "userEpisode" | "userPlayEpisode" | "playEpisodeSlot" | "slotDialogue" | "ending" | "endingReward" | "userEnding" | "collection" | "collectionProduct" | "product" | "episodeProduct" | "userPurchase" | "coinTransaction" | "userSubscription" | "promptTemplate" | "image"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2812,6 +2815,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Ending: {
+      payload: Prisma.$EndingPayload<ExtArgs>
+      fields: Prisma.EndingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EndingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EndingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingPayload>
+        }
+        findFirst: {
+          args: Prisma.EndingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EndingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingPayload>
+        }
+        findMany: {
+          args: Prisma.EndingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingPayload>[]
+        }
+        create: {
+          args: Prisma.EndingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingPayload>
+        }
+        createMany: {
+          args: Prisma.EndingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EndingCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingPayload>[]
+        }
+        delete: {
+          args: Prisma.EndingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingPayload>
+        }
+        update: {
+          args: Prisma.EndingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingPayload>
+        }
+        deleteMany: {
+          args: Prisma.EndingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EndingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EndingUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingPayload>[]
+        }
+        upsert: {
+          args: Prisma.EndingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingPayload>
+        }
+        aggregate: {
+          args: Prisma.EndingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEnding>
+        }
+        groupBy: {
+          args: Prisma.EndingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EndingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EndingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EndingCountAggregateOutputType> | number
+        }
+      }
+    }
+    EndingReward: {
+      payload: Prisma.$EndingRewardPayload<ExtArgs>
+      fields: Prisma.EndingRewardFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EndingRewardFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingRewardPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EndingRewardFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingRewardPayload>
+        }
+        findFirst: {
+          args: Prisma.EndingRewardFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingRewardPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EndingRewardFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingRewardPayload>
+        }
+        findMany: {
+          args: Prisma.EndingRewardFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingRewardPayload>[]
+        }
+        create: {
+          args: Prisma.EndingRewardCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingRewardPayload>
+        }
+        createMany: {
+          args: Prisma.EndingRewardCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EndingRewardCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingRewardPayload>[]
+        }
+        delete: {
+          args: Prisma.EndingRewardDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingRewardPayload>
+        }
+        update: {
+          args: Prisma.EndingRewardUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingRewardPayload>
+        }
+        deleteMany: {
+          args: Prisma.EndingRewardDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EndingRewardUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EndingRewardUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingRewardPayload>[]
+        }
+        upsert: {
+          args: Prisma.EndingRewardUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndingRewardPayload>
+        }
+        aggregate: {
+          args: Prisma.EndingRewardAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEndingReward>
+        }
+        groupBy: {
+          args: Prisma.EndingRewardGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EndingRewardGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EndingRewardCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EndingRewardCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserEnding: {
+      payload: Prisma.$UserEndingPayload<ExtArgs>
+      fields: Prisma.UserEndingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserEndingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEndingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserEndingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEndingPayload>
+        }
+        findFirst: {
+          args: Prisma.UserEndingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEndingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserEndingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEndingPayload>
+        }
+        findMany: {
+          args: Prisma.UserEndingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEndingPayload>[]
+        }
+        create: {
+          args: Prisma.UserEndingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEndingPayload>
+        }
+        createMany: {
+          args: Prisma.UserEndingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserEndingCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEndingPayload>[]
+        }
+        delete: {
+          args: Prisma.UserEndingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEndingPayload>
+        }
+        update: {
+          args: Prisma.UserEndingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEndingPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserEndingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserEndingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserEndingUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEndingPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserEndingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserEndingPayload>
+        }
+        aggregate: {
+          args: Prisma.UserEndingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserEnding>
+        }
+        groupBy: {
+          args: Prisma.UserEndingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserEndingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserEndingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserEndingCountAggregateOutputType> | number
+        }
+      }
+    }
     Collection: {
       payload: Prisma.$CollectionPayload<ExtArgs>
       fields: Prisma.CollectionFieldRefs
@@ -3601,6 +3826,7 @@ export const EpisodeScalarFieldEnum = {
   description: 'description',
   koreanDescription: 'koreanDescription',
   thumbnailUrl: 'thumbnailUrl',
+  data: 'data',
   totalScenes: 'totalScenes',
   status: 'status',
   createdAt: 'createdAt',
@@ -3615,6 +3841,8 @@ export const SceneScalarFieldEnum = {
   episodeId: 'episodeId',
   type: 'type',
   flowType: 'flowType',
+  branchKey: 'branchKey',
+  endingId: 'endingId',
   title: 'title',
   koreanTitle: 'koreanTitle',
   order: 'order',
@@ -3966,6 +4194,8 @@ export const UserPlayEpisodeScalarFieldEnum = {
   version: 'version',
   result: 'result',
   data: 'data',
+  rewardsGranted: 'rewardsGranted',
+  endingId: 'endingId',
   source: 'source',
   deletedAt: 'deletedAt',
   archivedAt: 'archivedAt',
@@ -4008,6 +4238,46 @@ export const SlotDialogueScalarFieldEnum = {
 } as const
 
 export type SlotDialogueScalarFieldEnum = (typeof SlotDialogueScalarFieldEnum)[keyof typeof SlotDialogueScalarFieldEnum]
+
+
+export const EndingScalarFieldEnum = {
+  id: 'id',
+  episodeId: 'episodeId',
+  key: 'key',
+  name: 'name',
+  imageUrl: 'imageUrl',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EndingScalarFieldEnum = (typeof EndingScalarFieldEnum)[keyof typeof EndingScalarFieldEnum]
+
+
+export const EndingRewardScalarFieldEnum = {
+  id: 'id',
+  endingId: 'endingId',
+  type: 'type',
+  payload: 'payload',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EndingRewardScalarFieldEnum = (typeof EndingRewardScalarFieldEnum)[keyof typeof EndingRewardScalarFieldEnum]
+
+
+export const UserEndingScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  episodeId: 'episodeId',
+  endingKey: 'endingKey',
+  reachedCount: 'reachedCount',
+  isActive: 'isActive',
+  reachedAt: 'reachedAt'
+} as const
+
+export type UserEndingScalarFieldEnum = (typeof UserEndingScalarFieldEnum)[keyof typeof UserEndingScalarFieldEnum]
 
 
 export const CollectionScalarFieldEnum = {
@@ -4326,6 +4596,20 @@ export type ListEnumPlayEpisodeModeFieldRefInput<$PrismaModel> = FieldRefInputTy
 
 
 /**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
  * Reference to a field of type 'SceneType'
  */
 export type EnumSceneTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SceneType'>
@@ -4350,20 +4634,6 @@ export type EnumSceneFlowTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'SceneFlowType[]'
  */
 export type ListEnumSceneFlowTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SceneFlowType[]'>
-    
-
-
-/**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -4883,6 +5153,9 @@ export type GlobalOmitConfig = {
   userPlayEpisode?: Prisma.UserPlayEpisodeOmit
   playEpisodeSlot?: Prisma.PlayEpisodeSlotOmit
   slotDialogue?: Prisma.SlotDialogueOmit
+  ending?: Prisma.EndingOmit
+  endingReward?: Prisma.EndingRewardOmit
+  userEnding?: Prisma.UserEndingOmit
   collection?: Prisma.CollectionOmit
   collectionProduct?: Prisma.CollectionProductOmit
   product?: Prisma.ProductOmit

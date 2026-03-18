@@ -29,12 +29,14 @@ export type AggregateScene = {
 export type SceneAvgAggregateOutputType = {
   id: number | null
   episodeId: number | null
+  endingId: number | null
   order: number | null
 }
 
 export type SceneSumAggregateOutputType = {
   id: number | null
   episodeId: number | null
+  endingId: number | null
   order: number | null
 }
 
@@ -43,6 +45,8 @@ export type SceneMinAggregateOutputType = {
   episodeId: number | null
   type: $Enums.SceneType | null
   flowType: $Enums.SceneFlowType | null
+  branchKey: string | null
+  endingId: number | null
   title: string | null
   koreanTitle: string | null
   order: number | null
@@ -58,6 +62,8 @@ export type SceneMaxAggregateOutputType = {
   episodeId: number | null
   type: $Enums.SceneType | null
   flowType: $Enums.SceneFlowType | null
+  branchKey: string | null
+  endingId: number | null
   title: string | null
   koreanTitle: string | null
   order: number | null
@@ -73,6 +79,8 @@ export type SceneCountAggregateOutputType = {
   episodeId: number
   type: number
   flowType: number
+  branchKey: number
+  endingId: number
   title: number
   koreanTitle: number
   order: number
@@ -89,12 +97,14 @@ export type SceneCountAggregateOutputType = {
 export type SceneAvgAggregateInputType = {
   id?: true
   episodeId?: true
+  endingId?: true
   order?: true
 }
 
 export type SceneSumAggregateInputType = {
   id?: true
   episodeId?: true
+  endingId?: true
   order?: true
 }
 
@@ -103,6 +113,8 @@ export type SceneMinAggregateInputType = {
   episodeId?: true
   type?: true
   flowType?: true
+  branchKey?: true
+  endingId?: true
   title?: true
   koreanTitle?: true
   order?: true
@@ -118,6 +130,8 @@ export type SceneMaxAggregateInputType = {
   episodeId?: true
   type?: true
   flowType?: true
+  branchKey?: true
+  endingId?: true
   title?: true
   koreanTitle?: true
   order?: true
@@ -133,6 +147,8 @@ export type SceneCountAggregateInputType = {
   episodeId?: true
   type?: true
   flowType?: true
+  branchKey?: true
+  endingId?: true
   title?: true
   koreanTitle?: true
   order?: true
@@ -236,6 +252,8 @@ export type SceneGroupByOutputType = {
   episodeId: number
   type: $Enums.SceneType
   flowType: $Enums.SceneFlowType
+  branchKey: string | null
+  endingId: number | null
   title: string
   koreanTitle: string | null
   order: number
@@ -275,6 +293,8 @@ export type SceneWhereInput = {
   episodeId?: Prisma.IntFilter<"Scene"> | number
   type?: Prisma.EnumSceneTypeFilter<"Scene"> | $Enums.SceneType
   flowType?: Prisma.EnumSceneFlowTypeFilter<"Scene"> | $Enums.SceneFlowType
+  branchKey?: Prisma.StringNullableFilter<"Scene"> | string | null
+  endingId?: Prisma.IntNullableFilter<"Scene"> | number | null
   title?: Prisma.StringFilter<"Scene"> | string
   koreanTitle?: Prisma.StringNullableFilter<"Scene"> | string | null
   order?: Prisma.IntFilter<"Scene"> | number
@@ -293,6 +313,8 @@ export type SceneOrderByWithRelationInput = {
   episodeId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   flowType?: Prisma.SortOrder
+  branchKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  endingId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrder
   koreanTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrder
@@ -315,6 +337,8 @@ export type SceneWhereUniqueInput = Prisma.AtLeast<{
   episodeId?: Prisma.IntFilter<"Scene"> | number
   type?: Prisma.EnumSceneTypeFilter<"Scene"> | $Enums.SceneType
   flowType?: Prisma.EnumSceneFlowTypeFilter<"Scene"> | $Enums.SceneFlowType
+  branchKey?: Prisma.StringNullableFilter<"Scene"> | string | null
+  endingId?: Prisma.IntNullableFilter<"Scene"> | number | null
   title?: Prisma.StringFilter<"Scene"> | string
   koreanTitle?: Prisma.StringNullableFilter<"Scene"> | string | null
   order?: Prisma.IntFilter<"Scene"> | number
@@ -333,6 +357,8 @@ export type SceneOrderByWithAggregationInput = {
   episodeId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   flowType?: Prisma.SortOrder
+  branchKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  endingId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrder
   koreanTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrder
@@ -357,6 +383,8 @@ export type SceneScalarWhereWithAggregatesInput = {
   episodeId?: Prisma.IntWithAggregatesFilter<"Scene"> | number
   type?: Prisma.EnumSceneTypeWithAggregatesFilter<"Scene"> | $Enums.SceneType
   flowType?: Prisma.EnumSceneFlowTypeWithAggregatesFilter<"Scene"> | $Enums.SceneFlowType
+  branchKey?: Prisma.StringNullableWithAggregatesFilter<"Scene"> | string | null
+  endingId?: Prisma.IntNullableWithAggregatesFilter<"Scene"> | number | null
   title?: Prisma.StringWithAggregatesFilter<"Scene"> | string
   koreanTitle?: Prisma.StringNullableWithAggregatesFilter<"Scene"> | string | null
   order?: Prisma.IntWithAggregatesFilter<"Scene"> | number
@@ -371,6 +399,8 @@ export type SceneScalarWhereWithAggregatesInput = {
 export type SceneCreateInput = {
   type?: $Enums.SceneType
   flowType?: $Enums.SceneFlowType
+  branchKey?: string | null
+  endingId?: number | null
   title: string
   koreanTitle?: string | null
   order: number
@@ -389,6 +419,8 @@ export type SceneUncheckedCreateInput = {
   episodeId: number
   type?: $Enums.SceneType
   flowType?: $Enums.SceneFlowType
+  branchKey?: string | null
+  endingId?: number | null
   title: string
   koreanTitle?: string | null
   order: number
@@ -404,6 +436,8 @@ export type SceneUncheckedCreateInput = {
 export type SceneUpdateInput = {
   type?: Prisma.EnumSceneTypeFieldUpdateOperationsInput | $Enums.SceneType
   flowType?: Prisma.EnumSceneFlowTypeFieldUpdateOperationsInput | $Enums.SceneFlowType
+  branchKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endingId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -422,6 +456,8 @@ export type SceneUncheckedUpdateInput = {
   episodeId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumSceneTypeFieldUpdateOperationsInput | $Enums.SceneType
   flowType?: Prisma.EnumSceneFlowTypeFieldUpdateOperationsInput | $Enums.SceneFlowType
+  branchKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endingId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -439,6 +475,8 @@ export type SceneCreateManyInput = {
   episodeId: number
   type?: $Enums.SceneType
   flowType?: $Enums.SceneFlowType
+  branchKey?: string | null
+  endingId?: number | null
   title: string
   koreanTitle?: string | null
   order: number
@@ -453,6 +491,8 @@ export type SceneCreateManyInput = {
 export type SceneUpdateManyMutationInput = {
   type?: Prisma.EnumSceneTypeFieldUpdateOperationsInput | $Enums.SceneType
   flowType?: Prisma.EnumSceneFlowTypeFieldUpdateOperationsInput | $Enums.SceneFlowType
+  branchKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endingId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -469,6 +509,8 @@ export type SceneUncheckedUpdateManyInput = {
   episodeId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumSceneTypeFieldUpdateOperationsInput | $Enums.SceneType
   flowType?: Prisma.EnumSceneFlowTypeFieldUpdateOperationsInput | $Enums.SceneFlowType
+  branchKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endingId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -500,6 +542,8 @@ export type SceneCountOrderByAggregateInput = {
   episodeId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   flowType?: Prisma.SortOrder
+  branchKey?: Prisma.SortOrder
+  endingId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   koreanTitle?: Prisma.SortOrder
   order?: Prisma.SortOrder
@@ -514,6 +558,7 @@ export type SceneCountOrderByAggregateInput = {
 export type SceneAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   episodeId?: Prisma.SortOrder
+  endingId?: Prisma.SortOrder
   order?: Prisma.SortOrder
 }
 
@@ -522,6 +567,8 @@ export type SceneMaxOrderByAggregateInput = {
   episodeId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   flowType?: Prisma.SortOrder
+  branchKey?: Prisma.SortOrder
+  endingId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   koreanTitle?: Prisma.SortOrder
   order?: Prisma.SortOrder
@@ -537,6 +584,8 @@ export type SceneMinOrderByAggregateInput = {
   episodeId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   flowType?: Prisma.SortOrder
+  branchKey?: Prisma.SortOrder
+  endingId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   koreanTitle?: Prisma.SortOrder
   order?: Prisma.SortOrder
@@ -550,6 +599,7 @@ export type SceneMinOrderByAggregateInput = {
 export type SceneSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   episodeId?: Prisma.SortOrder
+  endingId?: Prisma.SortOrder
   order?: Prisma.SortOrder
 }
 
@@ -625,6 +675,8 @@ export type SceneUpdateOneRequiredWithoutDialoguesNestedInput = {
 export type SceneCreateWithoutEpisodeInput = {
   type?: $Enums.SceneType
   flowType?: $Enums.SceneFlowType
+  branchKey?: string | null
+  endingId?: number | null
   title: string
   koreanTitle?: string | null
   order: number
@@ -641,6 +693,8 @@ export type SceneUncheckedCreateWithoutEpisodeInput = {
   id?: number
   type?: $Enums.SceneType
   flowType?: $Enums.SceneFlowType
+  branchKey?: string | null
+  endingId?: number | null
   title: string
   koreanTitle?: string | null
   order: number
@@ -687,6 +741,8 @@ export type SceneScalarWhereInput = {
   episodeId?: Prisma.IntFilter<"Scene"> | number
   type?: Prisma.EnumSceneTypeFilter<"Scene"> | $Enums.SceneType
   flowType?: Prisma.EnumSceneFlowTypeFilter<"Scene"> | $Enums.SceneFlowType
+  branchKey?: Prisma.StringNullableFilter<"Scene"> | string | null
+  endingId?: Prisma.IntNullableFilter<"Scene"> | number | null
   title?: Prisma.StringFilter<"Scene"> | string
   koreanTitle?: Prisma.StringNullableFilter<"Scene"> | string | null
   order?: Prisma.IntFilter<"Scene"> | number
@@ -701,6 +757,8 @@ export type SceneScalarWhereInput = {
 export type SceneCreateWithoutDialoguesInput = {
   type?: $Enums.SceneType
   flowType?: $Enums.SceneFlowType
+  branchKey?: string | null
+  endingId?: number | null
   title: string
   koreanTitle?: string | null
   order: number
@@ -718,6 +776,8 @@ export type SceneUncheckedCreateWithoutDialoguesInput = {
   episodeId: number
   type?: $Enums.SceneType
   flowType?: $Enums.SceneFlowType
+  branchKey?: string | null
+  endingId?: number | null
   title: string
   koreanTitle?: string | null
   order: number
@@ -748,6 +808,8 @@ export type SceneUpdateToOneWithWhereWithoutDialoguesInput = {
 export type SceneUpdateWithoutDialoguesInput = {
   type?: Prisma.EnumSceneTypeFieldUpdateOperationsInput | $Enums.SceneType
   flowType?: Prisma.EnumSceneFlowTypeFieldUpdateOperationsInput | $Enums.SceneFlowType
+  branchKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endingId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -765,6 +827,8 @@ export type SceneUncheckedUpdateWithoutDialoguesInput = {
   episodeId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumSceneTypeFieldUpdateOperationsInput | $Enums.SceneType
   flowType?: Prisma.EnumSceneFlowTypeFieldUpdateOperationsInput | $Enums.SceneFlowType
+  branchKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endingId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -780,6 +844,8 @@ export type SceneCreateManyEpisodeInput = {
   id?: number
   type?: $Enums.SceneType
   flowType?: $Enums.SceneFlowType
+  branchKey?: string | null
+  endingId?: number | null
   title: string
   koreanTitle?: string | null
   order: number
@@ -794,6 +860,8 @@ export type SceneCreateManyEpisodeInput = {
 export type SceneUpdateWithoutEpisodeInput = {
   type?: Prisma.EnumSceneTypeFieldUpdateOperationsInput | $Enums.SceneType
   flowType?: Prisma.EnumSceneFlowTypeFieldUpdateOperationsInput | $Enums.SceneFlowType
+  branchKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endingId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -810,6 +878,8 @@ export type SceneUncheckedUpdateWithoutEpisodeInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumSceneTypeFieldUpdateOperationsInput | $Enums.SceneType
   flowType?: Prisma.EnumSceneFlowTypeFieldUpdateOperationsInput | $Enums.SceneFlowType
+  branchKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endingId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -826,6 +896,8 @@ export type SceneUncheckedUpdateManyWithoutEpisodeInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumSceneTypeFieldUpdateOperationsInput | $Enums.SceneType
   flowType?: Prisma.EnumSceneFlowTypeFieldUpdateOperationsInput | $Enums.SceneFlowType
+  branchKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endingId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -873,6 +945,8 @@ export type SceneSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   episodeId?: boolean
   type?: boolean
   flowType?: boolean
+  branchKey?: boolean
+  endingId?: boolean
   title?: boolean
   koreanTitle?: boolean
   order?: boolean
@@ -892,6 +966,8 @@ export type SceneSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   episodeId?: boolean
   type?: boolean
   flowType?: boolean
+  branchKey?: boolean
+  endingId?: boolean
   title?: boolean
   koreanTitle?: boolean
   order?: boolean
@@ -909,6 +985,8 @@ export type SceneSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   episodeId?: boolean
   type?: boolean
   flowType?: boolean
+  branchKey?: boolean
+  endingId?: boolean
   title?: boolean
   koreanTitle?: boolean
   order?: boolean
@@ -926,6 +1004,8 @@ export type SceneSelectScalar = {
   episodeId?: boolean
   type?: boolean
   flowType?: boolean
+  branchKey?: boolean
+  endingId?: boolean
   title?: boolean
   koreanTitle?: boolean
   order?: boolean
@@ -937,7 +1017,7 @@ export type SceneSelectScalar = {
   status?: boolean
 }
 
-export type SceneOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "episodeId" | "type" | "flowType" | "title" | "koreanTitle" | "order" | "bgImageUrl" | "audioUrl" | "data" | "createdAt" | "updatedAt" | "status", ExtArgs["result"]["scene"]>
+export type SceneOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "episodeId" | "type" | "flowType" | "branchKey" | "endingId" | "title" | "koreanTitle" | "order" | "bgImageUrl" | "audioUrl" | "data" | "createdAt" | "updatedAt" | "status", ExtArgs["result"]["scene"]>
 export type SceneInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
   dialogues?: boolean | Prisma.Scene$dialoguesArgs<ExtArgs>
@@ -961,6 +1041,8 @@ export type $ScenePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     episodeId: number
     type: $Enums.SceneType
     flowType: $Enums.SceneFlowType
+    branchKey: string | null
+    endingId: number | null
     title: string
     koreanTitle: string | null
     order: number
@@ -1399,6 +1481,8 @@ export interface SceneFieldRefs {
   readonly episodeId: Prisma.FieldRef<"Scene", 'Int'>
   readonly type: Prisma.FieldRef<"Scene", 'SceneType'>
   readonly flowType: Prisma.FieldRef<"Scene", 'SceneFlowType'>
+  readonly branchKey: Prisma.FieldRef<"Scene", 'String'>
+  readonly endingId: Prisma.FieldRef<"Scene", 'Int'>
   readonly title: Prisma.FieldRef<"Scene", 'String'>
   readonly koreanTitle: Prisma.FieldRef<"Scene", 'String'>
   readonly order: Prisma.FieldRef<"Scene", 'Int'>

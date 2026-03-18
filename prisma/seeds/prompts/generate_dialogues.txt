@@ -1,0 +1,24 @@
+Return ONLY valid JSON. English roleplay learning app.
+User: {{userCharacterLine}}
+NPCs:
+{{npcList}}
+Situation: {{situation}}
+{{constraints}}
+DataTable:
+{{dataTable}}
+Message type rules:
+- type="DIALOGUE": character speaking directly (has characterId, characterName, charImageLabel).
+- type="NARRATION": narrator describing scene/action (no characterId, no characterName needed).
+
+Rules:
+- koreanText: required for every message.
+- charImageLabel: "default"|"happy"|"angry"|"sad" (DIALOGUE only).
+- characterId: must match IDs above (DIALOGUE only).
+
+{
+  "messages": [
+    {"type":"DIALOGUE","characterId":number,"characterName":"...","charImageLabel":"...","englishText":"...","koreanText":"..."},
+    {"type":"NARRATION","characterId":null,"characterName":null,"charImageLabel":null,"englishText":"...","koreanText":"..."}
+  ],
+  "dataTable": {}
+}

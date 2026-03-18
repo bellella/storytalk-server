@@ -69,6 +69,7 @@ model User {
   userPurchases     UserPurchase[]
   coinTransactions  CoinTransaction[]
   userSubscriptions UserSubscription[]
+  userEndings       UserEnding[]
 
   @@unique([email, provider])
 }
@@ -158,6 +159,8 @@ model Episode {
   koreanDescription String?
   thumbnailUrl      String?
 
+  data Json?
+
   totalScenes Int? // 메인 경로 씬 수 (NORMAL + 분기당 1개) - 프론트 진행도 표시용
 
   status    PublishStatus @default(DRAFT)
@@ -167,9 +170,11 @@ model Episode {
   story            Story?            @relation(fields: [storyId], references: [id])
   scenes           Scene[]
   rewards          EpisodeReward[]
+  endings          Ending[]
   userEpisodes     UserEpisode[]
   userPlayEpisodes UserPlayEpisode[]
   episodeProducts  EpisodeProduct[]
+  userEndings      UserEnding[]
 
   @@unique([storyId, order])
 }
@@ -190,8 +195,10 @@ model Scene {
   id        Int @id @default(autoincrement())
   episodeId Int
 
-  type     SceneType     @default(VISUAL) // UI용
-  flowType SceneFlowType @default(NORMAL) // ✅ 로직용
+  type      SceneType     @default(VISUAL) // UI용
+  flowType  SceneFlowType @default(NORMAL) // ✅ 로직용
+  branchKey String?
+  endingId  Int?
 
   title       String
   koreanTitle String?
@@ -199,8 +206,8 @@ model Scene {
   bgImageUrl  String?
   audioUrl    String?
   data        Json?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
   status      PublishStatus @default(PUBLISHED)
 
   episode   Episode    @relation(fields: [episodeId], references: [id])
@@ -810,8 +817,12 @@ model UserPlayEpisode {
 
   version Int @default(1)
 
-  result Json?
-  data   Json?
+  result         Json?
+  data           Json?
+  rewardsGranted Boolean @default(false)
+
+  endingId Int?
+  ending   Ending? @relation(fields: [endingId], references: [id], onDelete: SetNull)
 
   source PlayEpisodeSource @default(PURCHASE)
 
@@ -832,6 +843,7 @@ model UserPlayEpisode {
   @@index([userId, updatedAt])
   @@index([userId, status])
   @@index([episodeId])
+  @@index([endingId])
 }
 
 enum PlayEpisodeSlotType {
@@ -900,6 +912,55 @@ model SlotDialogue {
   @@unique([slotId, order])
   @@index([slotId, createdAt])
   @@index([playEpisodeId, sceneId])
+}
+
+// 엔딩 
+
+model Ending {
+  id        Int     @id @default(autoincrement())
+  episodeId Int
+  key       String
+  name      String
+  imageUrl  String?
+  order     Int     @default(0)
+
+  episode Episode        @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+  rewards EndingReward[]
+
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  userPlayEpisodes UserPlayEpisode[]
+
+  @@unique([episodeId, key])
+  @@index([episodeId])
+}
+
+model EndingReward {
+  id        Int        @id @default(autoincrement())
+  endingId  Int
+  type      RewardType
+  payload   Json
+  isActive  Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  ending    Ending     @relation(fields: [endingId], references: [id])
+}
+
+model UserEnding {
+  id        Int    @id @default(autoincrement())
+  userId    Int
+  episodeId Int
+  endingKey String
+
+  reachedCount Int      @default(0) // 도달 횟수
+  isActive     Boolean  @default(true) // false면 유효하지 않음 → 재도달 시 다시 지급 가능
+  reachedAt    DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  episode Episode @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, episodeId, endingKey])
+  @@index([userId, episodeId])
 }
 
 enum CollectionKey {
@@ -1126,10 +1187,10 @@ model PromptTemplate {
 ///// ADMIN
 
 model Image {
-  id          Int      @id @default(autoincrement())
-  name        String?
-  url         String   @db.Text
-  type        String?  // background, character, cover, icon 같은 용도
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  name      String?
+  url       String   @db.Text
+  type      String? // background, character, cover, icon 같은 용도
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

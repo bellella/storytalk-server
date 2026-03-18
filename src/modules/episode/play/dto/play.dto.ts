@@ -181,8 +181,9 @@ export class ChoiceSlotResponseDto {
 }
 
 export class BranchTriggerResponseDto {
-  pickedSceneId: number;
-  scene: SceneDto;
+  winningKey: string;
+  pickedSceneIds: number[];
+  scenes: SceneDto[];
 }
 
 export class RewardGrantDto {
@@ -215,15 +216,19 @@ export class EvaluationResultDto {
   generatedAt: string;
 }
 
-export class CompletePlayResponseDto {
-  playEpisodeId: number;
-  @ApiProperty({ enum: EpisodeStage, enumName: 'EpisodeStage' })
-  currentStage: EpisodeStage;
-  status: PlayEpisodeStatus;
-  evaluation: EvaluationResultDto | null;
-  xpGained: number;
-  rewards: RewardGrantDto[];
+/** completePlayEpisode 응답 - 프론트 표시용 */
+export class EndingInfoDto {
+  id: number;
+  key: string;
+  name: string;
+  imageUrl: string | null;
+  episodeId: number;
+  episodeTitle: string;
+  episodeKoreanTitle: string | null;
 }
+
+/** completePlayEpisode 응답 - ResultResponseDto와 동일 구조 */
+export type CompletePlayResponseDto = ResultResponseDto;
 
 export class PlayEpisodeDto {
   id: number;
@@ -240,23 +245,6 @@ export class ReplayResponseDto {
   //segments: SegmentDto[];
 }
 
-export class ResultResponseDto {
-  playEpisodeId: number;
-  episode: PlayEpisodeMetaDto;
-  @ApiProperty({ enum: EpisodeStage, enumName: 'EpisodeStage' })
-  currentStage: EpisodeStage;
-  @ApiProperty({ enum: PlayEpisodeStatus, enumName: 'PlayEpisodeStatus' })
-  status: PlayEpisodeStatus;
-  result: any | null;
-  correctedDialogues: {
-    type: 'correction' | 'translation';
-    userInput: string;
-    englishText: string;
-    koreanText: string;
-    evaluation: ResultEvaluationDto;
-  }[];
-}
-
 export class ResultEvaluationDto {
   overallScore: number;
   grammarScore: number;
@@ -265,4 +253,56 @@ export class ResultEvaluationDto {
   cefr: string;
   summary: string;
   feedback: string;
+}
+
+/** AI_INPUT_SLOT 턴별 평가 + 교정 문장 */
+export class CorrectedSlotDto {
+  type: 'correction' | 'translation';
+  userInput: string;
+  englishText: string;
+  koreanText: string;
+  evaluation: ResultEvaluationDto | null;
+}
+
+/** 플레이 결과 (play.result + slot 데이터 통합) - complete/getResult 공통 */
+export class PlayResultDto {
+  /** AI 평가 전체 (ROLEPLAY_WITH_EVAL 모드) */
+  evaluation: EvaluationResultDto | null;
+  /** 엔딩 도달 시 */
+  ending: EndingInfoDto | null;
+  /** 턴별 교정/번역 + 평가 (AI_INPUT_SLOT 슬롯들) */
+  slots: CorrectedSlotDto[];
+  /** 완료 시 XP 획득량 */
+  xpGained: number;
+  /** 지급된 리워드 (캐릭터 해금 등) */
+  rewards: RewardGrantDto[];
+}
+
+export class ResultResponseDto {
+  playEpisodeId: number;
+  episode: PlayEpisodeMetaDto;
+  @ApiProperty({ enum: EpisodeStage, enumName: 'EpisodeStage' })
+  currentStage: EpisodeStage;
+  @ApiProperty({ enum: PlayEpisodeStatus, enumName: 'PlayEpisodeStatus' })
+  status: PlayEpisodeStatus;
+  /** 평가, 엔딩, 슬롯 평가 통합 */
+  result: PlayResultDto;
+}
+
+/** 유저가 해금한 엔딩 (엔딩 리스트용) */
+export class UserEndingItemDto {
+  id: number;
+  key: string;
+  name: string;
+  imageUrl: string | null;
+  reachedCount: number; // 도달 횟수
+  reachedAt: string;
+  episode: {
+    id: number;
+    title: string;
+    koreanTitle: string | null;
+    thumbnailUrl: string | null;
+    storyId: number | null;
+    storyTitle: string | null;
+  };
 }
