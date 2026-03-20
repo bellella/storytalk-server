@@ -916,17 +916,30 @@ export class PlayService {
         });
 
         const currentPlayData = (play.data as Record<string, any>) ?? {};
-        const mergedData = { ...currentPlayData, ...dataTable };
+        const sceneScores = {
+          ...((currentPlayData.sceneScores ?? {}) as Record<string, number>),
+        };
 
-        // sceneScoreDelta 처리: 기존 sceneScores에 delta 누적
-        if (dataTable?.sceneScoreDelta) {
-          const sceneScores = { ...(currentPlayData.sceneScores ?? {}) } as Record<string, number>;
-          for (const [sceneId, delta] of Object.entries(dataTable.sceneScoreDelta as Record<string, number>)) {
-            sceneScores[sceneId] = (sceneScores[sceneId] ?? 0) + delta;
+        // dataTable: 숫자 값 → sceneScores에 누적 (기존값 + delta)
+        const dataTableObj = (dataTable ?? {}) as Record<string, any>;
+        for (const [key, value] of Object.entries(dataTableObj)) {
+          if (typeof value === 'number') {
+            sceneScores[key] = (sceneScores[key] ?? 0) + value;
           }
-          mergedData.sceneScores = sceneScores;
-          delete mergedData.sceneScoreDelta;
         }
+
+        // 숫자 키 제외하고 merge (나머지는 overwrite)
+        const dataTableOverwrite: Record<string, any> = {};
+        for (const [key, value] of Object.entries(dataTableObj)) {
+          if (typeof value !== 'number') {
+            dataTableOverwrite[key] = value;
+          }
+        }
+        const mergedData = {
+          ...currentPlayData,
+          ...dataTableOverwrite,
+          sceneScores,
+        };
 
         await tx.userPlayEpisode.update({
           where: { id: playEpisodeId },

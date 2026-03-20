@@ -86,7 +86,7 @@ Step 1 — Detect input language, then branch:
 [NON-ENGLISH input] type="translation" — translate to natural English.
 Step 2 — messages[0]: user's corrected/translated text (characterId=${args.userCharacter.characterId}).
 Step 3 — Append 1–4 NPC replies matching each NPC's personality.
-${args.dataTablePrompt ? `DataTable:\n${args.dataTablePrompt}\n` : ''}
+${args.dataTablePrompt ? `DataTable:\n${args.dataTablePrompt}\n- dataTable: keys from above, values = number (delta to ADD to existing). Example: {"BADA_ROUTE": 10, "STAY_ROUTE": 0}\n` : ''}
 Message type rules:
 - type="DIALOGUE": character speaking (has characterId, characterName, charImageLabel).
 - type="NARRATION": narrator action/description (characterId=null, characterName=null).
