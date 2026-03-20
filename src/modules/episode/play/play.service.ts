@@ -1730,7 +1730,7 @@ export class PlayService {
       englishText: string;
       koreanText: string;
       followUpDialogueIds: number[];
-      /** branchScore에 누적할 delta. dataTable과 동일 형식: { BADA_ROUTE: 10 } */
+      /** branchScore에 누적할 delta. { BADA_ROUTE: 10 } */
       branchScoreDelta?: Record<string, number>;
     }>;
 
@@ -1779,7 +1779,7 @@ export class PlayService {
         select: { id: true },
       });
 
-      // branchScoreDelta 누적 (dataTable과 동일 형식: { BADA_ROUTE: 10 })
+      // branchScoreDelta 누적
       const branchScore = {
         ...((playData.branchScore ?? {}) as Record<string, number>),
       };
@@ -1787,12 +1787,6 @@ export class PlayService {
       for (const [key, value] of Object.entries(delta)) {
         if (typeof value === 'number') {
           branchScore[key] = (branchScore[key] ?? 0) + value;
-        }
-      }
-      // 레거시: scoreDelta [{ key, delta }] 형식
-      for (const { key, delta: d } of (option as any).scoreDelta ?? []) {
-        if (typeof d === 'number') {
-          branchScore[key] = (branchScore[key] ?? 0) + d;
         }
       }
 

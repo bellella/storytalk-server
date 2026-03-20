@@ -43,7 +43,14 @@ export function prepareCorrectAndDialoguesVariables(
     constraints: constraints ? `Constraints:\n${constraints}\n` : '',
     sceneMessages,
     userText: args.userText,
-    dataTablePrompt: args.dataTablePrompt ? `DataTable:\n${args.dataTablePrompt}\n` : '',
+    dataTablePrompt: args.dataTablePrompt
+      ? `DataTable (REQUIRED — never return empty):
+${args.dataTablePrompt}
+- dataTable: MUST include each key above with a number (delta to add). 0 if no change.
+- Example: {"MinJun": 10}
+
+`
+      : '',
     userCharacterId: String(args.userCharacter.characterId),
     userCharacterName: args.userCharacter.name,
   };
@@ -86,7 +93,12 @@ Step 1 — Detect input language, then branch:
 [NON-ENGLISH input] type="translation" — translate to natural English.
 Step 2 — messages[0]: user's corrected/translated text (characterId=${args.userCharacter.characterId}).
 Step 3 — Append 1–4 NPC replies matching each NPC's personality.
-${args.dataTablePrompt ? `DataTable:\n${args.dataTablePrompt}\n- dataTable: keys from above, values = number (delta to ADD to existing). Example: {"BADA_ROUTE": 10, "STAY_ROUTE": 0}\n` : ''}
+${args.dataTablePrompt ? `DataTable (REQUIRED — never return empty):
+${args.dataTablePrompt}
+- dataTable: MUST include each key above with a number (delta to add). 0 if no change.
+- Example: {"MinJun": 10} or {"BADA_ROUTE": 15, "STAY_ROUTE": 0}
+
+` : ''}
 Message type rules:
 - type="DIALOGUE": character speaking (has characterId, characterName, charImageLabel).
 - type="NARRATION": narrator action/description (characterId=null, characterName=null).
@@ -96,7 +108,7 @@ CRITICAL FIELD RULES — never break these:
 - "koreanText": ALWAYS the Korean translation of englishText.
 - "charImageLabel": "default"|"happy"|"angry"|"sad" (DIALOGUE only).
 - "characterId": must match IDs listed above (DIALOGUE only).
-- No trailing commas.
+${args.dataTablePrompt ? '- "dataTable": MUST include each key from DataTable section with number. Never return {}.\n' : ''}- No trailing commas.
 
 {
   "type": "correction|translation",
@@ -118,6 +130,6 @@ CRITICAL FIELD RULES — never break these:
       "koreanText": "<Korean translation of NPC reply>"
     }
   ],
-  "dataTable": {}
+  "dataTable": ${args.dataTablePrompt ? '{"MinJun": 10}' : '{}'}
 }`.trim();
 }
