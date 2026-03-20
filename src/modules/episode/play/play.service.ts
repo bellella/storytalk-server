@@ -916,15 +916,15 @@ export class PlayService {
         });
 
         const currentPlayData = (play.data as Record<string, any>) ?? {};
-        const sceneScores = {
-          ...((currentPlayData.sceneScores ?? {}) as Record<string, number>),
+        const branchScore = {
+          ...((currentPlayData.branchScore ?? {}) as Record<string, number>),
         };
 
-        // dataTable: 숫자 값 → sceneScores에 누적 (기존값 + delta)
+        // dataTable: 숫자 값 → branchScore에 누적 (기존값 + delta)
         const dataTableObj = (dataTable ?? {}) as Record<string, any>;
         for (const [key, value] of Object.entries(dataTableObj)) {
           if (typeof value === 'number') {
-            sceneScores[key] = (sceneScores[key] ?? 0) + value;
+            branchScore[key] = (branchScore[key] ?? 0) + value;
           }
         }
 
@@ -938,7 +938,7 @@ export class PlayService {
         const mergedData = {
           ...currentPlayData,
           ...dataTableOverwrite,
-          sceneScores,
+          branchScore,
         };
 
         await tx.userPlayEpisode.update({
@@ -1730,7 +1730,8 @@ export class PlayService {
       englishText: string;
       koreanText: string;
       followUpDialogueIds: number[];
-      scoreDelta?: { key: string; delta: number }[];
+      /** branchScore에 누적할 delta. dataTable과 동일 형식: { BADA_ROUTE: 10 } */
+      branchScoreDelta?: Record<string, number>;
     }>;
 
     // Idempotency: slot already exists → return stored result
@@ -1778,12 +1779,21 @@ export class PlayService {
         select: { id: true },
       });
 
-      // scoreDelta 누적 (key 기준으로 sceneScores에 반영)
-      const sceneScores = {
-        ...((playData.sceneScores ?? {}) as Record<string, number>),
+      // branchScoreDelta 누적 (dataTable과 동일 형식: { BADA_ROUTE: 10 })
+      const branchScore = {
+        ...((playData.branchScore ?? {}) as Record<string, number>),
       };
-      for (const { key, delta } of option.scoreDelta ?? []) {
-        sceneScores[key] = (sceneScores[key] ?? 0) + delta;
+      const delta = option.branchScoreDelta ?? {};
+      for (const [key, value] of Object.entries(delta)) {
+        if (typeof value === 'number') {
+          branchScore[key] = (branchScore[key] ?? 0) + value;
+        }
+      }
+      // 레거시: scoreDelta [{ key, delta }] 형식
+      for (const { key, delta: d } of (option as any).scoreDelta ?? []) {
+        if (typeof d === 'number') {
+          branchScore[key] = (branchScore[key] ?? 0) + d;
+        }
       }
 
       const branchResults = {
@@ -1798,7 +1808,7 @@ export class PlayService {
         where: { id: playEpisodeId },
         data: {
           lastSlotId: slot.id,
-          data: { ...playData, sceneScores, branchResults },
+          data: { ...playData, branchScore, branchResults },
         },
       });
     });
@@ -1898,16 +1908,16 @@ export class PlayService {
       );
 
     const playData = (play.data as Record<string, any>) ?? {};
-    const sceneScores = (playData.sceneScores ?? {}) as Record<string, number>;
+    const branchScore = (playData.branchScore ?? {}) as Record<string, number>;
 
-    // winningKey 결정: sceneScores[key] 기준으로 선택
+    // winningKey 결정: branchScore[key] 기준으로 선택
     let winningKey: string | undefined;
 
     if (selectionMode === 'TOP') {
       // threshold 이상인 candidateKeys 중 가장 높은 점수 선택
       let best = -Infinity;
       for (const key of candidateKeys) {
-        const score = sceneScores[key] ?? 0;
+        const score = branchScore[key] ?? 0;
         if (score >= threshold && score > best) {
           best = score;
           winningKey = key;
