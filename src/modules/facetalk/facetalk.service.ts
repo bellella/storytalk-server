@@ -188,7 +188,7 @@ export class FaceTalkService {
       this.chatService.getAffinity(userId, session.characterId),
       this.prisma.character.findUniqueOrThrow({
         where: { id: session.characterId },
-        select: { aiPrompt: true, name: true },
+        select: { chatPrompt: true, name: true },
       }),
       this.prisma.characterChat.findUnique({
         where: { id: session.chatId },
@@ -203,7 +203,7 @@ export class FaceTalkService {
     ]);
 
     const systemPrompt = await this.buildFaceTalkPrompt(
-      character.aiPrompt ?? '',
+      character.chatPrompt ?? '',
       character.name,
       affinity,
       chat?.summary

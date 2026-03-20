@@ -194,7 +194,7 @@ export class ChatService {
       this.getRecentMessages(chat.id),
       this.prisma.character.findUniqueOrThrow({
         where: { id: characterId },
-        select: { aiPrompt: true },
+        select: { chatPrompt: true },
       }),
       this.prisma.user.findUnique({
         where: { id: userId },
@@ -206,7 +206,7 @@ export class ChatService {
 
     const promptOptions = {
       type: dto.type,
-      aiPrompt: character.aiPrompt || '',
+      aiPrompt: character.chatPrompt || '',
       affinity,
       userName: user?.name ?? null,
       options: dto.options,
@@ -223,7 +223,7 @@ export class ChatService {
       type: dto.type,
       userId,
       userName: user?.name ?? null,
-      aiPrompt: character.aiPrompt || '',
+      aiPrompt: character.chatPrompt || '',
       affinity,
       summary: chat.summary,
       recentMessages: recentMessages.map((m) => ({

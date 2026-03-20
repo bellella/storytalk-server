@@ -46,7 +46,8 @@ export type CharacterMinAggregateOutputType = {
   description: string | null
   personality: string | null
   greetingMessage: string | null
-  aiPrompt: string | null
+  chatPrompt: string | null
+  playEpisodePrompt: string | null
   status: $Enums.PublishStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -64,7 +65,8 @@ export type CharacterMaxAggregateOutputType = {
   description: string | null
   personality: string | null
   greetingMessage: string | null
-  aiPrompt: string | null
+  chatPrompt: string | null
+  playEpisodePrompt: string | null
   status: $Enums.PublishStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -82,7 +84,8 @@ export type CharacterCountAggregateOutputType = {
   description: number
   personality: number
   greetingMessage: number
-  aiPrompt: number
+  chatPrompt: number
+  playEpisodePrompt: number
   status: number
   createdAt: number
   updatedAt: number
@@ -112,7 +115,8 @@ export type CharacterMinAggregateInputType = {
   description?: true
   personality?: true
   greetingMessage?: true
-  aiPrompt?: true
+  chatPrompt?: true
+  playEpisodePrompt?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -130,7 +134,8 @@ export type CharacterMaxAggregateInputType = {
   description?: true
   personality?: true
   greetingMessage?: true
-  aiPrompt?: true
+  chatPrompt?: true
+  playEpisodePrompt?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -148,7 +153,8 @@ export type CharacterCountAggregateInputType = {
   description?: true
   personality?: true
   greetingMessage?: true
-  aiPrompt?: true
+  chatPrompt?: true
+  playEpisodePrompt?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -253,7 +259,8 @@ export type CharacterGroupByOutputType = {
   description: string
   personality: string | null
   greetingMessage: string | null
-  aiPrompt: string | null
+  chatPrompt: string | null
+  playEpisodePrompt: string | null
   status: $Enums.PublishStatus
   createdAt: Date
   updatedAt: Date
@@ -294,7 +301,8 @@ export type CharacterWhereInput = {
   description?: Prisma.StringFilter<"Character"> | string
   personality?: Prisma.StringNullableFilter<"Character"> | string | null
   greetingMessage?: Prisma.StringNullableFilter<"Character"> | string | null
-  aiPrompt?: Prisma.StringNullableFilter<"Character"> | string | null
+  chatPrompt?: Prisma.StringNullableFilter<"Character"> | string | null
+  playEpisodePrompt?: Prisma.StringNullableFilter<"Character"> | string | null
   status?: Prisma.EnumPublishStatusFilter<"Character"> | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
@@ -320,7 +328,8 @@ export type CharacterOrderByWithRelationInput = {
   description?: Prisma.SortOrder
   personality?: Prisma.SortOrderInput | Prisma.SortOrder
   greetingMessage?: Prisma.SortOrderInput | Prisma.SortOrder
-  aiPrompt?: Prisma.SortOrderInput | Prisma.SortOrder
+  chatPrompt?: Prisma.SortOrderInput | Prisma.SortOrder
+  playEpisodePrompt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -349,7 +358,8 @@ export type CharacterWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringFilter<"Character"> | string
   personality?: Prisma.StringNullableFilter<"Character"> | string | null
   greetingMessage?: Prisma.StringNullableFilter<"Character"> | string | null
-  aiPrompt?: Prisma.StringNullableFilter<"Character"> | string | null
+  chatPrompt?: Prisma.StringNullableFilter<"Character"> | string | null
+  playEpisodePrompt?: Prisma.StringNullableFilter<"Character"> | string | null
   status?: Prisma.EnumPublishStatusFilter<"Character"> | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
@@ -375,7 +385,8 @@ export type CharacterOrderByWithAggregationInput = {
   description?: Prisma.SortOrder
   personality?: Prisma.SortOrderInput | Prisma.SortOrder
   greetingMessage?: Prisma.SortOrderInput | Prisma.SortOrder
-  aiPrompt?: Prisma.SortOrderInput | Prisma.SortOrder
+  chatPrompt?: Prisma.SortOrderInput | Prisma.SortOrder
+  playEpisodePrompt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -401,7 +412,8 @@ export type CharacterScalarWhereWithAggregatesInput = {
   description?: Prisma.StringWithAggregatesFilter<"Character"> | string
   personality?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
   greetingMessage?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
-  aiPrompt?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
+  chatPrompt?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
+  playEpisodePrompt?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
   status?: Prisma.EnumPublishStatusWithAggregatesFilter<"Character"> | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Character"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Character"> | Date | string
@@ -418,7 +430,8 @@ export type CharacterCreateInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -444,7 +457,8 @@ export type CharacterUncheckedCreateInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -469,7 +483,8 @@ export type CharacterUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -495,7 +510,8 @@ export type CharacterUncheckedUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -521,7 +537,8 @@ export type CharacterCreateManyInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -538,7 +555,8 @@ export type CharacterUpdateManyMutationInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -556,7 +574,8 @@ export type CharacterUncheckedUpdateManyInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -579,7 +598,8 @@ export type CharacterCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   personality?: Prisma.SortOrder
   greetingMessage?: Prisma.SortOrder
-  aiPrompt?: Prisma.SortOrder
+  chatPrompt?: Prisma.SortOrder
+  playEpisodePrompt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -602,7 +622,8 @@ export type CharacterMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   personality?: Prisma.SortOrder
   greetingMessage?: Prisma.SortOrder
-  aiPrompt?: Prisma.SortOrder
+  chatPrompt?: Prisma.SortOrder
+  playEpisodePrompt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -620,7 +641,8 @@ export type CharacterMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   personality?: Prisma.SortOrder
   greetingMessage?: Prisma.SortOrder
-  aiPrompt?: Prisma.SortOrder
+  chatPrompt?: Prisma.SortOrder
+  playEpisodePrompt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -769,7 +791,8 @@ export type CharacterCreateWithoutUsersInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -794,7 +817,8 @@ export type CharacterUncheckedCreateWithoutUsersInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -834,7 +858,8 @@ export type CharacterUpdateWithoutUsersInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -859,7 +884,8 @@ export type CharacterUncheckedUpdateWithoutUsersInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -883,7 +909,8 @@ export type CharacterCreateWithoutDialoguesInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -908,7 +935,8 @@ export type CharacterUncheckedCreateWithoutDialoguesInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -948,7 +976,8 @@ export type CharacterUpdateWithoutDialoguesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -973,7 +1002,8 @@ export type CharacterUncheckedUpdateWithoutDialoguesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -997,7 +1027,8 @@ export type CharacterCreateWithoutStoryLinksInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1022,7 +1053,8 @@ export type CharacterUncheckedCreateWithoutStoryLinksInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1062,7 +1094,8 @@ export type CharacterUpdateWithoutStoryLinksInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1087,7 +1120,8 @@ export type CharacterUncheckedUpdateWithoutStoryLinksInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1111,7 +1145,8 @@ export type CharacterCreateWithoutImagesInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1136,7 +1171,8 @@ export type CharacterUncheckedCreateWithoutImagesInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1176,7 +1212,8 @@ export type CharacterUpdateWithoutImagesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1201,7 +1238,8 @@ export type CharacterUncheckedUpdateWithoutImagesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1225,7 +1263,8 @@ export type CharacterCreateWithoutFriendsInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1250,7 +1289,8 @@ export type CharacterUncheckedCreateWithoutFriendsInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1290,7 +1330,8 @@ export type CharacterUpdateWithoutFriendsInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1315,7 +1356,8 @@ export type CharacterUncheckedUpdateWithoutFriendsInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1339,7 +1381,8 @@ export type CharacterCreateWithoutCharacterChatsInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1364,7 +1407,8 @@ export type CharacterUncheckedCreateWithoutCharacterChatsInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1404,7 +1448,8 @@ export type CharacterUpdateWithoutCharacterChatsInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1429,7 +1474,8 @@ export type CharacterUncheckedUpdateWithoutCharacterChatsInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1453,7 +1499,8 @@ export type CharacterCreateWithoutMessagesInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1478,7 +1525,8 @@ export type CharacterUncheckedCreateWithoutMessagesInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1518,7 +1566,8 @@ export type CharacterUpdateWithoutMessagesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1543,7 +1592,8 @@ export type CharacterUncheckedUpdateWithoutMessagesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1567,7 +1617,8 @@ export type CharacterCreateWithoutSlotDialoguesInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1592,7 +1643,8 @@ export type CharacterUncheckedCreateWithoutSlotDialoguesInput = {
   description: string
   personality?: string | null
   greetingMessage?: string | null
-  aiPrompt?: string | null
+  chatPrompt?: string | null
+  playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1632,7 +1684,8 @@ export type CharacterUpdateWithoutSlotDialoguesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1657,7 +1710,8 @@ export type CharacterUncheckedUpdateWithoutSlotDialoguesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1776,7 +1830,8 @@ export type CharacterSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   description?: boolean
   personality?: boolean
   greetingMessage?: boolean
-  aiPrompt?: boolean
+  chatPrompt?: boolean
+  playEpisodePrompt?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1803,7 +1858,8 @@ export type CharacterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   description?: boolean
   personality?: boolean
   greetingMessage?: boolean
-  aiPrompt?: boolean
+  chatPrompt?: boolean
+  playEpisodePrompt?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1821,7 +1877,8 @@ export type CharacterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   description?: boolean
   personality?: boolean
   greetingMessage?: boolean
-  aiPrompt?: boolean
+  chatPrompt?: boolean
+  playEpisodePrompt?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1839,7 +1896,8 @@ export type CharacterSelectScalar = {
   description?: boolean
   personality?: boolean
   greetingMessage?: boolean
-  aiPrompt?: boolean
+  chatPrompt?: boolean
+  playEpisodePrompt?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1847,7 +1905,7 @@ export type CharacterSelectScalar = {
   minUserLevel?: boolean
 }
 
-export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "scope" | "name" | "koreanName" | "avatarImage" | "mainImage" | "description" | "personality" | "greetingMessage" | "aiPrompt" | "status" | "createdAt" | "updatedAt" | "isUserSelectable" | "minUserLevel", ExtArgs["result"]["character"]>
+export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "scope" | "name" | "koreanName" | "avatarImage" | "mainImage" | "description" | "personality" | "greetingMessage" | "chatPrompt" | "playEpisodePrompt" | "status" | "createdAt" | "updatedAt" | "isUserSelectable" | "minUserLevel", ExtArgs["result"]["character"]>
 export type CharacterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   images?: boolean | Prisma.Character$imagesArgs<ExtArgs>
   dialogues?: boolean | Prisma.Character$dialoguesArgs<ExtArgs>
@@ -1884,7 +1942,8 @@ export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     description: string
     personality: string | null
     greetingMessage: string | null
-    aiPrompt: string | null
+    chatPrompt: string | null
+    playEpisodePrompt: string | null
     status: $Enums.PublishStatus
     createdAt: Date
     updatedAt: Date
@@ -2330,7 +2389,8 @@ export interface CharacterFieldRefs {
   readonly description: Prisma.FieldRef<"Character", 'String'>
   readonly personality: Prisma.FieldRef<"Character", 'String'>
   readonly greetingMessage: Prisma.FieldRef<"Character", 'String'>
-  readonly aiPrompt: Prisma.FieldRef<"Character", 'String'>
+  readonly chatPrompt: Prisma.FieldRef<"Character", 'String'>
+  readonly playEpisodePrompt: Prisma.FieldRef<"Character", 'String'>
   readonly status: Prisma.FieldRef<"Character", 'PublishStatus'>
   readonly createdAt: Prisma.FieldRef<"Character", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Character", 'DateTime'>

@@ -5,6 +5,7 @@ export interface CharacterInfo {
   characterId: number | null;
   name: string;
   personality?: string | null;
+  playEpisodePrompt?: string | null;
 }
 
 /** dialogue.data JSON 필드 구조 (AI_INPUT_SLOT / AI_SLOT 전용) */

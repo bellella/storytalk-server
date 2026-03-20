@@ -532,7 +532,7 @@ export class PlayService {
         id: true,
         name: true,
         personality: true,
-        aiPrompt: true,
+        playEpisodePrompt: true,
       },
     });
     const charMap = new Map(characters.map((c) => [c.id, c]));
@@ -552,11 +552,13 @@ export class PlayService {
           ? (userInfo?.name ?? userChar?.name ?? 'User')
           : (dialogue.characterName ?? userChar?.name ?? 'User'),
         personality: userChar?.personality ?? null,
+        playEpisodePrompt: userChar?.playEpisodePrompt ?? null,
       },
       npcCharacters: npcChars.map((c) => ({
         characterId: c.id,
         name: c.name,
         personality: c.personality ?? null,
+        playEpisodePrompt: c.playEpisodePrompt ?? null,
       })),
       constraints: data.constraints?.map((c) => replaceUserName(c)),
       situation: data.situation ? replaceUserName(data.situation) : undefined,

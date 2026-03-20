@@ -24,14 +24,20 @@ export function prepareCorrectAndDialoguesVariables(
       const personality = c.personality
         ? `, personality="${c.personality}"`
         : '';
-      return `- id=${c.characterId}, name="${c.name}"${personality}`;
+      const prompt = c.playEpisodePrompt
+        ? `\n  Instructions: ${c.playEpisodePrompt}`
+        : '';
+      return `- id=${c.characterId}, name="${c.name}"${personality}${prompt}`;
     })
     .join('\n');
   const sceneMessages = args.messagesInTheScene?.length
     ? `\nPrevious messages:\n${args.messagesInTheScene.map((m) => `- ${m.characterName}: ${m.englishText}`).join('\n')}\n`
     : '';
+  const userPrompt = args.userCharacter.playEpisodePrompt
+    ? `\n  Instructions: ${args.userCharacter.playEpisodePrompt}`
+    : '';
   return {
-    userCharacterLine: `id=${args.userCharacter.characterId}, name="${args.userCharacter.name}"${args.userCharacter.personality ? `, personality="${args.userCharacter.personality}"` : ''}`,
+    userCharacterLine: `id=${args.userCharacter.characterId}, name="${args.userCharacter.name}"${args.userCharacter.personality ? `, personality="${args.userCharacter.personality}"` : ''}${userPrompt}`,
     npcList,
     situation: args.situation,
     constraints: constraints ? `Constraints:\n${constraints}\n` : '',
@@ -53,7 +59,10 @@ export function buildCorrectAndDialoguesPrompt(
       const personality = c.personality
         ? `, personality="${c.personality}"`
         : '';
-      return `- id=${c.characterId}, name="${c.name}"${personality}`;
+      const prompt = c.playEpisodePrompt
+        ? `\n  Instructions: ${c.playEpisodePrompt}`
+        : '';
+      return `- id=${c.characterId}, name="${c.name}"${personality}${prompt}`;
     })
     .join('\n');
 
@@ -61,9 +70,12 @@ export function buildCorrectAndDialoguesPrompt(
     ? `\nPrevious messages:\n${args.messagesInTheScene.map((m) => `- ${m.characterName}: ${m.englishText}`).join('\n')}\n`
     : '';
 
+  const userPrompt = args.userCharacter.playEpisodePrompt
+    ? `\n  Instructions: ${args.userCharacter.playEpisodePrompt}`
+    : '';
   return `Return ONLY valid JSON. English roleplay learning app.
 
-User: id=${args.userCharacter.characterId}, name="${args.userCharacter.name}"${args.userCharacter.personality ? `, personality="${args.userCharacter.personality}"` : ''}
+User: id=${args.userCharacter.characterId}, name="${args.userCharacter.name}"${args.userCharacter.personality ? `, personality="${args.userCharacter.personality}"` : ''}${userPrompt}
 NPCs:
 ${npcList}
 Situation: ${args.situation}

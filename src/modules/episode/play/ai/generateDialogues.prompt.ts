@@ -18,10 +18,16 @@ export function prepareGenerateDialoguesVariables(
       const personality = c.personality
         ? `, personality="${c.personality}"`
         : '';
-      return `- id=${c.characterId}, name="${c.name}"${personality}`;
+      const prompt = c.playEpisodePrompt
+        ? `\n  Instructions: ${c.playEpisodePrompt}`
+        : '';
+      return `- id=${c.characterId}, name="${c.name}"${personality}${prompt}`;
     })
     .join('\n');
-  const userLine = `id=${args.userCharacter.characterId}, name="${args.userCharacter.name}"${args.userCharacter.personality ? `, personality="${args.userCharacter.personality}"` : ''}`;
+  const userPrompt = args.userCharacter.playEpisodePrompt
+    ? `\n  Instructions: ${args.userCharacter.playEpisodePrompt}`
+    : '';
+  const userLine = `id=${args.userCharacter.characterId}, name="${args.userCharacter.name}"${args.userCharacter.personality ? `, personality="${args.userCharacter.personality}"` : ''}${userPrompt}`;
   return {
     userCharacterLine: userLine,
     npcList,
@@ -41,12 +47,18 @@ export function buildGenerateDialoguesPrompt(
       const personality = c.personality
         ? `, personality="${c.personality}"`
         : '';
-      return `- id=${c.characterId}, name="${c.name}"${personality}`;
+      const prompt = c.playEpisodePrompt
+        ? `\n  Instructions: ${c.playEpisodePrompt}`
+        : '';
+      return `- id=${c.characterId}, name="${c.name}"${personality}${prompt}`;
     })
     .join('\n');
 
+  const userPrompt = args.userCharacter.playEpisodePrompt
+    ? `\n  Instructions: ${args.userCharacter.playEpisodePrompt}`
+    : '';
   return `Return ONLY valid JSON. English roleplay learning app.
-User: id=${args.userCharacter.characterId}, name="${args.userCharacter.name}"${args.userCharacter.personality ? `, personality="${args.userCharacter.personality}"` : ''}
+User: id=${args.userCharacter.characterId}, name="${args.userCharacter.name}"${args.userCharacter.personality ? `, personality="${args.userCharacter.personality}"` : ''}${userPrompt}
 NPCs:
 ${npcList}
 Situation: ${args.situation}

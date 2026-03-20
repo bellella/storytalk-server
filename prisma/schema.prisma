@@ -433,17 +433,18 @@ model Character {
   id    Int            @id @default(autoincrement())
   scope CharacterScope @default(GLOBAL)
 
-  name            String
-  koreanName      String?
-  avatarImage     String?
-  mainImage       String?
-  description     String
-  personality     String?
-  greetingMessage String?
-  aiPrompt        String?
-  status          PublishStatus @default(DRAFT)
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  name              String
+  koreanName        String?
+  avatarImage       String?
+  mainImage         String?
+  description       String
+  personality       String?
+  greetingMessage   String?
+  chatPrompt        String?
+  playEpisodePrompt String?
+  status            PublishStatus @default(DRAFT)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
 
   isUserSelectable Boolean @default(false)
   minUserLevel     Int     @default(1)
