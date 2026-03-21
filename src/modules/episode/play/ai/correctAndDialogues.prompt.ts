@@ -47,10 +47,16 @@ export function prepareCorrectAndDialoguesVariables(
       ? `DataTable (REQUIRED — never return empty):
 ${args.dataTablePrompt}
 - dataTable: MUST include each key above with a number (delta to add). 0 if no change.
-- Example: {"MinJun": 10}
 
 `
       : '',
+    dataTableExample: args.dataTablePrompt
+      ? (() => {
+          const m = args.dataTablePrompt!.match(/^([A-Za-z0-9_]+)/);
+          const key = m ? m[1] : 'MinJun';
+          return JSON.stringify({ [key]: 10 });
+        })()
+      : '{}',
     userCharacterId: String(args.userCharacter.characterId),
     userCharacterName: args.userCharacter.name,
   };

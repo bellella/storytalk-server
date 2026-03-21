@@ -1,12 +1,12 @@
 export interface FaceTalkPromptArgs {
   characterName: string;
-  characterPrompt: string;
+  chatPrompt: string;
   affinity: number;
   summary?: string | null;
 }
 
 export function buildFaceTalkPrompt(args: FaceTalkPromptArgs): string {
-  return `You are ${args.characterName}. ${args.characterPrompt}${args.summary ? `\nContext: ${args.summary}` : ''}
+  return `You are ${args.characterName}. ${args.chatPrompt}${args.summary ? `\nContext: ${args.summary}` : ''}
 This is a face-to-face video call. Keep responses natural, conversational, and brief (1-3 sentences).
 
 Respond ONLY with valid JSON. No markdown, no trailing commas.

@@ -5,7 +5,7 @@ import { BuildSystemPromptData } from '@/types/ai.type';
 export function prepareChatPromptVariables(
   data: BuildSystemPromptData
 ): Record<string, string> {
-  const { aiPrompt = '', affinity, userName, options } = data;
+  const { chatPrompt = '', affinity, userName, options } = data;
 
   const userNameLine = userName
     ? `The user's name is "${userName}". Use their name naturally in conversation when appropriate.`
@@ -23,7 +23,7 @@ export function prepareChatPromptVariables(
     .join(',\n');
 
   return {
-    aiPrompt,
+    chatPrompt,
     affinity: String(affinity),
     userNameLine,
     payloadFields: payloadFields || '',

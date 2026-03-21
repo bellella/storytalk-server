@@ -266,7 +266,7 @@ export class FaceTalkService {
   }
 
   private async buildFaceTalkPrompt(
-    characterPrompt: string,
+    chatPrompt: string,
     characterName: string,
     affinity: number,
     summary?: string | null
@@ -274,14 +274,14 @@ export class FaceTalkService {
     const templatePrompt =
       await this.promptTemplateService.getPromptContentOrNull(
         FACETALK_PROMPT_KEY,
-        { characterName, characterPrompt, affinity, summary: summary ?? '' }
+        { characterName, chatPrompt, affinity, summary: summary ?? '' }
       );
 
     if (templatePrompt) return templatePrompt;
 
     return buildFaceTalkPrompt({
       characterName,
-      characterPrompt,
+      chatPrompt,
       affinity,
       summary,
     });

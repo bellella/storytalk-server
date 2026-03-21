@@ -196,6 +196,21 @@ export class PlayService {
   ): Promise<{ success: boolean }> {
     const play = await this.assertAccessiblePlayEpisode(userId, playEpisodeId);
 
+    // lastSceneId 있으면 해당 씬의 endingId 조회해서 data에 기록
+    const existingData = (play.data as Record<string, any>) ?? {};
+    const mergedData: Record<string, any> =
+      dto.data !== undefined ? (dto.data as Record<string, any>) : existingData;
+
+    if (dto.lastSceneId !== undefined) {
+      const scene = await this.prisma.scene.findUnique({
+        where: { id: dto.lastSceneId },
+        select: { endingId: true },
+      });
+      if (scene?.endingId) {
+        mergedData.endingId = scene.endingId;
+      }
+    }
+
     await this.prisma.userPlayEpisode.update({
       where: { id: play.id },
       data: {
@@ -204,7 +219,7 @@ export class PlayService {
         ...(dto.currentStage !== undefined && {
           currentStage: dto.currentStage,
         }),
-        ...(dto.data !== undefined && { data: dto.data }),
+        data: mergedData,
       },
     });
 
@@ -1037,18 +1052,9 @@ export class PlayService {
           }
         }
 
-        // 2.5) lastSceneId로 endingId 조회 (엔딩 연결된 씬이면)
-        let endingId: number | null = null;
-        if (play.lastSceneId) {
-          const scene = await tx.scene.findUnique({
-            where: {
-              id: play.lastSceneId,
-              episodeId: play.episodeId,
-            },
-            select: { endingId: true },
-          });
-          endingId = scene?.endingId ?? null;
-        }
+        // 2.5) data.endingId로 엔딩 조회 (씬 진행 중 updateProgress에서 기록됨)
+        const playData = (play.data as Record<string, any>) ?? {};
+        const endingId: number | null = playData.endingId ?? null;
 
         // 3) 모드에 따른 stage 전환
         const nextStage = EpisodeStage.QUIZ_IN_PROGRESS;

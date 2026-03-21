@@ -1,4 +1,4 @@
-Instructions: {{aiPrompt}}
+Instructions: {{chatPrompt}}
 Friendship Level (0-100): {{affinity}}
 {{userNameLine}}
 

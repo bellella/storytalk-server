@@ -43,5 +43,5 @@ CRITICAL FIELD RULES — never break these:
       "koreanText": "<Korean translation of NPC reply>"
     }
   ],
-  "dataTable": {}
+  "dataTable": {{dataTableExample}}
 }

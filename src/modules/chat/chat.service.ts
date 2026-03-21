@@ -206,7 +206,7 @@ export class ChatService {
 
     const promptOptions = {
       type: dto.type,
-      aiPrompt: character.chatPrompt || '',
+      chatPrompt: character.chatPrompt || '',
       affinity,
       userName: user?.name ?? null,
       options: dto.options,
@@ -223,7 +223,7 @@ export class ChatService {
       type: dto.type,
       userId,
       userName: user?.name ?? null,
-      aiPrompt: character.chatPrompt || '',
+      chatPrompt: character.chatPrompt || '',
       affinity,
       summary: chat.summary,
       recentMessages: recentMessages.map((m) => ({

@@ -29,6 +29,7 @@
 - `sceneMessages` - Previous messages:\n... (없으면 빈 문자열)
 - `userText` - 유저 입력 텍스트
 - `dataTablePrompt` - DataTable:\n... (없으면 빈 문자열)
+- `dataTableExample` - dataTable 예시 (dataTablePrompt 있으면 {"MinJun": 10}, 없으면 {})
 - `userCharacterId` - 유저 캐릭터 ID (숫자)
 - `userCharacterName` - 유저 캐릭터 이름
 

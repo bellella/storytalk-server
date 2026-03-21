@@ -28,7 +28,7 @@ export class OpenAiService {
       options.systemPrompt ??
       this.buildSystemPrompt({
         type: options.type,
-        aiPrompt: options.aiPrompt,
+        chatPrompt: options.chatPrompt,
         affinity: options.affinity,
         userName: options.userName,
         options: options.options,
@@ -43,10 +43,10 @@ export class OpenAiService {
   }
 
   buildSystemPrompt(data: BuildSystemPromptData): string {
-    const { aiPrompt = '', affinity, userName, options, summary } = data;
+    const { chatPrompt = '', affinity, userName, options, summary } = data;
 
     const parts = [
-      `Instructions: ${aiPrompt}`,
+      `Instructions: ${chatPrompt}`,
       `Friendship Level (0-100): ${affinity}`,
       ...(summary ? [`Conversation summary: ${summary}`] : []),
       userName

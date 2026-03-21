@@ -5,7 +5,7 @@ export interface CharacterContext {
   name: string;
   description: string;
   personality?: string | null;
-  aiPrompt?: string | null;
+  chatPrompt?: string | null;
 }
 
 export interface MessageContext {
@@ -23,7 +23,7 @@ export class GenerateCharacterResponseOptions {
   type: MessageType;
   userId: number;
   userName: string | null;
-  aiPrompt: string;
+  chatPrompt: string;
   affinity: number;
   recentMessages: MessageContext[];
   userMessage: string;
@@ -35,7 +35,7 @@ export class GenerateCharacterResponseOptions {
 
 export class BuildSystemPromptData {
   type: MessageType;
-  aiPrompt: string;
+  chatPrompt: string;
   affinity: number;
   userName: string | null;
   options?: SendMessageOptionType[];
