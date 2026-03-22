@@ -12,8 +12,9 @@ const StickerMessageSchema = z.object({
 });
 
 export const AiResponseSchema = z.object({
-  type: z.literal('BATCH'),
-  messages: z.array(z.discriminatedUnion('type', [TextMessageSchema, StickerMessageSchema])),
+  messages: z.array(
+    z.discriminatedUnion('type', [TextMessageSchema, StickerMessageSchema])
+  ),
   payload: z.record(z.string(), z.string()).optional().default({}),
 });
 
