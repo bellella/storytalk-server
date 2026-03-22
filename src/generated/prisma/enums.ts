@@ -82,7 +82,8 @@ export const DialogueType = {
   CHOICE_SLOT: 'CHOICE_SLOT',
   AI_INPUT_SLOT: 'AI_INPUT_SLOT',
   AI_SLOT: 'AI_SLOT',
-  SPEAKING_MISSION: 'SPEAKING_MISSION'
+  SPEAKING_MISSION: 'SPEAKING_MISSION',
+  BG_CHANGE: 'BG_CHANGE'
 } as const
 
 export type DialogueType = (typeof DialogueType)[keyof typeof DialogueType]

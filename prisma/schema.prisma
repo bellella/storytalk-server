@@ -230,6 +230,8 @@ enum DialogueType {
   AI_SLOT
   // 학습/미션형
   SPEAKING_MISSION // 따라 말하기
+  // 배경
+  BG_CHANGE // 배경 이미지 변경
 }
 
 enum DialogueSpeakerRole {
