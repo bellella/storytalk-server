@@ -66,7 +66,6 @@ CRITICAL: Respond with ONLY valid JSON. No markdown, no trailing commas, no extr
 
 Required JSON structure (follow EXACTLY):
 {
-  "type": "BATCH",
   "messages": [
     {
       "type": "TEXT",
