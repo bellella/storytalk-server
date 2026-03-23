@@ -3,6 +3,7 @@ import {
   NotFoundException,
   ForbiddenException,
   BadRequestException,
+  Logger,
 } from '@nestjs/common';
 import { PrismaService } from '@/modules/prisma/prisma.service';
 import { OpenAiService } from '@/modules/ai/openai.service';
@@ -20,6 +21,8 @@ const FACETALK_PROMPT_KEY = 'FACETALK_PROMPT';
 
 @Injectable()
 export class FaceTalkService {
+  private readonly logger = new Logger(FaceTalkService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly openAiService: OpenAiService,
@@ -184,7 +187,7 @@ export class FaceTalkService {
       throw new BadRequestException('Session is not active');
     }
 
-    const [affinity, character, chat, recentChatMessages] = await Promise.all([
+    const [affinity, character, chat] = await Promise.all([
       this.chatService.getAffinity(userId, session.characterId),
       this.prisma.character.findUniqueOrThrow({
         where: { id: session.characterId },
@@ -193,12 +196,6 @@ export class FaceTalkService {
       this.prisma.characterChat.findUnique({
         where: { id: session.chatId },
         select: { summary: true },
-      }),
-      this.prisma.message.findMany({
-        where: { chatId: session.chatId, type: MessageType.TEXT },
-        orderBy: { id: 'desc' },
-        take: 10,
-        select: { isFromUser: true, content: true },
       }),
     ]);
 
@@ -210,37 +207,29 @@ export class FaceTalkService {
     );
 
     type SessionMessage = { role: 'user' | 'assistant'; content: string };
-    const chatHistory: SessionMessage[] = recentChatMessages
-      .reverse()
-      .map((m) => ({
-        role: m.isFromUser ? 'user' : 'assistant',
-        content: m.content,
-      }));
-    const sessionHistory: SessionMessage[] = Array.isArray(
-      session.sessionMessages
-    )
+    const sessionHistory: SessionMessage[] = Array.isArray(session.sessionMessages)
       ? (session.sessionMessages as SessionMessage[])
       : [];
-    const history: SessionMessage[] = [...chatHistory, ...sessionHistory];
-    console.log(systemPrompt, 'systemPrompt');
-    console.log(history, 'history');
+
+    this.logger.log(`processTurn sessionId=${sessionId} historyCount=${sessionHistory.length}`);
+
     const rawText = await this.openAiService.callApi(systemPrompt, [
-      ...history,
+      ...sessionHistory,
       { role: 'user', content: userInput },
     ]);
 
-    const parsed = this.parseTurnResponse(rawText);
+    this.logger.log(`processTurn sessionId=${sessionId} rawText=${rawText}`);
 
-    const updatedMessages: SessionMessage[] = [
-      ...history,
-      { role: 'user', content: userInput },
-      { role: 'assistant', content: parsed.content },
-    ];
+    const parsed = this.parseTurnResponse(rawText);
 
     await this.prisma.faceTalkSession.update({
       where: { id: sessionId },
       data: {
-        sessionMessages: updatedMessages,
+        sessionMessages: [
+          ...sessionHistory,
+          { role: 'user', content: userInput },
+          { role: 'assistant', content: parsed.content },
+        ],
         totalTurns: { increment: 1 },
       },
     });
