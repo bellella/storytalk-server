@@ -57,6 +57,7 @@ export class EpisodeDetailDto {
   storyId?: number;
   title: string;
   koreanTitle?: string;
+  isLiked?: boolean;
   order: number;
   description?: string;
   koreanDescription?: string;

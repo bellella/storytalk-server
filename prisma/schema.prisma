@@ -466,14 +466,14 @@ model Character {
 }
 
 model StoryCharacter {
-  id            Int      @id @default(autoincrement())
-  storyId       Int
-  characterId   Int
-  name          String
+  id          Int      @id @default(autoincrement())
+  storyId     Int
+  characterId Int
+  name        String
   /// 스토리 상세 캐릭터 목록에 노출
-  listed        Boolean  @default(true)
-  order         Int      @default(0)
-  createdAt     DateTime @default(now())
+  listed      Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
 
   story     Story     @relation(fields: [storyId], references: [id])
   character Character @relation(fields: [characterId], references: [id])

@@ -17,6 +17,12 @@ export class EpisodeLikeItemDto {
   @ApiPropertyOptional()
   storyTitle?: string;
 
+  @ApiPropertyOptional({
+    description:
+      'PLAY 타입 에피소드인 경우 연결된 상품 id (EpisodeProduct 기반)',
+  })
+  productId?: number | null;
+
   @ApiProperty()
   isLiked: boolean;
 }

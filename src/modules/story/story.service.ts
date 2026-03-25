@@ -50,7 +50,7 @@ export class StoryService {
             id: true,
             title: true,
             order: true,
-            // duration 등 추가 필드 필요 시 여기서 select
+            description: true,
           },
         },
         storyCharacters: {
@@ -152,8 +152,8 @@ export class StoryService {
           id: ep.id,
           title: ep.title,
           order: ep.order,
-          duration: '5 min', // TODO: Episode 모델에 duration 필드 추가
           isLocked,
+          description: ep.description ?? undefined,
           isLiked: likedEpisodeIdSet.has(ep.id),
           userEpisode: userEpisodeMap[ep.id] ?? undefined,
         };
@@ -247,7 +247,7 @@ export class StoryService {
     episodeId: number,
     userId?: number
   ): Promise<EpisodeDetailDto> {
-    const [episode, userInfo] = await Promise.all([
+    const [episode, userInfo, likeInfo] = await Promise.all([
       this.prisma.episode.findUnique({
         where: { id: episodeId },
         include: {
@@ -283,6 +283,12 @@ export class StoryService {
         ? this.prisma.user.findUnique({
             where: { id: userId },
             select: { name: true, selectedCharacterId: true },
+          })
+        : Promise.resolve(null),
+      userId
+        ? this.prisma.userEpisodeLike.findUnique({
+            where: { userId_episodeId: { userId, episodeId } },
+            select: { episodeId: true },
           })
         : Promise.resolve(null),
     ]);
@@ -385,6 +391,7 @@ export class StoryService {
       koreanDescription: episode.koreanDescription ?? undefined,
       thumbnailUrl: episode.thumbnailUrl ?? undefined,
       totalScenes: episode.totalScenes ?? null,
+      isLiked: !!likeInfo,
       scenes,
       characterImageMap,
     };

@@ -129,6 +129,11 @@ export class EpisodeService {
             thumbnailUrl: true,
             type: true,
             story: { select: { id: true, title: true } },
+            episodeProducts: {
+              select: { productId: true },
+              orderBy: { id: 'asc' },
+              take: 1,
+            },
           },
         },
       },
@@ -143,6 +148,7 @@ export class EpisodeService {
       type: like.episode.type,
       storyId: like.episode.story?.id,
       storyTitle: like.episode.story?.title,
+      productId: like.episode.episodeProducts?.[0]?.productId ?? null,
       isLiked: true,
     }));
   }

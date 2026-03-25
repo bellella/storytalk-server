@@ -220,6 +220,7 @@ export class ProductsService {
                 title: true,
                 koreanTitle: true,
                 thumbnailUrl: true,
+                tags: true,
                 story: { select: { id: true, title: true } },
               },
             },
@@ -283,6 +284,7 @@ export class ProductsService {
         title: string;
         koreanTitle: string | null;
         thumbnailUrl: string | null;
+        tags: unknown | null;
         story: { id: number; title: string };
       };
     },
@@ -293,6 +295,7 @@ export class ProductsService {
       title: ep.episode.title,
       koreanTitle: ep.episode.koreanTitle,
       thumbnailUrl: ep.episode.thumbnailUrl,
+      tags: ep.episode.tags ?? null,
       storyId: ep.episode.story.id,
       storyTitle: ep.episode.story.title,
       ...(typeof isLiked === 'boolean' ? { isLiked } : {}),

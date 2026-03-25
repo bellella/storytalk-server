@@ -22,8 +22,8 @@ export class StoryDetailDto {
     id: number;
     title: string;
     order: number;
-    duration: string; // '5 min' 등
     isLocked: boolean;
+    description?: string;
     isLiked?: boolean;
     userEpisode?: UserEpisodeDto;
   }[];
