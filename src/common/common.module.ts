@@ -3,6 +3,6 @@ import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [HttpModule],
-  exports: [HttpModule], 
+  exports: [HttpModule],
 })
 export class CommonModule {}

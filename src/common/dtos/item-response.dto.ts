@@ -12,5 +12,4 @@ export class ItemResponseDto<T> {
    */
   @ApiProperty({ type: Number, nullable: true })
   totalCount: number;
-
 }

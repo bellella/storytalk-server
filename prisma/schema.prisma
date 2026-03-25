@@ -65,6 +65,7 @@ model User {
   userQuizSessions  UserQuizSession[]
   characterChats    CharacterChat[]
   userPlayEpisodes  UserPlayEpisode[]
+  userEpisodeLikes  UserEpisodeLike[]
   products          EpisodeProduct[]
   userPurchases     UserPurchase[]
   coinTransactions  CoinTransaction[]
@@ -160,6 +161,8 @@ model Episode {
   thumbnailUrl      String?
 
   data Json?
+  /// 에피소드 태그 (예: 문자열 배열 `["grammar","beginner"]` 또는 임의 JSON)
+  tags Json?
 
   totalScenes Int? // 메인 경로 씬 수 (NORMAL + 분기당 1개) - 프론트 진행도 표시용
 
@@ -173,6 +176,7 @@ model Episode {
   endings          Ending[]
   userEpisodes     UserEpisode[]
   userPlayEpisodes UserPlayEpisode[]
+  userEpisodeLikes UserEpisodeLike[]
   episodeProducts  EpisodeProduct[]
   userEndings      UserEnding[]
 
@@ -775,6 +779,26 @@ model UserEpisode {
   meta    Json?
   user    User    @relation(fields: [userId], references: [id])
   episode Episode @relation(fields: [episodeId], references: [id])
+
+  @@unique([userId, episodeId])
+  @@index([userId])
+  @@index([episodeId])
+}
+
+//////////////////////////////////////////////////////
+// EPISODE LIKE SYSTEM
+//////////////////////////////////////////////////////
+
+model UserEpisodeLike {
+  id Int @id @default(autoincrement())
+
+  userId    Int
+  episodeId Int
+
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  episode Episode @relation(fields: [episodeId], references: [id], onDelete: Cascade)
 
   @@unique([userId, episodeId])
   @@index([userId])

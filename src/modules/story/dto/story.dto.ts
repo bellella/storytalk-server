@@ -1,4 +1,9 @@
-import { EpisodeStage, Level, StoryType } from '@/generated/prisma/client';
+import {
+  EpisodeStage,
+  EpisodeType,
+  Level,
+  StoryType,
+} from '@/generated/prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 import { StoryListItemDto } from './story-list-item.dto';
 
@@ -23,6 +28,11 @@ export class RecentlyPlayedEpisodeDto {
   koreanTitle: string | null;
   order: number;
   thumbnailUrl: string | null;
+  @ApiProperty({ enum: EpisodeType, enumName: 'EpisodeType' })
+  type: EpisodeType;
+  @ApiProperty({ nullable: true, required: false })
+  playEpisodeId?: number | null;
+  isLiked?: boolean;
 }
 
 export class UserEpisodeProgressDto {

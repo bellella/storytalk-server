@@ -1,8 +1,8 @@
 export interface EvaluateSlotsPromptArgs {
   turns: {
     index: number;
-    userInput: string;      // 유저가 실제 입력한 원문
-    correctedText: string;  // AI가 교정/번역한 텍스트
+    userInput: string; // 유저가 실제 입력한 원문
+    correctedText: string; // AI가 교정/번역한 텍스트
     inputType: 'correction' | 'translation'; // 영어 입력이면 correction, 한국어면 translation
   }[];
 }
@@ -21,7 +21,9 @@ export function prepareEvaluateSlotsVariables(
   return { turnList };
 }
 
-export function buildEvaluateSlotsPrompt(args: EvaluateSlotsPromptArgs): string {
+export function buildEvaluateSlotsPrompt(
+  args: EvaluateSlotsPromptArgs
+): string {
   const turnList = args.turns
     .map((t) =>
       t.inputType === 'correction'

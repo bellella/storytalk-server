@@ -79,6 +79,7 @@ export class StoryService {
 
     // 2️⃣ 유저가 로그인 되어 있다면 Episode 진행 상태 조회
     let userEpisodeMap: Record<number, UserEpisodeDto> = {};
+    let likedEpisodeIdSet = new Set<number>();
     if (user) {
       const stageWeights = {
         [EpisodeStage.STORY_IN_PROGRESS]: 25,
@@ -113,6 +114,15 @@ export class StoryService {
           },
         ])
       );
+
+      const likedEpisodes = await this.prisma.userEpisodeLike.findMany({
+        where: {
+          userId: user.id,
+          episode: { storyId },
+        },
+        select: { episodeId: true },
+      });
+      likedEpisodeIdSet = new Set(likedEpisodes.map((l) => l.episodeId));
     }
 
     // 3️⃣ 데이터 가공
@@ -144,13 +154,14 @@ export class StoryService {
           order: ep.order,
           duration: '5 min', // TODO: Episode 모델에 duration 필드 추가
           isLocked,
-          userEpisode: userEpisodeMap[ep.id] ?? null,
+          isLiked: likedEpisodeIdSet.has(ep.id),
+          userEpisode: userEpisodeMap[ep.id] ?? undefined,
         };
       }),
       characters: story.storyCharacters.map((sc) => ({
-        id: sc.character?.id!,
-        name: sc.character?.name!,
-        description: sc.character?.description!,
+        id: sc.character?.id,
+        name: sc.character?.name,
+        description: sc.character?.description,
         avatarImage: sc.character?.avatarImage!,
       })),
     };
@@ -294,13 +305,17 @@ export class StoryService {
     // characterId → { label → imageUrl } 맵 (응답용)
     const characterImageMap: Record<string, Record<string, string>> = {};
     for (const [charId, labelMap] of imageMap.entries()) {
-      characterImageMap[String(charId)] = Object.fromEntries(labelMap.entries());
+      characterImageMap[String(charId)] = Object.fromEntries(
+        labelMap.entries()
+      );
     }
 
     const userName = userInfo?.name ?? undefined;
     const selectedCharacterId = userInfo?.selectedCharacterId ?? undefined;
     if (selectedCharacterId && imageMap.has(selectedCharacterId)) {
-      characterImageMap['avatar'] = Object.fromEntries(imageMap.get(selectedCharacterId)!.entries());
+      characterImageMap['avatar'] = Object.fromEntries(
+        imageMap.get(selectedCharacterId)!.entries()
+      );
     }
 
     const replaceUserName = (text: string) =>
@@ -471,76 +486,160 @@ export class StoryService {
     userId: number,
     limit = 7
   ): Promise<RecentlyPlayedEpisodeItemDto[]> {
-    const userEpisodes = await this.prisma.userEpisode.findMany({
+    const episodeSelect = {
+      id: true,
+      title: true,
+      koreanTitle: true,
+      order: true,
+      thumbnailUrl: true,
+      type: true,
+      story: {
+        select: {
+          id: true,
+          title: true,
+          koreanTitle: true,
+          type: true,
+          level: true,
+          icon: true,
+          coverImage: true,
+        },
+      },
+    };
+
+    const [novelItems, playItems] = await Promise.all([
+      this.prisma.userEpisode.findMany({
+        where: {
+          userId,
+          episode: {
+            type: EpisodeType.NOVEL,
+            story: { status: PublishStatus.PUBLISHED },
+          },
+        },
+        orderBy: { startedAt: 'desc' },
+        take: limit,
+        select: {
+          currentStage: true,
+          isCompleted: true,
+          score: true,
+          lastSceneId: true,
+          startedAt: true,
+          completedAt: true,
+          episode: { select: episodeSelect },
+        },
+      }),
+      this.prisma.userPlayEpisode.findMany({
+        where: {
+          userId,
+          deletedAt: null,
+          episode: {
+            type: EpisodeType.PLAY,
+            status: PublishStatus.PUBLISHED,
+          },
+        },
+        orderBy: { startedAt: 'desc' },
+        take: limit,
+        select: {
+          id: true,
+          currentStage: true,
+          status: true,
+          lastSceneId: true,
+          startedAt: true,
+          completedAt: true,
+          episode: { select: episodeSelect },
+        },
+      }),
+    ]);
+
+    const episodeIds = Array.from(
+      new Set([
+        ...novelItems.map((ue) => ue.episode.id),
+        ...playItems.map((ue) => ue.episode.id),
+      ])
+    );
+    const likedEpisodes = await this.prisma.userEpisodeLike.findMany({
       where: {
         userId,
-        episode: {
-          type: EpisodeType.NOVEL,
-          story: { status: PublishStatus.PUBLISHED },
-        },
+        ...(episodeIds.length > 0 ? { episodeId: { in: episodeIds } } : {}),
       },
-      orderBy: { startedAt: 'desc' },
-      take: limit,
-      select: {
-        currentStage: true,
-        isCompleted: true,
-        score: true,
-        lastSceneId: true,
-        startedAt: true,
-        completedAt: true,
-        episode: {
-          select: {
-            id: true,
-            title: true,
-            koreanTitle: true,
-            order: true,
-            thumbnailUrl: true,
-            story: {
-              select: {
-                id: true,
-                title: true,
-                koreanTitle: true,
-                type: true,
-                level: true,
-                icon: true,
-                coverImage: true,
-              },
-            },
-          },
-        },
-      },
+      select: { episodeId: true },
     });
+    const likedEpisodeIdSet = new Set(likedEpisodes.map((l) => l.episodeId));
 
-    return userEpisodes
-      .filter((ue) => ue.episode.story !== null)
-      .map(
-        (ue): RecentlyPlayedEpisodeItemDto => ({
-          story: {
-            id: ue.episode.story!.id,
-            title: ue.episode.story!.title,
-            koreanTitle: ue.episode.story!.koreanTitle,
-            type: ue.episode.story!.type,
-            level: ue.episode.story!.level,
-            icon: ue.episode.story!.icon,
-            coverImage: ue.episode.story!.coverImage,
-          },
-          episode: {
-            id: ue.episode.id,
-            title: ue.episode.title,
-            koreanTitle: ue.episode.koreanTitle,
-            order: ue.episode.order,
-            thumbnailUrl: ue.episode.thumbnailUrl ?? null,
-          },
-          userEpisode: {
-            currentStage: ue.currentStage,
-            isCompleted: ue.isCompleted,
-            score: ue.score,
-            lastSceneId: ue.lastSceneId,
-            startedAt: ue.startedAt.toISOString(),
-            completedAt: ue.completedAt?.toISOString() ?? null,
-          },
-        })
-      );
+    const mapped: RecentlyPlayedEpisodeItemDto[] = [
+      ...novelItems
+        .filter((ue) => ue.episode.story !== null)
+        .map(
+          (ue): RecentlyPlayedEpisodeItemDto => ({
+            story: {
+              id: ue.episode.story!.id,
+              title: ue.episode.story!.title,
+              koreanTitle: ue.episode.story!.koreanTitle,
+              type: ue.episode.story!.type,
+              level: ue.episode.story!.level,
+              icon: ue.episode.story!.icon,
+              coverImage: ue.episode.story!.coverImage,
+            },
+            episode: {
+              id: ue.episode.id,
+              title: ue.episode.title,
+              koreanTitle: ue.episode.koreanTitle,
+              order: ue.episode.order,
+              thumbnailUrl: ue.episode.thumbnailUrl ?? null,
+              type: ue.episode.type,
+              isLiked: likedEpisodeIdSet.has(ue.episode.id),
+            },
+            userEpisode: {
+              currentStage: ue.currentStage,
+              isCompleted: ue.isCompleted,
+              score: ue.score,
+              lastSceneId: ue.lastSceneId,
+              startedAt: ue.startedAt.toISOString(),
+              completedAt: ue.completedAt?.toISOString() ?? null,
+            },
+          })
+        ),
+      ...playItems
+        .filter((ue) => ue.episode.story !== null)
+        .map(
+          (ue): RecentlyPlayedEpisodeItemDto => ({
+            story: {
+              id: ue.episode.story!.id,
+              title: ue.episode.story!.title,
+              koreanTitle: ue.episode.story!.koreanTitle,
+              type: ue.episode.story!.type,
+              level: ue.episode.story!.level,
+              icon: ue.episode.story!.icon,
+              coverImage: ue.episode.story!.coverImage,
+            },
+            episode: {
+              id: ue.episode.id,
+              title: ue.episode.title,
+              koreanTitle: ue.episode.koreanTitle,
+              order: ue.episode.order,
+              thumbnailUrl: ue.episode.thumbnailUrl ?? null,
+              type: ue.episode.type,
+              playEpisodeId: ue.id,
+              isLiked: likedEpisodeIdSet.has(ue.episode.id),
+            },
+            userEpisode: {
+              currentStage: ue.currentStage,
+              isCompleted: ue.status === 'COMPLETED',
+              score: null,
+              lastSceneId: ue.lastSceneId,
+              startedAt: ue.startedAt.toISOString(),
+              completedAt: ue.completedAt?.toISOString() ?? null,
+            },
+          })
+        ),
+    ];
+
+    return mapped
+      .sort(
+        (a, b) =>
+          new Date(b.userEpisode.startedAt).getTime() -
+          new Date(a.userEpisode.startedAt).getTime()
+      )
+      .slice(0, limit);
   }
 
   private mapChoiceOptions(data: any): ChoiceOptionDto[] {

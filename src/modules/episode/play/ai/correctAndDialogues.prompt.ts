@@ -52,7 +52,7 @@ ${args.dataTablePrompt}
       : '',
     dataTableExample: args.dataTablePrompt
       ? (() => {
-          const m = args.dataTablePrompt!.match(/^([A-Za-z0-9_]+)/);
+          const m = args.dataTablePrompt.match(/^([A-Za-z0-9_]+)/);
           const key = m ? m[1] : 'MinJun';
           return JSON.stringify({ [key]: 10 });
         })()
@@ -99,12 +99,16 @@ Step 1 — Detect input language, then branch:
 [NON-ENGLISH input] type="translation" — translate to natural English.
 Step 2 — messages[0]: user's corrected/translated text (characterId=${args.userCharacter.characterId}).
 Step 3 — Append 1–4 NPC replies matching each NPC's personality.
-${args.dataTablePrompt ? `DataTable (REQUIRED — never return empty):
+${
+  args.dataTablePrompt
+    ? `DataTable (REQUIRED — never return empty):
 ${args.dataTablePrompt}
 - dataTable: MUST include each key above with a number (delta to add). 0 if no change.
 - Example: {"MinJun": 10} or {"BADA_ROUTE": 15, "STAY_ROUTE": 0}
 
-` : ''}
+`
+    : ''
+}
 Message type rules:
 - type="DIALOGUE": character speaking (has characterId, characterName, charImageLabel).
 - type="NARRATION": narrator action/description (characterId=null, characterName=null).

@@ -114,7 +114,7 @@ export class QuizOptionDto {
   SpeakRepeatDataDto,
   TtsDto,
   CheckDto,
-  SpeakRequiredToken,
+  SpeakRequiredToken
 )
 export class QuizDto {
   id: number;

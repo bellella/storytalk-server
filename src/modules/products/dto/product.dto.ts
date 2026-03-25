@@ -11,6 +11,7 @@ export class EpisodeInProductDto {
   thumbnailUrl: string | null;
   storyId: number;
   storyTitle: string;
+  isLiked?: boolean;
 }
 
 export class ProductItemDto {

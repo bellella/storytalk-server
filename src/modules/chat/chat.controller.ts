@@ -12,7 +12,10 @@ import { ApiBearerAuth, ApiOkResponse, ApiProperty } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ReqUser } from '@/common/decorators/user.decorator';
 import { ChatService } from './chat.service';
-import { ChatRoomInfoDto, ChatRoomListItemDto } from './dto/chat-room-list-item.dto';
+import {
+  ChatRoomInfoDto,
+  ChatRoomListItemDto,
+} from './dto/chat-room-list-item.dto';
 import { ChatMessageDto } from './dto/chat-message.dto';
 import { StickerDto } from './dto/sticker.dto';
 import { SendMessageDto } from './dto/send-message.dto';

@@ -30,7 +30,12 @@ export class ReviewService {
 
     const dialogue = await this.prisma.dialogue.findUnique({
       where: { id: reviewItem.dialogueId },
-      select: { englishText: true, koreanText: true, characterName: true, character: { select: { avatarImage: true } } },
+      select: {
+        englishText: true,
+        koreanText: true,
+        characterName: true,
+        character: { select: { avatarImage: true } },
+      },
     });
 
     return this.mapItem(saved, reviewItem, dialogue);

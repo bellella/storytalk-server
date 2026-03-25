@@ -3,6 +3,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { EpisodeProgressDto } from './dto/episode-progress-response.dto';
+import { EpisodeLikeItemDto } from './dto/episode-like-item.dto';
+import { EpisodeLikeToggleResponseDto } from './dto/episode-like-toggle-response.dto';
 
 @Injectable()
 export class EpisodeService {
@@ -73,6 +75,76 @@ export class EpisodeService {
     });
 
     return { success: true };
+  }
+
+  async toggleEpisodeLike(
+    userId: number,
+    episodeId: number
+  ): Promise<EpisodeLikeToggleResponseDto> {
+    const episode = await this.prisma.episode.findUnique({
+      where: { id: episodeId },
+      select: { id: true },
+    });
+
+    if (!episode) {
+      throw new NotFoundException('에피소드를 찾을 수 없습니다.');
+    }
+
+    const existingLike = await this.prisma.userEpisodeLike.findUnique({
+      where: {
+        userId_episodeId: { userId, episodeId },
+      },
+    });
+
+    if (existingLike) {
+      await this.prisma.userEpisodeLike.delete({
+        where: {
+          userId_episodeId: { userId, episodeId },
+        },
+      });
+      return { success: true, episodeId, isLiked: false };
+    }
+
+    await this.prisma.userEpisodeLike.create({
+      data: {
+        userId,
+        episodeId,
+      },
+    });
+
+    return { success: true, episodeId, isLiked: true };
+  }
+
+  async getUserEpisodeLikes(userId: number): Promise<EpisodeLikeItemDto[]> {
+    const likes = await this.prisma.userEpisodeLike.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        episode: {
+          select: {
+            id: true,
+            title: true,
+            koreanTitle: true,
+            order: true,
+            thumbnailUrl: true,
+            type: true,
+            story: { select: { id: true, title: true } },
+          },
+        },
+      },
+    });
+
+    return likes.map((like) => ({
+      id: like.episode.id,
+      title: like.episode.title,
+      koreanTitle: like.episode.koreanTitle,
+      order: like.episode.order,
+      thumbnailUrl: like.episode.thumbnailUrl ?? null,
+      type: like.episode.type,
+      storyId: like.episode.story?.id,
+      storyTitle: like.episode.story?.title,
+      isLiked: true,
+    }));
   }
 
   async findUserEpisodeOrThrow(userId: number, episodeId: number) {

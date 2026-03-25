@@ -21,6 +21,8 @@ import { ReviewItemDto } from './dto/review-item.dto';
 import { QuizDto } from './dto/quiz.dto';
 import { EpisodeProgressDto } from './dto/episode-progress-response.dto';
 import { UpdateEpisodeProgressDto } from './dto/scene-complete.dto';
+import { EpisodeLikeItemDto } from './dto/episode-like-item.dto';
+import { EpisodeLikeToggleResponseDto } from './dto/episode-like-toggle-response.dto';
 
 @Controller('episodes')
 export class EpisodeController {
@@ -51,6 +53,29 @@ export class EpisodeController {
   @ApiOkResponse({ type: [QuizDto] })
   async getQuizzes(@Param('id', ParseIntPipe) id: number): Promise<QuizDto[]> {
     return await this.storyService.getQuizzes(id);
+  }
+
+  // ── 에피소드 좋아요 ──
+
+  @Post(':id/like')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @ApiOkResponse({ type: EpisodeLikeToggleResponseDto })
+  async toggleEpisodeLike(
+    @Param('id', ParseIntPipe) episodeId: number,
+    @ReqUser('id') userId: number
+  ): Promise<EpisodeLikeToggleResponseDto> {
+    return this.episodeService.toggleEpisodeLike(userId, episodeId);
+  }
+
+  @Get('likes')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @ApiOkResponse({ type: [EpisodeLikeItemDto] })
+  async getMyEpisodeLikes(
+    @ReqUser('id') userId: number
+  ): Promise<EpisodeLikeItemDto[]> {
+    return this.episodeService.getUserEpisodeLikes(userId);
   }
 
   // ── 에피소드 진행 엔드포인트 ──

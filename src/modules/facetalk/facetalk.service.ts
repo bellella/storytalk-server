@@ -207,11 +207,15 @@ export class FaceTalkService {
     );
 
     type SessionMessage = { role: 'user' | 'assistant'; content: string };
-    const sessionHistory: SessionMessage[] = Array.isArray(session.sessionMessages)
+    const sessionHistory: SessionMessage[] = Array.isArray(
+      session.sessionMessages
+    )
       ? (session.sessionMessages as SessionMessage[])
       : [];
 
-    this.logger.log(`processTurn sessionId=${sessionId} historyCount=${sessionHistory.length}`);
+    this.logger.log(
+      `processTurn sessionId=${sessionId} historyCount=${sessionHistory.length}`
+    );
 
     const rawText = await this.openAiService.callApi(systemPrompt, [
       ...sessionHistory,

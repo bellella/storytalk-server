@@ -9,4 +9,3 @@ export class DailyQuizCompleteResponseDto {
   @ApiProperty({ type: QuizScoreDto })
   result: QuizScoreDto;
 }
-

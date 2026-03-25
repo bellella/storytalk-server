@@ -1,4 +1,9 @@
-import { DialogueSpeakerRole, DialogueType, SceneFlowType, SceneType } from '@/generated/prisma/enums';
+import {
+  DialogueSpeakerRole,
+  DialogueType,
+  SceneFlowType,
+  SceneType,
+} from '@/generated/prisma/enums';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ChoiceOptionDto {

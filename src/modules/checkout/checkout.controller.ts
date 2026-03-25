@@ -4,7 +4,10 @@ import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CheckoutService } from './checkout.service';
-import { BuyPlayEpisodeDto, BuyPlayEpisodeResponseDto } from './dto/checkout.dto';
+import {
+  BuyPlayEpisodeDto,
+  BuyPlayEpisodeResponseDto,
+} from './dto/checkout.dto';
 
 @Controller('checkout')
 @UseGuards(JwtAuthGuard)

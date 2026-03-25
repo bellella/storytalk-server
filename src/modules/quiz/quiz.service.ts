@@ -496,7 +496,8 @@ export class QuizService {
     reward: { id: number; type: RewardType; payload: any }
   ): Promise<EpisodeRewardDto> {
     if (reward.type === RewardType.CHARACTER_INVITE) {
-      const characterId = (reward.payload as { characterId: number }).characterId;
+      const characterId = (reward.payload as { characterId: number })
+        .characterId;
       const [character] = await Promise.all([
         this.prisma.character.findUnique({
           where: { id: characterId },
@@ -504,7 +505,12 @@ export class QuizService {
         }),
         this.prisma.characterFriend.upsert({
           where: { userId_characterId: { userId, characterId } },
-          create: { userId, characterId, status: CharacterRelationStatus.INVITABLE, affinity: 0 },
+          create: {
+            userId,
+            characterId,
+            status: CharacterRelationStatus.INVITABLE,
+            affinity: 0,
+          },
           update: {},
         }),
       ]);
@@ -513,7 +519,11 @@ export class QuizService {
         type: reward.type,
         payload: reward.payload,
         unlockedCharacter: character
-          ? { characterId: character.id, name: character.name, avatarImageUrl: character.avatarImage }
+          ? {
+              characterId: character.id,
+              name: character.name,
+              avatarImageUrl: character.avatarImage,
+            }
           : null,
       };
     }

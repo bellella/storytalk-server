@@ -4,7 +4,10 @@ export interface AiMessage {
 }
 
 export abstract class AiProvider {
-  abstract callApi(systemPrompt: string, messages?: AiMessage[]): Promise<string>;
+  abstract callApi(
+    systemPrompt: string,
+    messages?: AiMessage[]
+  ): Promise<string>;
 }
 
 export const AI_PROVIDER = 'AI_PROVIDER';

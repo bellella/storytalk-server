@@ -15,7 +15,10 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { OptionalJwtAuthGuard } from '../auth/guards/optional-auth.guard';
 import { StoryDetailDto } from './dto/story-detail.dto';
 import { StoryListItemDto } from './dto/story-list-item.dto';
-import { RecentlyPlayedEpisodeItemDto, StoriesResponseDto } from './dto/story.dto';
+import {
+  RecentlyPlayedEpisodeItemDto,
+  StoriesResponseDto,
+} from './dto/story.dto';
 import { TagItemDto } from './dto/tag-item.dto';
 import { StoryService } from './story.service';
 

@@ -119,7 +119,9 @@ RULES — never break these:
       const parsed = JSON.parse(extracted);
       return AiResponseSchema.parse(parsed);
     } catch (error) {
-      this.logger.error(`Failed to parse AI response as JSON. rawText: ${rawText}`);
+      this.logger.error(
+        `Failed to parse AI response as JSON. rawText: ${rawText}`
+      );
       throw new Error('AI response parsing failed');
     }
   }

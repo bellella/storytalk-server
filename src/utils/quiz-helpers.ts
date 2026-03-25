@@ -20,7 +20,7 @@ const SentenceBuildRawSchema = z
       const ids = new Set(d.tokensAll.map((t) => t.id));
       return d.answerTokenIds.every((id) => ids.has(id));
     },
-    { message: 'answerTokenIds must reference valid token ids' },
+    { message: 'answerTokenIds must reference valid token ids' }
   );
 
 export const SentenceBuildDataSchema = SentenceBuildRawSchema.transform(
@@ -30,7 +30,7 @@ export const SentenceBuildDataSchema = SentenceBuildRawSchema.transform(
     tokenTextMap: Object.fromEntries(d.tokensAll.map((t) => [t.id, t.t])),
     answerTokenIds: d.answerTokenIds,
     punctuation: d.settings?.autoPunctuation?.append ?? '',
-  }),
+  })
 );
 
 export type SentenceBuildParsed = z.output<typeof SentenceBuildDataSchema>;
@@ -67,37 +67,35 @@ const SentenceClozeRawSchema = z
       const choiceIds = new Set(d.choices.map((c) => c.id));
       return slotIds.every((sid) => choiceIds.has(d.answerBySlot[sid]));
     },
-    { message: 'Invalid slot/answer/choice mapping' },
+    { message: 'Invalid slot/answer/choice mapping' }
   );
 
-export const SentenceClozeDataSchema = SentenceClozeRawSchema.transform(
-  (d) => {
-    const slotIds = d.parts
-      .filter((p): p is z.infer<typeof SlotPartSchema> => p.type === 'slot')
-      .map((p) => p.slotId);
+export const SentenceClozeDataSchema = SentenceClozeRawSchema.transform((d) => {
+  const slotIds = d.parts
+    .filter((p): p is z.infer<typeof SlotPartSchema> => p.type === 'slot')
+    .map((p) => p.slotId);
 
-    return {
-      promptKorean: d.promptKorean ?? d.questionKorean,
-      parts: d.parts,
-      choices: d.choices,
-      answerBySlot: d.answerBySlot,
-      slotIds,
-    };
-  },
-);
+  return {
+    promptKorean: d.promptKorean ?? d.questionKorean,
+    parts: d.parts,
+    choices: d.choices,
+    answerBySlot: d.answerBySlot,
+    slotIds,
+  };
+});
 
 export type SentenceClozeParsed = z.output<typeof SentenceClozeDataSchema>;
 
 // ── 파서 함수 ──
 export function parseSentenceBuildData(
-  data: unknown,
+  data: unknown
 ): SentenceBuildParsed | null {
   const result = SentenceBuildDataSchema.safeParse(data);
   return result.success ? result.data : null;
 }
 
 export function parseSentenceClozeData(
-  data: unknown,
+  data: unknown
 ): SentenceClozeParsed | null {
   const result = SentenceClozeDataSchema.safeParse(data);
   return result.success ? result.data : null;

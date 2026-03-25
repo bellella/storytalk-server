@@ -163,7 +163,13 @@ export class PlayService {
           key: u.endingKey,
         })),
       },
-      select: { id: true, key: true, name: true, imageUrl: true, episodeId: true },
+      select: {
+        id: true,
+        key: true,
+        name: true,
+        imageUrl: true,
+        episodeId: true,
+      },
     });
     const endingMap = new Map(
       endings.map((e) => [`${e.episodeId}:${e.key}`, e])
@@ -200,7 +206,7 @@ export class PlayService {
     // lastSceneId 있으면 해당 씬의 endingId 조회해서 data에 기록
     const existingData = (play.data as Record<string, any>) ?? {};
     const mergedData: Record<string, any> =
-      dto.data !== undefined ? (dto.data as Record<string, any>) : existingData;
+      dto.data !== undefined ? dto.data : existingData;
 
     if (dto.lastSceneId !== undefined) {
       const scene = await this.prisma.scene.findUnique({
@@ -252,8 +258,9 @@ export class PlayService {
       { pickedSceneId?: number; pickedSceneIds?: number[] }
     >;
     const resolvedPickedSceneIds = new Set(
-      Object.values(branchResults).flatMap((r) =>
-        r.pickedSceneIds ?? (r.pickedSceneId != null ? [r.pickedSceneId] : [])
+      Object.values(branchResults).flatMap(
+        (r) =>
+          r.pickedSceneIds ?? (r.pickedSceneId != null ? [r.pickedSceneId] : [])
       )
     );
     const preloadedScenes = episode.scenes.filter(
@@ -360,7 +367,7 @@ export class PlayService {
     const allFollowUpIds: number[] = [];
     for (const [dialogueId, slot] of choiceSlotByDialogueId) {
       const optionKey = (slot.data as any)?.optionKey;
-      const options = ((choiceRawDataMap.get(dialogueId) as any)?.options ??
+      const options = (choiceRawDataMap.get(dialogueId)?.options ??
         []) as any[];
       const option = options.find((o: any) => o.key === optionKey);
       const ids: number[] = option?.followUpDialogueIds ?? [];
@@ -636,7 +643,10 @@ export class PlayService {
         console.log(rawText);
         let parsed: any;
         try {
-          parsed = typeof rawText === 'string' ? JSON.parse(extractJson(rawText)) : rawText;
+          parsed =
+            typeof rawText === 'string'
+              ? JSON.parse(extractJson(rawText))
+              : rawText;
         } catch {
           throw new BadRequestException('AI returned invalid JSON');
         }
@@ -840,7 +850,10 @@ export class PlayService {
         console.log(rawText);
         let parsed: any;
         try {
-          parsed = typeof rawText === 'string' ? JSON.parse(extractJson(rawText)) : rawText;
+          parsed =
+            typeof rawText === 'string'
+              ? JSON.parse(extractJson(rawText))
+              : rawText;
         } catch {
           throw new BadRequestException('AI returned invalid JSON');
         }
@@ -934,7 +947,7 @@ export class PlayService {
         };
 
         // dataTable: 숫자 값 → branchScore에 누적 (기존값 + delta)
-        const dataTableObj = (dataTable ?? {}) as Record<string, any>;
+        const dataTableObj = dataTable ?? {};
         for (const [key, value] of Object.entries(dataTableObj)) {
           if (typeof value === 'number') {
             branchScore[key] = (branchScore[key] ?? 0) + value;
@@ -1042,7 +1055,9 @@ export class PlayService {
             console.log(evalRaw, 'evalRaw');
             try {
               const parsed =
-                typeof evalRaw === 'string' ? JSON.parse(extractJson(evalRaw)) : evalRaw;
+                typeof evalRaw === 'string'
+                  ? JSON.parse(extractJson(evalRaw))
+                  : evalRaw;
               evaluation = EvaluateSlotsResponseZ.parse(parsed);
             } catch {
               // 파싱 실패 시 evaluation 없이 진행
@@ -1173,7 +1188,9 @@ export class PlayService {
           let parsed: any;
           try {
             parsed =
-              typeof rawText === 'string' ? JSON.parse(extractJson(rawText)) : rawText;
+              typeof rawText === 'string'
+                ? JSON.parse(extractJson(rawText))
+                : rawText;
           } catch {
             throw new BadRequestException('AI returned invalid JSON');
           }
@@ -1369,7 +1386,9 @@ export class PlayService {
           const slotData = (s.data ?? {}) as Record<string, any>;
           const userDialogue = slotDialoguesBySlotId.get(s.id);
           return {
-            type: (slotData.type ?? 'correction') as 'correction' | 'translation',
+            type: (slotData.type ?? 'correction') as
+              | 'correction'
+              | 'translation',
             userInput: slotData.userInput ?? '',
             englishText: userDialogue?.englishText ?? '',
             koreanText: userDialogue?.koreanText ?? '',
@@ -1639,7 +1658,10 @@ export class PlayService {
       }),
     ]);
 
-    const slotDialoguesBySlotId = new Map<number, { englishText: string; koreanText: string }>();
+    const slotDialoguesBySlotId = new Map<
+      number,
+      { englishText: string; koreanText: string }
+    >();
     for (const d of allSlotDialogues) {
       slotDialoguesBySlotId.set(d.slotId, {
         englishText: d.englishText ?? '',
@@ -1689,7 +1711,8 @@ export class PlayService {
     }
 
     const result: PlayResultDto = {
-      evaluation: (savedResult.evaluation ?? null) as EvaluationResultDto | null,
+      evaluation: (savedResult.evaluation ??
+        null) as EvaluationResultDto | null,
       ending: endingInfo,
       slots: slotsForResult,
       xpGained: savedResult.xpGained ?? 0,

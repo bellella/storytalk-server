@@ -18,4 +18,3 @@ export class QuizScoreDto {
   @ApiPropertyOptional({ type: [EpisodeRewardDto] })
   rewards?: EpisodeRewardDto[];
 }
-

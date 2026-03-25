@@ -59,6 +59,13 @@ export class ProductsService {
       collections.flatMap((c) => c.products.map((cp) => cp.productId))
     );
 
+    const episodeIds = collections.flatMap((c) =>
+      c.products
+        .map((cp) => cp.product.episodes?.[0]?.episode?.id)
+        .filter((id): id is number => typeof id === 'number')
+    );
+    const likedEpisodeIds = await this.getLikedEpisodeIds(userId, episodeIds);
+
     const mapCollection = (c: (typeof collections)[0]): CollectionItemDto => ({
       id: c.id,
       title: c.title,
@@ -68,7 +75,12 @@ export class ProductsService {
       startsAt: c.startsAt?.toISOString() ?? null,
       endsAt: c.endsAt?.toISOString() ?? null,
       products: c.products.map((cp) =>
-        this.mapProduct(cp.product, purchasedProductIds, userId)
+        this.mapProduct(
+          cp.product,
+          purchasedProductIds,
+          userId,
+          likedEpisodeIds
+        )
       ),
     });
 
@@ -84,9 +96,7 @@ export class ProductsService {
   }
 
   /** CollectionKey.TOP인 컬렉션 하나 */
-  async getTopCollection(
-    userId?: number
-  ): Promise<TopCollectionResponseDto> {
+  async getTopCollection(userId?: number): Promise<TopCollectionResponseDto> {
     const result = await this.getCollections(userId);
     return { top: result.top };
   }
@@ -119,9 +129,14 @@ export class ProductsService {
       products.map((p) => p.id)
     );
 
+    const episodeIds = products
+      .map((p) => p.episodes?.[0]?.episode?.id)
+      .filter((id): id is number => typeof id === 'number');
+    const likedEpisodeIds = await this.getLikedEpisodeIds(userId, episodeIds);
+
     return {
       items: products.map((p) =>
-        this.mapProduct(p, purchasedProductIds, userId)
+        this.mapProduct(p, purchasedProductIds, userId, likedEpisodeIds)
       ),
     };
   }
@@ -166,6 +181,11 @@ export class ProductsService {
       : collectionProducts;
     const nextCursor = hasNext ? (items[items.length - 1]?.id ?? null) : null;
 
+    const episodeIds = items
+      .map((cp) => cp.product.episodes?.[0]?.episode?.id)
+      .filter((id): id is number => typeof id === 'number');
+    const likedEpisodeIds = await this.getLikedEpisodeIds(userId, episodeIds);
+
     const purchasedProductIds = await this.getPurchasedProductIds(
       userId,
       items.map((cp) => cp.productId)
@@ -173,7 +193,12 @@ export class ProductsService {
 
     return new CursorResponseDto(
       items.map((cp) =>
-        this.mapProduct(cp.product, purchasedProductIds, userId)
+        this.mapProduct(
+          cp.product,
+          purchasedProductIds,
+          userId,
+          likedEpisodeIds
+        )
       ),
       nextCursor
     );
@@ -211,7 +236,18 @@ export class ProductsService {
       productId,
     ]);
 
-    return this.mapProduct(product, purchasedProductIds, userId);
+    const episodeId = product.episodes?.[0]?.episode?.id ?? null;
+    const likedEpisodeIds = await this.getLikedEpisodeIds(
+      userId,
+      episodeId !== null ? [episodeId] : []
+    );
+
+    return this.mapProduct(
+      product,
+      purchasedProductIds,
+      userId,
+      likedEpisodeIds
+    );
   }
 
   // ---------- private ----------
@@ -228,15 +264,30 @@ export class ProductsService {
     return new Set(purchases.map((p) => p.productId));
   }
 
-  private mapEpisode(ep: {
-    episode: {
-      id: number;
-      title: string;
-      koreanTitle: string | null;
-      thumbnailUrl: string | null;
-      story: { id: number; title: string };
-    };
-  }): EpisodeInProductDto {
+  private async getLikedEpisodeIds(
+    userId: number | undefined,
+    episodeIds: number[]
+  ): Promise<Set<number>> {
+    if (!userId || episodeIds.length === 0) return new Set();
+    const likes = await this.prisma.userEpisodeLike.findMany({
+      where: { userId, episodeId: { in: episodeIds } },
+      select: { episodeId: true },
+    });
+    return new Set(likes.map((l) => l.episodeId));
+  }
+
+  private mapEpisode(
+    ep: {
+      episode: {
+        id: number;
+        title: string;
+        koreanTitle: string | null;
+        thumbnailUrl: string | null;
+        story: { id: number; title: string };
+      };
+    },
+    isLiked?: boolean
+  ): EpisodeInProductDto {
     return {
       id: ep.episode.id,
       title: ep.episode.title,
@@ -244,14 +295,22 @@ export class ProductsService {
       thumbnailUrl: ep.episode.thumbnailUrl,
       storyId: ep.episode.story.id,
       storyTitle: ep.episode.story.title,
+      ...(typeof isLiked === 'boolean' ? { isLiked } : {}),
     };
   }
 
   private mapProduct(
     product: any,
     purchasedProductIds: Set<number>,
-    userId?: number
+    userId?: number,
+    likedEpisodeIds?: Set<number>
   ): ProductItemDto {
+    const firstEpisode = product.episodes?.[0]?.episode;
+    const isLiked =
+      userId !== undefined && likedEpisodeIds && firstEpisode?.id !== undefined
+        ? likedEpisodeIds.has(firstEpisode.id)
+        : undefined;
+
     return {
       id: product.id,
       name: product.name,
@@ -262,7 +321,7 @@ export class ProductsService {
       storeSku: product.storeSku,
       thumbnailUrl: product.episodes[0]?.episode?.thumbnailUrl ?? null,
       episode: product.episodes[0]
-        ? this.mapEpisode(product.episodes[0])
+        ? this.mapEpisode(product.episodes[0], isLiked)
         : null,
       ...(userId !== undefined
         ? { isPurchased: purchasedProductIds.has(product.id) }

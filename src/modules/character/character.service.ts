@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CharacterDetailDto, CharacterListItemDto, SelectableCharacterDto } from './dto/character.dto';
+import {
+  CharacterDetailDto,
+  CharacterListItemDto,
+  SelectableCharacterDto,
+} from './dto/character.dto';
 import { CharacterScope } from '@/generated/prisma/client';
 
 export interface CharacterImageEntry {
@@ -45,7 +49,9 @@ export class CharacterService {
     }));
   }
 
-  async getSelectableCharacters(userId?: number): Promise<SelectableCharacterDto[]> {
+  async getSelectableCharacters(
+    userId?: number
+  ): Promise<SelectableCharacterDto[]> {
     const [characters, user] = await Promise.all([
       this.prisma.character.findMany({
         where: { isUserSelectable: true },

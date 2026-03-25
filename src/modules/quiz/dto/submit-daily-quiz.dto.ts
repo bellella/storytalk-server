@@ -1,4 +1,10 @@
-import { IsArray, IsBoolean, IsInt, IsObject, ValidateNested } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsInt,
+  IsObject,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class DailyQuizAnswerItemDto {
