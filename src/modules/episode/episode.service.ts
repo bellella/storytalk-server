@@ -1,26 +1,12 @@
-import {
-  CharacterRelationStatus,
-  EpisodeStage,
-  RewardType,
-  XpSourceType,
-  XpTriggerType,
-} from '@/generated/prisma/client';
+import { EpisodeStage } from '@/generated/prisma/client';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { EpisodeProgressDto } from './dto/episode-progress-response.dto';
-import { XpService } from '../xp/xp.service';
-import {
-  EpisodeCompleteResponseDto,
-  EpisodeRewardDto,
-} from './dto/episode-complete-response.dto';
 
 @Injectable()
 export class EpisodeService {
-  constructor(
-    private prisma: PrismaService,
-    private xpService: XpService
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
   async startEpisode(
     userId: number,
@@ -78,109 +64,15 @@ export class EpisodeService {
   async completeEpisode(
     userId: number,
     episodeId: number
-  ): Promise<EpisodeCompleteResponseDto> {
+  ): Promise<SuccessResponseDto> {
     const userEpisode = await this.findUserEpisodeOrThrow(userId, episodeId);
-    const episode = await this.prisma.episode.findUnique({
-      where: { id: episodeId },
-      include: {
-        story: {
-          select: {
-            id: true,
-            title: true,
-          },
-        },
-      },
-    });
-    if (!episode) {
-      throw new NotFoundException('에피소드를 찾을 수 없습니다.');
-    }
-
-    const rewards = await this.prisma.episodeReward.findMany({
-      where: { episodeId, isActive: true },
-    });
-
-    const rewardResults: EpisodeRewardDto[] = await Promise.all(
-      rewards.map((reward) => this.processReward(userId, reward))
-    );
 
     await this.prisma.userEpisode.update({
       where: { id: userEpisode.id },
       data: { currentStage: EpisodeStage.STORY_COMPLETED, isCompleted: true },
     });
 
-    const xpResult = await this.xpService.grantXp({
-      userId,
-      triggerType: XpTriggerType.EPISODE_COMPLETE,
-      sourceType: XpSourceType.EPISODE,
-      sourceId: episodeId,
-    });
-
-    return {
-      xp: {
-        xpGranted: xpResult.xpGranted,
-        totalXp: xpResult.totalXp,
-        previousLevel: xpResult.previousLevel,
-        currentLevel: xpResult.currentLevel,
-        leveledUp: xpResult.leveledUp,
-        nextLevel: xpResult.nextLevel,
-        xpToNextLevel: xpResult.xpToNextLevel,
-        requiredTotalXp: xpResult.requiredTotalXp,
-      },
-      episode: {
-        episodeId: episode.id,
-        episodeTitle: episode.title,
-        episodeOrder: episode.order,
-        storyId: episode.story?.id,
-        storyTitle: episode.story?.title,
-      },
-      rewards: rewardResults,
-    };
-  }
-
-  private async processReward(
-    userId: number,
-    reward: { id: number; type: RewardType; payload: any }
-  ): Promise<EpisodeRewardDto> {
-    if (reward.type === RewardType.CHARACTER_INVITE) {
-      const characterId = (reward.payload as { characterId: number })
-        .characterId;
-
-      const [character] = await Promise.all([
-        this.prisma.character.findUnique({
-          where: { id: characterId },
-          select: { id: true, name: true, avatarImage: true },
-        }),
-        this.prisma.characterFriend.upsert({
-          where: { userId_characterId: { userId, characterId } },
-          create: {
-            userId,
-            characterId,
-            status: CharacterRelationStatus.INVITABLE,
-            affinity: 0,
-          },
-          update: {},
-        }),
-      ]);
-
-      return {
-        id: reward.id,
-        type: reward.type,
-        payload: reward.payload,
-        unlockedCharacter: character
-          ? {
-              characterId: character.id,
-              name: character.name,
-              avatarImageUrl: character.avatarImage,
-            }
-          : null,
-      };
-    }
-
-    return {
-      id: reward.id,
-      type: reward.type,
-      payload: reward.payload,
-    };
+    return { success: true };
   }
 
   async findUserEpisodeOrThrow(userId: number, episodeId: number) {

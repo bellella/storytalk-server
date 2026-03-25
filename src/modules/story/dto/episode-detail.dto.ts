@@ -58,5 +58,13 @@ export class EpisodeDetailDto {
   thumbnailUrl?: string | null;
   totalScenes?: number | null; // 메인 경로 씬 수 (프론트 진행도 표시용)
   scenes: SceneDto[];
-  characterImages: CharacterImageDto[]; // StoryCharacter에 걸려있는 CharacterImage들
+  @ApiProperty({
+    type: 'object',
+    additionalProperties: {
+      type: 'object',
+      additionalProperties: { type: 'string' },
+    },
+    description: '{ characterId|"avatar": { label: imageUrl } }',
+  })
+  characterImageMap: Record<string, Record<string, string>>;
 }

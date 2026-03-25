@@ -1,4 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { XpProgressDto } from '@/modules/xp/dto/xp-progress.dto';
+import { EpisodeRewardDto } from '@/modules/episode/dto/episode-complete-response.dto';
 
 export class QuizScoreDto {
   @ApiProperty({ description: '전체 문항 수' })
@@ -9,5 +11,11 @@ export class QuizScoreDto {
 
   @ApiProperty({ description: '점수(정답률, 0~100%)' })
   score: number;
+
+  @ApiPropertyOptional({ type: XpProgressDto })
+  xp?: XpProgressDto;
+
+  @ApiPropertyOptional({ type: [EpisodeRewardDto] })
+  rewards?: EpisodeRewardDto[];
 }
 

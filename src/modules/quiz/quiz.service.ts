@@ -1,8 +1,10 @@
 import {
+  CharacterRelationStatus,
   EpisodeStage,
   QuizSessionType,
   QuizSourceType,
   QuizType,
+  RewardType,
   XpSourceType,
   XpTriggerType,
 } from '@/generated/prisma/client';
@@ -28,6 +30,7 @@ import { QuizSessionResponseDto } from './dto/quiz-session-response.dto';
 import { StartQuizSessionDto } from './dto/start-quiz-session.dto';
 import { SubmitQuizAnswerDto } from './dto/submit-quiz-answer.dto';
 import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
+import { EpisodeRewardDto } from '../episode/dto/episode-complete-response.dto';
 
 export interface QuizSentenceInput {
   englishText: string;
@@ -452,11 +455,69 @@ export class QuizService {
       },
     });
 
+    let xpResult: Awaited<ReturnType<XpService['grantXp']>> | undefined;
+    let rewards: EpisodeRewardDto[] | undefined;
+
+    if (session.type === QuizSessionType.EPISODE && session.sourceId) {
+      await this.prisma.userEpisode.updateMany({
+        where: { userId, episodeId: session.sourceId },
+        data: { currentStage: EpisodeStage.QUIZ_COMPLETED },
+      });
+      xpResult = await this.xpService.grantXp({
+        userId,
+        triggerType: XpTriggerType.EPISODE_COMPLETE,
+        sourceType: XpSourceType.EPISODE,
+        sourceId: session.sourceId,
+      });
+      const rawRewards = await this.prisma.episodeReward.findMany({
+        where: { episodeId: session.sourceId, isActive: true },
+      });
+      rewards = await Promise.all(
+        rawRewards.map((r) => this.processEpisodeReward(userId, r))
+      );
+    } else if (session.type === QuizSessionType.PLAY && session.sourceId) {
+      await this.prisma.userPlayEpisode.updateMany({
+        where: { userId, episodeId: session.sourceId },
+        data: { currentStage: EpisodeStage.QUIZ_COMPLETED },
+      });
+    }
+
     return {
       totalCount,
       correctCount,
       score,
+      ...(xpResult && { xp: xpResult }),
+      ...(rewards && { rewards }),
     };
+  }
+
+  private async processEpisodeReward(
+    userId: number,
+    reward: { id: number; type: RewardType; payload: any }
+  ): Promise<EpisodeRewardDto> {
+    if (reward.type === RewardType.CHARACTER_INVITE) {
+      const characterId = (reward.payload as { characterId: number }).characterId;
+      const [character] = await Promise.all([
+        this.prisma.character.findUnique({
+          where: { id: characterId },
+          select: { id: true, name: true, avatarImage: true },
+        }),
+        this.prisma.characterFriend.upsert({
+          where: { userId_characterId: { userId, characterId } },
+          create: { userId, characterId, status: CharacterRelationStatus.INVITABLE, affinity: 0 },
+          update: {},
+        }),
+      ]);
+      return {
+        id: reward.id,
+        type: reward.type,
+        payload: reward.payload,
+        unlockedCharacter: character
+          ? { characterId: character.id, name: character.name, avatarImageUrl: character.avatarImage }
+          : null,
+      };
+    }
+    return { id: reward.id, type: reward.type, payload: reward.payload };
   }
 
   async getDailyQuiz(userId: number): Promise<DailyQuizResponseDto> {

@@ -20,7 +20,6 @@ import { EpisodeDetailDto } from '../story/dto/episode-detail.dto';
 import { ReviewItemDto } from './dto/review-item.dto';
 import { QuizDto } from './dto/quiz.dto';
 import { EpisodeProgressDto } from './dto/episode-progress-response.dto';
-import { EpisodeCompleteResponseDto } from './dto/episode-complete-response.dto';
 import { UpdateEpisodeProgressDto } from './dto/scene-complete.dto';
 
 @Controller('episodes')
@@ -85,11 +84,11 @@ export class EpisodeController {
   @Patch(':id/complete')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth('access-token')
-  @ApiOkResponse({ type: EpisodeCompleteResponseDto })
+  @ApiOkResponse({ type: SuccessResponseDto })
   async completeEpisode(
     @Param('id', ParseIntPipe) episodeId: number,
     @ReqUser('id') userId: number
-  ): Promise<EpisodeCompleteResponseDto> {
+  ): Promise<SuccessResponseDto> {
     return this.episodeService.completeEpisode(userId, episodeId);
   }
 }

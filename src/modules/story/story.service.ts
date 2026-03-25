@@ -17,7 +17,6 @@ import { ReviewItemDto } from '../episode/dto/review-item.dto';
 import { UserEpisodeDto } from '../episode/dto/user-episode.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import {
-  CharacterImageDto,
   ChoiceOptionDto,
   DialogueDto,
   EpisodeDetailDto,
@@ -55,6 +54,8 @@ export class StoryService {
           },
         },
         storyCharacters: {
+          where: { listed: true },
+          orderBy: { order: 'asc' },
           include: {
             character: {
               select: {
@@ -290,25 +291,17 @@ export class StoryService {
 
     const imageMap = await this.characterService.buildImageMap(allCharacterIds);
 
-    // CharacterImageDto 평탄화 (응답용)
-    const allCharacterImages: CharacterImageDto[] = (
-      episode.story?.storyCharacters ?? []
-    ).flatMap((sc) =>
-      sc.character
-        ? sc.character.images.map(
-            (img): CharacterImageDto => ({
-              id: img.id,
-              characterId: img.characterId,
-              imageUrl: img.imageUrl,
-              label: img.label ?? undefined,
-              isDefault: img.isDefault,
-            })
-          )
-        : []
-    );
+    // characterId → { label → imageUrl } 맵 (응답용)
+    const characterImageMap: Record<string, Record<string, string>> = {};
+    for (const [charId, labelMap] of imageMap.entries()) {
+      characterImageMap[String(charId)] = Object.fromEntries(labelMap.entries());
+    }
 
     const userName = userInfo?.name ?? undefined;
     const selectedCharacterId = userInfo?.selectedCharacterId ?? undefined;
+    if (selectedCharacterId && imageMap.has(selectedCharacterId)) {
+      characterImageMap['avatar'] = Object.fromEntries(imageMap.get(selectedCharacterId)!.entries());
+    }
 
     const replaceUserName = (text: string) =>
       userName ? text.replaceAll('{{userName}}', userName) : text;
@@ -378,7 +371,7 @@ export class StoryService {
       thumbnailUrl: episode.thumbnailUrl ?? undefined,
       totalScenes: episode.totalScenes ?? null,
       scenes,
-      characterImages: allCharacterImages,
+      characterImageMap,
     };
   }
 

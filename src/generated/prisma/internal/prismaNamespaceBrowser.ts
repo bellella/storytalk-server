@@ -368,6 +368,8 @@ export const StoryCharacterScalarFieldEnum = {
   storyId: 'storyId',
   characterId: 'characterId',
   name: 'name',
+  listed: 'listed',
+  order: 'order',
   createdAt: 'createdAt'
 } as const
 

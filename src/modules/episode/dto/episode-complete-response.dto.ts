@@ -1,6 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { RewardType } from '@/generated/prisma/client';
-import { XpProgressDto } from '@/modules/xp/dto/xp-progress.dto';
 
 export class UnlockedCharacterDto {
   @ApiProperty()
@@ -47,9 +46,6 @@ export class EpisodeMetaDto {
 }
 
 export class EpisodeCompleteResponseDto {
-  @ApiProperty({ type: XpProgressDto })
-  xp: XpProgressDto;
-
   @ApiProperty({ type: EpisodeMetaDto })
   episode: EpisodeMetaDto;
 
