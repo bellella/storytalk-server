@@ -7,6 +7,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { SendMessageOptionType } from '../chat/dto/send-message.dto';
 import { AiResponse, AiResponseSchema } from './ai-response.schema';
 import { AI_PROVIDER, AiMessage, AiProvider } from './ai-provider.interface';
+import { extractJson } from '@/utils/json.util';
 
 @Injectable()
 export class AiService {
@@ -114,27 +115,13 @@ RULES — never break these:
 
   parseResponse(rawText: string): AiResponse {
     try {
-      const extracted = this.extractJson(rawText);
+      const extracted = extractJson(rawText);
       const parsed = JSON.parse(extracted);
       return AiResponseSchema.parse(parsed);
     } catch (error) {
       this.logger.error(`Failed to parse AI response as JSON. rawText: ${rawText}`);
       throw new Error('AI response parsing failed');
     }
-  }
-
-  private extractJson(raw: string): string {
-    const start = raw.indexOf('{');
-    if (start === -1) return raw;
-    let depth = 0;
-    for (let i = start; i < raw.length; i++) {
-      if (raw[i] === '{') depth++;
-      else if (raw[i] === '}') {
-        depth--;
-        if (depth === 0) return raw.slice(start, i + 1);
-      }
-    }
-    return raw;
   }
 }
 

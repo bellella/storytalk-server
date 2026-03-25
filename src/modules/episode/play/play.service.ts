@@ -17,6 +17,7 @@ import {
   XpTriggerType,
 } from '@/generated/prisma/enums';
 import { OpenAiService } from '@/modules/ai/openai.service';
+import { extractJson } from '@/utils/json.util';
 import {
   CharacterImageMap,
   CharacterService,
@@ -443,11 +444,8 @@ export class PlayService {
               speakerRole: fu.speakerRole,
               characterId: charId,
               characterName: isUserSpeaker
-                ? (user?.name ??
-                  fu.character?.name ??
-                  fu.characterName ??
-                  undefined)
-                : (fu.character?.name ?? fu.characterName ?? undefined),
+                ? (user?.name ?? fu.characterName ?? undefined)
+                : (fu.characterName ?? undefined),
               englishText: replaceUserName(fu.englishText ?? ''),
               koreanText: replaceUserName(fu.koreanText ?? ''),
               charImageLabel: fu.charImageLabel ?? undefined,
@@ -638,7 +636,7 @@ export class PlayService {
         console.log(rawText);
         let parsed: any;
         try {
-          parsed = typeof rawText === 'string' ? JSON.parse(rawText) : rawText;
+          parsed = typeof rawText === 'string' ? JSON.parse(extractJson(rawText)) : rawText;
         } catch {
           throw new BadRequestException('AI returned invalid JSON');
         }
@@ -842,7 +840,7 @@ export class PlayService {
         console.log(rawText);
         let parsed: any;
         try {
-          parsed = typeof rawText === 'string' ? JSON.parse(rawText) : rawText;
+          parsed = typeof rawText === 'string' ? JSON.parse(extractJson(rawText)) : rawText;
         } catch {
           throw new BadRequestException('AI returned invalid JSON');
         }
@@ -1044,7 +1042,7 @@ export class PlayService {
             console.log(evalRaw, 'evalRaw');
             try {
               const parsed =
-                typeof evalRaw === 'string' ? JSON.parse(evalRaw) : evalRaw;
+                typeof evalRaw === 'string' ? JSON.parse(extractJson(evalRaw)) : evalRaw;
               evaluation = EvaluateSlotsResponseZ.parse(parsed);
             } catch {
               // 파싱 실패 시 evaluation 없이 진행
@@ -1175,7 +1173,7 @@ export class PlayService {
           let parsed: any;
           try {
             parsed =
-              typeof rawText === 'string' ? JSON.parse(rawText) : rawText;
+              typeof rawText === 'string' ? JSON.parse(extractJson(rawText)) : rawText;
           } catch {
             throw new BadRequestException('AI returned invalid JSON');
           }
@@ -1866,8 +1864,8 @@ export class PlayService {
           speakerRole: d.speakerRole,
           characterId,
           characterName: isUserSpeaker
-            ? (user?.name ?? d.character?.name ?? d.characterName ?? undefined)
-            : (d.character?.name ?? d.characterName ?? undefined),
+            ? (user?.name ?? d.characterName ?? undefined)
+            : (d.characterName ?? undefined),
           englishText: replaceUserName(d.englishText),
           koreanText: replaceUserName(d.koreanText),
           charImageLabel: d.charImageLabel ?? undefined,

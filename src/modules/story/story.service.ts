@@ -340,11 +340,8 @@ export class StoryService {
           speakerRole: dialogue.speakerRole,
           characterId,
           characterName: isUserSpeaker
-            ? (userName ??
-              dialogue.character?.name ??
-              dialogue.characterName ??
-              undefined)
-            : (dialogue.character?.name ?? dialogue.characterName ?? undefined),
+            ? (userName ?? dialogue.characterName ?? undefined)
+            : (dialogue.characterName ?? undefined),
           englishText: replaceUserName(dialogue.englishText),
           koreanText: replaceUserName(dialogue.koreanText),
           charImageLabel: dialogue.charImageLabel ?? undefined,
