@@ -61,9 +61,14 @@ export class ChatService {
     if (!chat) throw new NotFoundException('Chat not found');
     if (chat.userId !== userId) throw new ForbiddenException('Not your chat');
 
+    const affinity = await this.getAffinity(userId, chat.characterId);
+
     return {
       chatId: chat.id,
-      character: chat.character,
+      character: {
+        ...chat.character,
+        affinity,
+      },
       unreadCount: chat.unreadCount,
       isPinned: chat.isPinned,
       lastMessageAt: chat.lastMessageAt,

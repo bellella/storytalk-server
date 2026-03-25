@@ -18,6 +18,9 @@ export class ChatRoomCharacterDetailDto {
   @ApiProperty()
   name: string;
 
+  @ApiProperty({ default: 0 })
+  affinity: number;
+
   @ApiPropertyOptional()
   koreanName?: string | null;
 

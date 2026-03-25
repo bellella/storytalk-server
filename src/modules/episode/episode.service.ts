@@ -126,9 +126,9 @@ export class EpisodeService {
             title: true,
             koreanTitle: true,
             order: true,
-            thumbnailUrl: true,
             type: true,
-            story: { select: { id: true, title: true } },
+            thumbnailUrl: true,
+            story: { select: { id: true, title: true, coverImage: true } },
             episodeProducts: {
               select: { productId: true },
               orderBy: { id: 'asc' },
@@ -144,7 +144,11 @@ export class EpisodeService {
       title: like.episode.title,
       koreanTitle: like.episode.koreanTitle,
       order: like.episode.order,
-      thumbnailUrl: like.episode.thumbnailUrl ?? null,
+      // NOVEL: story image, PLAY: episode image
+      thumbnailUrl:
+        like.episode.type === 'NOVEL'
+          ? like.episode.story?.coverImage ?? null
+          : like.episode.thumbnailUrl ?? null,
       type: like.episode.type,
       storyId: like.episode.story?.id,
       storyTitle: like.episode.story?.title,

@@ -8,7 +8,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { OptionalJwtAuthGuard } from '../auth/guards/optional-auth.guard';
 import { ReqUser } from '@/common/decorators/user.decorator';
@@ -30,6 +30,18 @@ export class EpisodeController {
     private readonly storyService: StoryService,
     private readonly episodeService: EpisodeService
   ) {}
+
+  // ── 에피소드 좋아요 ──
+
+  @Get('likes')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @ApiOkResponse({ type: [EpisodeLikeItemDto] })
+  async getMyEpisodeLikes(
+    @ReqUser('id') userId: number
+  ): Promise<EpisodeLikeItemDto[]> {
+    return this.episodeService.getUserEpisodeLikes(userId);
+  }
 
   @Get(':id')
   @UseGuards(OptionalJwtAuthGuard)
@@ -55,8 +67,6 @@ export class EpisodeController {
     return await this.storyService.getQuizzes(id);
   }
 
-  // ── 에피소드 좋아요 ──
-
   @Post(':id/like')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth('access-token')
@@ -66,16 +76,6 @@ export class EpisodeController {
     @ReqUser('id') userId: number
   ): Promise<EpisodeLikeToggleResponseDto> {
     return this.episodeService.toggleEpisodeLike(userId, episodeId);
-  }
-
-  @Get('likes')
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth('access-token')
-  @ApiOkResponse({ type: [EpisodeLikeItemDto] })
-  async getMyEpisodeLikes(
-    @ReqUser('id') userId: number
-  ): Promise<EpisodeLikeItemDto[]> {
-    return this.episodeService.getUserEpisodeLikes(userId);
   }
 
   // ── 에피소드 진행 엔드포인트 ──
