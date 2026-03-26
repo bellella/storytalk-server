@@ -387,12 +387,28 @@ export class QuizService {
       },
     });
 
-    // EPISODE 타입이면 UserEpisode 상태를 QUIZ_IN_PROGRESS로 업데이트
+    // EPISODE 타입이면 UserEpisode를 보장하되,
+    // 이미 QUIZ_COMPLETED면 stage를 되돌리지 않는다.
     if (dto.type === QuizSessionType.EPISODE && dto.sourceId) {
-      await this.prisma.userEpisode.updateMany({
-        where: { userId, episodeId: dto.sourceId },
-        data: { currentStage: EpisodeStage.QUIZ_IN_PROGRESS },
+      const existingUserEpisode = await this.prisma.userEpisode.findUnique({
+        where: { userId_episodeId: { userId, episodeId: dto.sourceId } },
+        select: { id: true, currentStage: true },
       });
+
+      if (!existingUserEpisode) {
+        await this.prisma.userEpisode.create({
+          data: {
+            userId,
+            episodeId: dto.sourceId,
+            currentStage: EpisodeStage.QUIZ_IN_PROGRESS,
+          },
+        });
+      } else if (existingUserEpisode.currentStage !== EpisodeStage.QUIZ_COMPLETED) {
+        await this.prisma.userEpisode.update({
+          where: { id: existingUserEpisode.id },
+          data: { currentStage: EpisodeStage.QUIZ_IN_PROGRESS },
+        });
+      }
     } else if (dto.type === QuizSessionType.PLAY && dto.sourceId) {
       await this.prisma.userPlayEpisode.updateMany({
         where: { userId, episodeId: dto.sourceId },
@@ -459,9 +475,17 @@ export class QuizService {
     let rewards: EpisodeRewardDto[] | undefined;
 
     if (session.type === QuizSessionType.EPISODE && session.sourceId) {
-      await this.prisma.userEpisode.updateMany({
-        where: { userId, episodeId: session.sourceId },
-        data: { currentStage: EpisodeStage.QUIZ_COMPLETED },
+      // 퀴즈 완료가 unlock 기준이므로 UserEpisode를 반드시 남긴다.
+      await this.prisma.userEpisode.upsert({
+        where: { userId_episodeId: { userId, episodeId: session.sourceId } },
+        create: {
+          userId,
+          episodeId: session.sourceId,
+          currentStage: EpisodeStage.QUIZ_COMPLETED,
+        },
+        update: {
+          currentStage: EpisodeStage.QUIZ_COMPLETED,
+        },
       });
       xpResult = await this.xpService.grantXp({
         userId,
