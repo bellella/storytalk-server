@@ -393,3 +393,19 @@ export const PromptType = {
 } as const
 
 export type PromptType = (typeof PromptType)[keyof typeof PromptType]
+
+
+export const UsageFeatureType = {
+  CHARACTER_CHAT: 'CHARACTER_CHAT',
+  EPISODE_READ: 'EPISODE_READ'
+} as const
+
+export type UsageFeatureType = (typeof UsageFeatureType)[keyof typeof UsageFeatureType]
+
+
+export const AdRewardType = {
+  CHARACTER_CHAT: 'CHARACTER_CHAT',
+  EPISODE_READ: 'EPISODE_READ'
+} as const
+
+export type AdRewardType = (typeof AdRewardType)[keyof typeof AdRewardType]

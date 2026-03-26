@@ -74,6 +74,8 @@ model User {
   userCoupons       UserCoupon[]
   couponUsages      CouponUsage[]
   couponCodes       CouponCode[]
+  usages            UserUsage[]
+  adRewardLogs      AdRewardLog[]
 
   @@unique([email, provider])
 }
@@ -1367,6 +1369,76 @@ model PromptTemplate {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+/// AD
+
+enum UsageFeatureType {
+  CHARACTER_CHAT
+  EPISODE_READ
+}
+
+model UserUsage {
+  id Int @id @default(autoincrement())
+
+  userId Int
+
+  // 어떤 기능의 사용량인지
+  featureType UsageFeatureType
+
+  // 날짜별 상태 저장
+  usageDate DateTime @db.Date
+
+  // 오늘 실제 사용한 횟수
+  usedCount Int @default(0)
+
+  // 오늘 기본 무료 제공량
+  freeLimit Int @default(0)
+
+  // 오늘 광고를 몇 번 봤는지
+  adRewardCount Int @default(0)
+
+  // 오늘 광고로 추가 지급된 총 사용량
+  adRewardedCount Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, featureType, usageDate])
+  @@index([userId, usageDate])
+  @@index([userId, featureType])
+}
+
+enum AdRewardType {
+  CHARACTER_CHAT
+  EPISODE_READ
+}
+
+model AdRewardLog {
+  id Int @id @default(autoincrement())
+
+  userId Int
+
+  // 어떤 기능에 대한 광고 보상인지
+  type AdRewardType
+
+  // 광고 1회로 지급된 사용량
+  rewardAmount Int @default(0)
+
+  // 광고 SDK / 서버 검증에서 오는 중복 방지 키
+  rewardKey String? @unique
+
+  // 일단위 조회 편의용
+  usageDate DateTime @db.Date
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, usageDate])
+  @@index([userId, type, usageDate])
 }
 
 ///// ADMIN

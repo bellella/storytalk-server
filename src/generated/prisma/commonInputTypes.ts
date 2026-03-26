@@ -1058,6 +1058,40 @@ export type EnumPromptTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumPromptTypeFilter<$PrismaModel>
 }
 
+export type EnumUsageFeatureTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.UsageFeatureType | Prisma.EnumUsageFeatureTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.UsageFeatureType[] | Prisma.ListEnumUsageFeatureTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UsageFeatureType[] | Prisma.ListEnumUsageFeatureTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUsageFeatureTypeFilter<$PrismaModel> | $Enums.UsageFeatureType
+}
+
+export type EnumUsageFeatureTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UsageFeatureType | Prisma.EnumUsageFeatureTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.UsageFeatureType[] | Prisma.ListEnumUsageFeatureTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UsageFeatureType[] | Prisma.ListEnumUsageFeatureTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUsageFeatureTypeWithAggregatesFilter<$PrismaModel> | $Enums.UsageFeatureType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUsageFeatureTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUsageFeatureTypeFilter<$PrismaModel>
+}
+
+export type EnumAdRewardTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.AdRewardType | Prisma.EnumAdRewardTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AdRewardType[] | Prisma.ListEnumAdRewardTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AdRewardType[] | Prisma.ListEnumAdRewardTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAdRewardTypeFilter<$PrismaModel> | $Enums.AdRewardType
+}
+
+export type EnumAdRewardTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AdRewardType | Prisma.EnumAdRewardTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AdRewardType[] | Prisma.ListEnumAdRewardTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AdRewardType[] | Prisma.ListEnumAdRewardTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAdRewardTypeWithAggregatesFilter<$PrismaModel> | $Enums.AdRewardType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAdRewardTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAdRewardTypeFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -2048,6 +2082,40 @@ export type NestedEnumPromptTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPromptTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPromptTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumUsageFeatureTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.UsageFeatureType | Prisma.EnumUsageFeatureTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.UsageFeatureType[] | Prisma.ListEnumUsageFeatureTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UsageFeatureType[] | Prisma.ListEnumUsageFeatureTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUsageFeatureTypeFilter<$PrismaModel> | $Enums.UsageFeatureType
+}
+
+export type NestedEnumUsageFeatureTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UsageFeatureType | Prisma.EnumUsageFeatureTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.UsageFeatureType[] | Prisma.ListEnumUsageFeatureTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UsageFeatureType[] | Prisma.ListEnumUsageFeatureTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUsageFeatureTypeWithAggregatesFilter<$PrismaModel> | $Enums.UsageFeatureType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUsageFeatureTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUsageFeatureTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumAdRewardTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.AdRewardType | Prisma.EnumAdRewardTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AdRewardType[] | Prisma.ListEnumAdRewardTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AdRewardType[] | Prisma.ListEnumAdRewardTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAdRewardTypeFilter<$PrismaModel> | $Enums.AdRewardType
+}
+
+export type NestedEnumAdRewardTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AdRewardType | Prisma.EnumAdRewardTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AdRewardType[] | Prisma.ListEnumAdRewardTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AdRewardType[] | Prisma.ListEnumAdRewardTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAdRewardTypeWithAggregatesFilter<$PrismaModel> | $Enums.AdRewardType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAdRewardTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAdRewardTypeFilter<$PrismaModel>
 }
 
 

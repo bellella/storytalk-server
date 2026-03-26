@@ -258,6 +258,16 @@ export type UserSubscription = Prisma.UserSubscriptionModel
  */
 export type PromptTemplate = Prisma.PromptTemplateModel
 /**
+ * Model UserUsage
+ * 
+ */
+export type UserUsage = Prisma.UserUsageModel
+/**
+ * Model AdRewardLog
+ * 
+ */
+export type AdRewardLog = Prisma.AdRewardLogModel
+/**
  * Model Image
  * 
  */

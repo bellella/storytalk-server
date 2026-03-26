@@ -22,6 +22,8 @@ import { SaveMessageData } from '@/types/ai.type';
 import { PromptTemplateService } from '@/modules/prompt-template/prompt-template.service';
 import { prepareChatPromptVariables } from '@/modules/ai/chat.prompt';
 import { formatCreatedAtDisplay } from '@/common/utils/date.util';
+import { UsageService } from '../usage/usage.service';
+import { UsageFeatureType } from '@/generated/prisma/client';
 
 const CHAT_PROMPT_KEY = 'CHAT_PROMPT';
 
@@ -32,7 +34,8 @@ export class ChatService {
     private readonly openAiService: OpenAiService,
     private readonly promptTemplateService: PromptTemplateService,
     @Inject(forwardRef(() => ChatGateway))
-    private readonly chatGateway: ChatGateway
+    private readonly chatGateway: ChatGateway,
+    private readonly usageService: UsageService
   ) {}
 
   // ────────────────────────────────────────────
@@ -180,6 +183,8 @@ export class ChatService {
     characterId: number,
     dto: SendMessageDto
   ): Promise<SendMessageResponseDto> {
+    await this.usageService.recordUsage(userId, UsageFeatureType.CHARACTER_CHAT);
+
     const chat = await this.getOrCreateChat(userId, characterId);
 
     // 1) 유저 메시지 저장

@@ -24,6 +24,7 @@ import { WalletModule } from './modules/wallet/wallet.module';
 import { ReviewModule } from './modules/review/review.module';
 import { FaceTalkModule } from './modules/facetalk/facetalk.module';
 import { CouponsModule } from './modules/coupons/coupons.module';
+import { UsageModule } from './modules/usage/usage.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { CouponsModule } from './modules/coupons/coupons.module';
     ReviewModule,
     FaceTalkModule,
     CouponsModule,
+    UsageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

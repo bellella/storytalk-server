@@ -1,14 +1,18 @@
-import { EpisodeStage } from '@/generated/prisma/client';
+import { EpisodeStage, EpisodeType, UsageFeatureType } from '@/generated/prisma/client';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { EpisodeProgressDto } from './dto/episode-progress-response.dto';
 import { EpisodeLikeItemDto } from './dto/episode-like-item.dto';
 import { EpisodeLikeToggleResponseDto } from './dto/episode-like-toggle-response.dto';
+import { UsageService } from '../usage/usage.service';
 
 @Injectable()
 export class EpisodeService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private usageService: UsageService
+  ) {}
 
   async startEpisode(
     userId: number,
@@ -20,6 +24,16 @@ export class EpisodeService {
     });
     if (!episode) {
       throw new NotFoundException('에피소드를 찾을 수 없습니다.');
+    }
+
+    // NOVEL 타입만 usage 체크 (처음 시작할 때만)
+    if (episode.type === EpisodeType.NOVEL) {
+      const existing = await this.prisma.userEpisode.findUnique({
+        where: { userId_episodeId: { userId, episodeId } },
+      });
+      if (!existing) {
+        await this.usageService.recordUsage(userId, UsageFeatureType.EPISODE_READ);
+      }
     }
 
     // upsert: 이미 시작했으면 기존 데이터 반환, 없으면 새로 생성

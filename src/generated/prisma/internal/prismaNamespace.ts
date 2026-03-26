@@ -432,6 +432,8 @@ export const ModelName = {
   CouponUsage: 'CouponUsage',
   UserSubscription: 'UserSubscription',
   PromptTemplate: 'PromptTemplate',
+  UserUsage: 'UserUsage',
+  AdRewardLog: 'AdRewardLog',
   Image: 'Image'
 } as const
 
@@ -448,7 +450,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "story" | "tag" | "storyTag" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "userReviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterChat" | "message" | "sticker" | "faceTalkSession" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory" | "userEpisode" | "userEpisodeLike" | "userPlayEpisode" | "playEpisodeSlot" | "slotDialogue" | "ending" | "endingReward" | "userEnding" | "collection" | "collectionProduct" | "product" | "episodeProduct" | "userPurchase" | "coinTransaction" | "coupon" | "couponCode" | "userCoupon" | "couponUsage" | "userSubscription" | "promptTemplate" | "image"
+    modelProps: "user" | "story" | "tag" | "storyTag" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "userReviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterChat" | "message" | "sticker" | "faceTalkSession" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory" | "userEpisode" | "userEpisodeLike" | "userPlayEpisode" | "playEpisodeSlot" | "slotDialogue" | "ending" | "endingReward" | "userEnding" | "collection" | "collectionProduct" | "product" | "episodeProduct" | "userPurchase" | "coinTransaction" | "coupon" | "couponCode" | "userCoupon" | "couponUsage" | "userSubscription" | "promptTemplate" | "userUsage" | "adRewardLog" | "image"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4004,6 +4006,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UserUsage: {
+      payload: Prisma.$UserUsagePayload<ExtArgs>
+      fields: Prisma.UserUsageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserUsageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserUsagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserUsageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserUsagePayload>
+        }
+        findFirst: {
+          args: Prisma.UserUsageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserUsagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserUsageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserUsagePayload>
+        }
+        findMany: {
+          args: Prisma.UserUsageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserUsagePayload>[]
+        }
+        create: {
+          args: Prisma.UserUsageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserUsagePayload>
+        }
+        createMany: {
+          args: Prisma.UserUsageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserUsageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserUsagePayload>[]
+        }
+        delete: {
+          args: Prisma.UserUsageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserUsagePayload>
+        }
+        update: {
+          args: Prisma.UserUsageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserUsagePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserUsageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserUsageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserUsageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserUsagePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserUsageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserUsagePayload>
+        }
+        aggregate: {
+          args: Prisma.UserUsageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserUsage>
+        }
+        groupBy: {
+          args: Prisma.UserUsageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserUsageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserUsageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserUsageCountAggregateOutputType> | number
+        }
+      }
+    }
+    AdRewardLog: {
+      payload: Prisma.$AdRewardLogPayload<ExtArgs>
+      fields: Prisma.AdRewardLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AdRewardLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdRewardLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AdRewardLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdRewardLogPayload>
+        }
+        findFirst: {
+          args: Prisma.AdRewardLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdRewardLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AdRewardLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdRewardLogPayload>
+        }
+        findMany: {
+          args: Prisma.AdRewardLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdRewardLogPayload>[]
+        }
+        create: {
+          args: Prisma.AdRewardLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdRewardLogPayload>
+        }
+        createMany: {
+          args: Prisma.AdRewardLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AdRewardLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdRewardLogPayload>[]
+        }
+        delete: {
+          args: Prisma.AdRewardLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdRewardLogPayload>
+        }
+        update: {
+          args: Prisma.AdRewardLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdRewardLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.AdRewardLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AdRewardLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AdRewardLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdRewardLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.AdRewardLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdRewardLogPayload>
+        }
+        aggregate: {
+          args: Prisma.AdRewardLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAdRewardLog>
+        }
+        groupBy: {
+          args: Prisma.AdRewardLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdRewardLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AdRewardLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdRewardLogCountAggregateOutputType> | number
+        }
+      }
+    }
     Image: {
       payload: Prisma.$ImagePayload<ExtArgs>
       fields: Prisma.ImageFieldRefs
@@ -4861,6 +5011,35 @@ export const PromptTemplateScalarFieldEnum = {
 export type PromptTemplateScalarFieldEnum = (typeof PromptTemplateScalarFieldEnum)[keyof typeof PromptTemplateScalarFieldEnum]
 
 
+export const UserUsageScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  featureType: 'featureType',
+  usageDate: 'usageDate',
+  usedCount: 'usedCount',
+  freeLimit: 'freeLimit',
+  adRewardCount: 'adRewardCount',
+  adRewardedCount: 'adRewardedCount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserUsageScalarFieldEnum = (typeof UserUsageScalarFieldEnum)[keyof typeof UserUsageScalarFieldEnum]
+
+
+export const AdRewardLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  rewardAmount: 'rewardAmount',
+  rewardKey: 'rewardKey',
+  usageDate: 'usageDate',
+  createdAt: 'createdAt'
+} as const
+
+export type AdRewardLogScalarFieldEnum = (typeof AdRewardLogScalarFieldEnum)[keyof typeof AdRewardLogScalarFieldEnum]
+
+
 export const ImageScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -5577,6 +5756,34 @@ export type EnumPromptTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
 export type ListEnumPromptTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PromptType[]'>
     
 
+
+/**
+ * Reference to a field of type 'UsageFeatureType'
+ */
+export type EnumUsageFeatureTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UsageFeatureType'>
+    
+
+
+/**
+ * Reference to a field of type 'UsageFeatureType[]'
+ */
+export type ListEnumUsageFeatureTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UsageFeatureType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AdRewardType'
+ */
+export type EnumAdRewardTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdRewardType'>
+    
+
+
+/**
+ * Reference to a field of type 'AdRewardType[]'
+ */
+export type ListEnumAdRewardTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdRewardType[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -5704,6 +5911,8 @@ export type GlobalOmitConfig = {
   couponUsage?: Prisma.CouponUsageOmit
   userSubscription?: Prisma.UserSubscriptionOmit
   promptTemplate?: Prisma.PromptTemplateOmit
+  userUsage?: Prisma.UserUsageOmit
+  adRewardLog?: Prisma.AdRewardLogOmit
   image?: Prisma.ImageOmit
 }
 
