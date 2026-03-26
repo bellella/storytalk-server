@@ -71,6 +71,9 @@ model User {
   coinTransactions  CoinTransaction[]
   userSubscriptions UserSubscription[]
   userEndings       UserEnding[]
+  userCoupons       UserCoupon[]
+  couponUsages      CouponUsage[]
+  couponCodes       CouponCode[]
 
   @@unique([email, provider])
 }
@@ -1107,8 +1110,10 @@ model UserPurchase {
   type PurchaseType
 
   // 결제 당시 가격(코인이면 코인값)
-  pricePaid Int
-  currency  CurrencyType
+  pricePaid      Int          @default(0)
+  originalPrice  Int          @default(0)
+  discountAmount Int          @default(0)
+  currency       CurrencyType
 
   // 인앱결제 영수증/거래키 (코인팩/구독 결제 검증에 사용)
   storeOrderId String?
@@ -1119,6 +1124,7 @@ model UserPurchase {
   product          Product           @relation(fields: [productId], references: [id], onDelete: Restrict)
   userPlayEpisode  UserPlayEpisode?
   coinTransactions CoinTransaction[]
+  couponUsages     CouponUsage[]
 }
 
 //////////////////////////////////////////////////////
@@ -1152,6 +1158,155 @@ model CoinTransaction {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, createdAt])
+}
+
+// COUPON
+enum CouponStatus {
+  ACTIVE
+  INACTIVE
+  EXPIRED
+  DELETED
+}
+
+enum CouponTargetType {
+  ALL
+  PRODUCT
+  PRODUCT_TYPE
+}
+
+enum CouponBenefitType {
+  FIXED_AMOUNT // 정액 할인
+  PERCENTAGE // 정률 할인
+  FREE_PRODUCT // 대상 상품 무료
+  FREE_PRODUCT_TYPE // 대상 카테고리 무료
+  COIN_REWARD // 코인 지급
+}
+
+enum UserCouponStatus {
+  AVAILABLE
+  USED
+  EXPIRED
+  CANCELED
+}
+
+enum CouponUsageStatus {
+  APPLIED
+  CANCELED
+  RESTORED
+}
+
+model Coupon {
+  id          Int     @id @default(autoincrement())
+  name        String
+  key         String? @unique
+  description String?
+
+  benefitType CouponBenefitType
+
+  // 할인형
+  discountAmount    Int?
+  discountPercent   Int?
+  maxDiscountAmount Int?
+
+  // 코인지급형
+  rewardCoinAmount Int?
+
+  // 사용 조건
+  minPurchaseAmount Int?
+
+  targetType CouponTargetType @default(ALL)
+  targetId   Int?
+
+  issuedCount Int @default(0)
+  usedCount   Int @default(0)
+
+  validFrom     DateTime?
+  validUntil    DateTime?
+  expiresInDays Int?
+
+  isPublic Boolean      @default(true)
+  status   CouponStatus @default(ACTIVE)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userCoupons UserCoupon[]
+  usages      CouponUsage[]
+  codes       CouponCode[]
+}
+
+model CouponCode {
+  id       Int    @id @default(autoincrement())
+  couponId Int
+  code     String @unique
+
+  // 특정 유저 전용이면
+  assignedUserId Int?
+
+  // 이 코드 자체가 이미 사용됐는지
+  usedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  coupon       Coupon @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  assignedUser User?  @relation(fields: [assignedUserId], references: [id], onDelete: SetNull)
+
+  @@index([couponId])
+  @@index([assignedUserId])
+}
+
+model UserCoupon {
+  id       Int @id @default(autoincrement())
+  userId   Int
+  couponId Int
+
+  status UserCouponStatus @default(AVAILABLE)
+
+  issuedAt  DateTime  @default(now())
+  usedAt    DateTime?
+  expiredAt DateTime?
+
+  validFrom  DateTime?
+  validUntil DateTime?
+
+  source   String?
+  sourceId Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  coupon Coupon @relation(fields: [couponId], references: [id], onDelete: Restrict)
+
+  usages CouponUsage[]
+
+  @@index([userId, status])
+  @@index([couponId])
+}
+
+model CouponUsage {
+  id           Int @id @default(autoincrement())
+  userId       Int
+  couponId     Int
+  userCouponId Int
+
+  status CouponUsageStatus
+
+  userPurchaseId Int?
+  userPurchase   UserPurchase? @relation(fields: [userPurchaseId], references: [id], onDelete: SetNull)
+
+  appliedAmount Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  coupon     Coupon     @relation(fields: [couponId], references: [id], onDelete: Restrict)
+  userCoupon UserCoupon @relation(fields: [userCouponId], references: [id], onDelete: Restrict)
+
+  @@index([userId, status])
+  @@index([userPurchaseId])
 }
 
 //////////////////////////////////////////////////////

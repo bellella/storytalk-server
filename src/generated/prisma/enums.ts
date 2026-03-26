@@ -323,6 +323,55 @@ export const CoinTxType = {
 export type CoinTxType = (typeof CoinTxType)[keyof typeof CoinTxType]
 
 
+export const CouponStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  EXPIRED: 'EXPIRED',
+  DELETED: 'DELETED'
+} as const
+
+export type CouponStatus = (typeof CouponStatus)[keyof typeof CouponStatus]
+
+
+export const CouponTargetType = {
+  ALL: 'ALL',
+  PRODUCT: 'PRODUCT',
+  PRODUCT_TYPE: 'PRODUCT_TYPE'
+} as const
+
+export type CouponTargetType = (typeof CouponTargetType)[keyof typeof CouponTargetType]
+
+
+export const CouponBenefitType = {
+  FIXED_AMOUNT: 'FIXED_AMOUNT',
+  PERCENTAGE: 'PERCENTAGE',
+  FREE_PRODUCT: 'FREE_PRODUCT',
+  FREE_PRODUCT_TYPE: 'FREE_PRODUCT_TYPE',
+  COIN_REWARD: 'COIN_REWARD'
+} as const
+
+export type CouponBenefitType = (typeof CouponBenefitType)[keyof typeof CouponBenefitType]
+
+
+export const UserCouponStatus = {
+  AVAILABLE: 'AVAILABLE',
+  USED: 'USED',
+  EXPIRED: 'EXPIRED',
+  CANCELED: 'CANCELED'
+} as const
+
+export type UserCouponStatus = (typeof UserCouponStatus)[keyof typeof UserCouponStatus]
+
+
+export const CouponUsageStatus = {
+  APPLIED: 'APPLIED',
+  CANCELED: 'CANCELED',
+  RESTORED: 'RESTORED'
+} as const
+
+export type CouponUsageStatus = (typeof CouponUsageStatus)[keyof typeof CouponUsageStatus]
+
+
 export const SubscriptionStatus = {
   INACTIVE: 'INACTIVE',
   ACTIVE: 'ACTIVE',

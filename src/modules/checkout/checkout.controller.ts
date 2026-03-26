@@ -23,6 +23,10 @@ export class CheckoutController {
     @Body() body: BuyPlayEpisodeDto,
     @ReqUser() user: CurrentUser
   ): Promise<BuyPlayEpisodeResponseDto> {
-    return this.checkoutService.buyPlayEpisode(user.id, body.productId);
+    return this.checkoutService.buyPlayEpisode(
+      user.id,
+      body.productId,
+      body.couponCode
+    );
   }
 }

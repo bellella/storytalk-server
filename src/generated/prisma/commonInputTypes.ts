@@ -939,6 +939,91 @@ export type EnumCoinTxTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumCoinTxTypeFilter<$PrismaModel>
 }
 
+export type EnumCouponBenefitTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponBenefitType | Prisma.EnumCouponBenefitTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponBenefitType[] | Prisma.ListEnumCouponBenefitTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponBenefitType[] | Prisma.ListEnumCouponBenefitTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponBenefitTypeFilter<$PrismaModel> | $Enums.CouponBenefitType
+}
+
+export type EnumCouponTargetTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponTargetType | Prisma.EnumCouponTargetTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponTargetType[] | Prisma.ListEnumCouponTargetTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponTargetType[] | Prisma.ListEnumCouponTargetTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponTargetTypeFilter<$PrismaModel> | $Enums.CouponTargetType
+}
+
+export type EnumCouponStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponStatus | Prisma.EnumCouponStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponStatus[] | Prisma.ListEnumCouponStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponStatus[] | Prisma.ListEnumCouponStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponStatusFilter<$PrismaModel> | $Enums.CouponStatus
+}
+
+export type EnumCouponBenefitTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponBenefitType | Prisma.EnumCouponBenefitTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponBenefitType[] | Prisma.ListEnumCouponBenefitTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponBenefitType[] | Prisma.ListEnumCouponBenefitTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponBenefitTypeWithAggregatesFilter<$PrismaModel> | $Enums.CouponBenefitType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCouponBenefitTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCouponBenefitTypeFilter<$PrismaModel>
+}
+
+export type EnumCouponTargetTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponTargetType | Prisma.EnumCouponTargetTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponTargetType[] | Prisma.ListEnumCouponTargetTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponTargetType[] | Prisma.ListEnumCouponTargetTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponTargetTypeWithAggregatesFilter<$PrismaModel> | $Enums.CouponTargetType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCouponTargetTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCouponTargetTypeFilter<$PrismaModel>
+}
+
+export type EnumCouponStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponStatus | Prisma.EnumCouponStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponStatus[] | Prisma.ListEnumCouponStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponStatus[] | Prisma.ListEnumCouponStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponStatusWithAggregatesFilter<$PrismaModel> | $Enums.CouponStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCouponStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCouponStatusFilter<$PrismaModel>
+}
+
+export type EnumUserCouponStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.UserCouponStatus | Prisma.EnumUserCouponStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.UserCouponStatus[] | Prisma.ListEnumUserCouponStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UserCouponStatus[] | Prisma.ListEnumUserCouponStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUserCouponStatusFilter<$PrismaModel> | $Enums.UserCouponStatus
+}
+
+export type EnumUserCouponStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UserCouponStatus | Prisma.EnumUserCouponStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.UserCouponStatus[] | Prisma.ListEnumUserCouponStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UserCouponStatus[] | Prisma.ListEnumUserCouponStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUserCouponStatusWithAggregatesFilter<$PrismaModel> | $Enums.UserCouponStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUserCouponStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUserCouponStatusFilter<$PrismaModel>
+}
+
+export type EnumCouponUsageStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponUsageStatus | Prisma.EnumCouponUsageStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponUsageStatus[] | Prisma.ListEnumCouponUsageStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponUsageStatus[] | Prisma.ListEnumCouponUsageStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponUsageStatusFilter<$PrismaModel> | $Enums.CouponUsageStatus
+}
+
+export type EnumCouponUsageStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponUsageStatus | Prisma.EnumCouponUsageStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponUsageStatus[] | Prisma.ListEnumCouponUsageStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponUsageStatus[] | Prisma.ListEnumCouponUsageStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponUsageStatusWithAggregatesFilter<$PrismaModel> | $Enums.CouponUsageStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCouponUsageStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCouponUsageStatusFilter<$PrismaModel>
+}
+
 export type EnumSubscriptionStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.SubscriptionStatus | Prisma.EnumSubscriptionStatusFieldRefInput<$PrismaModel>
   in?: $Enums.SubscriptionStatus[] | Prisma.ListEnumSubscriptionStatusFieldRefInput<$PrismaModel>
@@ -1844,6 +1929,91 @@ export type NestedEnumCoinTxTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumCoinTxTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumCoinTxTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumCouponBenefitTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponBenefitType | Prisma.EnumCouponBenefitTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponBenefitType[] | Prisma.ListEnumCouponBenefitTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponBenefitType[] | Prisma.ListEnumCouponBenefitTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponBenefitTypeFilter<$PrismaModel> | $Enums.CouponBenefitType
+}
+
+export type NestedEnumCouponTargetTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponTargetType | Prisma.EnumCouponTargetTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponTargetType[] | Prisma.ListEnumCouponTargetTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponTargetType[] | Prisma.ListEnumCouponTargetTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponTargetTypeFilter<$PrismaModel> | $Enums.CouponTargetType
+}
+
+export type NestedEnumCouponStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponStatus | Prisma.EnumCouponStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponStatus[] | Prisma.ListEnumCouponStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponStatus[] | Prisma.ListEnumCouponStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponStatusFilter<$PrismaModel> | $Enums.CouponStatus
+}
+
+export type NestedEnumCouponBenefitTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponBenefitType | Prisma.EnumCouponBenefitTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponBenefitType[] | Prisma.ListEnumCouponBenefitTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponBenefitType[] | Prisma.ListEnumCouponBenefitTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponBenefitTypeWithAggregatesFilter<$PrismaModel> | $Enums.CouponBenefitType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCouponBenefitTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCouponBenefitTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumCouponTargetTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponTargetType | Prisma.EnumCouponTargetTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponTargetType[] | Prisma.ListEnumCouponTargetTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponTargetType[] | Prisma.ListEnumCouponTargetTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponTargetTypeWithAggregatesFilter<$PrismaModel> | $Enums.CouponTargetType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCouponTargetTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCouponTargetTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumCouponStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponStatus | Prisma.EnumCouponStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponStatus[] | Prisma.ListEnumCouponStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponStatus[] | Prisma.ListEnumCouponStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponStatusWithAggregatesFilter<$PrismaModel> | $Enums.CouponStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCouponStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCouponStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumUserCouponStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.UserCouponStatus | Prisma.EnumUserCouponStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.UserCouponStatus[] | Prisma.ListEnumUserCouponStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UserCouponStatus[] | Prisma.ListEnumUserCouponStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUserCouponStatusFilter<$PrismaModel> | $Enums.UserCouponStatus
+}
+
+export type NestedEnumUserCouponStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UserCouponStatus | Prisma.EnumUserCouponStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.UserCouponStatus[] | Prisma.ListEnumUserCouponStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UserCouponStatus[] | Prisma.ListEnumUserCouponStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUserCouponStatusWithAggregatesFilter<$PrismaModel> | $Enums.UserCouponStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUserCouponStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUserCouponStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumCouponUsageStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponUsageStatus | Prisma.EnumCouponUsageStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponUsageStatus[] | Prisma.ListEnumCouponUsageStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponUsageStatus[] | Prisma.ListEnumCouponUsageStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponUsageStatusFilter<$PrismaModel> | $Enums.CouponUsageStatus
+}
+
+export type NestedEnumCouponUsageStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CouponUsageStatus | Prisma.EnumCouponUsageStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CouponUsageStatus[] | Prisma.ListEnumCouponUsageStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CouponUsageStatus[] | Prisma.ListEnumCouponUsageStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCouponUsageStatusWithAggregatesFilter<$PrismaModel> | $Enums.CouponUsageStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCouponUsageStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCouponUsageStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumSubscriptionStatusFilter<$PrismaModel = never> = {

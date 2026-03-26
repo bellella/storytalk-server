@@ -8,6 +8,7 @@ import { GoogleLoginDto } from './dto/google-login.dto';
 import { AppleLoginDto } from './dto/apple-login.dto';
 import { AuthProvider } from '@/generated/prisma/enums';
 import { SocialLoginResponseDto } from './dto/social-login.dto';
+import { CouponsService } from '../coupons/coupons.service';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,8 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+    private readonly couponsService: CouponsService
   ) {
     this.googleClient = new OAuth2Client();
     this.googleAudiences = [
@@ -125,6 +127,12 @@ export class AuthService {
         isNew: true,
       });
       isNew = true;
+
+      await this.couponsService.issueCouponToUser({
+        userId: user.id,
+        couponKey: 'WELCOME_PLAY_EPISODE',
+        source: 'SIGNUP',
+      });
     }
 
     const tokens = await this.generateTokens(user.id, user.email);

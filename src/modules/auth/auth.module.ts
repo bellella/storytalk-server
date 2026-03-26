@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { CommonModule } from '@/common/common.module';
 import { UsersModule } from '../users/user.module';
+import { CouponsModule } from '../coupons/coupons.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { UsersModule } from '../users/user.module';
       signOptions: { expiresIn: '1d' },
     }),
     UsersModule,
+    CouponsModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

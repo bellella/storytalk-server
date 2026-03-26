@@ -14,14 +14,19 @@ import {
   PurchaseType,
 } from '@/generated/prisma/enums';
 import { BuyPlayEpisodeResponseDto } from './dto/checkout.dto';
+import { CouponsService } from '../coupons/coupons.service';
 
 @Injectable()
 export class CheckoutService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly couponsService: CouponsService
+  ) {}
 
   async buyPlayEpisode(
     userId: number,
-    productId: number
+    productId: number,
+    couponCode?: string
   ): Promise<BuyPlayEpisodeResponseDto> {
     // 1. 상품 조회 및 유효성 검증
     const product = await this.prisma.product.findUnique({
@@ -62,14 +67,38 @@ export class CheckoutService {
     });
     const currentBalance = latestTx?.balanceAfter ?? 0;
 
-    if (currentBalance < product.price) {
+    let discountAmount = 0;
+    let couponApplyMeta:
+      | {
+          couponId: number;
+          couponCodeId: number;
+          userCouponId: number;
+          discountAmount: number;
+        }
+      | null = null;
+
+    if (couponCode) {
+      couponApplyMeta = await this.couponsService.validateDiscountCouponForProduct(
+        {
+          userId,
+          productId,
+          productPrice: product.price,
+          couponCode,
+        }
+      );
+      discountAmount = couponApplyMeta.discountAmount;
+    }
+
+    const netPrice = Math.max(0, product.price - discountAmount);
+
+    if (currentBalance < netPrice) {
       throw new BadRequestException(
-        `Insufficient coins. Required: ${product.price}, available: ${currentBalance}`
+        `Insufficient coins. Required: ${netPrice}, available: ${currentBalance}`
       );
     }
 
     // 4. 구매 처리 (transaction)
-    const balanceAfter = currentBalance - product.price;
+    const balanceAfter = currentBalance - netPrice;
 
     const { purchase, playEpisode } = await this.prisma.$transaction(
       async (tx) => {
@@ -78,7 +107,7 @@ export class CheckoutService {
             userId,
             productId,
             type: PurchaseType.COIN,
-            pricePaid: product.price,
+            pricePaid: netPrice,
             currency: CurrencyType.COIN,
           },
         });
@@ -87,11 +116,23 @@ export class CheckoutService {
           data: {
             userId,
             type: CoinTxType.SPEND,
-            amount: -product.price,
+            amount: -netPrice,
             balanceAfter,
             relatedPurchaseId: newPurchase.id,
           },
         });
+
+        if (couponApplyMeta) {
+          await this.couponsService.applyDiscountCouponToProductPurchase({
+            tx,
+            userId,
+            couponId: couponApplyMeta.couponId,
+            couponCodeId: couponApplyMeta.couponCodeId,
+            userCouponId: couponApplyMeta.userCouponId,
+            userPurchaseId: newPurchase.id,
+            discountAmount: couponApplyMeta.discountAmount,
+          });
+        }
 
         const newPlayEpisode = await tx.userPlayEpisode.create({
           data: {
@@ -113,7 +154,7 @@ export class CheckoutService {
       purchaseId: purchase.id,
       playEpisodeId: playEpisode.id,
       productId,
-      coinSpent: product.price,
+      coinSpent: netPrice,
       coinBalanceAfter: balanceAfter,
     };
   }

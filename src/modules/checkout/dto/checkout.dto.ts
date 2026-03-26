@@ -1,9 +1,13 @@
-import { IsInt, Min } from 'class-validator';
+import { IsInt, IsOptional, IsString, Min } from 'class-validator';
 
 export class BuyPlayEpisodeDto {
   @IsInt()
   @Min(1)
   productId: number;
+
+  @IsOptional()
+  @IsString()
+  couponCode?: string;
 }
 
 export class BuyPlayEpisodeResponseDto {

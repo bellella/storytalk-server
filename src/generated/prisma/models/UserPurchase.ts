@@ -31,6 +31,8 @@ export type UserPurchaseAvgAggregateOutputType = {
   userId: number | null
   productId: number | null
   pricePaid: number | null
+  originalPrice: number | null
+  discountAmount: number | null
 }
 
 export type UserPurchaseSumAggregateOutputType = {
@@ -38,6 +40,8 @@ export type UserPurchaseSumAggregateOutputType = {
   userId: number | null
   productId: number | null
   pricePaid: number | null
+  originalPrice: number | null
+  discountAmount: number | null
 }
 
 export type UserPurchaseMinAggregateOutputType = {
@@ -46,6 +50,8 @@ export type UserPurchaseMinAggregateOutputType = {
   productId: number | null
   type: $Enums.PurchaseType | null
   pricePaid: number | null
+  originalPrice: number | null
+  discountAmount: number | null
   currency: $Enums.CurrencyType | null
   storeOrderId: string | null
   createdAt: Date | null
@@ -57,6 +63,8 @@ export type UserPurchaseMaxAggregateOutputType = {
   productId: number | null
   type: $Enums.PurchaseType | null
   pricePaid: number | null
+  originalPrice: number | null
+  discountAmount: number | null
   currency: $Enums.CurrencyType | null
   storeOrderId: string | null
   createdAt: Date | null
@@ -68,6 +76,8 @@ export type UserPurchaseCountAggregateOutputType = {
   productId: number
   type: number
   pricePaid: number
+  originalPrice: number
+  discountAmount: number
   currency: number
   storeOrderId: number
   createdAt: number
@@ -80,6 +90,8 @@ export type UserPurchaseAvgAggregateInputType = {
   userId?: true
   productId?: true
   pricePaid?: true
+  originalPrice?: true
+  discountAmount?: true
 }
 
 export type UserPurchaseSumAggregateInputType = {
@@ -87,6 +99,8 @@ export type UserPurchaseSumAggregateInputType = {
   userId?: true
   productId?: true
   pricePaid?: true
+  originalPrice?: true
+  discountAmount?: true
 }
 
 export type UserPurchaseMinAggregateInputType = {
@@ -95,6 +109,8 @@ export type UserPurchaseMinAggregateInputType = {
   productId?: true
   type?: true
   pricePaid?: true
+  originalPrice?: true
+  discountAmount?: true
   currency?: true
   storeOrderId?: true
   createdAt?: true
@@ -106,6 +122,8 @@ export type UserPurchaseMaxAggregateInputType = {
   productId?: true
   type?: true
   pricePaid?: true
+  originalPrice?: true
+  discountAmount?: true
   currency?: true
   storeOrderId?: true
   createdAt?: true
@@ -117,6 +135,8 @@ export type UserPurchaseCountAggregateInputType = {
   productId?: true
   type?: true
   pricePaid?: true
+  originalPrice?: true
+  discountAmount?: true
   currency?: true
   storeOrderId?: true
   createdAt?: true
@@ -215,6 +235,8 @@ export type UserPurchaseGroupByOutputType = {
   productId: number
   type: $Enums.PurchaseType
   pricePaid: number
+  originalPrice: number
+  discountAmount: number
   currency: $Enums.CurrencyType
   storeOrderId: string | null
   createdAt: Date
@@ -249,6 +271,8 @@ export type UserPurchaseWhereInput = {
   productId?: Prisma.IntFilter<"UserPurchase"> | number
   type?: Prisma.EnumPurchaseTypeFilter<"UserPurchase"> | $Enums.PurchaseType
   pricePaid?: Prisma.IntFilter<"UserPurchase"> | number
+  originalPrice?: Prisma.IntFilter<"UserPurchase"> | number
+  discountAmount?: Prisma.IntFilter<"UserPurchase"> | number
   currency?: Prisma.EnumCurrencyTypeFilter<"UserPurchase"> | $Enums.CurrencyType
   storeOrderId?: Prisma.StringNullableFilter<"UserPurchase"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UserPurchase"> | Date | string
@@ -256,6 +280,7 @@ export type UserPurchaseWhereInput = {
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   userPlayEpisode?: Prisma.XOR<Prisma.UserPlayEpisodeNullableScalarRelationFilter, Prisma.UserPlayEpisodeWhereInput> | null
   coinTransactions?: Prisma.CoinTransactionListRelationFilter
+  couponUsages?: Prisma.CouponUsageListRelationFilter
 }
 
 export type UserPurchaseOrderByWithRelationInput = {
@@ -264,6 +289,8 @@ export type UserPurchaseOrderByWithRelationInput = {
   productId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   pricePaid?: Prisma.SortOrder
+  originalPrice?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   storeOrderId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -271,6 +298,7 @@ export type UserPurchaseOrderByWithRelationInput = {
   product?: Prisma.ProductOrderByWithRelationInput
   userPlayEpisode?: Prisma.UserPlayEpisodeOrderByWithRelationInput
   coinTransactions?: Prisma.CoinTransactionOrderByRelationAggregateInput
+  couponUsages?: Prisma.CouponUsageOrderByRelationAggregateInput
 }
 
 export type UserPurchaseWhereUniqueInput = Prisma.AtLeast<{
@@ -282,6 +310,8 @@ export type UserPurchaseWhereUniqueInput = Prisma.AtLeast<{
   productId?: Prisma.IntFilter<"UserPurchase"> | number
   type?: Prisma.EnumPurchaseTypeFilter<"UserPurchase"> | $Enums.PurchaseType
   pricePaid?: Prisma.IntFilter<"UserPurchase"> | number
+  originalPrice?: Prisma.IntFilter<"UserPurchase"> | number
+  discountAmount?: Prisma.IntFilter<"UserPurchase"> | number
   currency?: Prisma.EnumCurrencyTypeFilter<"UserPurchase"> | $Enums.CurrencyType
   storeOrderId?: Prisma.StringNullableFilter<"UserPurchase"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UserPurchase"> | Date | string
@@ -289,6 +319,7 @@ export type UserPurchaseWhereUniqueInput = Prisma.AtLeast<{
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   userPlayEpisode?: Prisma.XOR<Prisma.UserPlayEpisodeNullableScalarRelationFilter, Prisma.UserPlayEpisodeWhereInput> | null
   coinTransactions?: Prisma.CoinTransactionListRelationFilter
+  couponUsages?: Prisma.CouponUsageListRelationFilter
 }, "id">
 
 export type UserPurchaseOrderByWithAggregationInput = {
@@ -297,6 +328,8 @@ export type UserPurchaseOrderByWithAggregationInput = {
   productId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   pricePaid?: Prisma.SortOrder
+  originalPrice?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   storeOrderId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -316,6 +349,8 @@ export type UserPurchaseScalarWhereWithAggregatesInput = {
   productId?: Prisma.IntWithAggregatesFilter<"UserPurchase"> | number
   type?: Prisma.EnumPurchaseTypeWithAggregatesFilter<"UserPurchase"> | $Enums.PurchaseType
   pricePaid?: Prisma.IntWithAggregatesFilter<"UserPurchase"> | number
+  originalPrice?: Prisma.IntWithAggregatesFilter<"UserPurchase"> | number
+  discountAmount?: Prisma.IntWithAggregatesFilter<"UserPurchase"> | number
   currency?: Prisma.EnumCurrencyTypeWithAggregatesFilter<"UserPurchase"> | $Enums.CurrencyType
   storeOrderId?: Prisma.StringNullableWithAggregatesFilter<"UserPurchase"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserPurchase"> | Date | string
@@ -323,7 +358,9 @@ export type UserPurchaseScalarWhereWithAggregatesInput = {
 
 export type UserPurchaseCreateInput = {
   type: $Enums.PurchaseType
-  pricePaid: number
+  pricePaid?: number
+  originalPrice?: number
+  discountAmount?: number
   currency: $Enums.CurrencyType
   storeOrderId?: string | null
   createdAt?: Date | string
@@ -331,6 +368,7 @@ export type UserPurchaseCreateInput = {
   product: Prisma.ProductCreateNestedOneWithoutPurchasesInput
   userPlayEpisode?: Prisma.UserPlayEpisodeCreateNestedOneWithoutPurchaseInput
   coinTransactions?: Prisma.CoinTransactionCreateNestedManyWithoutRelatedPurchaseInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserPurchaseInput
 }
 
 export type UserPurchaseUncheckedCreateInput = {
@@ -338,17 +376,22 @@ export type UserPurchaseUncheckedCreateInput = {
   userId: number
   productId: number
   type: $Enums.PurchaseType
-  pricePaid: number
+  pricePaid?: number
+  originalPrice?: number
+  discountAmount?: number
   currency: $Enums.CurrencyType
   storeOrderId?: string | null
   createdAt?: Date | string
   userPlayEpisode?: Prisma.UserPlayEpisodeUncheckedCreateNestedOneWithoutPurchaseInput
   coinTransactions?: Prisma.CoinTransactionUncheckedCreateNestedManyWithoutRelatedPurchaseInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserPurchaseInput
 }
 
 export type UserPurchaseUpdateInput = {
   type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
   pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -356,6 +399,7 @@ export type UserPurchaseUpdateInput = {
   product?: Prisma.ProductUpdateOneRequiredWithoutPurchasesNestedInput
   userPlayEpisode?: Prisma.UserPlayEpisodeUpdateOneWithoutPurchaseNestedInput
   coinTransactions?: Prisma.CoinTransactionUpdateManyWithoutRelatedPurchaseNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserPurchaseNestedInput
 }
 
 export type UserPurchaseUncheckedUpdateInput = {
@@ -364,11 +408,14 @@ export type UserPurchaseUncheckedUpdateInput = {
   productId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
   pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userPlayEpisode?: Prisma.UserPlayEpisodeUncheckedUpdateOneWithoutPurchaseNestedInput
   coinTransactions?: Prisma.CoinTransactionUncheckedUpdateManyWithoutRelatedPurchaseNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserPurchaseNestedInput
 }
 
 export type UserPurchaseCreateManyInput = {
@@ -376,7 +423,9 @@ export type UserPurchaseCreateManyInput = {
   userId: number
   productId: number
   type: $Enums.PurchaseType
-  pricePaid: number
+  pricePaid?: number
+  originalPrice?: number
+  discountAmount?: number
   currency: $Enums.CurrencyType
   storeOrderId?: string | null
   createdAt?: Date | string
@@ -385,6 +434,8 @@ export type UserPurchaseCreateManyInput = {
 export type UserPurchaseUpdateManyMutationInput = {
   type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
   pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -396,6 +447,8 @@ export type UserPurchaseUncheckedUpdateManyInput = {
   productId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
   pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -422,6 +475,8 @@ export type UserPurchaseCountOrderByAggregateInput = {
   productId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   pricePaid?: Prisma.SortOrder
+  originalPrice?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   storeOrderId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -432,6 +487,8 @@ export type UserPurchaseAvgOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   pricePaid?: Prisma.SortOrder
+  originalPrice?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
 }
 
 export type UserPurchaseMaxOrderByAggregateInput = {
@@ -440,6 +497,8 @@ export type UserPurchaseMaxOrderByAggregateInput = {
   productId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   pricePaid?: Prisma.SortOrder
+  originalPrice?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   storeOrderId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -451,6 +510,8 @@ export type UserPurchaseMinOrderByAggregateInput = {
   productId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   pricePaid?: Prisma.SortOrder
+  originalPrice?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   storeOrderId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -461,6 +522,8 @@ export type UserPurchaseSumOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   pricePaid?: Prisma.SortOrder
+  originalPrice?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
 }
 
 export type UserPurchaseCreateNestedManyWithoutUserInput = {
@@ -583,27 +646,49 @@ export type UserPurchaseUpdateOneWithoutCoinTransactionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserPurchaseUpdateToOneWithWhereWithoutCoinTransactionsInput, Prisma.UserPurchaseUpdateWithoutCoinTransactionsInput>, Prisma.UserPurchaseUncheckedUpdateWithoutCoinTransactionsInput>
 }
 
+export type UserPurchaseCreateNestedOneWithoutCouponUsagesInput = {
+  create?: Prisma.XOR<Prisma.UserPurchaseCreateWithoutCouponUsagesInput, Prisma.UserPurchaseUncheckedCreateWithoutCouponUsagesInput>
+  connectOrCreate?: Prisma.UserPurchaseCreateOrConnectWithoutCouponUsagesInput
+  connect?: Prisma.UserPurchaseWhereUniqueInput
+}
+
+export type UserPurchaseUpdateOneWithoutCouponUsagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserPurchaseCreateWithoutCouponUsagesInput, Prisma.UserPurchaseUncheckedCreateWithoutCouponUsagesInput>
+  connectOrCreate?: Prisma.UserPurchaseCreateOrConnectWithoutCouponUsagesInput
+  upsert?: Prisma.UserPurchaseUpsertWithoutCouponUsagesInput
+  disconnect?: Prisma.UserPurchaseWhereInput | boolean
+  delete?: Prisma.UserPurchaseWhereInput | boolean
+  connect?: Prisma.UserPurchaseWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserPurchaseUpdateToOneWithWhereWithoutCouponUsagesInput, Prisma.UserPurchaseUpdateWithoutCouponUsagesInput>, Prisma.UserPurchaseUncheckedUpdateWithoutCouponUsagesInput>
+}
+
 export type UserPurchaseCreateWithoutUserInput = {
   type: $Enums.PurchaseType
-  pricePaid: number
+  pricePaid?: number
+  originalPrice?: number
+  discountAmount?: number
   currency: $Enums.CurrencyType
   storeOrderId?: string | null
   createdAt?: Date | string
   product: Prisma.ProductCreateNestedOneWithoutPurchasesInput
   userPlayEpisode?: Prisma.UserPlayEpisodeCreateNestedOneWithoutPurchaseInput
   coinTransactions?: Prisma.CoinTransactionCreateNestedManyWithoutRelatedPurchaseInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserPurchaseInput
 }
 
 export type UserPurchaseUncheckedCreateWithoutUserInput = {
   id?: number
   productId: number
   type: $Enums.PurchaseType
-  pricePaid: number
+  pricePaid?: number
+  originalPrice?: number
+  discountAmount?: number
   currency: $Enums.CurrencyType
   storeOrderId?: string | null
   createdAt?: Date | string
   userPlayEpisode?: Prisma.UserPlayEpisodeUncheckedCreateNestedOneWithoutPurchaseInput
   coinTransactions?: Prisma.CoinTransactionUncheckedCreateNestedManyWithoutRelatedPurchaseInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserPurchaseInput
 }
 
 export type UserPurchaseCreateOrConnectWithoutUserInput = {
@@ -641,6 +726,8 @@ export type UserPurchaseScalarWhereInput = {
   productId?: Prisma.IntFilter<"UserPurchase"> | number
   type?: Prisma.EnumPurchaseTypeFilter<"UserPurchase"> | $Enums.PurchaseType
   pricePaid?: Prisma.IntFilter<"UserPurchase"> | number
+  originalPrice?: Prisma.IntFilter<"UserPurchase"> | number
+  discountAmount?: Prisma.IntFilter<"UserPurchase"> | number
   currency?: Prisma.EnumCurrencyTypeFilter<"UserPurchase"> | $Enums.CurrencyType
   storeOrderId?: Prisma.StringNullableFilter<"UserPurchase"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UserPurchase"> | Date | string
@@ -648,13 +735,16 @@ export type UserPurchaseScalarWhereInput = {
 
 export type UserPurchaseCreateWithoutUserPlayEpisodeInput = {
   type: $Enums.PurchaseType
-  pricePaid: number
+  pricePaid?: number
+  originalPrice?: number
+  discountAmount?: number
   currency: $Enums.CurrencyType
   storeOrderId?: string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutUserPurchasesInput
   product: Prisma.ProductCreateNestedOneWithoutPurchasesInput
   coinTransactions?: Prisma.CoinTransactionCreateNestedManyWithoutRelatedPurchaseInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserPurchaseInput
 }
 
 export type UserPurchaseUncheckedCreateWithoutUserPlayEpisodeInput = {
@@ -662,11 +752,14 @@ export type UserPurchaseUncheckedCreateWithoutUserPlayEpisodeInput = {
   userId: number
   productId: number
   type: $Enums.PurchaseType
-  pricePaid: number
+  pricePaid?: number
+  originalPrice?: number
+  discountAmount?: number
   currency: $Enums.CurrencyType
   storeOrderId?: string | null
   createdAt?: Date | string
   coinTransactions?: Prisma.CoinTransactionUncheckedCreateNestedManyWithoutRelatedPurchaseInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserPurchaseInput
 }
 
 export type UserPurchaseCreateOrConnectWithoutUserPlayEpisodeInput = {
@@ -688,12 +781,15 @@ export type UserPurchaseUpdateToOneWithWhereWithoutUserPlayEpisodeInput = {
 export type UserPurchaseUpdateWithoutUserPlayEpisodeInput = {
   type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
   pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutUserPurchasesNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutPurchasesNestedInput
   coinTransactions?: Prisma.CoinTransactionUpdateManyWithoutRelatedPurchaseNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserPurchaseNestedInput
 }
 
 export type UserPurchaseUncheckedUpdateWithoutUserPlayEpisodeInput = {
@@ -702,33 +798,42 @@ export type UserPurchaseUncheckedUpdateWithoutUserPlayEpisodeInput = {
   productId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
   pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coinTransactions?: Prisma.CoinTransactionUncheckedUpdateManyWithoutRelatedPurchaseNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserPurchaseNestedInput
 }
 
 export type UserPurchaseCreateWithoutProductInput = {
   type: $Enums.PurchaseType
-  pricePaid: number
+  pricePaid?: number
+  originalPrice?: number
+  discountAmount?: number
   currency: $Enums.CurrencyType
   storeOrderId?: string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutUserPurchasesInput
   userPlayEpisode?: Prisma.UserPlayEpisodeCreateNestedOneWithoutPurchaseInput
   coinTransactions?: Prisma.CoinTransactionCreateNestedManyWithoutRelatedPurchaseInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserPurchaseInput
 }
 
 export type UserPurchaseUncheckedCreateWithoutProductInput = {
   id?: number
   userId: number
   type: $Enums.PurchaseType
-  pricePaid: number
+  pricePaid?: number
+  originalPrice?: number
+  discountAmount?: number
   currency: $Enums.CurrencyType
   storeOrderId?: string | null
   createdAt?: Date | string
   userPlayEpisode?: Prisma.UserPlayEpisodeUncheckedCreateNestedOneWithoutPurchaseInput
   coinTransactions?: Prisma.CoinTransactionUncheckedCreateNestedManyWithoutRelatedPurchaseInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserPurchaseInput
 }
 
 export type UserPurchaseCreateOrConnectWithoutProductInput = {
@@ -759,13 +864,16 @@ export type UserPurchaseUpdateManyWithWhereWithoutProductInput = {
 
 export type UserPurchaseCreateWithoutCoinTransactionsInput = {
   type: $Enums.PurchaseType
-  pricePaid: number
+  pricePaid?: number
+  originalPrice?: number
+  discountAmount?: number
   currency: $Enums.CurrencyType
   storeOrderId?: string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutUserPurchasesInput
   product: Prisma.ProductCreateNestedOneWithoutPurchasesInput
   userPlayEpisode?: Prisma.UserPlayEpisodeCreateNestedOneWithoutPurchaseInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserPurchaseInput
 }
 
 export type UserPurchaseUncheckedCreateWithoutCoinTransactionsInput = {
@@ -773,11 +881,14 @@ export type UserPurchaseUncheckedCreateWithoutCoinTransactionsInput = {
   userId: number
   productId: number
   type: $Enums.PurchaseType
-  pricePaid: number
+  pricePaid?: number
+  originalPrice?: number
+  discountAmount?: number
   currency: $Enums.CurrencyType
   storeOrderId?: string | null
   createdAt?: Date | string
   userPlayEpisode?: Prisma.UserPlayEpisodeUncheckedCreateNestedOneWithoutPurchaseInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserPurchaseInput
 }
 
 export type UserPurchaseCreateOrConnectWithoutCoinTransactionsInput = {
@@ -799,12 +910,15 @@ export type UserPurchaseUpdateToOneWithWhereWithoutCoinTransactionsInput = {
 export type UserPurchaseUpdateWithoutCoinTransactionsInput = {
   type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
   pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutUserPurchasesNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutPurchasesNestedInput
   userPlayEpisode?: Prisma.UserPlayEpisodeUpdateOneWithoutPurchaseNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserPurchaseNestedInput
 }
 
 export type UserPurchaseUncheckedUpdateWithoutCoinTransactionsInput = {
@@ -813,17 +927,96 @@ export type UserPurchaseUncheckedUpdateWithoutCoinTransactionsInput = {
   productId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
   pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userPlayEpisode?: Prisma.UserPlayEpisodeUncheckedUpdateOneWithoutPurchaseNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserPurchaseNestedInput
+}
+
+export type UserPurchaseCreateWithoutCouponUsagesInput = {
+  type: $Enums.PurchaseType
+  pricePaid?: number
+  originalPrice?: number
+  discountAmount?: number
+  currency: $Enums.CurrencyType
+  storeOrderId?: string | null
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutUserPurchasesInput
+  product: Prisma.ProductCreateNestedOneWithoutPurchasesInput
+  userPlayEpisode?: Prisma.UserPlayEpisodeCreateNestedOneWithoutPurchaseInput
+  coinTransactions?: Prisma.CoinTransactionCreateNestedManyWithoutRelatedPurchaseInput
+}
+
+export type UserPurchaseUncheckedCreateWithoutCouponUsagesInput = {
+  id?: number
+  userId: number
+  productId: number
+  type: $Enums.PurchaseType
+  pricePaid?: number
+  originalPrice?: number
+  discountAmount?: number
+  currency: $Enums.CurrencyType
+  storeOrderId?: string | null
+  createdAt?: Date | string
+  userPlayEpisode?: Prisma.UserPlayEpisodeUncheckedCreateNestedOneWithoutPurchaseInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedCreateNestedManyWithoutRelatedPurchaseInput
+}
+
+export type UserPurchaseCreateOrConnectWithoutCouponUsagesInput = {
+  where: Prisma.UserPurchaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserPurchaseCreateWithoutCouponUsagesInput, Prisma.UserPurchaseUncheckedCreateWithoutCouponUsagesInput>
+}
+
+export type UserPurchaseUpsertWithoutCouponUsagesInput = {
+  update: Prisma.XOR<Prisma.UserPurchaseUpdateWithoutCouponUsagesInput, Prisma.UserPurchaseUncheckedUpdateWithoutCouponUsagesInput>
+  create: Prisma.XOR<Prisma.UserPurchaseCreateWithoutCouponUsagesInput, Prisma.UserPurchaseUncheckedCreateWithoutCouponUsagesInput>
+  where?: Prisma.UserPurchaseWhereInput
+}
+
+export type UserPurchaseUpdateToOneWithWhereWithoutCouponUsagesInput = {
+  where?: Prisma.UserPurchaseWhereInput
+  data: Prisma.XOR<Prisma.UserPurchaseUpdateWithoutCouponUsagesInput, Prisma.UserPurchaseUncheckedUpdateWithoutCouponUsagesInput>
+}
+
+export type UserPurchaseUpdateWithoutCouponUsagesInput = {
+  type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
+  pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
+  storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutUserPurchasesNestedInput
+  product?: Prisma.ProductUpdateOneRequiredWithoutPurchasesNestedInput
+  userPlayEpisode?: Prisma.UserPlayEpisodeUpdateOneWithoutPurchaseNestedInput
+  coinTransactions?: Prisma.CoinTransactionUpdateManyWithoutRelatedPurchaseNestedInput
+}
+
+export type UserPurchaseUncheckedUpdateWithoutCouponUsagesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  productId?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
+  pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
+  storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userPlayEpisode?: Prisma.UserPlayEpisodeUncheckedUpdateOneWithoutPurchaseNestedInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedUpdateManyWithoutRelatedPurchaseNestedInput
 }
 
 export type UserPurchaseCreateManyUserInput = {
   id?: number
   productId: number
   type: $Enums.PurchaseType
-  pricePaid: number
+  pricePaid?: number
+  originalPrice?: number
+  discountAmount?: number
   currency: $Enums.CurrencyType
   storeOrderId?: string | null
   createdAt?: Date | string
@@ -832,12 +1025,15 @@ export type UserPurchaseCreateManyUserInput = {
 export type UserPurchaseUpdateWithoutUserInput = {
   type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
   pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   product?: Prisma.ProductUpdateOneRequiredWithoutPurchasesNestedInput
   userPlayEpisode?: Prisma.UserPlayEpisodeUpdateOneWithoutPurchaseNestedInput
   coinTransactions?: Prisma.CoinTransactionUpdateManyWithoutRelatedPurchaseNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserPurchaseNestedInput
 }
 
 export type UserPurchaseUncheckedUpdateWithoutUserInput = {
@@ -845,11 +1041,14 @@ export type UserPurchaseUncheckedUpdateWithoutUserInput = {
   productId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
   pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userPlayEpisode?: Prisma.UserPlayEpisodeUncheckedUpdateOneWithoutPurchaseNestedInput
   coinTransactions?: Prisma.CoinTransactionUncheckedUpdateManyWithoutRelatedPurchaseNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserPurchaseNestedInput
 }
 
 export type UserPurchaseUncheckedUpdateManyWithoutUserInput = {
@@ -857,6 +1056,8 @@ export type UserPurchaseUncheckedUpdateManyWithoutUserInput = {
   productId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
   pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -866,7 +1067,9 @@ export type UserPurchaseCreateManyProductInput = {
   id?: number
   userId: number
   type: $Enums.PurchaseType
-  pricePaid: number
+  pricePaid?: number
+  originalPrice?: number
+  discountAmount?: number
   currency: $Enums.CurrencyType
   storeOrderId?: string | null
   createdAt?: Date | string
@@ -875,12 +1078,15 @@ export type UserPurchaseCreateManyProductInput = {
 export type UserPurchaseUpdateWithoutProductInput = {
   type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
   pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutUserPurchasesNestedInput
   userPlayEpisode?: Prisma.UserPlayEpisodeUpdateOneWithoutPurchaseNestedInput
   coinTransactions?: Prisma.CoinTransactionUpdateManyWithoutRelatedPurchaseNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserPurchaseNestedInput
 }
 
 export type UserPurchaseUncheckedUpdateWithoutProductInput = {
@@ -888,11 +1094,14 @@ export type UserPurchaseUncheckedUpdateWithoutProductInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
   pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userPlayEpisode?: Prisma.UserPlayEpisodeUncheckedUpdateOneWithoutPurchaseNestedInput
   coinTransactions?: Prisma.CoinTransactionUncheckedUpdateManyWithoutRelatedPurchaseNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserPurchaseNestedInput
 }
 
 export type UserPurchaseUncheckedUpdateManyWithoutProductInput = {
@@ -900,6 +1109,8 @@ export type UserPurchaseUncheckedUpdateManyWithoutProductInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumPurchaseTypeFieldUpdateOperationsInput | $Enums.PurchaseType
   pricePaid?: Prisma.IntFieldUpdateOperationsInput | number
+  originalPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.EnumCurrencyTypeFieldUpdateOperationsInput | $Enums.CurrencyType
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -912,10 +1123,12 @@ export type UserPurchaseUncheckedUpdateManyWithoutProductInput = {
 
 export type UserPurchaseCountOutputType = {
   coinTransactions: number
+  couponUsages: number
 }
 
 export type UserPurchaseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   coinTransactions?: boolean | UserPurchaseCountOutputTypeCountCoinTransactionsArgs
+  couponUsages?: boolean | UserPurchaseCountOutputTypeCountCouponUsagesArgs
 }
 
 /**
@@ -935,6 +1148,13 @@ export type UserPurchaseCountOutputTypeCountCoinTransactionsArgs<ExtArgs extends
   where?: Prisma.CoinTransactionWhereInput
 }
 
+/**
+ * UserPurchaseCountOutputType without action
+ */
+export type UserPurchaseCountOutputTypeCountCouponUsagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CouponUsageWhereInput
+}
+
 
 export type UserPurchaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -942,6 +1162,8 @@ export type UserPurchaseSelect<ExtArgs extends runtime.Types.Extensions.Internal
   productId?: boolean
   type?: boolean
   pricePaid?: boolean
+  originalPrice?: boolean
+  discountAmount?: boolean
   currency?: boolean
   storeOrderId?: boolean
   createdAt?: boolean
@@ -949,6 +1171,7 @@ export type UserPurchaseSelect<ExtArgs extends runtime.Types.Extensions.Internal
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   userPlayEpisode?: boolean | Prisma.UserPurchase$userPlayEpisodeArgs<ExtArgs>
   coinTransactions?: boolean | Prisma.UserPurchase$coinTransactionsArgs<ExtArgs>
+  couponUsages?: boolean | Prisma.UserPurchase$couponUsagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserPurchaseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userPurchase"]>
 
@@ -958,6 +1181,8 @@ export type UserPurchaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   productId?: boolean
   type?: boolean
   pricePaid?: boolean
+  originalPrice?: boolean
+  discountAmount?: boolean
   currency?: boolean
   storeOrderId?: boolean
   createdAt?: boolean
@@ -971,6 +1196,8 @@ export type UserPurchaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   productId?: boolean
   type?: boolean
   pricePaid?: boolean
+  originalPrice?: boolean
+  discountAmount?: boolean
   currency?: boolean
   storeOrderId?: boolean
   createdAt?: boolean
@@ -984,17 +1211,20 @@ export type UserPurchaseSelectScalar = {
   productId?: boolean
   type?: boolean
   pricePaid?: boolean
+  originalPrice?: boolean
+  discountAmount?: boolean
   currency?: boolean
   storeOrderId?: boolean
   createdAt?: boolean
 }
 
-export type UserPurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "productId" | "type" | "pricePaid" | "currency" | "storeOrderId" | "createdAt", ExtArgs["result"]["userPurchase"]>
+export type UserPurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "productId" | "type" | "pricePaid" | "originalPrice" | "discountAmount" | "currency" | "storeOrderId" | "createdAt", ExtArgs["result"]["userPurchase"]>
 export type UserPurchaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   userPlayEpisode?: boolean | Prisma.UserPurchase$userPlayEpisodeArgs<ExtArgs>
   coinTransactions?: boolean | Prisma.UserPurchase$coinTransactionsArgs<ExtArgs>
+  couponUsages?: boolean | Prisma.UserPurchase$couponUsagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserPurchaseCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserPurchaseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1013,6 +1243,7 @@ export type $UserPurchasePayload<ExtArgs extends runtime.Types.Extensions.Intern
     product: Prisma.$ProductPayload<ExtArgs>
     userPlayEpisode: Prisma.$UserPlayEpisodePayload<ExtArgs> | null
     coinTransactions: Prisma.$CoinTransactionPayload<ExtArgs>[]
+    couponUsages: Prisma.$CouponUsagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1020,6 +1251,8 @@ export type $UserPurchasePayload<ExtArgs extends runtime.Types.Extensions.Intern
     productId: number
     type: $Enums.PurchaseType
     pricePaid: number
+    originalPrice: number
+    discountAmount: number
     currency: $Enums.CurrencyType
     storeOrderId: string | null
     createdAt: Date
@@ -1421,6 +1654,7 @@ export interface Prisma__UserPurchaseClient<T, Null = never, ExtArgs extends run
   product<T extends Prisma.ProductDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   userPlayEpisode<T extends Prisma.UserPurchase$userPlayEpisodeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserPurchase$userPlayEpisodeArgs<ExtArgs>>): Prisma.Prisma__UserPlayEpisodeClient<runtime.Types.Result.GetResult<Prisma.$UserPlayEpisodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   coinTransactions<T extends Prisma.UserPurchase$coinTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserPurchase$coinTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CoinTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  couponUsages<T extends Prisma.UserPurchase$couponUsagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserPurchase$couponUsagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CouponUsagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1455,6 +1689,8 @@ export interface UserPurchaseFieldRefs {
   readonly productId: Prisma.FieldRef<"UserPurchase", 'Int'>
   readonly type: Prisma.FieldRef<"UserPurchase", 'PurchaseType'>
   readonly pricePaid: Prisma.FieldRef<"UserPurchase", 'Int'>
+  readonly originalPrice: Prisma.FieldRef<"UserPurchase", 'Int'>
+  readonly discountAmount: Prisma.FieldRef<"UserPurchase", 'Int'>
   readonly currency: Prisma.FieldRef<"UserPurchase", 'CurrencyType'>
   readonly storeOrderId: Prisma.FieldRef<"UserPurchase", 'String'>
   readonly createdAt: Prisma.FieldRef<"UserPurchase", 'DateTime'>
@@ -1894,6 +2130,30 @@ export type UserPurchase$coinTransactionsArgs<ExtArgs extends runtime.Types.Exte
   take?: number
   skip?: number
   distinct?: Prisma.CoinTransactionScalarFieldEnum | Prisma.CoinTransactionScalarFieldEnum[]
+}
+
+/**
+ * UserPurchase.couponUsages
+ */
+export type UserPurchase$couponUsagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CouponUsage
+   */
+  select?: Prisma.CouponUsageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CouponUsage
+   */
+  omit?: Prisma.CouponUsageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CouponUsageInclude<ExtArgs> | null
+  where?: Prisma.CouponUsageWhereInput
+  orderBy?: Prisma.CouponUsageOrderByWithRelationInput | Prisma.CouponUsageOrderByWithRelationInput[]
+  cursor?: Prisma.CouponUsageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CouponUsageScalarFieldEnum | Prisma.CouponUsageScalarFieldEnum[]
 }
 
 /**
