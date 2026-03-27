@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, BadRequestException } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
 import { AllExceptionsFilter } from './common/filters/http-exception.filter';
@@ -33,7 +33,7 @@ async function bootstrap() {
       transform: true,
       exceptionFactory: (errors) => {
         console.log('Validation errors:', errors);
-        return errors;
+        return new BadRequestException(errors);
       },
     })
   );

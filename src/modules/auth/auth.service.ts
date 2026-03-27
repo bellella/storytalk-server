@@ -54,7 +54,7 @@ export class AuthService {
         throw new UnauthorizedException('Email not provided by Google');
       }
 
-      return this.handleSocialLogin({
+      return await this.handleSocialLogin({
         provider: AuthProvider.GOOGLE,
         providerId: googleId,
         email,
@@ -69,6 +69,8 @@ export class AuthService {
           Buffer.from(b64Payload, 'base64').toString()
         );
       } catch {}
+      if (error instanceof UnauthorizedException) throw error;
+      console.error('[googleLogin] handleSocialLogin error:', error);
       throw new UnauthorizedException('Failed to verify Google token');
     }
   }
@@ -91,7 +93,7 @@ export class AuthService {
         throw new UnauthorizedException('Email not provided by Apple');
       }
 
-      return this.handleSocialLogin({
+      return await this.handleSocialLogin({
         provider: AuthProvider.APPLE,
         providerId: appleId,
         email,
@@ -99,6 +101,8 @@ export class AuthService {
         profileImage: null,
       });
     } catch (error) {
+      if (error instanceof UnauthorizedException) throw error;
+      console.error('[appleLogin] handleSocialLogin error:', error);
       throw new UnauthorizedException('Failed to verify Apple token');
     }
   }
@@ -124,7 +128,7 @@ export class AuthService {
         throw new UnauthorizedException('Email not provided by Kakao');
       }
 
-      return this.handleSocialLogin({
+      return await this.handleSocialLogin({
         provider: AuthProvider.KAKAO,
         providerId: kakaoId,
         email,
@@ -133,6 +137,7 @@ export class AuthService {
       });
     } catch (error) {
       if (error instanceof UnauthorizedException) throw error;
+      console.error('[kakaoLogin] handleSocialLogin error:', error);
       throw new UnauthorizedException('Failed to verify Kakao token');
     }
   }
@@ -159,7 +164,7 @@ export class AuthService {
         throw new UnauthorizedException('Email not provided by Naver');
       }
 
-      return this.handleSocialLogin({
+      return await this.handleSocialLogin({
         provider: AuthProvider.NAVER,
         providerId: naverId,
         email,
@@ -168,6 +173,7 @@ export class AuthService {
       });
     } catch (error) {
       if (error instanceof UnauthorizedException) throw error;
+      console.error('[naverLogin] handleSocialLogin error:', error);
       throw new UnauthorizedException('Failed to verify Naver token');
     }
   }
