@@ -1,15 +1,24 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { AuthProvider, QuizSessionType, User } from '@/generated/prisma/client';
+import {
+  AuthProvider,
+  QuizSessionType,
+  User,
+  UserGender,
+} from '@/generated/prisma/client';
 import { UserCreateInput } from '@/generated/prisma/models';
 import { UpdatePersonalInfoDto } from './dto/update-personal-info.dto';
 import { RegisterProfileDto, UserDto, UserProfileDto } from './dto/user.dto';
 import { getTodayRange } from '@/common/utils/date.util';
 import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
+import { XpService } from '../xp/xp.service';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly xpService: XpService
+  ) {}
 
   /**
    * Creates a new user in the database.
@@ -61,24 +70,18 @@ export class UserService {
       throw new NotFoundException('User not found');
     }
 
-    const nextLevelRow = await this.prisma.xpLevel.findFirst({
-      where: { level: { gt: user.XpLevel }, isActive: true },
-      orderBy: { requiredTotalXp: 'asc' },
-      select: { requiredTotalXp: true },
-    });
-    const xpToNextLevel = nextLevelRow
-      ? nextLevelRow.requiredTotalXp - user.xp
-      : null;
+    const { xpInCurrentLevel, xpToNextLevel } =
+      await this.xpService.getXpProgressForProfile(user.xp, user.XpLevel);
 
     return {
       id: user.id,
       email: user.email,
       name: user.name,
-      profileImage: user.profileImage,
+      gender: user.gender,
       role: user.role,
       level: user.level,
       xpLevel: user.XpLevel,
-      xp: user.xp,
+      xpInCurrentLevel,
       xpToNextLevel,
       dailyStatus: {
         quizCompleted: !!dailySession?.completedAt,
@@ -111,6 +114,9 @@ export class UserService {
       data: {
         isNew: false,
         name: registerProfileDto.name,
+        ...(registerProfileDto.gender !== undefined && {
+          gender: registerProfileDto.gender,
+        }),
         registeredAt: new Date(),
       },
     });
@@ -134,7 +140,7 @@ export class UserService {
         email: `withdrawn+${uniqueSuffix}@storytalk.local`,
         providerId: `withdrawn_${uniqueSuffix}`,
         name: null,
-        profileImage: null,
+        gender: UserGender.OTHER,
         selectedCharacterId: null,
       },
     });

@@ -171,6 +171,28 @@ export class XpService {
   }
 
   /**
+   * 프로필(/me)용: 현재 레벨 구간에서의 XP(진행바) + 다음 레벨까지 남은 XP
+   * (User.xp는 누적 총합이므로 그대로 노출하지 않음)
+   */
+  async getXpProgressForProfile(
+    userXp: number,
+    userXpLevel: number
+  ): Promise<{
+    xpInCurrentLevel: number;
+    xpToNextLevel: number | null;
+  }> {
+    const currentLevelRow = await this.prisma.xpLevel.findFirst({
+      where: { level: userXpLevel, isActive: true },
+      select: { requiredTotalXp: true },
+    });
+    const floorXp = currentLevelRow?.requiredTotalXp ?? 0;
+    const xpInCurrentLevel = Math.max(0, userXp - floorXp);
+
+    const { xpToNextLevel } = await this.getNextLevelInfo(userXp, userXpLevel);
+    return { xpInCurrentLevel, xpToNextLevel };
+  }
+
+  /**
    * 다음 레벨 및 남은 XP 계산
    */
   private async getNextLevelInfo(

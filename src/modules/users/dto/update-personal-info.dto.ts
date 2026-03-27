@@ -1,6 +1,12 @@
-import { IsEmail, IsInt } from 'class-validator';
-import { IsString } from 'class-validator';
-import { IsNotEmpty } from 'class-validator';
+import { UserGender } from '@/generated/prisma/enums';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsEnum,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class UpdatePersonalInfoDto {
   @IsString()
@@ -10,4 +16,8 @@ export class UpdatePersonalInfoDto {
   @IsInt()
   @IsNotEmpty()
   selectedCharacterId: number;
+
+  @ApiPropertyOptional({ enum: UserGender, enumName: 'UserGender' })
+  @IsEnum(UserGender)
+  gender: UserGender;
 }

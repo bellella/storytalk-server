@@ -41,13 +41,19 @@ enum UserRole {
   ADMIN
 }
 
+enum UserGender {
+  MALE
+  FEMALE
+  OTHER
+}
+
 model User {
   id           Int          @id @default(autoincrement())
   name         String?
   email        String
   provider     AuthProvider
   providerId   String
-  profileImage String?
+  gender       UserGender?
   level        Level        @default(BEGINNER)
   XpLevel      Int          @default(1)
   xp           Int          @default(0)

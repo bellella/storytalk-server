@@ -62,6 +62,13 @@ export type EnumAuthProviderFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumAuthProviderFilter<$PrismaModel> | $Enums.AuthProvider
 }
 
+export type EnumUserGenderNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.UserGender | Prisma.EnumUserGenderFieldRefInput<$PrismaModel> | null
+  in?: $Enums.UserGender[] | Prisma.ListEnumUserGenderFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.UserGender[] | Prisma.ListEnumUserGenderFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumUserGenderNullableFilter<$PrismaModel> | $Enums.UserGender | null
+}
+
 export type EnumLevelFilter<$PrismaModel = never> = {
   equals?: $Enums.Level | Prisma.EnumLevelFieldRefInput<$PrismaModel>
   in?: $Enums.Level[] | Prisma.ListEnumLevelFieldRefInput<$PrismaModel>
@@ -179,6 +186,16 @@ export type EnumAuthProviderWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAuthProviderFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAuthProviderFilter<$PrismaModel>
+}
+
+export type EnumUserGenderNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UserGender | Prisma.EnumUserGenderFieldRefInput<$PrismaModel> | null
+  in?: $Enums.UserGender[] | Prisma.ListEnumUserGenderFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.UserGender[] | Prisma.ListEnumUserGenderFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumUserGenderNullableWithAggregatesFilter<$PrismaModel> | $Enums.UserGender | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUserGenderNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUserGenderNullableFilter<$PrismaModel>
 }
 
 export type EnumLevelWithAggregatesFilter<$PrismaModel = never> = {
@@ -1189,6 +1206,13 @@ export type NestedEnumAuthProviderFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumAuthProviderFilter<$PrismaModel> | $Enums.AuthProvider
 }
 
+export type NestedEnumUserGenderNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.UserGender | Prisma.EnumUserGenderFieldRefInput<$PrismaModel> | null
+  in?: $Enums.UserGender[] | Prisma.ListEnumUserGenderFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.UserGender[] | Prisma.ListEnumUserGenderFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumUserGenderNullableFilter<$PrismaModel> | $Enums.UserGender | null
+}
+
 export type NestedEnumLevelFilter<$PrismaModel = never> = {
   equals?: $Enums.Level | Prisma.EnumLevelFieldRefInput<$PrismaModel>
   in?: $Enums.Level[] | Prisma.ListEnumLevelFieldRefInput<$PrismaModel>
@@ -1310,6 +1334,16 @@ export type NestedEnumAuthProviderWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAuthProviderFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAuthProviderFilter<$PrismaModel>
+}
+
+export type NestedEnumUserGenderNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UserGender | Prisma.EnumUserGenderFieldRefInput<$PrismaModel> | null
+  in?: $Enums.UserGender[] | Prisma.ListEnumUserGenderFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.UserGender[] | Prisma.ListEnumUserGenderFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumUserGenderNullableWithAggregatesFilter<$PrismaModel> | $Enums.UserGender | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUserGenderNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUserGenderNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumLevelWithAggregatesFilter<$PrismaModel = never> = {

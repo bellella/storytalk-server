@@ -48,7 +48,7 @@ export type UserMinAggregateOutputType = {
   email: string | null
   provider: $Enums.AuthProvider | null
   providerId: string | null
-  profileImage: string | null
+  gender: $Enums.UserGender | null
   level: $Enums.Level | null
   XpLevel: number | null
   xp: number | null
@@ -67,7 +67,7 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   provider: $Enums.AuthProvider | null
   providerId: string | null
-  profileImage: string | null
+  gender: $Enums.UserGender | null
   level: $Enums.Level | null
   XpLevel: number | null
   xp: number | null
@@ -86,7 +86,7 @@ export type UserCountAggregateOutputType = {
   email: number
   provider: number
   providerId: number
-  profileImage: number
+  gender: number
   level: number
   XpLevel: number
   xp: number
@@ -123,7 +123,7 @@ export type UserMinAggregateInputType = {
   email?: true
   provider?: true
   providerId?: true
-  profileImage?: true
+  gender?: true
   level?: true
   XpLevel?: true
   xp?: true
@@ -142,7 +142,7 @@ export type UserMaxAggregateInputType = {
   email?: true
   provider?: true
   providerId?: true
-  profileImage?: true
+  gender?: true
   level?: true
   XpLevel?: true
   xp?: true
@@ -161,7 +161,7 @@ export type UserCountAggregateInputType = {
   email?: true
   provider?: true
   providerId?: true
-  profileImage?: true
+  gender?: true
   level?: true
   XpLevel?: true
   xp?: true
@@ -267,7 +267,7 @@ export type UserGroupByOutputType = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage: string | null
+  gender: $Enums.UserGender | null
   level: $Enums.Level
   XpLevel: number
   xp: number
@@ -309,7 +309,7 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   provider?: Prisma.EnumAuthProviderFilter<"User"> | $Enums.AuthProvider
   providerId?: Prisma.StringFilter<"User"> | string
-  profileImage?: Prisma.StringNullableFilter<"User"> | string | null
+  gender?: Prisma.EnumUserGenderNullableFilter<"User"> | $Enums.UserGender | null
   level?: Prisma.EnumLevelFilter<"User"> | $Enums.Level
   XpLevel?: Prisma.IntFilter<"User"> | number
   xp?: Prisma.IntFilter<"User"> | number
@@ -350,7 +350,7 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   providerId?: Prisma.SortOrder
-  profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  gender?: Prisma.SortOrderInput | Prisma.SortOrder
   level?: Prisma.SortOrder
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
@@ -395,7 +395,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   email?: Prisma.StringFilter<"User"> | string
   provider?: Prisma.EnumAuthProviderFilter<"User"> | $Enums.AuthProvider
   providerId?: Prisma.StringFilter<"User"> | string
-  profileImage?: Prisma.StringNullableFilter<"User"> | string | null
+  gender?: Prisma.EnumUserGenderNullableFilter<"User"> | $Enums.UserGender | null
   level?: Prisma.EnumLevelFilter<"User"> | $Enums.Level
   XpLevel?: Prisma.IntFilter<"User"> | number
   xp?: Prisma.IntFilter<"User"> | number
@@ -436,7 +436,7 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   providerId?: Prisma.SortOrder
-  profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  gender?: Prisma.SortOrderInput | Prisma.SortOrder
   level?: Prisma.SortOrder
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
@@ -463,7 +463,7 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   provider?: Prisma.EnumAuthProviderWithAggregatesFilter<"User"> | $Enums.AuthProvider
   providerId?: Prisma.StringWithAggregatesFilter<"User"> | string
-  profileImage?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  gender?: Prisma.EnumUserGenderNullableWithAggregatesFilter<"User"> | $Enums.UserGender | null
   level?: Prisma.EnumLevelWithAggregatesFilter<"User"> | $Enums.Level
   XpLevel?: Prisma.IntWithAggregatesFilter<"User"> | number
   xp?: Prisma.IntWithAggregatesFilter<"User"> | number
@@ -481,7 +481,7 @@ export type UserCreateInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -521,7 +521,7 @@ export type UserUncheckedCreateInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -560,7 +560,7 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -600,7 +600,7 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -640,7 +640,7 @@ export type UserCreateManyInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -658,7 +658,7 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -676,7 +676,7 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -700,7 +700,7 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   providerId?: Prisma.SortOrder
-  profileImage?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
   level?: Prisma.SortOrder
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
@@ -727,7 +727,7 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   providerId?: Prisma.SortOrder
-  profileImage?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
   level?: Prisma.SortOrder
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
@@ -746,7 +746,7 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   providerId?: Prisma.SortOrder
-  profileImage?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
   level?: Prisma.SortOrder
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
@@ -797,6 +797,10 @@ export type StringFieldUpdateOperationsInput = {
 
 export type EnumAuthProviderFieldUpdateOperationsInput = {
   set?: $Enums.AuthProvider
+}
+
+export type NullableEnumUserGenderFieldUpdateOperationsInput = {
+  set?: $Enums.UserGender | null
 }
 
 export type EnumLevelFieldUpdateOperationsInput = {
@@ -1182,7 +1186,7 @@ export type UserCreateWithoutStoryProgressInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -1221,7 +1225,7 @@ export type UserUncheckedCreateWithoutStoryProgressInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -1275,7 +1279,7 @@ export type UserUpdateWithoutStoryProgressInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1314,7 +1318,7 @@ export type UserUncheckedUpdateWithoutStoryProgressInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1352,7 +1356,7 @@ export type UserCreateWithoutUserReviewItemsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -1391,7 +1395,7 @@ export type UserUncheckedCreateWithoutUserReviewItemsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -1445,7 +1449,7 @@ export type UserUpdateWithoutUserReviewItemsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1484,7 +1488,7 @@ export type UserUncheckedUpdateWithoutUserReviewItemsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1522,7 +1526,7 @@ export type UserCreateWithoutUserQuizSessionsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -1561,7 +1565,7 @@ export type UserUncheckedCreateWithoutUserQuizSessionsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -1615,7 +1619,7 @@ export type UserUpdateWithoutUserQuizSessionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1654,7 +1658,7 @@ export type UserUncheckedUpdateWithoutUserQuizSessionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1692,7 +1696,7 @@ export type UserCreateWithoutSelectedCharacterInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -1731,7 +1735,7 @@ export type UserUncheckedCreateWithoutSelectedCharacterInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -1799,7 +1803,7 @@ export type UserScalarWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   provider?: Prisma.EnumAuthProviderFilter<"User"> | $Enums.AuthProvider
   providerId?: Prisma.StringFilter<"User"> | string
-  profileImage?: Prisma.StringNullableFilter<"User"> | string | null
+  gender?: Prisma.EnumUserGenderNullableFilter<"User"> | $Enums.UserGender | null
   level?: Prisma.EnumLevelFilter<"User"> | $Enums.Level
   XpLevel?: Prisma.IntFilter<"User"> | number
   xp?: Prisma.IntFilter<"User"> | number
@@ -1817,7 +1821,7 @@ export type UserCreateWithoutCharacterFriendsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -1856,7 +1860,7 @@ export type UserUncheckedCreateWithoutCharacterFriendsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -1910,7 +1914,7 @@ export type UserUpdateWithoutCharacterFriendsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1949,7 +1953,7 @@ export type UserUncheckedUpdateWithoutCharacterFriendsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1987,7 +1991,7 @@ export type UserCreateWithoutCharacterChatsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -2026,7 +2030,7 @@ export type UserUncheckedCreateWithoutCharacterChatsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -2080,7 +2084,7 @@ export type UserUpdateWithoutCharacterChatsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2119,7 +2123,7 @@ export type UserUncheckedUpdateWithoutCharacterChatsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2157,7 +2161,7 @@ export type UserCreateWithoutMessagesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -2196,7 +2200,7 @@ export type UserUncheckedCreateWithoutMessagesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -2250,7 +2254,7 @@ export type UserUpdateWithoutMessagesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2289,7 +2293,7 @@ export type UserUncheckedUpdateWithoutMessagesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2327,7 +2331,7 @@ export type UserCreateWithoutDialogueBookmarksInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -2366,7 +2370,7 @@ export type UserUncheckedCreateWithoutDialogueBookmarksInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -2420,7 +2424,7 @@ export type UserUpdateWithoutDialogueBookmarksInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2459,7 +2463,7 @@ export type UserUncheckedUpdateWithoutDialogueBookmarksInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2497,7 +2501,7 @@ export type UserCreateWithoutUserEpisodesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -2536,7 +2540,7 @@ export type UserUncheckedCreateWithoutUserEpisodesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -2590,7 +2594,7 @@ export type UserUpdateWithoutUserEpisodesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2629,7 +2633,7 @@ export type UserUncheckedUpdateWithoutUserEpisodesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2667,7 +2671,7 @@ export type UserCreateWithoutUserEpisodeLikesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -2706,7 +2710,7 @@ export type UserUncheckedCreateWithoutUserEpisodeLikesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -2760,7 +2764,7 @@ export type UserUpdateWithoutUserEpisodeLikesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2799,7 +2803,7 @@ export type UserUncheckedUpdateWithoutUserEpisodeLikesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2837,7 +2841,7 @@ export type UserCreateWithoutUserPlayEpisodesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -2876,7 +2880,7 @@ export type UserUncheckedCreateWithoutUserPlayEpisodesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -2930,7 +2934,7 @@ export type UserUpdateWithoutUserPlayEpisodesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2969,7 +2973,7 @@ export type UserUncheckedUpdateWithoutUserPlayEpisodesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3007,7 +3011,7 @@ export type UserCreateWithoutUserEndingsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -3046,7 +3050,7 @@ export type UserUncheckedCreateWithoutUserEndingsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -3100,7 +3104,7 @@ export type UserUpdateWithoutUserEndingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3139,7 +3143,7 @@ export type UserUncheckedUpdateWithoutUserEndingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3177,7 +3181,7 @@ export type UserCreateWithoutProductsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -3216,7 +3220,7 @@ export type UserUncheckedCreateWithoutProductsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -3270,7 +3274,7 @@ export type UserUpdateWithoutProductsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3309,7 +3313,7 @@ export type UserUncheckedUpdateWithoutProductsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3347,7 +3351,7 @@ export type UserCreateWithoutUserPurchasesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -3386,7 +3390,7 @@ export type UserUncheckedCreateWithoutUserPurchasesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -3440,7 +3444,7 @@ export type UserUpdateWithoutUserPurchasesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3479,7 +3483,7 @@ export type UserUncheckedUpdateWithoutUserPurchasesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3517,7 +3521,7 @@ export type UserCreateWithoutCoinTransactionsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -3556,7 +3560,7 @@ export type UserUncheckedCreateWithoutCoinTransactionsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -3610,7 +3614,7 @@ export type UserUpdateWithoutCoinTransactionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3649,7 +3653,7 @@ export type UserUncheckedUpdateWithoutCoinTransactionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3687,7 +3691,7 @@ export type UserCreateWithoutCouponCodesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -3726,7 +3730,7 @@ export type UserUncheckedCreateWithoutCouponCodesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -3780,7 +3784,7 @@ export type UserUpdateWithoutCouponCodesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3819,7 +3823,7 @@ export type UserUncheckedUpdateWithoutCouponCodesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3857,7 +3861,7 @@ export type UserCreateWithoutUserCouponsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -3896,7 +3900,7 @@ export type UserUncheckedCreateWithoutUserCouponsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -3950,7 +3954,7 @@ export type UserUpdateWithoutUserCouponsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3989,7 +3993,7 @@ export type UserUncheckedUpdateWithoutUserCouponsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4027,7 +4031,7 @@ export type UserCreateWithoutCouponUsagesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -4066,7 +4070,7 @@ export type UserUncheckedCreateWithoutCouponUsagesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -4120,7 +4124,7 @@ export type UserUpdateWithoutCouponUsagesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4159,7 +4163,7 @@ export type UserUncheckedUpdateWithoutCouponUsagesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4197,7 +4201,7 @@ export type UserCreateWithoutUserSubscriptionsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -4236,7 +4240,7 @@ export type UserUncheckedCreateWithoutUserSubscriptionsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -4290,7 +4294,7 @@ export type UserUpdateWithoutUserSubscriptionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4329,7 +4333,7 @@ export type UserUncheckedUpdateWithoutUserSubscriptionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4367,7 +4371,7 @@ export type UserCreateWithoutUsagesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -4406,7 +4410,7 @@ export type UserUncheckedCreateWithoutUsagesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -4460,7 +4464,7 @@ export type UserUpdateWithoutUsagesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4499,7 +4503,7 @@ export type UserUncheckedUpdateWithoutUsagesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4537,7 +4541,7 @@ export type UserCreateWithoutAdRewardLogsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -4576,7 +4580,7 @@ export type UserUncheckedCreateWithoutAdRewardLogsInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -4630,7 +4634,7 @@ export type UserUpdateWithoutAdRewardLogsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4669,7 +4673,7 @@ export type UserUncheckedUpdateWithoutAdRewardLogsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4707,7 +4711,7 @@ export type UserCreateWithoutSupportInquiriesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -4746,7 +4750,7 @@ export type UserUncheckedCreateWithoutSupportInquiriesInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -4800,7 +4804,7 @@ export type UserUpdateWithoutSupportInquiriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4839,7 +4843,7 @@ export type UserUncheckedUpdateWithoutSupportInquiriesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4878,7 +4882,7 @@ export type UserCreateManySelectedCharacterInput = {
   email: string
   provider: $Enums.AuthProvider
   providerId: string
-  profileImage?: string | null
+  gender?: $Enums.UserGender | null
   level?: $Enums.Level
   XpLevel?: number
   xp?: number
@@ -4895,7 +4899,7 @@ export type UserUpdateWithoutSelectedCharacterInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4934,7 +4938,7 @@ export type UserUncheckedUpdateWithoutSelectedCharacterInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4973,7 +4977,7 @@ export type UserUncheckedUpdateManyWithoutSelectedCharacterInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
   providerId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender | null
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
@@ -5202,7 +5206,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   provider?: boolean
   providerId?: boolean
-  profileImage?: boolean
+  gender?: boolean
   level?: boolean
   XpLevel?: boolean
   xp?: boolean
@@ -5244,7 +5248,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   provider?: boolean
   providerId?: boolean
-  profileImage?: boolean
+  gender?: boolean
   level?: boolean
   XpLevel?: boolean
   xp?: boolean
@@ -5264,7 +5268,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   provider?: boolean
   providerId?: boolean
-  profileImage?: boolean
+  gender?: boolean
   level?: boolean
   XpLevel?: boolean
   xp?: boolean
@@ -5284,7 +5288,7 @@ export type UserSelectScalar = {
   email?: boolean
   provider?: boolean
   providerId?: boolean
-  profileImage?: boolean
+  gender?: boolean
   level?: boolean
   XpLevel?: boolean
   xp?: boolean
@@ -5297,7 +5301,7 @@ export type UserSelectScalar = {
   isNew?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "provider" | "providerId" | "profileImage" | "level" | "XpLevel" | "xp" | "streakDays" | "role" | "selectedCharacterId" | "lastLoginAt" | "registeredAt" | "createdAt" | "isNew", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "provider" | "providerId" | "gender" | "level" | "XpLevel" | "xp" | "streakDays" | "role" | "selectedCharacterId" | "lastLoginAt" | "registeredAt" | "createdAt" | "isNew", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   selectedCharacter?: boolean | Prisma.User$selectedCharacterArgs<ExtArgs>
   storyProgress?: boolean | Prisma.User$storyProgressArgs<ExtArgs>
@@ -5362,7 +5366,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     provider: $Enums.AuthProvider
     providerId: string
-    profileImage: string | null
+    gender: $Enums.UserGender | null
     level: $Enums.Level
     XpLevel: number
     xp: number
@@ -5823,7 +5827,7 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly provider: Prisma.FieldRef<"User", 'AuthProvider'>
   readonly providerId: Prisma.FieldRef<"User", 'String'>
-  readonly profileImage: Prisma.FieldRef<"User", 'String'>
+  readonly gender: Prisma.FieldRef<"User", 'UserGender'>
   readonly level: Prisma.FieldRef<"User", 'Level'>
   readonly XpLevel: Prisma.FieldRef<"User", 'Int'>
   readonly xp: Prisma.FieldRef<"User", 'Int'>

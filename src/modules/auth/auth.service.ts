@@ -48,7 +48,7 @@ export class AuthService {
         throw new UnauthorizedException('Invalid Google token');
       }
 
-      const { sub: googleId, email, name, picture } = payload;
+      const { sub: googleId, email, name } = payload;
 
       if (!email) {
         throw new UnauthorizedException('Email not provided by Google');
@@ -59,7 +59,6 @@ export class AuthService {
         providerId: googleId,
         email,
         name: name || null,
-        profileImage: picture || null,
       });
     } catch (error) {
       // 토큰의 실제 aud 확인용 (디버깅 후 삭제)
@@ -98,7 +97,6 @@ export class AuthService {
         providerId: appleId,
         email,
         name: name || null,
-        profileImage: null,
       });
     } catch (error) {
       if (error instanceof UnauthorizedException) throw error;
@@ -122,15 +120,12 @@ export class AuthService {
       const email: string =
         data.kakao_account?.email ?? `kakao_${kakaoId}@kakao.local`;
       const name: string | null = data.kakao_account?.profile?.nickname ?? null;
-      const profileImage: string | null =
-        data.kakao_account?.profile?.profile_image_url ?? null;
 
       return await this.handleSocialLogin({
         provider: AuthProvider.KAKAO,
         providerId: kakaoId,
         email,
         name,
-        profileImage,
       });
     } catch (error) {
       if (error instanceof UnauthorizedException) throw error;
@@ -146,24 +141,20 @@ export class AuthService {
     const { accessToken } = dto;
 
     try {
-      const { data } = await axios.get(
-        'https://openapi.naver.com/v1/nid/me',
-        { headers: { Authorization: `Bearer ${accessToken}` } }
-      );
+      const { data } = await axios.get('https://openapi.naver.com/v1/nid/me', {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
 
       const profile = data.response;
       const naverId: string = profile.id;
-      const email: string =
-        profile.email ?? `naver_${naverId}@naver.local`;
+      const email: string = profile.email ?? `naver_${naverId}@naver.local`;
       const name: string | null = profile.name ?? null;
-      const profileImage: string | null = profile.profile_image ?? null;
 
       return await this.handleSocialLogin({
         provider: AuthProvider.NAVER,
         providerId: naverId,
         email,
         name,
-        profileImage,
       });
     } catch (error) {
       if (error instanceof UnauthorizedException) throw error;
@@ -180,7 +171,6 @@ export class AuthService {
     providerId: string;
     email: string;
     name: string | null;
-    profileImage: string | null;
   }): Promise<SocialLoginResponseDto> {
     let user = await this.userService.findOneByEmailAndProvider(
       data.email,
@@ -195,7 +185,6 @@ export class AuthService {
         name: data.name,
         provider: data.provider,
         providerId: data.providerId,
-        profileImage: data.profileImage,
         isNew: true,
       });
       isNew = true;
@@ -214,7 +203,7 @@ export class AuthService {
         id: user.id,
         email: user.email,
         name: user.name,
-        profileImage: user.profileImage,
+        gender: user.gender,
         role: user.role,
       },
       tokens,

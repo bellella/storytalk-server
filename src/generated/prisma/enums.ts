@@ -49,6 +49,15 @@ export const UserRole = {
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
+export const UserGender = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE',
+  OTHER: 'OTHER'
+} as const
+
+export type UserGender = (typeof UserGender)[keyof typeof UserGender]
+
+
 export const StoryType = {
   UNIT: 'UNIT',
   NOVEL: 'NOVEL',

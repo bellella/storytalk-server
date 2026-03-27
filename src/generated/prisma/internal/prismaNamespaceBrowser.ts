@@ -127,7 +127,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   provider: 'provider',
   providerId: 'providerId',
-  profileImage: 'profileImage',
+  gender: 'gender',
   level: 'level',
   XpLevel: 'XpLevel',
   xp: 'xp',
