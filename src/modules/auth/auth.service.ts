@@ -119,14 +119,11 @@ export class AuthService {
       });
 
       const kakaoId = String(data.id);
-      const email: string | undefined = data.kakao_account?.email;
+      const email: string =
+        data.kakao_account?.email ?? `kakao_${kakaoId}@kakao.local`;
       const name: string | null = data.kakao_account?.profile?.nickname ?? null;
       const profileImage: string | null =
         data.kakao_account?.profile?.profile_image_url ?? null;
-
-      if (!email) {
-        throw new UnauthorizedException('Email not provided by Kakao');
-      }
 
       return await this.handleSocialLogin({
         provider: AuthProvider.KAKAO,
@@ -156,13 +153,10 @@ export class AuthService {
 
       const profile = data.response;
       const naverId: string = profile.id;
-      const email: string | undefined = profile.email;
+      const email: string =
+        profile.email ?? `naver_${naverId}@naver.local`;
       const name: string | null = profile.name ?? null;
       const profileImage: string | null = profile.profile_image ?? null;
-
-      if (!email) {
-        throw new UnauthorizedException('Email not provided by Naver');
-      }
 
       return await this.handleSocialLogin({
         provider: AuthProvider.NAVER,
