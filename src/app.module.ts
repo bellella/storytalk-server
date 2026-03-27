@@ -25,6 +25,7 @@ import { ReviewModule } from './modules/review/review.module';
 import { FaceTalkModule } from './modules/facetalk/facetalk.module';
 import { CouponsModule } from './modules/coupons/coupons.module';
 import { UsageModule } from './modules/usage/usage.module';
+import { SupportModule } from './modules/support/support.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { UsageModule } from './modules/usage/usage.module';
     FaceTalkModule,
     CouponsModule,
     UsageModule,
+    SupportModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -8,7 +8,12 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdatePersonalInfoDto } from './dto/update-personal-info.dto';
 import { UserService } from './user.service';
@@ -50,6 +55,7 @@ export class UserController {
   }
 
   @Delete('me')
+  @ApiOperation({ summary: '회원 탈퇴 (계정 익명화)' })
   @ApiOkResponse({ type: SuccessResponseDto })
   withdrawMe(@ReqUser('id') userId: number): Promise<SuccessResponseDto> {
     return this.userService.withdrawMe(userId);

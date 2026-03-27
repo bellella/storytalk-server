@@ -3,6 +3,8 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { GoogleLoginDto } from './dto/google-login.dto';
 import { AppleLoginDto } from './dto/apple-login.dto';
+import { KakaoLoginDto } from './dto/kakao-login.dto';
+import { NaverLoginDto } from './dto/naver-login.dto';
 import { SocialLoginResponseDto } from './dto/social-login.dto';
 
 @ApiTags('Auth')
@@ -26,5 +28,23 @@ export class AuthController {
     @Body() dto: AppleLoginDto
   ): Promise<SocialLoginResponseDto> {
     return this.authService.appleLogin(dto);
+  }
+
+  @Post('kakao')
+  @ApiOperation({ summary: 'Kakao 로그인' })
+  @ApiResponse({ type: SocialLoginResponseDto })
+  async kakaoLogin(
+    @Body() dto: KakaoLoginDto
+  ): Promise<SocialLoginResponseDto> {
+    return this.authService.kakaoLogin(dto);
+  }
+
+  @Post('naver')
+  @ApiOperation({ summary: 'Naver 로그인' })
+  @ApiResponse({ type: SocialLoginResponseDto })
+  async naverLogin(
+    @Body() dto: NaverLoginDto
+  ): Promise<SocialLoginResponseDto> {
+    return this.authService.naverLogin(dto);
   }
 }

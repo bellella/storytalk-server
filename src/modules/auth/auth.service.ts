@@ -3,9 +3,12 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { OAuth2Client } from 'google-auth-library';
 import appleSignin from 'apple-signin-auth';
+import axios from 'axios';
 import { UserService } from '../users/user.service';
 import { GoogleLoginDto } from './dto/google-login.dto';
 import { AppleLoginDto } from './dto/apple-login.dto';
+import { KakaoLoginDto } from './dto/kakao-login.dto';
+import { NaverLoginDto } from './dto/naver-login.dto';
 import { AuthProvider } from '@/generated/prisma/enums';
 import { SocialLoginResponseDto } from './dto/social-login.dto';
 import { CouponsService } from '../coupons/coupons.service';
@@ -97,6 +100,75 @@ export class AuthService {
       });
     } catch (error) {
       throw new UnauthorizedException('Failed to verify Apple token');
+    }
+  }
+
+  /**
+   * Kakao 로그인 처리
+   */
+  async kakaoLogin(dto: KakaoLoginDto): Promise<SocialLoginResponseDto> {
+    const { accessToken } = dto;
+
+    try {
+      const { data } = await axios.get('https://kapi.kakao.com/v2/user/me', {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+      const kakaoId = String(data.id);
+      const email: string | undefined = data.kakao_account?.email;
+      const name: string | null = data.kakao_account?.profile?.nickname ?? null;
+      const profileImage: string | null =
+        data.kakao_account?.profile?.profile_image_url ?? null;
+
+      if (!email) {
+        throw new UnauthorizedException('Email not provided by Kakao');
+      }
+
+      return this.handleSocialLogin({
+        provider: AuthProvider.KAKAO,
+        providerId: kakaoId,
+        email,
+        name,
+        profileImage,
+      });
+    } catch (error) {
+      if (error instanceof UnauthorizedException) throw error;
+      throw new UnauthorizedException('Failed to verify Kakao token');
+    }
+  }
+
+  /**
+   * Naver 로그인 처리
+   */
+  async naverLogin(dto: NaverLoginDto): Promise<SocialLoginResponseDto> {
+    const { accessToken } = dto;
+
+    try {
+      const { data } = await axios.get(
+        'https://openapi.naver.com/v1/nid/me',
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+
+      const profile = data.response;
+      const naverId: string = profile.id;
+      const email: string | undefined = profile.email;
+      const name: string | null = profile.name ?? null;
+      const profileImage: string | null = profile.profile_image ?? null;
+
+      if (!email) {
+        throw new UnauthorizedException('Email not provided by Naver');
+      }
+
+      return this.handleSocialLogin({
+        provider: AuthProvider.NAVER,
+        providerId: naverId,
+        email,
+        name,
+        profileImage,
+      });
+    } catch (error) {
+      if (error instanceof UnauthorizedException) throw error;
+      throw new UnauthorizedException('Failed to verify Naver token');
     }
   }
 

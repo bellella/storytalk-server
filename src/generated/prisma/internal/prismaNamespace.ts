@@ -434,6 +434,7 @@ export const ModelName = {
   PromptTemplate: 'PromptTemplate',
   UserUsage: 'UserUsage',
   AdRewardLog: 'AdRewardLog',
+  SupportInquiry: 'SupportInquiry',
   Image: 'Image'
 } as const
 
@@ -450,7 +451,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "story" | "tag" | "storyTag" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "userReviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterChat" | "message" | "sticker" | "faceTalkSession" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory" | "userEpisode" | "userEpisodeLike" | "userPlayEpisode" | "playEpisodeSlot" | "slotDialogue" | "ending" | "endingReward" | "userEnding" | "collection" | "collectionProduct" | "product" | "episodeProduct" | "userPurchase" | "coinTransaction" | "coupon" | "couponCode" | "userCoupon" | "couponUsage" | "userSubscription" | "promptTemplate" | "userUsage" | "adRewardLog" | "image"
+    modelProps: "user" | "story" | "tag" | "storyTag" | "unit" | "episode" | "scene" | "dialogue" | "storyProgress" | "reviewItem" | "userReviewItem" | "quiz" | "userQuizSession" | "quizSessionItem" | "userQuizAnswer" | "character" | "storyCharacter" | "characterImage" | "characterFriend" | "characterChat" | "message" | "sticker" | "faceTalkSession" | "dialogueBookmark" | "episodeReward" | "xpLevel" | "xpRule" | "userXpHistory" | "userEpisode" | "userEpisodeLike" | "userPlayEpisode" | "playEpisodeSlot" | "slotDialogue" | "ending" | "endingReward" | "userEnding" | "collection" | "collectionProduct" | "product" | "episodeProduct" | "userPurchase" | "coinTransaction" | "coupon" | "couponCode" | "userCoupon" | "couponUsage" | "userSubscription" | "promptTemplate" | "userUsage" | "adRewardLog" | "supportInquiry" | "image"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4154,6 +4155,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SupportInquiry: {
+      payload: Prisma.$SupportInquiryPayload<ExtArgs>
+      fields: Prisma.SupportInquiryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SupportInquiryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupportInquiryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SupportInquiryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupportInquiryPayload>
+        }
+        findFirst: {
+          args: Prisma.SupportInquiryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupportInquiryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SupportInquiryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupportInquiryPayload>
+        }
+        findMany: {
+          args: Prisma.SupportInquiryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupportInquiryPayload>[]
+        }
+        create: {
+          args: Prisma.SupportInquiryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupportInquiryPayload>
+        }
+        createMany: {
+          args: Prisma.SupportInquiryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SupportInquiryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupportInquiryPayload>[]
+        }
+        delete: {
+          args: Prisma.SupportInquiryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupportInquiryPayload>
+        }
+        update: {
+          args: Prisma.SupportInquiryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupportInquiryPayload>
+        }
+        deleteMany: {
+          args: Prisma.SupportInquiryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SupportInquiryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SupportInquiryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupportInquiryPayload>[]
+        }
+        upsert: {
+          args: Prisma.SupportInquiryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SupportInquiryPayload>
+        }
+        aggregate: {
+          args: Prisma.SupportInquiryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSupportInquiry>
+        }
+        groupBy: {
+          args: Prisma.SupportInquiryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SupportInquiryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SupportInquiryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SupportInquiryCountAggregateOutputType> | number
+        }
+      }
+    }
     Image: {
       payload: Prisma.$ImagePayload<ExtArgs>
       fields: Prisma.ImageFieldRefs
@@ -5041,6 +5116,27 @@ export const AdRewardLogScalarFieldEnum = {
 export type AdRewardLogScalarFieldEnum = (typeof AdRewardLogScalarFieldEnum)[keyof typeof AdRewardLogScalarFieldEnum]
 
 
+export const SupportInquiryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  email: 'email',
+  type: 'type',
+  subject: 'subject',
+  message: 'message',
+  status: 'status',
+  appVersion: 'appVersion',
+  os: 'os',
+  osVersion: 'osVersion',
+  deviceModel: 'deviceModel',
+  adminNote: 'adminNote',
+  resolvedAt: 'resolvedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupportInquiryScalarFieldEnum = (typeof SupportInquiryScalarFieldEnum)[keyof typeof SupportInquiryScalarFieldEnum]
+
+
 export const ImageScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -5799,6 +5895,34 @@ export type EnumAdRewardTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 export type ListEnumAdRewardTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdRewardType[]'>
     
 
+
+/**
+ * Reference to a field of type 'SupportInquiryType'
+ */
+export type EnumSupportInquiryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupportInquiryType'>
+    
+
+
+/**
+ * Reference to a field of type 'SupportInquiryType[]'
+ */
+export type ListEnumSupportInquiryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupportInquiryType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SupportInquiryStatus'
+ */
+export type EnumSupportInquiryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupportInquiryStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SupportInquiryStatus[]'
+ */
+export type ListEnumSupportInquiryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupportInquiryStatus[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -5928,6 +6052,7 @@ export type GlobalOmitConfig = {
   promptTemplate?: Prisma.PromptTemplateOmit
   userUsage?: Prisma.UserUsageOmit
   adRewardLog?: Prisma.AdRewardLogOmit
+  supportInquiry?: Prisma.SupportInquiryOmit
   image?: Prisma.ImageOmit
 }
 

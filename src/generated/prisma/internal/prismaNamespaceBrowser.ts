@@ -101,6 +101,7 @@ export const ModelName = {
   PromptTemplate: 'PromptTemplate',
   UserUsage: 'UserUsage',
   AdRewardLog: 'AdRewardLog',
+  SupportInquiry: 'SupportInquiry',
   Image: 'Image'
 } as const
 
@@ -892,6 +893,27 @@ export const AdRewardLogScalarFieldEnum = {
 } as const
 
 export type AdRewardLogScalarFieldEnum = (typeof AdRewardLogScalarFieldEnum)[keyof typeof AdRewardLogScalarFieldEnum]
+
+
+export const SupportInquiryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  email: 'email',
+  type: 'type',
+  subject: 'subject',
+  message: 'message',
+  status: 'status',
+  appVersion: 'appVersion',
+  os: 'os',
+  osVersion: 'osVersion',
+  deviceModel: 'deviceModel',
+  adminNote: 'adminNote',
+  resolvedAt: 'resolvedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupportInquiryScalarFieldEnum = (typeof SupportInquiryScalarFieldEnum)[keyof typeof SupportInquiryScalarFieldEnum]
 
 
 export const ImageScalarFieldEnum = {

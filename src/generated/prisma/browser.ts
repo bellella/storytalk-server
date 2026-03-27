@@ -268,6 +268,11 @@ export type UserUsage = Prisma.UserUsageModel
  */
 export type AdRewardLog = Prisma.AdRewardLogModel
 /**
+ * Model SupportInquiry
+ * 
+ */
+export type SupportInquiry = Prisma.SupportInquiryModel
+/**
  * Model Image
  * 
  */

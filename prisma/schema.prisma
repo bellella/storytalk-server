@@ -32,6 +32,8 @@ enum Level {
 enum AuthProvider {
   GOOGLE
   APPLE
+  KAKAO
+  NAVER
 }
 
 enum UserRole {
@@ -83,6 +85,7 @@ model User {
   couponCodes       CouponCode[]
   usages            UserUsage[]
   adRewardLogs      AdRewardLog[]
+  supportInquiries  SupportInquiry[]
 
   @@unique([email, provider])
 }
@@ -317,7 +320,7 @@ model ReviewItem {
   description String?
   order       Int
 
-  episode Episode  @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+  episode  Episode  @relation(fields: [episodeId], references: [id], onDelete: Cascade)
   dialogue Dialogue @relation(fields: [dialogueId], references: [id], onDelete: Cascade)
 
   userReviewItems UserReviewItem[]
@@ -1451,6 +1454,48 @@ model AdRewardLog {
 
   @@index([userId, usageDate])
   @@index([userId, type, usageDate])
+}
+
+enum SupportInquiryType {
+  GENERAL
+  BUG
+  PAYMENT
+  ACCOUNT
+  REPORT
+}
+
+enum SupportInquiryStatus {
+  PENDING
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+model SupportInquiry {
+  id      Int                  @id @default(autoincrement())
+  userId  Int?
+  email   String?
+  type    SupportInquiryType   @default(GENERAL)
+  subject String
+  message String
+  status  SupportInquiryStatus @default(PENDING)
+
+  appVersion  String?
+  os          String?
+  osVersion   String?
+  deviceModel String?
+
+  adminNote  String?
+  resolvedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([type, status])
+  @@index([createdAt])
 }
 
 ///// ADMIN

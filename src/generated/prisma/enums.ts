@@ -33,7 +33,9 @@ export type Level = (typeof Level)[keyof typeof Level]
 
 export const AuthProvider = {
   GOOGLE: 'GOOGLE',
-  APPLE: 'APPLE'
+  APPLE: 'APPLE',
+  KAKAO: 'KAKAO',
+  NAVER: 'NAVER'
 } as const
 
 export type AuthProvider = (typeof AuthProvider)[keyof typeof AuthProvider]
@@ -417,3 +419,24 @@ export const AdRewardType = {
 } as const
 
 export type AdRewardType = (typeof AdRewardType)[keyof typeof AdRewardType]
+
+
+export const SupportInquiryType = {
+  GENERAL: 'GENERAL',
+  BUG: 'BUG',
+  PAYMENT: 'PAYMENT',
+  ACCOUNT: 'ACCOUNT',
+  REPORT: 'REPORT'
+} as const
+
+export type SupportInquiryType = (typeof SupportInquiryType)[keyof typeof SupportInquiryType]
+
+
+export const SupportInquiryStatus = {
+  PENDING: 'PENDING',
+  IN_PROGRESS: 'IN_PROGRESS',
+  RESOLVED: 'RESOLVED',
+  CLOSED: 'CLOSED'
+} as const
+
+export type SupportInquiryStatus = (typeof SupportInquiryStatus)[keyof typeof SupportInquiryStatus]

@@ -341,6 +341,7 @@ export type UserWhereInput = {
   couponCodes?: Prisma.CouponCodeListRelationFilter
   usages?: Prisma.UserUsageListRelationFilter
   adRewardLogs?: Prisma.AdRewardLogListRelationFilter
+  supportInquiries?: Prisma.SupportInquiryListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -381,6 +382,7 @@ export type UserOrderByWithRelationInput = {
   couponCodes?: Prisma.CouponCodeOrderByRelationAggregateInput
   usages?: Prisma.UserUsageOrderByRelationAggregateInput
   adRewardLogs?: Prisma.AdRewardLogOrderByRelationAggregateInput
+  supportInquiries?: Prisma.SupportInquiryOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -425,6 +427,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   couponCodes?: Prisma.CouponCodeListRelationFilter
   usages?: Prisma.UserUsageListRelationFilter
   adRewardLogs?: Prisma.AdRewardLogListRelationFilter
+  supportInquiries?: Prisma.SupportInquiryListRelationFilter
 }, "id" | "email_provider">
 
 export type UserOrderByWithAggregationInput = {
@@ -509,6 +512,7 @@ export type UserCreateInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -548,6 +552,7 @@ export type UserUncheckedCreateInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -586,6 +591,7 @@ export type UserUpdateInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -625,6 +631,7 @@ export type UserUncheckedUpdateInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -1154,6 +1161,22 @@ export type UserUpdateOneRequiredWithoutAdRewardLogsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAdRewardLogsInput, Prisma.UserUpdateWithoutAdRewardLogsInput>, Prisma.UserUncheckedUpdateWithoutAdRewardLogsInput>
 }
 
+export type UserCreateNestedOneWithoutSupportInquiriesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSupportInquiriesInput, Prisma.UserUncheckedCreateWithoutSupportInquiriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSupportInquiriesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutSupportInquiriesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSupportInquiriesInput, Prisma.UserUncheckedCreateWithoutSupportInquiriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSupportInquiriesInput
+  upsert?: Prisma.UserUpsertWithoutSupportInquiriesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSupportInquiriesInput, Prisma.UserUpdateWithoutSupportInquiriesInput>, Prisma.UserUncheckedUpdateWithoutSupportInquiriesInput>
+}
+
 export type UserCreateWithoutStoryProgressInput = {
   name?: string | null
   email: string
@@ -1189,6 +1212,7 @@ export type UserCreateWithoutStoryProgressInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStoryProgressInput = {
@@ -1227,6 +1251,7 @@ export type UserUncheckedCreateWithoutStoryProgressInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStoryProgressInput = {
@@ -1280,6 +1305,7 @@ export type UserUpdateWithoutStoryProgressInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStoryProgressInput = {
@@ -1318,6 +1344,7 @@ export type UserUncheckedUpdateWithoutStoryProgressInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUserReviewItemsInput = {
@@ -1355,6 +1382,7 @@ export type UserCreateWithoutUserReviewItemsInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserReviewItemsInput = {
@@ -1393,6 +1421,7 @@ export type UserUncheckedCreateWithoutUserReviewItemsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserReviewItemsInput = {
@@ -1446,6 +1475,7 @@ export type UserUpdateWithoutUserReviewItemsInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserReviewItemsInput = {
@@ -1484,6 +1514,7 @@ export type UserUncheckedUpdateWithoutUserReviewItemsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUserQuizSessionsInput = {
@@ -1521,6 +1552,7 @@ export type UserCreateWithoutUserQuizSessionsInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserQuizSessionsInput = {
@@ -1559,6 +1591,7 @@ export type UserUncheckedCreateWithoutUserQuizSessionsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserQuizSessionsInput = {
@@ -1612,6 +1645,7 @@ export type UserUpdateWithoutUserQuizSessionsInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserQuizSessionsInput = {
@@ -1650,6 +1684,7 @@ export type UserUncheckedUpdateWithoutUserQuizSessionsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSelectedCharacterInput = {
@@ -1687,6 +1722,7 @@ export type UserCreateWithoutSelectedCharacterInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSelectedCharacterInput = {
@@ -1725,6 +1761,7 @@ export type UserUncheckedCreateWithoutSelectedCharacterInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSelectedCharacterInput = {
@@ -1810,6 +1847,7 @@ export type UserCreateWithoutCharacterFriendsInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCharacterFriendsInput = {
@@ -1848,6 +1886,7 @@ export type UserUncheckedCreateWithoutCharacterFriendsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCharacterFriendsInput = {
@@ -1901,6 +1940,7 @@ export type UserUpdateWithoutCharacterFriendsInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCharacterFriendsInput = {
@@ -1939,6 +1979,7 @@ export type UserUncheckedUpdateWithoutCharacterFriendsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCharacterChatsInput = {
@@ -1976,6 +2017,7 @@ export type UserCreateWithoutCharacterChatsInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCharacterChatsInput = {
@@ -2014,6 +2056,7 @@ export type UserUncheckedCreateWithoutCharacterChatsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCharacterChatsInput = {
@@ -2067,6 +2110,7 @@ export type UserUpdateWithoutCharacterChatsInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCharacterChatsInput = {
@@ -2105,6 +2149,7 @@ export type UserUncheckedUpdateWithoutCharacterChatsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMessagesInput = {
@@ -2142,6 +2187,7 @@ export type UserCreateWithoutMessagesInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMessagesInput = {
@@ -2180,6 +2226,7 @@ export type UserUncheckedCreateWithoutMessagesInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMessagesInput = {
@@ -2233,6 +2280,7 @@ export type UserUpdateWithoutMessagesInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMessagesInput = {
@@ -2271,6 +2319,7 @@ export type UserUncheckedUpdateWithoutMessagesInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDialogueBookmarksInput = {
@@ -2308,6 +2357,7 @@ export type UserCreateWithoutDialogueBookmarksInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDialogueBookmarksInput = {
@@ -2346,6 +2396,7 @@ export type UserUncheckedCreateWithoutDialogueBookmarksInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDialogueBookmarksInput = {
@@ -2399,6 +2450,7 @@ export type UserUpdateWithoutDialogueBookmarksInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDialogueBookmarksInput = {
@@ -2437,6 +2489,7 @@ export type UserUncheckedUpdateWithoutDialogueBookmarksInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUserEpisodesInput = {
@@ -2474,6 +2527,7 @@ export type UserCreateWithoutUserEpisodesInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserEpisodesInput = {
@@ -2512,6 +2566,7 @@ export type UserUncheckedCreateWithoutUserEpisodesInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserEpisodesInput = {
@@ -2565,6 +2620,7 @@ export type UserUpdateWithoutUserEpisodesInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserEpisodesInput = {
@@ -2603,6 +2659,7 @@ export type UserUncheckedUpdateWithoutUserEpisodesInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUserEpisodeLikesInput = {
@@ -2640,6 +2697,7 @@ export type UserCreateWithoutUserEpisodeLikesInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserEpisodeLikesInput = {
@@ -2678,6 +2736,7 @@ export type UserUncheckedCreateWithoutUserEpisodeLikesInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserEpisodeLikesInput = {
@@ -2731,6 +2790,7 @@ export type UserUpdateWithoutUserEpisodeLikesInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserEpisodeLikesInput = {
@@ -2769,6 +2829,7 @@ export type UserUncheckedUpdateWithoutUserEpisodeLikesInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUserPlayEpisodesInput = {
@@ -2806,6 +2867,7 @@ export type UserCreateWithoutUserPlayEpisodesInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserPlayEpisodesInput = {
@@ -2844,6 +2906,7 @@ export type UserUncheckedCreateWithoutUserPlayEpisodesInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserPlayEpisodesInput = {
@@ -2897,6 +2960,7 @@ export type UserUpdateWithoutUserPlayEpisodesInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserPlayEpisodesInput = {
@@ -2935,6 +2999,7 @@ export type UserUncheckedUpdateWithoutUserPlayEpisodesInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUserEndingsInput = {
@@ -2972,6 +3037,7 @@ export type UserCreateWithoutUserEndingsInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserEndingsInput = {
@@ -3010,6 +3076,7 @@ export type UserUncheckedCreateWithoutUserEndingsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserEndingsInput = {
@@ -3063,6 +3130,7 @@ export type UserUpdateWithoutUserEndingsInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserEndingsInput = {
@@ -3101,6 +3169,7 @@ export type UserUncheckedUpdateWithoutUserEndingsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProductsInput = {
@@ -3138,6 +3207,7 @@ export type UserCreateWithoutProductsInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProductsInput = {
@@ -3176,6 +3246,7 @@ export type UserUncheckedCreateWithoutProductsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProductsInput = {
@@ -3229,6 +3300,7 @@ export type UserUpdateWithoutProductsInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProductsInput = {
@@ -3267,6 +3339,7 @@ export type UserUncheckedUpdateWithoutProductsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUserPurchasesInput = {
@@ -3304,6 +3377,7 @@ export type UserCreateWithoutUserPurchasesInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserPurchasesInput = {
@@ -3342,6 +3416,7 @@ export type UserUncheckedCreateWithoutUserPurchasesInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserPurchasesInput = {
@@ -3395,6 +3470,7 @@ export type UserUpdateWithoutUserPurchasesInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserPurchasesInput = {
@@ -3433,6 +3509,7 @@ export type UserUncheckedUpdateWithoutUserPurchasesInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCoinTransactionsInput = {
@@ -3470,6 +3547,7 @@ export type UserCreateWithoutCoinTransactionsInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCoinTransactionsInput = {
@@ -3508,6 +3586,7 @@ export type UserUncheckedCreateWithoutCoinTransactionsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCoinTransactionsInput = {
@@ -3561,6 +3640,7 @@ export type UserUpdateWithoutCoinTransactionsInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCoinTransactionsInput = {
@@ -3599,6 +3679,7 @@ export type UserUncheckedUpdateWithoutCoinTransactionsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCouponCodesInput = {
@@ -3636,6 +3717,7 @@ export type UserCreateWithoutCouponCodesInput = {
   couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCouponCodesInput = {
@@ -3674,6 +3756,7 @@ export type UserUncheckedCreateWithoutCouponCodesInput = {
   couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCouponCodesInput = {
@@ -3727,6 +3810,7 @@ export type UserUpdateWithoutCouponCodesInput = {
   couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCouponCodesInput = {
@@ -3765,6 +3849,7 @@ export type UserUncheckedUpdateWithoutCouponCodesInput = {
   couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUserCouponsInput = {
@@ -3802,6 +3887,7 @@ export type UserCreateWithoutUserCouponsInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserCouponsInput = {
@@ -3840,6 +3926,7 @@ export type UserUncheckedCreateWithoutUserCouponsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserCouponsInput = {
@@ -3893,6 +3980,7 @@ export type UserUpdateWithoutUserCouponsInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserCouponsInput = {
@@ -3931,6 +4019,7 @@ export type UserUncheckedUpdateWithoutUserCouponsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCouponUsagesInput = {
@@ -3968,6 +4057,7 @@ export type UserCreateWithoutCouponUsagesInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCouponUsagesInput = {
@@ -4006,6 +4096,7 @@ export type UserUncheckedCreateWithoutCouponUsagesInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCouponUsagesInput = {
@@ -4059,6 +4150,7 @@ export type UserUpdateWithoutCouponUsagesInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCouponUsagesInput = {
@@ -4097,6 +4189,7 @@ export type UserUncheckedUpdateWithoutCouponUsagesInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUserSubscriptionsInput = {
@@ -4134,6 +4227,7 @@ export type UserCreateWithoutUserSubscriptionsInput = {
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserSubscriptionsInput = {
@@ -4172,6 +4266,7 @@ export type UserUncheckedCreateWithoutUserSubscriptionsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserSubscriptionsInput = {
@@ -4225,6 +4320,7 @@ export type UserUpdateWithoutUserSubscriptionsInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserSubscriptionsInput = {
@@ -4263,6 +4359,7 @@ export type UserUncheckedUpdateWithoutUserSubscriptionsInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutUsagesInput = {
@@ -4300,6 +4397,7 @@ export type UserCreateWithoutUsagesInput = {
   couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUsagesInput = {
@@ -4338,6 +4436,7 @@ export type UserUncheckedCreateWithoutUsagesInput = {
   couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUsagesInput = {
@@ -4391,6 +4490,7 @@ export type UserUpdateWithoutUsagesInput = {
   couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUsagesInput = {
@@ -4429,6 +4529,7 @@ export type UserUncheckedUpdateWithoutUsagesInput = {
   couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAdRewardLogsInput = {
@@ -4466,6 +4567,7 @@ export type UserCreateWithoutAdRewardLogsInput = {
   couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
   couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAdRewardLogsInput = {
@@ -4504,6 +4606,7 @@ export type UserUncheckedCreateWithoutAdRewardLogsInput = {
   couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
   couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
   usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAdRewardLogsInput = {
@@ -4557,6 +4660,7 @@ export type UserUpdateWithoutAdRewardLogsInput = {
   couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAdRewardLogsInput = {
@@ -4595,6 +4699,177 @@ export type UserUncheckedUpdateWithoutAdRewardLogsInput = {
   couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutSupportInquiriesInput = {
+  name?: string | null
+  email: string
+  provider: $Enums.AuthProvider
+  providerId: string
+  profileImage?: string | null
+  level?: $Enums.Level
+  XpLevel?: number
+  xp?: number
+  streakDays?: number
+  role?: $Enums.UserRole
+  lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
+  createdAt?: Date | string
+  isNew?: boolean
+  selectedCharacter?: Prisma.CharacterCreateNestedOneWithoutUsersInput
+  storyProgress?: Prisma.StoryProgressCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutUserInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutUserInput
+  userReviewItems?: Prisma.UserReviewItemCreateNestedManyWithoutUserInput
+  characterFriends?: Prisma.CharacterFriendCreateNestedManyWithoutUserInput
+  Messages?: Prisma.MessageCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatCreateNestedManyWithoutUserInput
+  userPlayEpisodes?: Prisma.UserPlayEpisodeCreateNestedManyWithoutUserInput
+  userEpisodeLikes?: Prisma.UserEpisodeLikeCreateNestedManyWithoutUserInput
+  products?: Prisma.EpisodeProductCreateNestedManyWithoutUserInput
+  userPurchases?: Prisma.UserPurchaseCreateNestedManyWithoutUserInput
+  coinTransactions?: Prisma.CoinTransactionCreateNestedManyWithoutUserInput
+  userSubscriptions?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput
+  userEndings?: Prisma.UserEndingCreateNestedManyWithoutUserInput
+  userCoupons?: Prisma.UserCouponCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
+  couponCodes?: Prisma.CouponCodeCreateNestedManyWithoutAssignedUserInput
+  usages?: Prisma.UserUsageCreateNestedManyWithoutUserInput
+  adRewardLogs?: Prisma.AdRewardLogCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSupportInquiriesInput = {
+  id?: number
+  name?: string | null
+  email: string
+  provider: $Enums.AuthProvider
+  providerId: string
+  profileImage?: string | null
+  level?: $Enums.Level
+  XpLevel?: number
+  xp?: number
+  streakDays?: number
+  role?: $Enums.UserRole
+  selectedCharacterId?: number | null
+  lastLoginAt?: Date | string
+  registeredAt?: Date | string | null
+  createdAt?: Date | string
+  isNew?: boolean
+  storyProgress?: Prisma.StoryProgressUncheckedCreateNestedManyWithoutUserInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutUserInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutUserInput
+  userReviewItems?: Prisma.UserReviewItemUncheckedCreateNestedManyWithoutUserInput
+  characterFriends?: Prisma.CharacterFriendUncheckedCreateNestedManyWithoutUserInput
+  Messages?: Prisma.MessageUncheckedCreateNestedManyWithoutUserInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedCreateNestedManyWithoutUserInput
+  characterChats?: Prisma.CharacterChatUncheckedCreateNestedManyWithoutUserInput
+  userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedCreateNestedManyWithoutUserInput
+  userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedCreateNestedManyWithoutUserInput
+  products?: Prisma.EpisodeProductUncheckedCreateNestedManyWithoutUserInput
+  userPurchases?: Prisma.UserPurchaseUncheckedCreateNestedManyWithoutUserInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedCreateNestedManyWithoutUserInput
+  userSubscriptions?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  userEndings?: Prisma.UserEndingUncheckedCreateNestedManyWithoutUserInput
+  userCoupons?: Prisma.UserCouponUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
+  couponCodes?: Prisma.CouponCodeUncheckedCreateNestedManyWithoutAssignedUserInput
+  usages?: Prisma.UserUsageUncheckedCreateNestedManyWithoutUserInput
+  adRewardLogs?: Prisma.AdRewardLogUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSupportInquiriesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSupportInquiriesInput, Prisma.UserUncheckedCreateWithoutSupportInquiriesInput>
+}
+
+export type UserUpsertWithoutSupportInquiriesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSupportInquiriesInput, Prisma.UserUncheckedUpdateWithoutSupportInquiriesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSupportInquiriesInput, Prisma.UserUncheckedCreateWithoutSupportInquiriesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSupportInquiriesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSupportInquiriesInput, Prisma.UserUncheckedUpdateWithoutSupportInquiriesInput>
+}
+
+export type UserUpdateWithoutSupportInquiriesInput = {
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
+  XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedCharacter?: Prisma.CharacterUpdateOneWithoutUsersNestedInput
+  storyProgress?: Prisma.StoryProgressUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutUserNestedInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutUserNestedInput
+  userReviewItems?: Prisma.UserReviewItemUpdateManyWithoutUserNestedInput
+  characterFriends?: Prisma.CharacterFriendUpdateManyWithoutUserNestedInput
+  Messages?: Prisma.MessageUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUpdateManyWithoutUserNestedInput
+  userPlayEpisodes?: Prisma.UserPlayEpisodeUpdateManyWithoutUserNestedInput
+  userEpisodeLikes?: Prisma.UserEpisodeLikeUpdateManyWithoutUserNestedInput
+  products?: Prisma.EpisodeProductUpdateManyWithoutUserNestedInput
+  userPurchases?: Prisma.UserPurchaseUpdateManyWithoutUserNestedInput
+  coinTransactions?: Prisma.CoinTransactionUpdateManyWithoutUserNestedInput
+  userSubscriptions?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput
+  userEndings?: Prisma.UserEndingUpdateManyWithoutUserNestedInput
+  userCoupons?: Prisma.UserCouponUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
+  couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
+  usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
+  adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSupportInquiriesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAuthProviderFieldUpdateOperationsInput | $Enums.AuthProvider
+  providerId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
+  XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isNew?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  storyProgress?: Prisma.StoryProgressUncheckedUpdateManyWithoutUserNestedInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutUserNestedInput
+  dialogueBookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutUserNestedInput
+  userReviewItems?: Prisma.UserReviewItemUncheckedUpdateManyWithoutUserNestedInput
+  characterFriends?: Prisma.CharacterFriendUncheckedUpdateManyWithoutUserNestedInput
+  Messages?: Prisma.MessageUncheckedUpdateManyWithoutUserNestedInput
+  userQuizSessions?: Prisma.UserQuizSessionUncheckedUpdateManyWithoutUserNestedInput
+  characterChats?: Prisma.CharacterChatUncheckedUpdateManyWithoutUserNestedInput
+  userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedUpdateManyWithoutUserNestedInput
+  userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedUpdateManyWithoutUserNestedInput
+  products?: Prisma.EpisodeProductUncheckedUpdateManyWithoutUserNestedInput
+  userPurchases?: Prisma.UserPurchaseUncheckedUpdateManyWithoutUserNestedInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userSubscriptions?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  userEndings?: Prisma.UserEndingUncheckedUpdateManyWithoutUserNestedInput
+  userCoupons?: Prisma.UserCouponUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
+  couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
+  usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
+  adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManySelectedCharacterInput = {
@@ -4650,6 +4925,7 @@ export type UserUpdateWithoutSelectedCharacterInput = {
   couponCodes?: Prisma.CouponCodeUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSelectedCharacterInput = {
@@ -4688,6 +4964,7 @@ export type UserUncheckedUpdateWithoutSelectedCharacterInput = {
   couponCodes?: Prisma.CouponCodeUncheckedUpdateManyWithoutAssignedUserNestedInput
   usages?: Prisma.UserUsageUncheckedUpdateManyWithoutUserNestedInput
   adRewardLogs?: Prisma.AdRewardLogUncheckedUpdateManyWithoutUserNestedInput
+  supportInquiries?: Prisma.SupportInquiryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutSelectedCharacterInput = {
@@ -4734,6 +5011,7 @@ export type UserCountOutputType = {
   couponCodes: number
   usages: number
   adRewardLogs: number
+  supportInquiries: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4757,6 +5035,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   couponCodes?: boolean | UserCountOutputTypeCountCouponCodesArgs
   usages?: boolean | UserCountOutputTypeCountUsagesArgs
   adRewardLogs?: boolean | UserCountOutputTypeCountAdRewardLogsArgs
+  supportInquiries?: boolean | UserCountOutputTypeCountSupportInquiriesArgs
 }
 
 /**
@@ -4909,6 +5188,13 @@ export type UserCountOutputTypeCountAdRewardLogsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.AdRewardLogWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSupportInquiriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupportInquiryWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -4948,6 +5234,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   couponCodes?: boolean | Prisma.User$couponCodesArgs<ExtArgs>
   usages?: boolean | Prisma.User$usagesArgs<ExtArgs>
   adRewardLogs?: boolean | Prisma.User$adRewardLogsArgs<ExtArgs>
+  supportInquiries?: boolean | Prisma.User$supportInquiriesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -5033,6 +5320,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   couponCodes?: boolean | Prisma.User$couponCodesArgs<ExtArgs>
   usages?: boolean | Prisma.User$usagesArgs<ExtArgs>
   adRewardLogs?: boolean | Prisma.User$adRewardLogsArgs<ExtArgs>
+  supportInquiries?: boolean | Prisma.User$supportInquiriesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5066,6 +5354,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     couponCodes: Prisma.$CouponCodePayload<ExtArgs>[]
     usages: Prisma.$UserUsagePayload<ExtArgs>[]
     adRewardLogs: Prisma.$AdRewardLogPayload<ExtArgs>[]
+    supportInquiries: Prisma.$SupportInquiryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -5499,6 +5788,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   couponCodes<T extends Prisma.User$couponCodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$couponCodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CouponCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   usages<T extends Prisma.User$usagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$usagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserUsagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   adRewardLogs<T extends Prisma.User$adRewardLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$adRewardLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdRewardLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  supportInquiries<T extends Prisma.User$supportInquiriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$supportInquiriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportInquiryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6436,6 +6726,30 @@ export type User$adRewardLogsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.AdRewardLogScalarFieldEnum | Prisma.AdRewardLogScalarFieldEnum[]
+}
+
+/**
+ * User.supportInquiries
+ */
+export type User$supportInquiriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupportInquiry
+   */
+  select?: Prisma.SupportInquirySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupportInquiry
+   */
+  omit?: Prisma.SupportInquiryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupportInquiryInclude<ExtArgs> | null
+  where?: Prisma.SupportInquiryWhereInput
+  orderBy?: Prisma.SupportInquiryOrderByWithRelationInput | Prisma.SupportInquiryOrderByWithRelationInput[]
+  cursor?: Prisma.SupportInquiryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupportInquiryScalarFieldEnum | Prisma.SupportInquiryScalarFieldEnum[]
 }
 
 /**
