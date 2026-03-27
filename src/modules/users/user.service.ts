@@ -5,6 +5,7 @@ import { UserCreateInput } from '@/generated/prisma/models';
 import { UpdatePersonalInfoDto } from './dto/update-personal-info.dto';
 import { RegisterProfileDto, UserDto, UserProfileDto } from './dto/user.dto';
 import { getTodayRange } from '@/common/utils/date.util';
+import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
 
 @Injectable()
 export class UserService {
@@ -74,6 +75,7 @@ export class UserService {
       email: user.email,
       name: user.name,
       profileImage: user.profileImage,
+      role: user.role,
       level: user.level,
       xpLevel: user.XpLevel,
       xp: user.xp,
@@ -112,5 +114,34 @@ export class UserService {
         registeredAt: new Date(),
       },
     });
+  }
+
+  async withdrawMe(userId: number): Promise<SuccessResponseDto> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const uniqueSuffix = `${userId}_${Date.now()}`;
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        // 계정 식별 정보를 익명화해 재로그인을 막고, 참조 무결성은 유지한다.
+        email: `withdrawn+${uniqueSuffix}@storytalk.local`,
+        providerId: `withdrawn_${uniqueSuffix}`,
+        name: null,
+        profileImage: null,
+        selectedCharacterId: null,
+      },
+    });
+
+    return {
+      success: true,
+      message: '회원 탈퇴가 완료되었습니다.',
+    };
   }
 }

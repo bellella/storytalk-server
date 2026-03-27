@@ -228,6 +228,8 @@ export type ReviewItemWhereInput = {
   dialogueId?: Prisma.IntFilter<"ReviewItem"> | number
   description?: Prisma.StringNullableFilter<"ReviewItem"> | string | null
   order?: Prisma.IntFilter<"ReviewItem"> | number
+  episode?: Prisma.XOR<Prisma.EpisodeScalarRelationFilter, Prisma.EpisodeWhereInput>
+  dialogue?: Prisma.XOR<Prisma.DialogueScalarRelationFilter, Prisma.DialogueWhereInput>
   userReviewItems?: Prisma.UserReviewItemListRelationFilter
 }
 
@@ -237,6 +239,8 @@ export type ReviewItemOrderByWithRelationInput = {
   dialogueId?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrder
+  episode?: Prisma.EpisodeOrderByWithRelationInput
+  dialogue?: Prisma.DialogueOrderByWithRelationInput
   userReviewItems?: Prisma.UserReviewItemOrderByRelationAggregateInput
 }
 
@@ -250,6 +254,8 @@ export type ReviewItemWhereUniqueInput = Prisma.AtLeast<{
   dialogueId?: Prisma.IntFilter<"ReviewItem"> | number
   description?: Prisma.StringNullableFilter<"ReviewItem"> | string | null
   order?: Prisma.IntFilter<"ReviewItem"> | number
+  episode?: Prisma.XOR<Prisma.EpisodeScalarRelationFilter, Prisma.EpisodeWhereInput>
+  dialogue?: Prisma.XOR<Prisma.DialogueScalarRelationFilter, Prisma.DialogueWhereInput>
   userReviewItems?: Prisma.UserReviewItemListRelationFilter
 }, "id" | "episodeId_dialogueId">
 
@@ -278,10 +284,10 @@ export type ReviewItemScalarWhereWithAggregatesInput = {
 }
 
 export type ReviewItemCreateInput = {
-  episodeId: number
-  dialogueId: number
   description?: string | null
   order: number
+  episode: Prisma.EpisodeCreateNestedOneWithoutReviewItemsInput
+  dialogue: Prisma.DialogueCreateNestedOneWithoutReviewItemsInput
   userReviewItems?: Prisma.UserReviewItemCreateNestedManyWithoutReviewItemInput
 }
 
@@ -295,10 +301,10 @@ export type ReviewItemUncheckedCreateInput = {
 }
 
 export type ReviewItemUpdateInput = {
-  episodeId?: Prisma.IntFieldUpdateOperationsInput | number
-  dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  episode?: Prisma.EpisodeUpdateOneRequiredWithoutReviewItemsNestedInput
+  dialogue?: Prisma.DialogueUpdateOneRequiredWithoutReviewItemsNestedInput
   userReviewItems?: Prisma.UserReviewItemUpdateManyWithoutReviewItemNestedInput
 }
 
@@ -320,8 +326,6 @@ export type ReviewItemCreateManyInput = {
 }
 
 export type ReviewItemUpdateManyMutationInput = {
-  episodeId?: Prisma.IntFieldUpdateOperationsInput | number
-  dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
 }
@@ -332,6 +336,16 @@ export type ReviewItemUncheckedUpdateManyInput = {
   dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type ReviewItemListRelationFilter = {
+  every?: Prisma.ReviewItemWhereInput
+  some?: Prisma.ReviewItemWhereInput
+  none?: Prisma.ReviewItemWhereInput
+}
+
+export type ReviewItemOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type ReviewItemEpisodeIdDialogueIdCompoundUniqueInput = {
@@ -382,6 +396,90 @@ export type ReviewItemScalarRelationFilter = {
   isNot?: Prisma.ReviewItemWhereInput
 }
 
+export type ReviewItemCreateNestedManyWithoutEpisodeInput = {
+  create?: Prisma.XOR<Prisma.ReviewItemCreateWithoutEpisodeInput, Prisma.ReviewItemUncheckedCreateWithoutEpisodeInput> | Prisma.ReviewItemCreateWithoutEpisodeInput[] | Prisma.ReviewItemUncheckedCreateWithoutEpisodeInput[]
+  connectOrCreate?: Prisma.ReviewItemCreateOrConnectWithoutEpisodeInput | Prisma.ReviewItemCreateOrConnectWithoutEpisodeInput[]
+  createMany?: Prisma.ReviewItemCreateManyEpisodeInputEnvelope
+  connect?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+}
+
+export type ReviewItemUncheckedCreateNestedManyWithoutEpisodeInput = {
+  create?: Prisma.XOR<Prisma.ReviewItemCreateWithoutEpisodeInput, Prisma.ReviewItemUncheckedCreateWithoutEpisodeInput> | Prisma.ReviewItemCreateWithoutEpisodeInput[] | Prisma.ReviewItemUncheckedCreateWithoutEpisodeInput[]
+  connectOrCreate?: Prisma.ReviewItemCreateOrConnectWithoutEpisodeInput | Prisma.ReviewItemCreateOrConnectWithoutEpisodeInput[]
+  createMany?: Prisma.ReviewItemCreateManyEpisodeInputEnvelope
+  connect?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+}
+
+export type ReviewItemUpdateManyWithoutEpisodeNestedInput = {
+  create?: Prisma.XOR<Prisma.ReviewItemCreateWithoutEpisodeInput, Prisma.ReviewItemUncheckedCreateWithoutEpisodeInput> | Prisma.ReviewItemCreateWithoutEpisodeInput[] | Prisma.ReviewItemUncheckedCreateWithoutEpisodeInput[]
+  connectOrCreate?: Prisma.ReviewItemCreateOrConnectWithoutEpisodeInput | Prisma.ReviewItemCreateOrConnectWithoutEpisodeInput[]
+  upsert?: Prisma.ReviewItemUpsertWithWhereUniqueWithoutEpisodeInput | Prisma.ReviewItemUpsertWithWhereUniqueWithoutEpisodeInput[]
+  createMany?: Prisma.ReviewItemCreateManyEpisodeInputEnvelope
+  set?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  disconnect?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  delete?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  connect?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  update?: Prisma.ReviewItemUpdateWithWhereUniqueWithoutEpisodeInput | Prisma.ReviewItemUpdateWithWhereUniqueWithoutEpisodeInput[]
+  updateMany?: Prisma.ReviewItemUpdateManyWithWhereWithoutEpisodeInput | Prisma.ReviewItemUpdateManyWithWhereWithoutEpisodeInput[]
+  deleteMany?: Prisma.ReviewItemScalarWhereInput | Prisma.ReviewItemScalarWhereInput[]
+}
+
+export type ReviewItemUncheckedUpdateManyWithoutEpisodeNestedInput = {
+  create?: Prisma.XOR<Prisma.ReviewItemCreateWithoutEpisodeInput, Prisma.ReviewItemUncheckedCreateWithoutEpisodeInput> | Prisma.ReviewItemCreateWithoutEpisodeInput[] | Prisma.ReviewItemUncheckedCreateWithoutEpisodeInput[]
+  connectOrCreate?: Prisma.ReviewItemCreateOrConnectWithoutEpisodeInput | Prisma.ReviewItemCreateOrConnectWithoutEpisodeInput[]
+  upsert?: Prisma.ReviewItemUpsertWithWhereUniqueWithoutEpisodeInput | Prisma.ReviewItemUpsertWithWhereUniqueWithoutEpisodeInput[]
+  createMany?: Prisma.ReviewItemCreateManyEpisodeInputEnvelope
+  set?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  disconnect?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  delete?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  connect?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  update?: Prisma.ReviewItemUpdateWithWhereUniqueWithoutEpisodeInput | Prisma.ReviewItemUpdateWithWhereUniqueWithoutEpisodeInput[]
+  updateMany?: Prisma.ReviewItemUpdateManyWithWhereWithoutEpisodeInput | Prisma.ReviewItemUpdateManyWithWhereWithoutEpisodeInput[]
+  deleteMany?: Prisma.ReviewItemScalarWhereInput | Prisma.ReviewItemScalarWhereInput[]
+}
+
+export type ReviewItemCreateNestedManyWithoutDialogueInput = {
+  create?: Prisma.XOR<Prisma.ReviewItemCreateWithoutDialogueInput, Prisma.ReviewItemUncheckedCreateWithoutDialogueInput> | Prisma.ReviewItemCreateWithoutDialogueInput[] | Prisma.ReviewItemUncheckedCreateWithoutDialogueInput[]
+  connectOrCreate?: Prisma.ReviewItemCreateOrConnectWithoutDialogueInput | Prisma.ReviewItemCreateOrConnectWithoutDialogueInput[]
+  createMany?: Prisma.ReviewItemCreateManyDialogueInputEnvelope
+  connect?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+}
+
+export type ReviewItemUncheckedCreateNestedManyWithoutDialogueInput = {
+  create?: Prisma.XOR<Prisma.ReviewItemCreateWithoutDialogueInput, Prisma.ReviewItemUncheckedCreateWithoutDialogueInput> | Prisma.ReviewItemCreateWithoutDialogueInput[] | Prisma.ReviewItemUncheckedCreateWithoutDialogueInput[]
+  connectOrCreate?: Prisma.ReviewItemCreateOrConnectWithoutDialogueInput | Prisma.ReviewItemCreateOrConnectWithoutDialogueInput[]
+  createMany?: Prisma.ReviewItemCreateManyDialogueInputEnvelope
+  connect?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+}
+
+export type ReviewItemUpdateManyWithoutDialogueNestedInput = {
+  create?: Prisma.XOR<Prisma.ReviewItemCreateWithoutDialogueInput, Prisma.ReviewItemUncheckedCreateWithoutDialogueInput> | Prisma.ReviewItemCreateWithoutDialogueInput[] | Prisma.ReviewItemUncheckedCreateWithoutDialogueInput[]
+  connectOrCreate?: Prisma.ReviewItemCreateOrConnectWithoutDialogueInput | Prisma.ReviewItemCreateOrConnectWithoutDialogueInput[]
+  upsert?: Prisma.ReviewItemUpsertWithWhereUniqueWithoutDialogueInput | Prisma.ReviewItemUpsertWithWhereUniqueWithoutDialogueInput[]
+  createMany?: Prisma.ReviewItemCreateManyDialogueInputEnvelope
+  set?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  disconnect?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  delete?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  connect?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  update?: Prisma.ReviewItemUpdateWithWhereUniqueWithoutDialogueInput | Prisma.ReviewItemUpdateWithWhereUniqueWithoutDialogueInput[]
+  updateMany?: Prisma.ReviewItemUpdateManyWithWhereWithoutDialogueInput | Prisma.ReviewItemUpdateManyWithWhereWithoutDialogueInput[]
+  deleteMany?: Prisma.ReviewItemScalarWhereInput | Prisma.ReviewItemScalarWhereInput[]
+}
+
+export type ReviewItemUncheckedUpdateManyWithoutDialogueNestedInput = {
+  create?: Prisma.XOR<Prisma.ReviewItemCreateWithoutDialogueInput, Prisma.ReviewItemUncheckedCreateWithoutDialogueInput> | Prisma.ReviewItemCreateWithoutDialogueInput[] | Prisma.ReviewItemUncheckedCreateWithoutDialogueInput[]
+  connectOrCreate?: Prisma.ReviewItemCreateOrConnectWithoutDialogueInput | Prisma.ReviewItemCreateOrConnectWithoutDialogueInput[]
+  upsert?: Prisma.ReviewItemUpsertWithWhereUniqueWithoutDialogueInput | Prisma.ReviewItemUpsertWithWhereUniqueWithoutDialogueInput[]
+  createMany?: Prisma.ReviewItemCreateManyDialogueInputEnvelope
+  set?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  disconnect?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  delete?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  connect?: Prisma.ReviewItemWhereUniqueInput | Prisma.ReviewItemWhereUniqueInput[]
+  update?: Prisma.ReviewItemUpdateWithWhereUniqueWithoutDialogueInput | Prisma.ReviewItemUpdateWithWhereUniqueWithoutDialogueInput[]
+  updateMany?: Prisma.ReviewItemUpdateManyWithWhereWithoutDialogueInput | Prisma.ReviewItemUpdateManyWithWhereWithoutDialogueInput[]
+  deleteMany?: Prisma.ReviewItemScalarWhereInput | Prisma.ReviewItemScalarWhereInput[]
+}
+
 export type ReviewItemCreateNestedOneWithoutUserReviewItemsInput = {
   create?: Prisma.XOR<Prisma.ReviewItemCreateWithoutUserReviewItemsInput, Prisma.ReviewItemUncheckedCreateWithoutUserReviewItemsInput>
   connectOrCreate?: Prisma.ReviewItemCreateOrConnectWithoutUserReviewItemsInput
@@ -396,11 +494,104 @@ export type ReviewItemUpdateOneRequiredWithoutUserReviewItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ReviewItemUpdateToOneWithWhereWithoutUserReviewItemsInput, Prisma.ReviewItemUpdateWithoutUserReviewItemsInput>, Prisma.ReviewItemUncheckedUpdateWithoutUserReviewItemsInput>
 }
 
-export type ReviewItemCreateWithoutUserReviewItemsInput = {
-  episodeId: number
+export type ReviewItemCreateWithoutEpisodeInput = {
+  description?: string | null
+  order: number
+  dialogue: Prisma.DialogueCreateNestedOneWithoutReviewItemsInput
+  userReviewItems?: Prisma.UserReviewItemCreateNestedManyWithoutReviewItemInput
+}
+
+export type ReviewItemUncheckedCreateWithoutEpisodeInput = {
+  id?: number
   dialogueId: number
   description?: string | null
   order: number
+  userReviewItems?: Prisma.UserReviewItemUncheckedCreateNestedManyWithoutReviewItemInput
+}
+
+export type ReviewItemCreateOrConnectWithoutEpisodeInput = {
+  where: Prisma.ReviewItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReviewItemCreateWithoutEpisodeInput, Prisma.ReviewItemUncheckedCreateWithoutEpisodeInput>
+}
+
+export type ReviewItemCreateManyEpisodeInputEnvelope = {
+  data: Prisma.ReviewItemCreateManyEpisodeInput | Prisma.ReviewItemCreateManyEpisodeInput[]
+  skipDuplicates?: boolean
+}
+
+export type ReviewItemUpsertWithWhereUniqueWithoutEpisodeInput = {
+  where: Prisma.ReviewItemWhereUniqueInput
+  update: Prisma.XOR<Prisma.ReviewItemUpdateWithoutEpisodeInput, Prisma.ReviewItemUncheckedUpdateWithoutEpisodeInput>
+  create: Prisma.XOR<Prisma.ReviewItemCreateWithoutEpisodeInput, Prisma.ReviewItemUncheckedCreateWithoutEpisodeInput>
+}
+
+export type ReviewItemUpdateWithWhereUniqueWithoutEpisodeInput = {
+  where: Prisma.ReviewItemWhereUniqueInput
+  data: Prisma.XOR<Prisma.ReviewItemUpdateWithoutEpisodeInput, Prisma.ReviewItemUncheckedUpdateWithoutEpisodeInput>
+}
+
+export type ReviewItemUpdateManyWithWhereWithoutEpisodeInput = {
+  where: Prisma.ReviewItemScalarWhereInput
+  data: Prisma.XOR<Prisma.ReviewItemUpdateManyMutationInput, Prisma.ReviewItemUncheckedUpdateManyWithoutEpisodeInput>
+}
+
+export type ReviewItemScalarWhereInput = {
+  AND?: Prisma.ReviewItemScalarWhereInput | Prisma.ReviewItemScalarWhereInput[]
+  OR?: Prisma.ReviewItemScalarWhereInput[]
+  NOT?: Prisma.ReviewItemScalarWhereInput | Prisma.ReviewItemScalarWhereInput[]
+  id?: Prisma.IntFilter<"ReviewItem"> | number
+  episodeId?: Prisma.IntFilter<"ReviewItem"> | number
+  dialogueId?: Prisma.IntFilter<"ReviewItem"> | number
+  description?: Prisma.StringNullableFilter<"ReviewItem"> | string | null
+  order?: Prisma.IntFilter<"ReviewItem"> | number
+}
+
+export type ReviewItemCreateWithoutDialogueInput = {
+  description?: string | null
+  order: number
+  episode: Prisma.EpisodeCreateNestedOneWithoutReviewItemsInput
+  userReviewItems?: Prisma.UserReviewItemCreateNestedManyWithoutReviewItemInput
+}
+
+export type ReviewItemUncheckedCreateWithoutDialogueInput = {
+  id?: number
+  episodeId: number
+  description?: string | null
+  order: number
+  userReviewItems?: Prisma.UserReviewItemUncheckedCreateNestedManyWithoutReviewItemInput
+}
+
+export type ReviewItemCreateOrConnectWithoutDialogueInput = {
+  where: Prisma.ReviewItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReviewItemCreateWithoutDialogueInput, Prisma.ReviewItemUncheckedCreateWithoutDialogueInput>
+}
+
+export type ReviewItemCreateManyDialogueInputEnvelope = {
+  data: Prisma.ReviewItemCreateManyDialogueInput | Prisma.ReviewItemCreateManyDialogueInput[]
+  skipDuplicates?: boolean
+}
+
+export type ReviewItemUpsertWithWhereUniqueWithoutDialogueInput = {
+  where: Prisma.ReviewItemWhereUniqueInput
+  update: Prisma.XOR<Prisma.ReviewItemUpdateWithoutDialogueInput, Prisma.ReviewItemUncheckedUpdateWithoutDialogueInput>
+  create: Prisma.XOR<Prisma.ReviewItemCreateWithoutDialogueInput, Prisma.ReviewItemUncheckedCreateWithoutDialogueInput>
+}
+
+export type ReviewItemUpdateWithWhereUniqueWithoutDialogueInput = {
+  where: Prisma.ReviewItemWhereUniqueInput
+  data: Prisma.XOR<Prisma.ReviewItemUpdateWithoutDialogueInput, Prisma.ReviewItemUncheckedUpdateWithoutDialogueInput>
+}
+
+export type ReviewItemUpdateManyWithWhereWithoutDialogueInput = {
+  where: Prisma.ReviewItemScalarWhereInput
+  data: Prisma.XOR<Prisma.ReviewItemUpdateManyMutationInput, Prisma.ReviewItemUncheckedUpdateManyWithoutDialogueInput>
+}
+
+export type ReviewItemCreateWithoutUserReviewItemsInput = {
+  description?: string | null
+  order: number
+  episode: Prisma.EpisodeCreateNestedOneWithoutReviewItemsInput
+  dialogue: Prisma.DialogueCreateNestedOneWithoutReviewItemsInput
 }
 
 export type ReviewItemUncheckedCreateWithoutUserReviewItemsInput = {
@@ -428,16 +619,74 @@ export type ReviewItemUpdateToOneWithWhereWithoutUserReviewItemsInput = {
 }
 
 export type ReviewItemUpdateWithoutUserReviewItemsInput = {
-  episodeId?: Prisma.IntFieldUpdateOperationsInput | number
-  dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  episode?: Prisma.EpisodeUpdateOneRequiredWithoutReviewItemsNestedInput
+  dialogue?: Prisma.DialogueUpdateOneRequiredWithoutReviewItemsNestedInput
 }
 
 export type ReviewItemUncheckedUpdateWithoutUserReviewItemsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   episodeId?: Prisma.IntFieldUpdateOperationsInput | number
   dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type ReviewItemCreateManyEpisodeInput = {
+  id?: number
+  dialogueId: number
+  description?: string | null
+  order: number
+}
+
+export type ReviewItemUpdateWithoutEpisodeInput = {
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  dialogue?: Prisma.DialogueUpdateOneRequiredWithoutReviewItemsNestedInput
+  userReviewItems?: Prisma.UserReviewItemUpdateManyWithoutReviewItemNestedInput
+}
+
+export type ReviewItemUncheckedUpdateWithoutEpisodeInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  userReviewItems?: Prisma.UserReviewItemUncheckedUpdateManyWithoutReviewItemNestedInput
+}
+
+export type ReviewItemUncheckedUpdateManyWithoutEpisodeInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  dialogueId?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type ReviewItemCreateManyDialogueInput = {
+  id?: number
+  episodeId: number
+  description?: string | null
+  order: number
+}
+
+export type ReviewItemUpdateWithoutDialogueInput = {
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  episode?: Prisma.EpisodeUpdateOneRequiredWithoutReviewItemsNestedInput
+  userReviewItems?: Prisma.UserReviewItemUpdateManyWithoutReviewItemNestedInput
+}
+
+export type ReviewItemUncheckedUpdateWithoutDialogueInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  episodeId?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  userReviewItems?: Prisma.UserReviewItemUncheckedUpdateManyWithoutReviewItemNestedInput
+}
+
+export type ReviewItemUncheckedUpdateManyWithoutDialogueInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  episodeId?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
 }
@@ -479,6 +728,8 @@ export type ReviewItemSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   dialogueId?: boolean
   description?: boolean
   order?: boolean
+  episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
+  dialogue?: boolean | Prisma.DialogueDefaultArgs<ExtArgs>
   userReviewItems?: boolean | Prisma.ReviewItem$userReviewItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ReviewItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reviewItem"]>
@@ -489,6 +740,8 @@ export type ReviewItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   dialogueId?: boolean
   description?: boolean
   order?: boolean
+  episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
+  dialogue?: boolean | Prisma.DialogueDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reviewItem"]>
 
 export type ReviewItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -497,6 +750,8 @@ export type ReviewItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   dialogueId?: boolean
   description?: boolean
   order?: boolean
+  episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
+  dialogue?: boolean | Prisma.DialogueDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reviewItem"]>
 
 export type ReviewItemSelectScalar = {
@@ -509,15 +764,25 @@ export type ReviewItemSelectScalar = {
 
 export type ReviewItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "episodeId" | "dialogueId" | "description" | "order", ExtArgs["result"]["reviewItem"]>
 export type ReviewItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
+  dialogue?: boolean | Prisma.DialogueDefaultArgs<ExtArgs>
   userReviewItems?: boolean | Prisma.ReviewItem$userReviewItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ReviewItemCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type ReviewItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type ReviewItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ReviewItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
+  dialogue?: boolean | Prisma.DialogueDefaultArgs<ExtArgs>
+}
+export type ReviewItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
+  dialogue?: boolean | Prisma.DialogueDefaultArgs<ExtArgs>
+}
 
 export type $ReviewItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ReviewItem"
   objects: {
+    episode: Prisma.$EpisodePayload<ExtArgs>
+    dialogue: Prisma.$DialoguePayload<ExtArgs>
     userReviewItems: Prisma.$UserReviewItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -920,6 +1185,8 @@ readonly fields: ReviewItemFieldRefs;
  */
 export interface Prisma__ReviewItemClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  episode<T extends Prisma.EpisodeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EpisodeDefaultArgs<ExtArgs>>): Prisma.Prisma__EpisodeClient<runtime.Types.Result.GetResult<Prisma.$EpisodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  dialogue<T extends Prisma.DialogueDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DialogueDefaultArgs<ExtArgs>>): Prisma.Prisma__DialogueClient<runtime.Types.Result.GetResult<Prisma.$DialoguePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   userReviewItems<T extends Prisma.ReviewItem$userReviewItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReviewItem$userReviewItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserReviewItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1204,6 +1471,10 @@ export type ReviewItemCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exte
    */
   data: Prisma.ReviewItemCreateManyInput | Prisma.ReviewItemCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewItemIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1274,6 +1545,10 @@ export type ReviewItemUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Exte
    * Limit how many ReviewItems to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewItemIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

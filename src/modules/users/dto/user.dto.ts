@@ -1,10 +1,13 @@
-import { Level } from '@/generated/prisma/enums';
+import { Level, UserRole } from '@/generated/prisma/enums';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UserDto {
   id: number;
   email: string;
   name: string | null;
   profileImage: string | null;
+  @ApiProperty({ enum: UserRole, enumName: 'UserRole' })
+  role: UserRole;
 }
 
 export class SelectedCharacterDto {

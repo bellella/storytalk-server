@@ -39,6 +39,14 @@ export const AuthProvider = {
 export type AuthProvider = (typeof AuthProvider)[keyof typeof AuthProvider]
 
 
+export const UserRole = {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
+} as const
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
 export const StoryType = {
   UNIT: 'UNIT',
   NOVEL: 'NOVEL',

@@ -131,6 +131,7 @@ export const UserScalarFieldEnum = {
   XpLevel: 'XpLevel',
   xp: 'xp',
   streakDays: 'streakDays',
+  role: 'role',
   selectedCharacterId: 'selectedCharacterId',
   lastLoginAt: 'lastLoginAt',
   registeredAt: 'registeredAt',

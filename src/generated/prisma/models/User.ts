@@ -53,6 +53,7 @@ export type UserMinAggregateOutputType = {
   XpLevel: number | null
   xp: number | null
   streakDays: number | null
+  role: $Enums.UserRole | null
   selectedCharacterId: number | null
   lastLoginAt: Date | null
   registeredAt: Date | null
@@ -71,6 +72,7 @@ export type UserMaxAggregateOutputType = {
   XpLevel: number | null
   xp: number | null
   streakDays: number | null
+  role: $Enums.UserRole | null
   selectedCharacterId: number | null
   lastLoginAt: Date | null
   registeredAt: Date | null
@@ -89,6 +91,7 @@ export type UserCountAggregateOutputType = {
   XpLevel: number
   xp: number
   streakDays: number
+  role: number
   selectedCharacterId: number
   lastLoginAt: number
   registeredAt: number
@@ -125,6 +128,7 @@ export type UserMinAggregateInputType = {
   XpLevel?: true
   xp?: true
   streakDays?: true
+  role?: true
   selectedCharacterId?: true
   lastLoginAt?: true
   registeredAt?: true
@@ -143,6 +147,7 @@ export type UserMaxAggregateInputType = {
   XpLevel?: true
   xp?: true
   streakDays?: true
+  role?: true
   selectedCharacterId?: true
   lastLoginAt?: true
   registeredAt?: true
@@ -161,6 +166,7 @@ export type UserCountAggregateInputType = {
   XpLevel?: true
   xp?: true
   streakDays?: true
+  role?: true
   selectedCharacterId?: true
   lastLoginAt?: true
   registeredAt?: true
@@ -266,6 +272,7 @@ export type UserGroupByOutputType = {
   XpLevel: number
   xp: number
   streakDays: number
+  role: $Enums.UserRole
   selectedCharacterId: number | null
   lastLoginAt: Date
   registeredAt: Date | null
@@ -307,6 +314,7 @@ export type UserWhereInput = {
   XpLevel?: Prisma.IntFilter<"User"> | number
   xp?: Prisma.IntFilter<"User"> | number
   streakDays?: Prisma.IntFilter<"User"> | number
+  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   selectedCharacterId?: Prisma.IntNullableFilter<"User"> | number | null
   lastLoginAt?: Prisma.DateTimeFilter<"User"> | Date | string
   registeredAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -346,6 +354,7 @@ export type UserOrderByWithRelationInput = {
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   selectedCharacterId?: Prisma.SortOrderInput | Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   registeredAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -389,6 +398,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   XpLevel?: Prisma.IntFilter<"User"> | number
   xp?: Prisma.IntFilter<"User"> | number
   streakDays?: Prisma.IntFilter<"User"> | number
+  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   selectedCharacterId?: Prisma.IntNullableFilter<"User"> | number | null
   lastLoginAt?: Prisma.DateTimeFilter<"User"> | Date | string
   registeredAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -428,6 +438,7 @@ export type UserOrderByWithAggregationInput = {
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   selectedCharacterId?: Prisma.SortOrderInput | Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   registeredAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -454,6 +465,7 @@ export type UserScalarWhereWithAggregatesInput = {
   XpLevel?: Prisma.IntWithAggregatesFilter<"User"> | number
   xp?: Prisma.IntWithAggregatesFilter<"User"> | number
   streakDays?: Prisma.IntWithAggregatesFilter<"User"> | number
+  role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   selectedCharacterId?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
   lastLoginAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   registeredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -471,6 +483,7 @@ export type UserCreateInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -509,6 +522,7 @@ export type UserUncheckedCreateInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -546,6 +560,7 @@ export type UserUpdateInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -584,6 +599,7 @@ export type UserUncheckedUpdateInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -622,6 +638,7 @@ export type UserCreateManyInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -639,6 +656,7 @@ export type UserUpdateManyMutationInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -656,6 +674,7 @@ export type UserUncheckedUpdateManyInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -679,6 +698,7 @@ export type UserCountOrderByAggregateInput = {
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   selectedCharacterId?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   registeredAt?: Prisma.SortOrder
@@ -705,6 +725,7 @@ export type UserMaxOrderByAggregateInput = {
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   selectedCharacterId?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   registeredAt?: Prisma.SortOrder
@@ -723,6 +744,7 @@ export type UserMinOrderByAggregateInput = {
   XpLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   streakDays?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   selectedCharacterId?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   registeredAt?: Prisma.SortOrder
@@ -780,6 +802,10 @@ export type IntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type EnumUserRoleFieldUpdateOperationsInput = {
+  set?: $Enums.UserRole
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -1138,6 +1164,7 @@ export type UserCreateWithoutStoryProgressInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -1175,6 +1202,7 @@ export type UserUncheckedCreateWithoutStoryProgressInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -1227,6 +1255,7 @@ export type UserUpdateWithoutStoryProgressInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1264,6 +1293,7 @@ export type UserUncheckedUpdateWithoutStoryProgressInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1300,6 +1330,7 @@ export type UserCreateWithoutUserReviewItemsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -1337,6 +1368,7 @@ export type UserUncheckedCreateWithoutUserReviewItemsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -1389,6 +1421,7 @@ export type UserUpdateWithoutUserReviewItemsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1426,6 +1459,7 @@ export type UserUncheckedUpdateWithoutUserReviewItemsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1462,6 +1496,7 @@ export type UserCreateWithoutUserQuizSessionsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -1499,6 +1534,7 @@ export type UserUncheckedCreateWithoutUserQuizSessionsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -1551,6 +1587,7 @@ export type UserUpdateWithoutUserQuizSessionsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1588,6 +1625,7 @@ export type UserUncheckedUpdateWithoutUserQuizSessionsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1624,6 +1662,7 @@ export type UserCreateWithoutSelectedCharacterInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -1661,6 +1700,7 @@ export type UserUncheckedCreateWithoutSelectedCharacterInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -1727,6 +1767,7 @@ export type UserScalarWhereInput = {
   XpLevel?: Prisma.IntFilter<"User"> | number
   xp?: Prisma.IntFilter<"User"> | number
   streakDays?: Prisma.IntFilter<"User"> | number
+  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   selectedCharacterId?: Prisma.IntNullableFilter<"User"> | number | null
   lastLoginAt?: Prisma.DateTimeFilter<"User"> | Date | string
   registeredAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -1744,6 +1785,7 @@ export type UserCreateWithoutCharacterFriendsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -1781,6 +1823,7 @@ export type UserUncheckedCreateWithoutCharacterFriendsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -1833,6 +1876,7 @@ export type UserUpdateWithoutCharacterFriendsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1870,6 +1914,7 @@ export type UserUncheckedUpdateWithoutCharacterFriendsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1906,6 +1951,7 @@ export type UserCreateWithoutCharacterChatsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -1943,6 +1989,7 @@ export type UserUncheckedCreateWithoutCharacterChatsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -1995,6 +2042,7 @@ export type UserUpdateWithoutCharacterChatsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2032,6 +2080,7 @@ export type UserUncheckedUpdateWithoutCharacterChatsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2068,6 +2117,7 @@ export type UserCreateWithoutMessagesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -2105,6 +2155,7 @@ export type UserUncheckedCreateWithoutMessagesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -2157,6 +2208,7 @@ export type UserUpdateWithoutMessagesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2194,6 +2246,7 @@ export type UserUncheckedUpdateWithoutMessagesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2230,6 +2283,7 @@ export type UserCreateWithoutDialogueBookmarksInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -2267,6 +2321,7 @@ export type UserUncheckedCreateWithoutDialogueBookmarksInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -2319,6 +2374,7 @@ export type UserUpdateWithoutDialogueBookmarksInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2356,6 +2412,7 @@ export type UserUncheckedUpdateWithoutDialogueBookmarksInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2392,6 +2449,7 @@ export type UserCreateWithoutUserEpisodesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -2429,6 +2487,7 @@ export type UserUncheckedCreateWithoutUserEpisodesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -2481,6 +2540,7 @@ export type UserUpdateWithoutUserEpisodesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2518,6 +2578,7 @@ export type UserUncheckedUpdateWithoutUserEpisodesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2554,6 +2615,7 @@ export type UserCreateWithoutUserEpisodeLikesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -2591,6 +2653,7 @@ export type UserUncheckedCreateWithoutUserEpisodeLikesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -2643,6 +2706,7 @@ export type UserUpdateWithoutUserEpisodeLikesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2680,6 +2744,7 @@ export type UserUncheckedUpdateWithoutUserEpisodeLikesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2716,6 +2781,7 @@ export type UserCreateWithoutUserPlayEpisodesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -2753,6 +2819,7 @@ export type UserUncheckedCreateWithoutUserPlayEpisodesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -2805,6 +2872,7 @@ export type UserUpdateWithoutUserPlayEpisodesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2842,6 +2910,7 @@ export type UserUncheckedUpdateWithoutUserPlayEpisodesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2878,6 +2947,7 @@ export type UserCreateWithoutUserEndingsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -2915,6 +2985,7 @@ export type UserUncheckedCreateWithoutUserEndingsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -2967,6 +3038,7 @@ export type UserUpdateWithoutUserEndingsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3004,6 +3076,7 @@ export type UserUncheckedUpdateWithoutUserEndingsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3040,6 +3113,7 @@ export type UserCreateWithoutProductsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -3077,6 +3151,7 @@ export type UserUncheckedCreateWithoutProductsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -3129,6 +3204,7 @@ export type UserUpdateWithoutProductsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3166,6 +3242,7 @@ export type UserUncheckedUpdateWithoutProductsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3202,6 +3279,7 @@ export type UserCreateWithoutUserPurchasesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -3239,6 +3317,7 @@ export type UserUncheckedCreateWithoutUserPurchasesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -3291,6 +3370,7 @@ export type UserUpdateWithoutUserPurchasesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3328,6 +3408,7 @@ export type UserUncheckedUpdateWithoutUserPurchasesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3364,6 +3445,7 @@ export type UserCreateWithoutCoinTransactionsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -3401,6 +3483,7 @@ export type UserUncheckedCreateWithoutCoinTransactionsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -3453,6 +3536,7 @@ export type UserUpdateWithoutCoinTransactionsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3490,6 +3574,7 @@ export type UserUncheckedUpdateWithoutCoinTransactionsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3526,6 +3611,7 @@ export type UserCreateWithoutCouponCodesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -3563,6 +3649,7 @@ export type UserUncheckedCreateWithoutCouponCodesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -3615,6 +3702,7 @@ export type UserUpdateWithoutCouponCodesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3652,6 +3740,7 @@ export type UserUncheckedUpdateWithoutCouponCodesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3688,6 +3777,7 @@ export type UserCreateWithoutUserCouponsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -3725,6 +3815,7 @@ export type UserUncheckedCreateWithoutUserCouponsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -3777,6 +3868,7 @@ export type UserUpdateWithoutUserCouponsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3814,6 +3906,7 @@ export type UserUncheckedUpdateWithoutUserCouponsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3850,6 +3943,7 @@ export type UserCreateWithoutCouponUsagesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -3887,6 +3981,7 @@ export type UserUncheckedCreateWithoutCouponUsagesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -3939,6 +4034,7 @@ export type UserUpdateWithoutCouponUsagesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3976,6 +4072,7 @@ export type UserUncheckedUpdateWithoutCouponUsagesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4012,6 +4109,7 @@ export type UserCreateWithoutUserSubscriptionsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -4049,6 +4147,7 @@ export type UserUncheckedCreateWithoutUserSubscriptionsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -4101,6 +4200,7 @@ export type UserUpdateWithoutUserSubscriptionsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4138,6 +4238,7 @@ export type UserUncheckedUpdateWithoutUserSubscriptionsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4174,6 +4275,7 @@ export type UserCreateWithoutUsagesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -4211,6 +4313,7 @@ export type UserUncheckedCreateWithoutUsagesInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -4263,6 +4366,7 @@ export type UserUpdateWithoutUsagesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4300,6 +4404,7 @@ export type UserUncheckedUpdateWithoutUsagesInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4336,6 +4441,7 @@ export type UserCreateWithoutAdRewardLogsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -4373,6 +4479,7 @@ export type UserUncheckedCreateWithoutAdRewardLogsInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   selectedCharacterId?: number | null
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
@@ -4425,6 +4532,7 @@ export type UserUpdateWithoutAdRewardLogsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4462,6 +4570,7 @@ export type UserUncheckedUpdateWithoutAdRewardLogsInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   selectedCharacterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4499,6 +4608,7 @@ export type UserCreateManySelectedCharacterInput = {
   XpLevel?: number
   xp?: number
   streakDays?: number
+  role?: $Enums.UserRole
   lastLoginAt?: Date | string
   registeredAt?: Date | string | null
   createdAt?: Date | string
@@ -4515,6 +4625,7 @@ export type UserUpdateWithoutSelectedCharacterInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4552,6 +4663,7 @@ export type UserUncheckedUpdateWithoutSelectedCharacterInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4589,6 +4701,7 @@ export type UserUncheckedUpdateManyWithoutSelectedCharacterInput = {
   XpLevel?: Prisma.IntFieldUpdateOperationsInput | number
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   streakDays?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   lastLoginAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registeredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4808,6 +4921,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   XpLevel?: boolean
   xp?: boolean
   streakDays?: boolean
+  role?: boolean
   selectedCharacterId?: boolean
   lastLoginAt?: boolean
   registeredAt?: boolean
@@ -4848,6 +4962,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   XpLevel?: boolean
   xp?: boolean
   streakDays?: boolean
+  role?: boolean
   selectedCharacterId?: boolean
   lastLoginAt?: boolean
   registeredAt?: boolean
@@ -4867,6 +4982,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   XpLevel?: boolean
   xp?: boolean
   streakDays?: boolean
+  role?: boolean
   selectedCharacterId?: boolean
   lastLoginAt?: boolean
   registeredAt?: boolean
@@ -4886,6 +5002,7 @@ export type UserSelectScalar = {
   XpLevel?: boolean
   xp?: boolean
   streakDays?: boolean
+  role?: boolean
   selectedCharacterId?: boolean
   lastLoginAt?: boolean
   registeredAt?: boolean
@@ -4893,7 +5010,7 @@ export type UserSelectScalar = {
   isNew?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "provider" | "providerId" | "profileImage" | "level" | "XpLevel" | "xp" | "streakDays" | "selectedCharacterId" | "lastLoginAt" | "registeredAt" | "createdAt" | "isNew", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "provider" | "providerId" | "profileImage" | "level" | "XpLevel" | "xp" | "streakDays" | "role" | "selectedCharacterId" | "lastLoginAt" | "registeredAt" | "createdAt" | "isNew", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   selectedCharacter?: boolean | Prisma.User$selectedCharacterArgs<ExtArgs>
   storyProgress?: boolean | Prisma.User$storyProgressArgs<ExtArgs>
@@ -4961,6 +5078,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     XpLevel: number
     xp: number
     streakDays: number
+    role: $Enums.UserRole
     selectedCharacterId: number | null
     lastLoginAt: Date
     registeredAt: Date | null
@@ -5420,6 +5538,7 @@ export interface UserFieldRefs {
   readonly XpLevel: Prisma.FieldRef<"User", 'Int'>
   readonly xp: Prisma.FieldRef<"User", 'Int'>
   readonly streakDays: Prisma.FieldRef<"User", 'Int'>
+  readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly selectedCharacterId: Prisma.FieldRef<"User", 'Int'>
   readonly lastLoginAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly registeredAt: Prisma.FieldRef<"User", 'DateTime'>

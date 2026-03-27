@@ -4278,6 +4278,7 @@ export const UserScalarFieldEnum = {
   XpLevel: 'XpLevel',
   xp: 'xp',
   streakDays: 'streakDays',
+  role: 'role',
   selectedCharacterId: 'selectedCharacterId',
   lastLoginAt: 'lastLoginAt',
   registeredAt: 'registeredAt',
@@ -5159,6 +5160,20 @@ export type EnumLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMode
  * Reference to a field of type 'Level[]'
  */
 export type ListEnumLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Level[]'>
+    
+
+
+/**
+ * Reference to a field of type 'UserRole'
+ */
+export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
+    
+
+
+/**
+ * Reference to a field of type 'UserRole[]'
+ */
+export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
     
 
 

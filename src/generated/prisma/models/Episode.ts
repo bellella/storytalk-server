@@ -317,6 +317,7 @@ export type EpisodeWhereInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeListRelationFilter
   episodeProducts?: Prisma.EpisodeProductListRelationFilter
   userEndings?: Prisma.UserEndingListRelationFilter
+  reviewItems?: Prisma.ReviewItemListRelationFilter
 }
 
 export type EpisodeOrderByWithRelationInput = {
@@ -345,6 +346,7 @@ export type EpisodeOrderByWithRelationInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeOrderByRelationAggregateInput
   episodeProducts?: Prisma.EpisodeProductOrderByRelationAggregateInput
   userEndings?: Prisma.UserEndingOrderByRelationAggregateInput
+  reviewItems?: Prisma.ReviewItemOrderByRelationAggregateInput
 }
 
 export type EpisodeWhereUniqueInput = Prisma.AtLeast<{
@@ -377,6 +379,7 @@ export type EpisodeWhereUniqueInput = Prisma.AtLeast<{
   userEpisodeLikes?: Prisma.UserEpisodeLikeListRelationFilter
   episodeProducts?: Prisma.EpisodeProductListRelationFilter
   userEndings?: Prisma.UserEndingListRelationFilter
+  reviewItems?: Prisma.ReviewItemListRelationFilter
 }, "id" | "storyId_order">
 
 export type EpisodeOrderByWithAggregationInput = {
@@ -449,6 +452,7 @@ export type EpisodeCreateInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUncheckedCreateInput = {
@@ -476,6 +480,7 @@ export type EpisodeUncheckedCreateInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductUncheckedCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingUncheckedCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemUncheckedCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUpdateInput = {
@@ -502,6 +507,7 @@ export type EpisodeUpdateInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateInput = {
@@ -529,6 +535,7 @@ export type EpisodeUncheckedUpdateInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUncheckedUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUncheckedUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUncheckedUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeCreateManyInput = {
@@ -737,6 +744,20 @@ export type EpisodeUpdateOneRequiredWithoutScenesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EpisodeUpdateToOneWithWhereWithoutScenesInput, Prisma.EpisodeUpdateWithoutScenesInput>, Prisma.EpisodeUncheckedUpdateWithoutScenesInput>
 }
 
+export type EpisodeCreateNestedOneWithoutReviewItemsInput = {
+  create?: Prisma.XOR<Prisma.EpisodeCreateWithoutReviewItemsInput, Prisma.EpisodeUncheckedCreateWithoutReviewItemsInput>
+  connectOrCreate?: Prisma.EpisodeCreateOrConnectWithoutReviewItemsInput
+  connect?: Prisma.EpisodeWhereUniqueInput
+}
+
+export type EpisodeUpdateOneRequiredWithoutReviewItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.EpisodeCreateWithoutReviewItemsInput, Prisma.EpisodeUncheckedCreateWithoutReviewItemsInput>
+  connectOrCreate?: Prisma.EpisodeCreateOrConnectWithoutReviewItemsInput
+  upsert?: Prisma.EpisodeUpsertWithoutReviewItemsInput
+  connect?: Prisma.EpisodeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EpisodeUpdateToOneWithWhereWithoutReviewItemsInput, Prisma.EpisodeUpdateWithoutReviewItemsInput>, Prisma.EpisodeUncheckedUpdateWithoutReviewItemsInput>
+}
+
 export type EpisodeCreateNestedOneWithoutRewardsInput = {
   create?: Prisma.XOR<Prisma.EpisodeCreateWithoutRewardsInput, Prisma.EpisodeUncheckedCreateWithoutRewardsInput>
   connectOrCreate?: Prisma.EpisodeCreateOrConnectWithoutRewardsInput
@@ -858,6 +879,7 @@ export type EpisodeCreateWithoutStoryInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUncheckedCreateWithoutStoryInput = {
@@ -884,6 +906,7 @@ export type EpisodeUncheckedCreateWithoutStoryInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductUncheckedCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingUncheckedCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemUncheckedCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeCreateOrConnectWithoutStoryInput = {
@@ -957,6 +980,7 @@ export type EpisodeCreateWithoutScenesInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUncheckedCreateWithoutScenesInput = {
@@ -983,6 +1007,7 @@ export type EpisodeUncheckedCreateWithoutScenesInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductUncheckedCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingUncheckedCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemUncheckedCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeCreateOrConnectWithoutScenesInput = {
@@ -1024,6 +1049,7 @@ export type EpisodeUpdateWithoutScenesInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateWithoutScenesInput = {
@@ -1043,6 +1069,129 @@ export type EpisodeUncheckedUpdateWithoutScenesInput = {
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rewards?: Prisma.EpisodeRewardUncheckedUpdateManyWithoutEpisodeNestedInput
+  endings?: Prisma.EndingUncheckedUpdateManyWithoutEpisodeNestedInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutEpisodeNestedInput
+  userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedUpdateManyWithoutEpisodeNestedInput
+  userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedUpdateManyWithoutEpisodeNestedInput
+  episodeProducts?: Prisma.EpisodeProductUncheckedUpdateManyWithoutEpisodeNestedInput
+  userEndings?: Prisma.UserEndingUncheckedUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUncheckedUpdateManyWithoutEpisodeNestedInput
+}
+
+export type EpisodeCreateWithoutReviewItemsInput = {
+  type?: $Enums.EpisodeType
+  playMode?: $Enums.PlayEpisodeMode | null
+  title: string
+  koreanTitle?: string | null
+  order: number
+  description?: string | null
+  koreanDescription?: string | null
+  thumbnailUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalScenes?: number | null
+  status?: $Enums.PublishStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  story?: Prisma.StoryCreateNestedOneWithoutEpisodesInput
+  scenes?: Prisma.SceneCreateNestedManyWithoutEpisodeInput
+  rewards?: Prisma.EpisodeRewardCreateNestedManyWithoutEpisodeInput
+  endings?: Prisma.EndingCreateNestedManyWithoutEpisodeInput
+  userEpisodes?: Prisma.UserEpisodeCreateNestedManyWithoutEpisodeInput
+  userPlayEpisodes?: Prisma.UserPlayEpisodeCreateNestedManyWithoutEpisodeInput
+  userEpisodeLikes?: Prisma.UserEpisodeLikeCreateNestedManyWithoutEpisodeInput
+  episodeProducts?: Prisma.EpisodeProductCreateNestedManyWithoutEpisodeInput
+  userEndings?: Prisma.UserEndingCreateNestedManyWithoutEpisodeInput
+}
+
+export type EpisodeUncheckedCreateWithoutReviewItemsInput = {
+  id?: number
+  storyId?: number | null
+  type?: $Enums.EpisodeType
+  playMode?: $Enums.PlayEpisodeMode | null
+  title: string
+  koreanTitle?: string | null
+  order: number
+  description?: string | null
+  koreanDescription?: string | null
+  thumbnailUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalScenes?: number | null
+  status?: $Enums.PublishStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  scenes?: Prisma.SceneUncheckedCreateNestedManyWithoutEpisodeInput
+  rewards?: Prisma.EpisodeRewardUncheckedCreateNestedManyWithoutEpisodeInput
+  endings?: Prisma.EndingUncheckedCreateNestedManyWithoutEpisodeInput
+  userEpisodes?: Prisma.UserEpisodeUncheckedCreateNestedManyWithoutEpisodeInput
+  userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedCreateNestedManyWithoutEpisodeInput
+  userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedCreateNestedManyWithoutEpisodeInput
+  episodeProducts?: Prisma.EpisodeProductUncheckedCreateNestedManyWithoutEpisodeInput
+  userEndings?: Prisma.UserEndingUncheckedCreateNestedManyWithoutEpisodeInput
+}
+
+export type EpisodeCreateOrConnectWithoutReviewItemsInput = {
+  where: Prisma.EpisodeWhereUniqueInput
+  create: Prisma.XOR<Prisma.EpisodeCreateWithoutReviewItemsInput, Prisma.EpisodeUncheckedCreateWithoutReviewItemsInput>
+}
+
+export type EpisodeUpsertWithoutReviewItemsInput = {
+  update: Prisma.XOR<Prisma.EpisodeUpdateWithoutReviewItemsInput, Prisma.EpisodeUncheckedUpdateWithoutReviewItemsInput>
+  create: Prisma.XOR<Prisma.EpisodeCreateWithoutReviewItemsInput, Prisma.EpisodeUncheckedCreateWithoutReviewItemsInput>
+  where?: Prisma.EpisodeWhereInput
+}
+
+export type EpisodeUpdateToOneWithWhereWithoutReviewItemsInput = {
+  where?: Prisma.EpisodeWhereInput
+  data: Prisma.XOR<Prisma.EpisodeUpdateWithoutReviewItemsInput, Prisma.EpisodeUncheckedUpdateWithoutReviewItemsInput>
+}
+
+export type EpisodeUpdateWithoutReviewItemsInput = {
+  type?: Prisma.EnumEpisodeTypeFieldUpdateOperationsInput | $Enums.EpisodeType
+  playMode?: Prisma.NullableEnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  koreanDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalScenes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  story?: Prisma.StoryUpdateOneWithoutEpisodesNestedInput
+  scenes?: Prisma.SceneUpdateManyWithoutEpisodeNestedInput
+  rewards?: Prisma.EpisodeRewardUpdateManyWithoutEpisodeNestedInput
+  endings?: Prisma.EndingUpdateManyWithoutEpisodeNestedInput
+  userEpisodes?: Prisma.UserEpisodeUpdateManyWithoutEpisodeNestedInput
+  userPlayEpisodes?: Prisma.UserPlayEpisodeUpdateManyWithoutEpisodeNestedInput
+  userEpisodeLikes?: Prisma.UserEpisodeLikeUpdateManyWithoutEpisodeNestedInput
+  episodeProducts?: Prisma.EpisodeProductUpdateManyWithoutEpisodeNestedInput
+  userEndings?: Prisma.UserEndingUpdateManyWithoutEpisodeNestedInput
+}
+
+export type EpisodeUncheckedUpdateWithoutReviewItemsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  storyId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  type?: Prisma.EnumEpisodeTypeFieldUpdateOperationsInput | $Enums.EpisodeType
+  playMode?: Prisma.NullableEnumPlayEpisodeModeFieldUpdateOperationsInput | $Enums.PlayEpisodeMode | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  koreanTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  koreanDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalScenes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  scenes?: Prisma.SceneUncheckedUpdateManyWithoutEpisodeNestedInput
   rewards?: Prisma.EpisodeRewardUncheckedUpdateManyWithoutEpisodeNestedInput
   endings?: Prisma.EndingUncheckedUpdateManyWithoutEpisodeNestedInput
   userEpisodes?: Prisma.UserEpisodeUncheckedUpdateManyWithoutEpisodeNestedInput
@@ -1075,6 +1224,7 @@ export type EpisodeCreateWithoutRewardsInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUncheckedCreateWithoutRewardsInput = {
@@ -1101,6 +1251,7 @@ export type EpisodeUncheckedCreateWithoutRewardsInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductUncheckedCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingUncheckedCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemUncheckedCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeCreateOrConnectWithoutRewardsInput = {
@@ -1142,6 +1293,7 @@ export type EpisodeUpdateWithoutRewardsInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateWithoutRewardsInput = {
@@ -1168,6 +1320,7 @@ export type EpisodeUncheckedUpdateWithoutRewardsInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUncheckedUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUncheckedUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUncheckedUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeCreateWithoutUserEpisodesInput = {
@@ -1193,6 +1346,7 @@ export type EpisodeCreateWithoutUserEpisodesInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUncheckedCreateWithoutUserEpisodesInput = {
@@ -1219,6 +1373,7 @@ export type EpisodeUncheckedCreateWithoutUserEpisodesInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductUncheckedCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingUncheckedCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemUncheckedCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeCreateOrConnectWithoutUserEpisodesInput = {
@@ -1260,6 +1415,7 @@ export type EpisodeUpdateWithoutUserEpisodesInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateWithoutUserEpisodesInput = {
@@ -1286,6 +1442,7 @@ export type EpisodeUncheckedUpdateWithoutUserEpisodesInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUncheckedUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUncheckedUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUncheckedUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeCreateWithoutUserEpisodeLikesInput = {
@@ -1311,6 +1468,7 @@ export type EpisodeCreateWithoutUserEpisodeLikesInput = {
   userPlayEpisodes?: Prisma.UserPlayEpisodeCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUncheckedCreateWithoutUserEpisodeLikesInput = {
@@ -1337,6 +1495,7 @@ export type EpisodeUncheckedCreateWithoutUserEpisodeLikesInput = {
   userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductUncheckedCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingUncheckedCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemUncheckedCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeCreateOrConnectWithoutUserEpisodeLikesInput = {
@@ -1378,6 +1537,7 @@ export type EpisodeUpdateWithoutUserEpisodeLikesInput = {
   userPlayEpisodes?: Prisma.UserPlayEpisodeUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateWithoutUserEpisodeLikesInput = {
@@ -1404,6 +1564,7 @@ export type EpisodeUncheckedUpdateWithoutUserEpisodeLikesInput = {
   userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUncheckedUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUncheckedUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUncheckedUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeCreateWithoutUserPlayEpisodesInput = {
@@ -1429,6 +1590,7 @@ export type EpisodeCreateWithoutUserPlayEpisodesInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUncheckedCreateWithoutUserPlayEpisodesInput = {
@@ -1455,6 +1617,7 @@ export type EpisodeUncheckedCreateWithoutUserPlayEpisodesInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductUncheckedCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingUncheckedCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemUncheckedCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeCreateOrConnectWithoutUserPlayEpisodesInput = {
@@ -1496,6 +1659,7 @@ export type EpisodeUpdateWithoutUserPlayEpisodesInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateWithoutUserPlayEpisodesInput = {
@@ -1522,6 +1686,7 @@ export type EpisodeUncheckedUpdateWithoutUserPlayEpisodesInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUncheckedUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUncheckedUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUncheckedUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeCreateWithoutEndingsInput = {
@@ -1547,6 +1712,7 @@ export type EpisodeCreateWithoutEndingsInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUncheckedCreateWithoutEndingsInput = {
@@ -1573,6 +1739,7 @@ export type EpisodeUncheckedCreateWithoutEndingsInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductUncheckedCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingUncheckedCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemUncheckedCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeCreateOrConnectWithoutEndingsInput = {
@@ -1614,6 +1781,7 @@ export type EpisodeUpdateWithoutEndingsInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateWithoutEndingsInput = {
@@ -1640,6 +1808,7 @@ export type EpisodeUncheckedUpdateWithoutEndingsInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUncheckedUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUncheckedUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUncheckedUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeCreateWithoutUserEndingsInput = {
@@ -1665,6 +1834,7 @@ export type EpisodeCreateWithoutUserEndingsInput = {
   userPlayEpisodes?: Prisma.UserPlayEpisodeCreateNestedManyWithoutEpisodeInput
   userEpisodeLikes?: Prisma.UserEpisodeLikeCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUncheckedCreateWithoutUserEndingsInput = {
@@ -1691,6 +1861,7 @@ export type EpisodeUncheckedCreateWithoutUserEndingsInput = {
   userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedCreateNestedManyWithoutEpisodeInput
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedCreateNestedManyWithoutEpisodeInput
   episodeProducts?: Prisma.EpisodeProductUncheckedCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemUncheckedCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeCreateOrConnectWithoutUserEndingsInput = {
@@ -1732,6 +1903,7 @@ export type EpisodeUpdateWithoutUserEndingsInput = {
   userPlayEpisodes?: Prisma.UserPlayEpisodeUpdateManyWithoutEpisodeNestedInput
   userEpisodeLikes?: Prisma.UserEpisodeLikeUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateWithoutUserEndingsInput = {
@@ -1758,6 +1930,7 @@ export type EpisodeUncheckedUpdateWithoutUserEndingsInput = {
   userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedUpdateManyWithoutEpisodeNestedInput
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUncheckedUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUncheckedUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeCreateWithoutEpisodeProductsInput = {
@@ -1783,6 +1956,7 @@ export type EpisodeCreateWithoutEpisodeProductsInput = {
   userPlayEpisodes?: Prisma.UserPlayEpisodeCreateNestedManyWithoutEpisodeInput
   userEpisodeLikes?: Prisma.UserEpisodeLikeCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeUncheckedCreateWithoutEpisodeProductsInput = {
@@ -1809,6 +1983,7 @@ export type EpisodeUncheckedCreateWithoutEpisodeProductsInput = {
   userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedCreateNestedManyWithoutEpisodeInput
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedCreateNestedManyWithoutEpisodeInput
   userEndings?: Prisma.UserEndingUncheckedCreateNestedManyWithoutEpisodeInput
+  reviewItems?: Prisma.ReviewItemUncheckedCreateNestedManyWithoutEpisodeInput
 }
 
 export type EpisodeCreateOrConnectWithoutEpisodeProductsInput = {
@@ -1850,6 +2025,7 @@ export type EpisodeUpdateWithoutEpisodeProductsInput = {
   userPlayEpisodes?: Prisma.UserPlayEpisodeUpdateManyWithoutEpisodeNestedInput
   userEpisodeLikes?: Prisma.UserEpisodeLikeUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateWithoutEpisodeProductsInput = {
@@ -1876,6 +2052,7 @@ export type EpisodeUncheckedUpdateWithoutEpisodeProductsInput = {
   userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedUpdateManyWithoutEpisodeNestedInput
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUncheckedUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUncheckedUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeCreateManyStoryInput = {
@@ -1919,6 +2096,7 @@ export type EpisodeUpdateWithoutStoryInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateWithoutStoryInput = {
@@ -1945,6 +2123,7 @@ export type EpisodeUncheckedUpdateWithoutStoryInput = {
   userEpisodeLikes?: Prisma.UserEpisodeLikeUncheckedUpdateManyWithoutEpisodeNestedInput
   episodeProducts?: Prisma.EpisodeProductUncheckedUpdateManyWithoutEpisodeNestedInput
   userEndings?: Prisma.UserEndingUncheckedUpdateManyWithoutEpisodeNestedInput
+  reviewItems?: Prisma.ReviewItemUncheckedUpdateManyWithoutEpisodeNestedInput
 }
 
 export type EpisodeUncheckedUpdateManyWithoutStoryInput = {
@@ -1979,6 +2158,7 @@ export type EpisodeCountOutputType = {
   userEpisodeLikes: number
   episodeProducts: number
   userEndings: number
+  reviewItems: number
 }
 
 export type EpisodeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1990,6 +2170,7 @@ export type EpisodeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   userEpisodeLikes?: boolean | EpisodeCountOutputTypeCountUserEpisodeLikesArgs
   episodeProducts?: boolean | EpisodeCountOutputTypeCountEpisodeProductsArgs
   userEndings?: boolean | EpisodeCountOutputTypeCountUserEndingsArgs
+  reviewItems?: boolean | EpisodeCountOutputTypeCountReviewItemsArgs
 }
 
 /**
@@ -2058,6 +2239,13 @@ export type EpisodeCountOutputTypeCountUserEndingsArgs<ExtArgs extends runtime.T
   where?: Prisma.UserEndingWhereInput
 }
 
+/**
+ * EpisodeCountOutputType without action
+ */
+export type EpisodeCountOutputTypeCountReviewItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReviewItemWhereInput
+}
+
 
 export type EpisodeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2085,6 +2273,7 @@ export type EpisodeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   userEpisodeLikes?: boolean | Prisma.Episode$userEpisodeLikesArgs<ExtArgs>
   episodeProducts?: boolean | Prisma.Episode$episodeProductsArgs<ExtArgs>
   userEndings?: boolean | Prisma.Episode$userEndingsArgs<ExtArgs>
+  reviewItems?: boolean | Prisma.Episode$reviewItemsArgs<ExtArgs>
   _count?: boolean | Prisma.EpisodeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["episode"]>
 
@@ -2158,6 +2347,7 @@ export type EpisodeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   userEpisodeLikes?: boolean | Prisma.Episode$userEpisodeLikesArgs<ExtArgs>
   episodeProducts?: boolean | Prisma.Episode$episodeProductsArgs<ExtArgs>
   userEndings?: boolean | Prisma.Episode$userEndingsArgs<ExtArgs>
+  reviewItems?: boolean | Prisma.Episode$reviewItemsArgs<ExtArgs>
   _count?: boolean | Prisma.EpisodeCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type EpisodeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2179,6 +2369,7 @@ export type $EpisodePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     userEpisodeLikes: Prisma.$UserEpisodeLikePayload<ExtArgs>[]
     episodeProducts: Prisma.$EpisodeProductPayload<ExtArgs>[]
     userEndings: Prisma.$UserEndingPayload<ExtArgs>[]
+    reviewItems: Prisma.$ReviewItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2603,6 +2794,7 @@ export interface Prisma__EpisodeClient<T, Null = never, ExtArgs extends runtime.
   userEpisodeLikes<T extends Prisma.Episode$userEpisodeLikesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Episode$userEpisodeLikesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserEpisodeLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   episodeProducts<T extends Prisma.Episode$episodeProductsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Episode$episodeProductsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EpisodeProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   userEndings<T extends Prisma.Episode$userEndingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Episode$userEndingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserEndingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviewItems<T extends Prisma.Episode$reviewItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Episode$reviewItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3252,6 +3444,30 @@ export type Episode$userEndingsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.UserEndingScalarFieldEnum | Prisma.UserEndingScalarFieldEnum[]
+}
+
+/**
+ * Episode.reviewItems
+ */
+export type Episode$reviewItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ReviewItem
+   */
+  select?: Prisma.ReviewItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ReviewItem
+   */
+  omit?: Prisma.ReviewItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewItemInclude<ExtArgs> | null
+  where?: Prisma.ReviewItemWhereInput
+  orderBy?: Prisma.ReviewItemOrderByWithRelationInput | Prisma.ReviewItemOrderByWithRelationInput[]
+  cursor?: Prisma.ReviewItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReviewItemScalarFieldEnum | Prisma.ReviewItemScalarFieldEnum[]
 }
 
 /**

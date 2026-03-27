@@ -316,6 +316,7 @@ export type DialogueWhereInput = {
   character?: Prisma.XOR<Prisma.CharacterNullableScalarRelationFilter, Prisma.CharacterWhereInput> | null
   bookmarks?: Prisma.DialogueBookmarkListRelationFilter
   playEpisodeSlots?: Prisma.PlayEpisodeSlotListRelationFilter
+  reviewItems?: Prisma.ReviewItemListRelationFilter
 }
 
 export type DialogueOrderByWithRelationInput = {
@@ -339,6 +340,7 @@ export type DialogueOrderByWithRelationInput = {
   character?: Prisma.CharacterOrderByWithRelationInput
   bookmarks?: Prisma.dialogueBookmarkOrderByRelationAggregateInput
   playEpisodeSlots?: Prisma.PlayEpisodeSlotOrderByRelationAggregateInput
+  reviewItems?: Prisma.ReviewItemOrderByRelationAggregateInput
 }
 
 export type DialogueWhereUniqueInput = Prisma.AtLeast<{
@@ -366,6 +368,7 @@ export type DialogueWhereUniqueInput = Prisma.AtLeast<{
   character?: Prisma.XOR<Prisma.CharacterNullableScalarRelationFilter, Prisma.CharacterWhereInput> | null
   bookmarks?: Prisma.DialogueBookmarkListRelationFilter
   playEpisodeSlots?: Prisma.PlayEpisodeSlotListRelationFilter
+  reviewItems?: Prisma.ReviewItemListRelationFilter
 }, "id" | "sceneId_order">
 
 export type DialogueOrderByWithAggregationInput = {
@@ -432,6 +435,7 @@ export type DialogueCreateInput = {
   character?: Prisma.CharacterCreateNestedOneWithoutDialoguesInput
   bookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutDialogueInput
   playEpisodeSlots?: Prisma.PlayEpisodeSlotCreateNestedManyWithoutDialogueInput
+  reviewItems?: Prisma.ReviewItemCreateNestedManyWithoutDialogueInput
 }
 
 export type DialogueUncheckedCreateInput = {
@@ -453,6 +457,7 @@ export type DialogueUncheckedCreateInput = {
   updatedAt?: Date | string
   bookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutDialogueInput
   playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedCreateNestedManyWithoutDialogueInput
+  reviewItems?: Prisma.ReviewItemUncheckedCreateNestedManyWithoutDialogueInput
 }
 
 export type DialogueUpdateInput = {
@@ -473,6 +478,7 @@ export type DialogueUpdateInput = {
   character?: Prisma.CharacterUpdateOneWithoutDialoguesNestedInput
   bookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutDialogueNestedInput
   playEpisodeSlots?: Prisma.PlayEpisodeSlotUpdateManyWithoutDialogueNestedInput
+  reviewItems?: Prisma.ReviewItemUpdateManyWithoutDialogueNestedInput
 }
 
 export type DialogueUncheckedUpdateInput = {
@@ -494,6 +500,7 @@ export type DialogueUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutDialogueNestedInput
   playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedUpdateManyWithoutDialogueNestedInput
+  reviewItems?: Prisma.ReviewItemUncheckedUpdateManyWithoutDialogueNestedInput
 }
 
 export type DialogueCreateManyInput = {
@@ -693,6 +700,20 @@ export type EnumDialogueSpeakerRoleFieldUpdateOperationsInput = {
   set?: $Enums.DialogueSpeakerRole
 }
 
+export type DialogueCreateNestedOneWithoutReviewItemsInput = {
+  create?: Prisma.XOR<Prisma.DialogueCreateWithoutReviewItemsInput, Prisma.DialogueUncheckedCreateWithoutReviewItemsInput>
+  connectOrCreate?: Prisma.DialogueCreateOrConnectWithoutReviewItemsInput
+  connect?: Prisma.DialogueWhereUniqueInput
+}
+
+export type DialogueUpdateOneRequiredWithoutReviewItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.DialogueCreateWithoutReviewItemsInput, Prisma.DialogueUncheckedCreateWithoutReviewItemsInput>
+  connectOrCreate?: Prisma.DialogueCreateOrConnectWithoutReviewItemsInput
+  upsert?: Prisma.DialogueUpsertWithoutReviewItemsInput
+  connect?: Prisma.DialogueWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DialogueUpdateToOneWithWhereWithoutReviewItemsInput, Prisma.DialogueUpdateWithoutReviewItemsInput>, Prisma.DialogueUncheckedUpdateWithoutReviewItemsInput>
+}
+
 export type DialogueCreateNestedManyWithoutCharacterInput = {
   create?: Prisma.XOR<Prisma.DialogueCreateWithoutCharacterInput, Prisma.DialogueUncheckedCreateWithoutCharacterInput> | Prisma.DialogueCreateWithoutCharacterInput[] | Prisma.DialogueUncheckedCreateWithoutCharacterInput[]
   connectOrCreate?: Prisma.DialogueCreateOrConnectWithoutCharacterInput | Prisma.DialogueCreateOrConnectWithoutCharacterInput[]
@@ -780,6 +801,7 @@ export type DialogueCreateWithoutSceneInput = {
   character?: Prisma.CharacterCreateNestedOneWithoutDialoguesInput
   bookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutDialogueInput
   playEpisodeSlots?: Prisma.PlayEpisodeSlotCreateNestedManyWithoutDialogueInput
+  reviewItems?: Prisma.ReviewItemCreateNestedManyWithoutDialogueInput
 }
 
 export type DialogueUncheckedCreateWithoutSceneInput = {
@@ -800,6 +822,7 @@ export type DialogueUncheckedCreateWithoutSceneInput = {
   updatedAt?: Date | string
   bookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutDialogueInput
   playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedCreateNestedManyWithoutDialogueInput
+  reviewItems?: Prisma.ReviewItemUncheckedCreateNestedManyWithoutDialogueInput
 }
 
 export type DialogueCreateOrConnectWithoutSceneInput = {
@@ -850,6 +873,104 @@ export type DialogueScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Dialogue"> | Date | string
 }
 
+export type DialogueCreateWithoutReviewItemsInput = {
+  order: number
+  flowType?: $Enums.DialogueFlowType
+  type?: $Enums.DialogueType
+  speakerRole?: $Enums.DialogueSpeakerRole
+  characterName?: string | null
+  englishText: string
+  koreanText: string
+  charImageLabel?: string | null
+  imageUrl?: string | null
+  audioUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  scene: Prisma.SceneCreateNestedOneWithoutDialoguesInput
+  character?: Prisma.CharacterCreateNestedOneWithoutDialoguesInput
+  bookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutDialogueInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotCreateNestedManyWithoutDialogueInput
+}
+
+export type DialogueUncheckedCreateWithoutReviewItemsInput = {
+  id?: number
+  sceneId: number
+  order: number
+  flowType?: $Enums.DialogueFlowType
+  type?: $Enums.DialogueType
+  speakerRole?: $Enums.DialogueSpeakerRole
+  characterName?: string | null
+  characterId?: number | null
+  englishText: string
+  koreanText: string
+  charImageLabel?: string | null
+  imageUrl?: string | null
+  audioUrl?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  bookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutDialogueInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedCreateNestedManyWithoutDialogueInput
+}
+
+export type DialogueCreateOrConnectWithoutReviewItemsInput = {
+  where: Prisma.DialogueWhereUniqueInput
+  create: Prisma.XOR<Prisma.DialogueCreateWithoutReviewItemsInput, Prisma.DialogueUncheckedCreateWithoutReviewItemsInput>
+}
+
+export type DialogueUpsertWithoutReviewItemsInput = {
+  update: Prisma.XOR<Prisma.DialogueUpdateWithoutReviewItemsInput, Prisma.DialogueUncheckedUpdateWithoutReviewItemsInput>
+  create: Prisma.XOR<Prisma.DialogueCreateWithoutReviewItemsInput, Prisma.DialogueUncheckedCreateWithoutReviewItemsInput>
+  where?: Prisma.DialogueWhereInput
+}
+
+export type DialogueUpdateToOneWithWhereWithoutReviewItemsInput = {
+  where?: Prisma.DialogueWhereInput
+  data: Prisma.XOR<Prisma.DialogueUpdateWithoutReviewItemsInput, Prisma.DialogueUncheckedUpdateWithoutReviewItemsInput>
+}
+
+export type DialogueUpdateWithoutReviewItemsInput = {
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
+  speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
+  characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  englishText?: Prisma.StringFieldUpdateOperationsInput | string
+  koreanText?: Prisma.StringFieldUpdateOperationsInput | string
+  charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  scene?: Prisma.SceneUpdateOneRequiredWithoutDialoguesNestedInput
+  character?: Prisma.CharacterUpdateOneWithoutDialoguesNestedInput
+  bookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutDialogueNestedInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotUpdateManyWithoutDialogueNestedInput
+}
+
+export type DialogueUncheckedUpdateWithoutReviewItemsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  sceneId?: Prisma.IntFieldUpdateOperationsInput | number
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  flowType?: Prisma.EnumDialogueFlowTypeFieldUpdateOperationsInput | $Enums.DialogueFlowType
+  type?: Prisma.EnumDialogueTypeFieldUpdateOperationsInput | $Enums.DialogueType
+  speakerRole?: Prisma.EnumDialogueSpeakerRoleFieldUpdateOperationsInput | $Enums.DialogueSpeakerRole
+  characterName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  characterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  englishText?: Prisma.StringFieldUpdateOperationsInput | string
+  koreanText?: Prisma.StringFieldUpdateOperationsInput | string
+  charImageLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutDialogueNestedInput
+  playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedUpdateManyWithoutDialogueNestedInput
+}
+
 export type DialogueCreateWithoutCharacterInput = {
   order: number
   flowType?: $Enums.DialogueFlowType
@@ -867,6 +988,7 @@ export type DialogueCreateWithoutCharacterInput = {
   scene: Prisma.SceneCreateNestedOneWithoutDialoguesInput
   bookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutDialogueInput
   playEpisodeSlots?: Prisma.PlayEpisodeSlotCreateNestedManyWithoutDialogueInput
+  reviewItems?: Prisma.ReviewItemCreateNestedManyWithoutDialogueInput
 }
 
 export type DialogueUncheckedCreateWithoutCharacterInput = {
@@ -887,6 +1009,7 @@ export type DialogueUncheckedCreateWithoutCharacterInput = {
   updatedAt?: Date | string
   bookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutDialogueInput
   playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedCreateNestedManyWithoutDialogueInput
+  reviewItems?: Prisma.ReviewItemUncheckedCreateNestedManyWithoutDialogueInput
 }
 
 export type DialogueCreateOrConnectWithoutCharacterInput = {
@@ -932,6 +1055,7 @@ export type DialogueCreateWithoutBookmarksInput = {
   scene: Prisma.SceneCreateNestedOneWithoutDialoguesInput
   character?: Prisma.CharacterCreateNestedOneWithoutDialoguesInput
   playEpisodeSlots?: Prisma.PlayEpisodeSlotCreateNestedManyWithoutDialogueInput
+  reviewItems?: Prisma.ReviewItemCreateNestedManyWithoutDialogueInput
 }
 
 export type DialogueUncheckedCreateWithoutBookmarksInput = {
@@ -952,6 +1076,7 @@ export type DialogueUncheckedCreateWithoutBookmarksInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedCreateNestedManyWithoutDialogueInput
+  reviewItems?: Prisma.ReviewItemUncheckedCreateNestedManyWithoutDialogueInput
 }
 
 export type DialogueCreateOrConnectWithoutBookmarksInput = {
@@ -987,6 +1112,7 @@ export type DialogueUpdateWithoutBookmarksInput = {
   scene?: Prisma.SceneUpdateOneRequiredWithoutDialoguesNestedInput
   character?: Prisma.CharacterUpdateOneWithoutDialoguesNestedInput
   playEpisodeSlots?: Prisma.PlayEpisodeSlotUpdateManyWithoutDialogueNestedInput
+  reviewItems?: Prisma.ReviewItemUpdateManyWithoutDialogueNestedInput
 }
 
 export type DialogueUncheckedUpdateWithoutBookmarksInput = {
@@ -1007,6 +1133,7 @@ export type DialogueUncheckedUpdateWithoutBookmarksInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedUpdateManyWithoutDialogueNestedInput
+  reviewItems?: Prisma.ReviewItemUncheckedUpdateManyWithoutDialogueNestedInput
 }
 
 export type DialogueCreateWithoutPlayEpisodeSlotsInput = {
@@ -1026,6 +1153,7 @@ export type DialogueCreateWithoutPlayEpisodeSlotsInput = {
   scene: Prisma.SceneCreateNestedOneWithoutDialoguesInput
   character?: Prisma.CharacterCreateNestedOneWithoutDialoguesInput
   bookmarks?: Prisma.dialogueBookmarkCreateNestedManyWithoutDialogueInput
+  reviewItems?: Prisma.ReviewItemCreateNestedManyWithoutDialogueInput
 }
 
 export type DialogueUncheckedCreateWithoutPlayEpisodeSlotsInput = {
@@ -1046,6 +1174,7 @@ export type DialogueUncheckedCreateWithoutPlayEpisodeSlotsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   bookmarks?: Prisma.dialogueBookmarkUncheckedCreateNestedManyWithoutDialogueInput
+  reviewItems?: Prisma.ReviewItemUncheckedCreateNestedManyWithoutDialogueInput
 }
 
 export type DialogueCreateOrConnectWithoutPlayEpisodeSlotsInput = {
@@ -1081,6 +1210,7 @@ export type DialogueUpdateWithoutPlayEpisodeSlotsInput = {
   scene?: Prisma.SceneUpdateOneRequiredWithoutDialoguesNestedInput
   character?: Prisma.CharacterUpdateOneWithoutDialoguesNestedInput
   bookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutDialogueNestedInput
+  reviewItems?: Prisma.ReviewItemUpdateManyWithoutDialogueNestedInput
 }
 
 export type DialogueUncheckedUpdateWithoutPlayEpisodeSlotsInput = {
@@ -1101,6 +1231,7 @@ export type DialogueUncheckedUpdateWithoutPlayEpisodeSlotsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutDialogueNestedInput
+  reviewItems?: Prisma.ReviewItemUncheckedUpdateManyWithoutDialogueNestedInput
 }
 
 export type DialogueCreateManySceneInput = {
@@ -1138,6 +1269,7 @@ export type DialogueUpdateWithoutSceneInput = {
   character?: Prisma.CharacterUpdateOneWithoutDialoguesNestedInput
   bookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutDialogueNestedInput
   playEpisodeSlots?: Prisma.PlayEpisodeSlotUpdateManyWithoutDialogueNestedInput
+  reviewItems?: Prisma.ReviewItemUpdateManyWithoutDialogueNestedInput
 }
 
 export type DialogueUncheckedUpdateWithoutSceneInput = {
@@ -1158,6 +1290,7 @@ export type DialogueUncheckedUpdateWithoutSceneInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutDialogueNestedInput
   playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedUpdateManyWithoutDialogueNestedInput
+  reviewItems?: Prisma.ReviewItemUncheckedUpdateManyWithoutDialogueNestedInput
 }
 
 export type DialogueUncheckedUpdateManyWithoutSceneInput = {
@@ -1213,6 +1346,7 @@ export type DialogueUpdateWithoutCharacterInput = {
   scene?: Prisma.SceneUpdateOneRequiredWithoutDialoguesNestedInput
   bookmarks?: Prisma.dialogueBookmarkUpdateManyWithoutDialogueNestedInput
   playEpisodeSlots?: Prisma.PlayEpisodeSlotUpdateManyWithoutDialogueNestedInput
+  reviewItems?: Prisma.ReviewItemUpdateManyWithoutDialogueNestedInput
 }
 
 export type DialogueUncheckedUpdateWithoutCharacterInput = {
@@ -1233,6 +1367,7 @@ export type DialogueUncheckedUpdateWithoutCharacterInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookmarks?: Prisma.dialogueBookmarkUncheckedUpdateManyWithoutDialogueNestedInput
   playEpisodeSlots?: Prisma.PlayEpisodeSlotUncheckedUpdateManyWithoutDialogueNestedInput
+  reviewItems?: Prisma.ReviewItemUncheckedUpdateManyWithoutDialogueNestedInput
 }
 
 export type DialogueUncheckedUpdateManyWithoutCharacterInput = {
@@ -1261,11 +1396,13 @@ export type DialogueUncheckedUpdateManyWithoutCharacterInput = {
 export type DialogueCountOutputType = {
   bookmarks: number
   playEpisodeSlots: number
+  reviewItems: number
 }
 
 export type DialogueCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bookmarks?: boolean | DialogueCountOutputTypeCountBookmarksArgs
   playEpisodeSlots?: boolean | DialogueCountOutputTypeCountPlayEpisodeSlotsArgs
+  reviewItems?: boolean | DialogueCountOutputTypeCountReviewItemsArgs
 }
 
 /**
@@ -1292,6 +1429,13 @@ export type DialogueCountOutputTypeCountPlayEpisodeSlotsArgs<ExtArgs extends run
   where?: Prisma.PlayEpisodeSlotWhereInput
 }
 
+/**
+ * DialogueCountOutputType without action
+ */
+export type DialogueCountOutputTypeCountReviewItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReviewItemWhereInput
+}
+
 
 export type DialogueSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1314,6 +1458,7 @@ export type DialogueSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   character?: boolean | Prisma.Dialogue$characterArgs<ExtArgs>
   bookmarks?: boolean | Prisma.Dialogue$bookmarksArgs<ExtArgs>
   playEpisodeSlots?: boolean | Prisma.Dialogue$playEpisodeSlotsArgs<ExtArgs>
+  reviewItems?: boolean | Prisma.Dialogue$reviewItemsArgs<ExtArgs>
   _count?: boolean | Prisma.DialogueCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dialogue"]>
 
@@ -1384,6 +1529,7 @@ export type DialogueInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   character?: boolean | Prisma.Dialogue$characterArgs<ExtArgs>
   bookmarks?: boolean | Prisma.Dialogue$bookmarksArgs<ExtArgs>
   playEpisodeSlots?: boolean | Prisma.Dialogue$playEpisodeSlotsArgs<ExtArgs>
+  reviewItems?: boolean | Prisma.Dialogue$reviewItemsArgs<ExtArgs>
   _count?: boolean | Prisma.DialogueCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DialogueIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1402,6 +1548,7 @@ export type $DialoguePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     character: Prisma.$CharacterPayload<ExtArgs> | null
     bookmarks: Prisma.$dialogueBookmarkPayload<ExtArgs>[]
     playEpisodeSlots: Prisma.$PlayEpisodeSlotPayload<ExtArgs>[]
+    reviewItems: Prisma.$ReviewItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1818,6 +1965,7 @@ export interface Prisma__DialogueClient<T, Null = never, ExtArgs extends runtime
   character<T extends Prisma.Dialogue$characterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Dialogue$characterArgs<ExtArgs>>): Prisma.Prisma__CharacterClient<runtime.Types.Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   bookmarks<T extends Prisma.Dialogue$bookmarksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Dialogue$bookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$dialogueBookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   playEpisodeSlots<T extends Prisma.Dialogue$playEpisodeSlotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Dialogue$playEpisodeSlotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlayEpisodeSlotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviewItems<T extends Prisma.Dialogue$reviewItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Dialogue$reviewItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2323,6 +2471,30 @@ export type Dialogue$playEpisodeSlotsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.PlayEpisodeSlotScalarFieldEnum | Prisma.PlayEpisodeSlotScalarFieldEnum[]
+}
+
+/**
+ * Dialogue.reviewItems
+ */
+export type Dialogue$reviewItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ReviewItem
+   */
+  select?: Prisma.ReviewItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ReviewItem
+   */
+  omit?: Prisma.ReviewItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewItemInclude<ExtArgs> | null
+  where?: Prisma.ReviewItemWhereInput
+  orderBy?: Prisma.ReviewItemOrderByWithRelationInput | Prisma.ReviewItemOrderByWithRelationInput[]
+  cursor?: Prisma.ReviewItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReviewItemScalarFieldEnum | Prisma.ReviewItemScalarFieldEnum[]
 }
 
 /**

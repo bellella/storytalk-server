@@ -143,6 +143,7 @@ export class AuthService {
         email: user.email,
         name: user.name,
         profileImage: user.profileImage,
+        role: user.role,
       },
       tokens,
       isNew,
