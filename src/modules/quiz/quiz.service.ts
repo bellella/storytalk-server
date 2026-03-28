@@ -479,15 +479,27 @@ export class QuizService {
 
     if (session.type === QuizSessionType.EPISODE && session.sourceId) {
       // 퀴즈 완료가 unlock 기준이므로 UserEpisode를 반드시 남긴다.
+      // completedAt: 최초 퀴즈 완료 시각만 기록(재제출로 덮지 않음)
+      const existingUe = await this.prisma.userEpisode.findUnique({
+        where: {
+          userId_episodeId: { userId, episodeId: session.sourceId },
+        },
+        select: { completedAt: true },
+      });
+      const quizCompletedAt = new Date();
       await this.prisma.userEpisode.upsert({
         where: { userId_episodeId: { userId, episodeId: session.sourceId } },
         create: {
           userId,
           episodeId: session.sourceId,
           currentStage: EpisodeStage.QUIZ_COMPLETED,
+          completedAt: quizCompletedAt,
         },
         update: {
           currentStage: EpisodeStage.QUIZ_COMPLETED,
+          ...(existingUe?.completedAt == null
+            ? { completedAt: quizCompletedAt }
+            : {}),
         },
       });
       xpResult = await this.xpService.grantXp({

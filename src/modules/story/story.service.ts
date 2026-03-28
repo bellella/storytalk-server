@@ -45,6 +45,7 @@ export class StoryService {
       where: { id: storyId, type: { in: [StoryType.NOVEL, StoryType.UNIT] } },
       include: {
         episodes: {
+          where: { status: PublishStatus.PUBLISHED },
           orderBy: { order: 'asc' },
           select: {
             id: true,
