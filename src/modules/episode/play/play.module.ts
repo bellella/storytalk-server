@@ -6,6 +6,7 @@ import { QuizModule } from '@/modules/quiz/quiz.module';
 import { StoryModule } from '@/modules/story/story.module';
 import { CharacterModule } from '@/modules/character/character.module';
 import { PromptTemplateModule } from '@/modules/prompt-template/prompt-template.module';
+import { RewardModule } from '@/modules/reward/reward.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { PromptTemplateModule } from '@/modules/prompt-template/prompt-template.
     StoryModule,
     CharacterModule,
     PromptTemplateModule,
+    RewardModule,
   ],
   controllers: [PlayController],
   providers: [PlayService],

@@ -249,7 +249,6 @@ export type EndingWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Ending"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Ending"> | Date | string
   episode?: Prisma.XOR<Prisma.EpisodeScalarRelationFilter, Prisma.EpisodeWhereInput>
-  rewards?: Prisma.EndingRewardListRelationFilter
   userPlayEpisodes?: Prisma.UserPlayEpisodeListRelationFilter
 }
 
@@ -263,7 +262,6 @@ export type EndingOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   episode?: Prisma.EpisodeOrderByWithRelationInput
-  rewards?: Prisma.EndingRewardOrderByRelationAggregateInput
   userPlayEpisodes?: Prisma.UserPlayEpisodeOrderByRelationAggregateInput
 }
 
@@ -281,7 +279,6 @@ export type EndingWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Ending"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Ending"> | Date | string
   episode?: Prisma.XOR<Prisma.EpisodeScalarRelationFilter, Prisma.EpisodeWhereInput>
-  rewards?: Prisma.EndingRewardListRelationFilter
   userPlayEpisodes?: Prisma.UserPlayEpisodeListRelationFilter
 }, "id" | "episodeId_key">
 
@@ -323,7 +320,6 @@ export type EndingCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   episode: Prisma.EpisodeCreateNestedOneWithoutEndingsInput
-  rewards?: Prisma.EndingRewardCreateNestedManyWithoutEndingInput
   userPlayEpisodes?: Prisma.UserPlayEpisodeCreateNestedManyWithoutEndingInput
 }
 
@@ -336,7 +332,6 @@ export type EndingUncheckedCreateInput = {
   order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  rewards?: Prisma.EndingRewardUncheckedCreateNestedManyWithoutEndingInput
   userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedCreateNestedManyWithoutEndingInput
 }
 
@@ -348,7 +343,6 @@ export type EndingUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   episode?: Prisma.EpisodeUpdateOneRequiredWithoutEndingsNestedInput
-  rewards?: Prisma.EndingRewardUpdateManyWithoutEndingNestedInput
   userPlayEpisodes?: Prisma.UserPlayEpisodeUpdateManyWithoutEndingNestedInput
 }
 
@@ -361,7 +355,6 @@ export type EndingUncheckedUpdateInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  rewards?: Prisma.EndingRewardUncheckedUpdateManyWithoutEndingNestedInput
   userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedUpdateManyWithoutEndingNestedInput
 }
 
@@ -461,11 +454,6 @@ export type EndingSumOrderByAggregateInput = {
   order?: Prisma.SortOrder
 }
 
-export type EndingScalarRelationFilter = {
-  is?: Prisma.EndingWhereInput
-  isNot?: Prisma.EndingWhereInput
-}
-
 export type EndingCreateNestedManyWithoutEpisodeInput = {
   create?: Prisma.XOR<Prisma.EndingCreateWithoutEpisodeInput, Prisma.EndingUncheckedCreateWithoutEpisodeInput> | Prisma.EndingCreateWithoutEpisodeInput[] | Prisma.EndingUncheckedCreateWithoutEpisodeInput[]
   connectOrCreate?: Prisma.EndingCreateOrConnectWithoutEpisodeInput | Prisma.EndingCreateOrConnectWithoutEpisodeInput[]
@@ -524,20 +512,6 @@ export type EndingUpdateOneWithoutUserPlayEpisodesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EndingUpdateToOneWithWhereWithoutUserPlayEpisodesInput, Prisma.EndingUpdateWithoutUserPlayEpisodesInput>, Prisma.EndingUncheckedUpdateWithoutUserPlayEpisodesInput>
 }
 
-export type EndingCreateNestedOneWithoutRewardsInput = {
-  create?: Prisma.XOR<Prisma.EndingCreateWithoutRewardsInput, Prisma.EndingUncheckedCreateWithoutRewardsInput>
-  connectOrCreate?: Prisma.EndingCreateOrConnectWithoutRewardsInput
-  connect?: Prisma.EndingWhereUniqueInput
-}
-
-export type EndingUpdateOneRequiredWithoutRewardsNestedInput = {
-  create?: Prisma.XOR<Prisma.EndingCreateWithoutRewardsInput, Prisma.EndingUncheckedCreateWithoutRewardsInput>
-  connectOrCreate?: Prisma.EndingCreateOrConnectWithoutRewardsInput
-  upsert?: Prisma.EndingUpsertWithoutRewardsInput
-  connect?: Prisma.EndingWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.EndingUpdateToOneWithWhereWithoutRewardsInput, Prisma.EndingUpdateWithoutRewardsInput>, Prisma.EndingUncheckedUpdateWithoutRewardsInput>
-}
-
 export type EndingCreateWithoutEpisodeInput = {
   key: string
   name: string
@@ -545,7 +519,6 @@ export type EndingCreateWithoutEpisodeInput = {
   order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  rewards?: Prisma.EndingRewardCreateNestedManyWithoutEndingInput
   userPlayEpisodes?: Prisma.UserPlayEpisodeCreateNestedManyWithoutEndingInput
 }
 
@@ -557,7 +530,6 @@ export type EndingUncheckedCreateWithoutEpisodeInput = {
   order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  rewards?: Prisma.EndingRewardUncheckedCreateNestedManyWithoutEndingInput
   userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedCreateNestedManyWithoutEndingInput
 }
 
@@ -609,7 +581,6 @@ export type EndingCreateWithoutUserPlayEpisodesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   episode: Prisma.EpisodeCreateNestedOneWithoutEndingsInput
-  rewards?: Prisma.EndingRewardCreateNestedManyWithoutEndingInput
 }
 
 export type EndingUncheckedCreateWithoutUserPlayEpisodesInput = {
@@ -621,7 +592,6 @@ export type EndingUncheckedCreateWithoutUserPlayEpisodesInput = {
   order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  rewards?: Prisma.EndingRewardUncheckedCreateNestedManyWithoutEndingInput
 }
 
 export type EndingCreateOrConnectWithoutUserPlayEpisodesInput = {
@@ -648,7 +618,6 @@ export type EndingUpdateWithoutUserPlayEpisodesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   episode?: Prisma.EpisodeUpdateOneRequiredWithoutEndingsNestedInput
-  rewards?: Prisma.EndingRewardUpdateManyWithoutEndingNestedInput
 }
 
 export type EndingUncheckedUpdateWithoutUserPlayEpisodesInput = {
@@ -660,69 +629,6 @@ export type EndingUncheckedUpdateWithoutUserPlayEpisodesInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  rewards?: Prisma.EndingRewardUncheckedUpdateManyWithoutEndingNestedInput
-}
-
-export type EndingCreateWithoutRewardsInput = {
-  key: string
-  name: string
-  imageUrl?: string | null
-  order?: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  episode: Prisma.EpisodeCreateNestedOneWithoutEndingsInput
-  userPlayEpisodes?: Prisma.UserPlayEpisodeCreateNestedManyWithoutEndingInput
-}
-
-export type EndingUncheckedCreateWithoutRewardsInput = {
-  id?: number
-  episodeId: number
-  key: string
-  name: string
-  imageUrl?: string | null
-  order?: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedCreateNestedManyWithoutEndingInput
-}
-
-export type EndingCreateOrConnectWithoutRewardsInput = {
-  where: Prisma.EndingWhereUniqueInput
-  create: Prisma.XOR<Prisma.EndingCreateWithoutRewardsInput, Prisma.EndingUncheckedCreateWithoutRewardsInput>
-}
-
-export type EndingUpsertWithoutRewardsInput = {
-  update: Prisma.XOR<Prisma.EndingUpdateWithoutRewardsInput, Prisma.EndingUncheckedUpdateWithoutRewardsInput>
-  create: Prisma.XOR<Prisma.EndingCreateWithoutRewardsInput, Prisma.EndingUncheckedCreateWithoutRewardsInput>
-  where?: Prisma.EndingWhereInput
-}
-
-export type EndingUpdateToOneWithWhereWithoutRewardsInput = {
-  where?: Prisma.EndingWhereInput
-  data: Prisma.XOR<Prisma.EndingUpdateWithoutRewardsInput, Prisma.EndingUncheckedUpdateWithoutRewardsInput>
-}
-
-export type EndingUpdateWithoutRewardsInput = {
-  key?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  episode?: Prisma.EpisodeUpdateOneRequiredWithoutEndingsNestedInput
-  userPlayEpisodes?: Prisma.UserPlayEpisodeUpdateManyWithoutEndingNestedInput
-}
-
-export type EndingUncheckedUpdateWithoutRewardsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  episodeId?: Prisma.IntFieldUpdateOperationsInput | number
-  key?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedUpdateManyWithoutEndingNestedInput
 }
 
 export type EndingCreateManyEpisodeInput = {
@@ -742,7 +648,6 @@ export type EndingUpdateWithoutEpisodeInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  rewards?: Prisma.EndingRewardUpdateManyWithoutEndingNestedInput
   userPlayEpisodes?: Prisma.UserPlayEpisodeUpdateManyWithoutEndingNestedInput
 }
 
@@ -754,7 +659,6 @@ export type EndingUncheckedUpdateWithoutEpisodeInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  rewards?: Prisma.EndingRewardUncheckedUpdateManyWithoutEndingNestedInput
   userPlayEpisodes?: Prisma.UserPlayEpisodeUncheckedUpdateManyWithoutEndingNestedInput
 }
 
@@ -774,12 +678,10 @@ export type EndingUncheckedUpdateManyWithoutEpisodeInput = {
  */
 
 export type EndingCountOutputType = {
-  rewards: number
   userPlayEpisodes: number
 }
 
 export type EndingCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  rewards?: boolean | EndingCountOutputTypeCountRewardsArgs
   userPlayEpisodes?: boolean | EndingCountOutputTypeCountUserPlayEpisodesArgs
 }
 
@@ -791,13 +693,6 @@ export type EndingCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
    * Select specific fields to fetch from the EndingCountOutputType
    */
   select?: Prisma.EndingCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * EndingCountOutputType without action
- */
-export type EndingCountOutputTypeCountRewardsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.EndingRewardWhereInput
 }
 
 /**
@@ -818,7 +713,6 @@ export type EndingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   createdAt?: boolean
   updatedAt?: boolean
   episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
-  rewards?: boolean | Prisma.Ending$rewardsArgs<ExtArgs>
   userPlayEpisodes?: boolean | Prisma.Ending$userPlayEpisodesArgs<ExtArgs>
   _count?: boolean | Prisma.EndingCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ending"]>
@@ -861,7 +755,6 @@ export type EndingSelectScalar = {
 export type EndingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "episodeId" | "key" | "name" | "imageUrl" | "order" | "createdAt" | "updatedAt", ExtArgs["result"]["ending"]>
 export type EndingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   episode?: boolean | Prisma.EpisodeDefaultArgs<ExtArgs>
-  rewards?: boolean | Prisma.Ending$rewardsArgs<ExtArgs>
   userPlayEpisodes?: boolean | Prisma.Ending$userPlayEpisodesArgs<ExtArgs>
   _count?: boolean | Prisma.EndingCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -876,7 +769,6 @@ export type $EndingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name: "Ending"
   objects: {
     episode: Prisma.$EpisodePayload<ExtArgs>
-    rewards: Prisma.$EndingRewardPayload<ExtArgs>[]
     userPlayEpisodes: Prisma.$UserPlayEpisodePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1283,7 +1175,6 @@ readonly fields: EndingFieldRefs;
 export interface Prisma__EndingClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   episode<T extends Prisma.EpisodeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EpisodeDefaultArgs<ExtArgs>>): Prisma.Prisma__EpisodeClient<runtime.Types.Result.GetResult<Prisma.$EpisodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  rewards<T extends Prisma.Ending$rewardsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Ending$rewardsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EndingRewardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   userPlayEpisodes<T extends Prisma.Ending$userPlayEpisodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Ending$userPlayEpisodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPlayEpisodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1715,30 +1606,6 @@ export type EndingDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many Endings to delete.
    */
   limit?: number
-}
-
-/**
- * Ending.rewards
- */
-export type Ending$rewardsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the EndingReward
-   */
-  select?: Prisma.EndingRewardSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the EndingReward
-   */
-  omit?: Prisma.EndingRewardOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EndingRewardInclude<ExtArgs> | null
-  where?: Prisma.EndingRewardWhereInput
-  orderBy?: Prisma.EndingRewardOrderByWithRelationInput | Prisma.EndingRewardOrderByWithRelationInput[]
-  cursor?: Prisma.EndingRewardWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.EndingRewardScalarFieldEnum | Prisma.EndingRewardScalarFieldEnum[]
 }
 
 /**

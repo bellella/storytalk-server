@@ -48,20 +48,22 @@ enum UserGender {
 }
 
 model User {
-  id           Int          @id @default(autoincrement())
-  name         String?
-  email        String
-  provider     AuthProvider
-  providerId   String
-  gender       UserGender?
-  level        Level        @default(BEGINNER)
-  XpLevel      Int          @default(1)
-  xp           Int          @default(0)
-  streakDays   Int          @default(0)
+  id         Int          @id @default(autoincrement())
+  name       String?
+  email      String
+  provider   AuthProvider
+  providerId String
+  gender     UserGender?
+  level      Level        @default(BEGINNER)
+  XpLevel    Int          @default(1)
+  xp         Int          @default(0)
+  streakDays Int          @default(0)
 
   role UserRole @default(USER)
 
   selectedCharacterId Int?
+
+  dismissedNoticeVersion Int? @default(0)
 
   lastLoginAt  DateTime  @default(now())
   registeredAt DateTime?
@@ -92,6 +94,8 @@ model User {
   usages            UserUsage[]
   adRewardLogs      AdRewardLog[]
   supportInquiries  SupportInquiry[]
+  attendances       UserAttendance[]
+  rewardHistories   UserRewardHistory[]
 
   @@unique([email, provider])
 }
@@ -193,7 +197,6 @@ model Episode {
 
   story            Story?            @relation(fields: [storyId], references: [id])
   scenes           Scene[]
-  rewards          EpisodeReward[]
   endings          Ending[]
   userEpisodes     UserEpisode[]
   userPlayEpisodes UserPlayEpisode[]
@@ -685,27 +688,6 @@ model dialogueBookmark {
   @@unique([userId, dialogueId])
 }
 
-//////////////////////////////////////////////////////
-// EPISODE REWARD SYSTEM
-//////////////////////////////////////////////////////
-
-model EpisodeReward {
-  id        Int        @id @default(autoincrement())
-  episodeId Int
-  type      RewardType
-  payload   Json
-  isActive  Boolean    @default(true)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-
-  episode Episode @relation(fields: [episodeId], references: [id], onDelete: Cascade)
-}
-
-enum RewardType {
-  CHARACTER_INVITE
-  ITEM
-}
-
 /////////////
 // XP
 
@@ -981,25 +963,12 @@ model Ending {
   order     Int     @default(0)
 
   episode Episode        @relation(fields: [episodeId], references: [id], onDelete: Cascade)
-  rewards EndingReward[]
-
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   userPlayEpisodes UserPlayEpisode[]
 
   @@unique([episodeId, key])
   @@index([episodeId])
-}
-
-model EndingReward {
-  id        Int        @id @default(autoincrement())
-  endingId  Int
-  type      RewardType
-  payload   Json
-  isActive  Boolean    @default(true)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  ending    Ending     @relation(fields: [endingId], references: [id], onDelete: Cascade)
 }
 
 model UserEnding {
@@ -1502,6 +1471,97 @@ model SupportInquiry {
   @@index([userId])
   @@index([type, status])
   @@index([createdAt])
+}
+
+enum NoticeType {
+  GENERAL
+  BETA
+  EVENT
+  MAINTENANCE
+  UPDATE
+}
+
+// 공지사항
+model Notice {
+  id        Int        @id @default(autoincrement())
+  title     String
+  content   String     @db.Text
+  type      NoticeType @default(GENERAL)
+  isPopup   Boolean    @default(false)
+  isActive  Boolean    @default(true)
+  version   Int        @default(1)
+  startsAt  DateTime?
+  endsAt    DateTime?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+//출석
+model UserAttendance {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  attendanceDate DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, attendanceDate])
+  @@index([userId, createdAt])
+}
+
+// 리워드 통합 (wip)
+enum RewardSourceType {
+  EPISODE
+  ENDING
+  ATTENDANCE
+  SIGNUP
+  EVENT
+  ADMIN
+}
+
+enum RewardType {
+  COIN
+  COUPON
+  CHARACTER_INVITE
+  XP
+  ITEM
+}
+
+model Reward {
+  id         Int              @id @default(autoincrement())
+  sourceType RewardSourceType
+  sourceId   Int
+  type       RewardType
+  description String?
+  payload    Json
+  isActive   Boolean          @default(true)
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  histories UserRewardHistory[]
+
+  @@index([sourceType, sourceId])
+}
+
+model UserRewardHistory {
+  id         Int              @id @default(autoincrement())
+  userId     Int
+  rewardId   Int?
+  sourceType RewardSourceType
+  sourceId   Int?
+  type       RewardType
+  description String?
+  payload    Json
+  grantKey   String?
+  grantedAt  DateTime         @default(now())
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reward Reward? @relation(fields: [rewardId], references: [id], onDelete: SetNull)
+
+  @@unique([grantKey])
+  @@index([userId, grantedAt])
+  @@index([sourceType, sourceId])
 }
 
 ///// ADMIN

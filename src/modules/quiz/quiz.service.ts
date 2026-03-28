@@ -4,6 +4,7 @@ import {
   QuizSessionType,
   QuizSourceType,
   QuizType,
+  RewardSourceType,
   RewardType,
   XpSourceType,
   XpTriggerType,
@@ -403,7 +404,9 @@ export class QuizService {
             currentStage: EpisodeStage.QUIZ_IN_PROGRESS,
           },
         });
-      } else if (existingUserEpisode.currentStage !== EpisodeStage.QUIZ_COMPLETED) {
+      } else if (
+        existingUserEpisode.currentStage !== EpisodeStage.QUIZ_COMPLETED
+      ) {
         await this.prisma.userEpisode.update({
           where: { id: existingUserEpisode.id },
           data: { currentStage: EpisodeStage.QUIZ_IN_PROGRESS },
@@ -493,8 +496,12 @@ export class QuizService {
         sourceType: XpSourceType.EPISODE,
         sourceId: session.sourceId,
       });
-      const rawRewards = await this.prisma.episodeReward.findMany({
-        where: { episodeId: session.sourceId, isActive: true },
+      const rawRewards = await this.prisma.reward.findMany({
+        where: {
+          sourceType: RewardSourceType.EPISODE,
+          sourceId: session.sourceId,
+          isActive: true,
+        },
       });
       rewards = await Promise.all(
         rawRewards.map((r) => this.processEpisodeReward(userId, r))

@@ -26,6 +26,7 @@ import { FaceTalkModule } from './modules/facetalk/facetalk.module';
 import { CouponsModule } from './modules/coupons/coupons.module';
 import { UsageModule } from './modules/usage/usage.module';
 import { SupportModule } from './modules/support/support.module';
+import { AttendanceModule } from './modules/attendance/attendance.module';
 
 @Module({
   imports: [
@@ -57,6 +58,7 @@ import { SupportModule } from './modules/support/support.module';
     CouponsModule,
     UsageModule,
     SupportModule,
+    AttendanceModule,
   ],
   controllers: [AppController],
   providers: [AppService],

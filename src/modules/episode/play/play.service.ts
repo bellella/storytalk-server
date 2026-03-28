@@ -1,6 +1,5 @@
 import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
 import {
-  CharacterRelationStatus,
   DialogueSpeakerRole,
   DialogueType,
   EpisodeStage,
@@ -8,7 +7,7 @@ import {
   PlayEpisodeSlotType,
   PlayEpisodeStatus,
   QuizSourceType,
-  RewardType,
+  RewardSourceType,
   SceneFlowType,
   SlotDialogueType,
   SlotMessageType,
@@ -79,6 +78,7 @@ import { UpdatePlayDto } from './dto/update-play.dto';
 import { AiSlotDialogueData, AiSlotDialogueInput } from './types/ai.type';
 import { BranchTriggerSceneData } from './types/scene-data.type';
 import { PromptTemplateService } from '@/modules/prompt-template/prompt-template.service';
+import { RewardService } from '@/modules/reward/reward.service';
 
 const PROMPT_KEYS = {
   AI_SLOT_GENERATE_DIALOGUES: 'AI_SLOT_GENERATE_DIALOGUES',
@@ -96,7 +96,8 @@ export class PlayService {
     private quizService: QuizService,
     private storyService: StoryService,
     private characterService: CharacterService,
-    private promptTemplateService: PromptTemplateService
+    private promptTemplateService: PromptTemplateService,
+    private rewardService: RewardService
   ) {}
 
   async getMyPlayEpisodes(
@@ -1072,68 +1073,27 @@ export class PlayService {
         // 3) 모드에 따른 stage 전환
         const nextStage = EpisodeStage.QUIZ_IN_PROGRESS;
 
-        // 4) 엔딩 리워드 지급 (endingId 있을 때, 중복 방지)
+        // 4) 엔딩/에피소드 리워드 지급 (중복 방지: UserRewardHistory.grantKey)
         const grantedRewards: { type: string; payload: any }[] = [];
         let rewardsGranted = false;
 
         if (endingId && !play.rewardsGranted) {
           const ending = await tx.ending.findUnique({
             where: { id: endingId },
-            include: {
-              rewards: { where: { isActive: true } },
-            },
           });
 
           if (ending) {
-            // UserEnding 조회: 없거나 isActive=false면 리워드 지급 가능 (유효하지 않으면 다시 지급)
-            const existing = await tx.userEnding.findUnique({
-              where: {
-                userId_episodeId_endingKey: {
-                  userId,
-                  episodeId: play.episodeId,
-                  endingKey: ending.key,
-                },
-              },
-            });
-            const shouldGrantRewards = !existing || !existing.isActive;
+            // 엔딩 리워드 지급
+            const endingGranted = await this.rewardService.grantRewardsForSource(
+              tx,
+              userId,
+              RewardSourceType.ENDING,
+              endingId,
+              `ending_${endingId}_ep_${play.episodeId}_u_${userId}`
+            );
+            grantedRewards.push(...endingGranted);
 
-            if (shouldGrantRewards) {
-              for (const reward of ending.rewards) {
-                const payload = reward.payload as Record<string, any>;
-                if (reward.type === RewardType.CHARACTER_INVITE) {
-                  const characterId = payload.characterId as number;
-                  if (characterId) {
-                    const existing = await tx.characterFriend.findUnique({
-                      where: {
-                        userId_characterId: { userId, characterId },
-                      },
-                    });
-                    if (!existing) {
-                      await tx.characterFriend.create({
-                        data: {
-                          userId,
-                          characterId,
-                          status: CharacterRelationStatus.INVITABLE,
-                        },
-                      });
-                      grantedRewards.push({ type: reward.type, payload });
-                    } else if (
-                      existing.status === CharacterRelationStatus.LOCKED
-                    ) {
-                      await tx.characterFriend.update({
-                        where: {
-                          userId_characterId: { userId, characterId },
-                        },
-                        data: { status: CharacterRelationStatus.INVITABLE },
-                      });
-                      grantedRewards.push({ type: reward.type, payload });
-                    }
-                  }
-                }
-              }
-            }
-
-            // 엔딩 도달 기록: count 증가, 지급 시 isActive=true
+            // 엔딩 도달 기록
             await tx.userEnding.upsert({
               where: {
                 userId_episodeId_endingKey: {
@@ -1151,7 +1111,6 @@ export class PlayService {
               },
               update: {
                 reachedCount: { increment: 1 },
-                ...(shouldGrantRewards ? { isActive: true } : {}),
               },
             });
             rewardsGranted = true;
@@ -1260,39 +1219,15 @@ export class PlayService {
           }
         }
 
-        // 7) EpisodeReward 지급
-        const episodeRewards = await tx.episodeReward.findMany({
-          where: { episodeId: play.episodeId, isActive: true },
-        });
-
-        for (const reward of episodeRewards) {
-          const payload = reward.payload as Record<string, any>;
-
-          if (reward.type === RewardType.CHARACTER_INVITE) {
-            const characterId = payload.characterId as number;
-            if (characterId) {
-              const existing = await tx.characterFriend.findUnique({
-                where: { userId_characterId: { userId, characterId } },
-              });
-              if (!existing) {
-                await tx.characterFriend.create({
-                  data: {
-                    userId,
-                    characterId,
-                    status: CharacterRelationStatus.INVITABLE,
-                  },
-                });
-                grantedRewards.push({ type: reward.type, payload });
-              } else if (existing.status === CharacterRelationStatus.LOCKED) {
-                await tx.characterFriend.update({
-                  where: { userId_characterId: { userId, characterId } },
-                  data: { status: CharacterRelationStatus.INVITABLE },
-                });
-                grantedRewards.push({ type: reward.type, payload });
-              }
-            }
-          }
-        }
+        // 7) EpisodeReward 지급 (Reward 테이블, sourceType=EPISODE)
+        const episodeGranted = await this.rewardService.grantRewardsForSource(
+          tx,
+          userId,
+          RewardSourceType.EPISODE,
+          play.episodeId,
+          `episode_${play.episodeId}_u_${userId}`
+        );
+        grantedRewards.push(...episodeGranted);
 
         // 8) play 업데이트 (result에 evaluation, xpGained, rewards 저장)
         const resultToSave = {

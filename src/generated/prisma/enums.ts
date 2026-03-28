@@ -199,14 +199,6 @@ export const FaceTalkStatus = {
 export type FaceTalkStatus = (typeof FaceTalkStatus)[keyof typeof FaceTalkStatus]
 
 
-export const RewardType = {
-  CHARACTER_INVITE: 'CHARACTER_INVITE',
-  ITEM: 'ITEM'
-} as const
-
-export type RewardType = (typeof RewardType)[keyof typeof RewardType]
-
-
 export const XpTriggerType = {
   EPISODE_COMPLETE: 'EPISODE_COMPLETE',
   DAILY_QUIZ_COMPLETE: 'DAILY_QUIZ_COMPLETE'
@@ -449,3 +441,37 @@ export const SupportInquiryStatus = {
 } as const
 
 export type SupportInquiryStatus = (typeof SupportInquiryStatus)[keyof typeof SupportInquiryStatus]
+
+
+export const NoticeType = {
+  GENERAL: 'GENERAL',
+  BETA: 'BETA',
+  EVENT: 'EVENT',
+  MAINTENANCE: 'MAINTENANCE',
+  UPDATE: 'UPDATE'
+} as const
+
+export type NoticeType = (typeof NoticeType)[keyof typeof NoticeType]
+
+
+export const RewardSourceType = {
+  EPISODE: 'EPISODE',
+  ENDING: 'ENDING',
+  ATTENDANCE: 'ATTENDANCE',
+  SIGNUP: 'SIGNUP',
+  EVENT: 'EVENT',
+  ADMIN: 'ADMIN'
+} as const
+
+export type RewardSourceType = (typeof RewardSourceType)[keyof typeof RewardSourceType]
+
+
+export const RewardType = {
+  COIN: 'COIN',
+  COUPON: 'COUPON',
+  CHARACTER_INVITE: 'CHARACTER_INVITE',
+  XP: 'XP',
+  ITEM: 'ITEM'
+} as const
+
+export type RewardType = (typeof RewardType)[keyof typeof RewardType]
