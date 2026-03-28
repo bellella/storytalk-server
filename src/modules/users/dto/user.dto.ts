@@ -43,4 +43,7 @@ export class RegisterProfileDto {
 
 export class DailyStatusDto {
   quizCompleted: boolean;
+
+  @ApiProperty({ description: '오늘 출석 체크 완료 여부' })
+  attendanceChecked: boolean;
 }

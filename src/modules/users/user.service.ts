@@ -48,7 +48,7 @@ export class UserService {
    */
   async findOne(id: number): Promise<UserProfileDto> {
     const { start: todayStart, end: todayEnd } = getTodayRange();
-    const [user, dailySession] = await Promise.all([
+    const [user, dailySession, todayAttendance] = await Promise.all([
       this.prisma.user.findUnique({
         where: { id },
         include: {
@@ -64,6 +64,15 @@ export class UserService {
           type: QuizSessionType.DAILY_QUIZ,
           startedAt: { gte: todayStart, lte: todayEnd },
         },
+      }),
+      this.prisma.userAttendance.findUnique({
+        where: {
+          userId_attendanceDate: {
+            userId: id,
+            attendanceDate: todayStart,
+          },
+        },
+        select: { id: true },
       }),
     ]);
     if (!user) {
@@ -85,6 +94,7 @@ export class UserService {
       xpToNextLevel,
       dailyStatus: {
         quizCompleted: !!dailySession?.completedAt,
+        attendanceChecked: !!todayAttendance,
       },
       selectedCharacter: user.selectedCharacter
         ? {
