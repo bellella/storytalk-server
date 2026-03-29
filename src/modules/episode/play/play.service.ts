@@ -75,7 +75,11 @@ import {
   UserEndingItemDto,
 } from './dto/play.dto';
 import { UpdatePlayDto } from './dto/update-play.dto';
-import { AiSlotDialogueData, AiSlotDialogueInput } from './types/ai.type';
+import {
+  AiSlotDialogueData,
+  AiSlotDialogueInput,
+  normalizeAiSlotConstraints,
+} from './types/ai.type';
 import { BranchTriggerSceneData } from './types/scene-data.type';
 import { PromptTemplateService } from '@/modules/prompt-template/prompt-template.service';
 import { RewardService } from '@/modules/reward/reward.service';
@@ -517,7 +521,7 @@ export class PlayService {
    *
    * dialogue.data에 저장된 JSON:
    *   - partnerCharacterIds: number[]  — 대화 상대 NPC 목록
-   *   - constraints?: string[]
+   *   - constraints?: string (권장) | string[] (구버전)
    *   - situation?: string
    *   - includeDialogues?: boolean
    *   - dataTablePrompt?: string
@@ -581,7 +585,7 @@ export class PlayService {
         personality: c.personality ?? null,
         playEpisodePrompt: c.playEpisodePrompt ?? null,
       })),
-      constraints: data.constraints?.map((c) => replaceUserName(c)),
+      constraints: normalizeAiSlotConstraints(data.constraints, replaceUserName),
       situation: data.situation ? replaceUserName(data.situation) : undefined,
       sceneId: dialogue.sceneId,
       markerOrder: dialogue.order,

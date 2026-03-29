@@ -7,7 +7,8 @@ export interface CorrectAndDialoguesPromptArgs {
   userText: string;
   dataTable?: Record<string, any> | null;
   dataTablePrompt?: string;
-  constraints?: string[];
+  /** 통째로 넣는 제약 텍스트 */
+  constraints?: string;
   messagesInTheScene?: {
     characterName: string;
     englishText: string;
@@ -18,7 +19,9 @@ export interface CorrectAndDialoguesPromptArgs {
 export function prepareCorrectAndDialoguesVariables(
   args: CorrectAndDialoguesPromptArgs
 ): Record<string, string> {
-  const constraints = (args.constraints ?? []).map((c) => `- ${c}`).join('\n');
+  const constraintsBlock = args.constraints?.trim()
+    ? `Constraints:\n${args.constraints.trim()}\n`
+    : '';
   const npcList = args.npcCharacters
     .map((c) => {
       const personality = c.personality
@@ -40,7 +43,7 @@ export function prepareCorrectAndDialoguesVariables(
     userCharacterLine: `id=${args.userCharacter.characterId}, name="${args.userCharacter.name}"${args.userCharacter.personality ? `, personality="${args.userCharacter.personality}"` : ''}${userPrompt}`,
     npcList,
     situation: args.situation,
-    constraints: constraints ? `Constraints:\n${constraints}\n` : '',
+    constraints: constraintsBlock,
     sceneMessages,
     userText: args.userText,
     dataTablePrompt: args.dataTablePrompt
@@ -65,7 +68,9 @@ ${args.dataTablePrompt}
 export function buildCorrectAndDialoguesPrompt(
   args: CorrectAndDialoguesPromptArgs
 ) {
-  const constraints = (args.constraints ?? []).map((c) => `- ${c}`).join('\n');
+  const constraintsBlock = args.constraints?.trim()
+    ? `Constraints:\n${args.constraints.trim()}\n`
+    : '';
 
   const npcList = args.npcCharacters
     .map((c) => {
@@ -92,7 +97,7 @@ User: id=${args.userCharacter.characterId}, name="${args.userCharacter.name}"${a
 NPCs:
 ${npcList}
 Situation: ${args.situation}
-${constraints ? `Constraints:\n${constraints}\n` : ''}${sceneMessages}
+${constraintsBlock}${sceneMessages}
 Input: "${args.userText}"
 Step 1 — Detect input language, then branch:
 [ENGLISH input] type="correction" — fix grammar/naturalness. If already correct, keep as-is.

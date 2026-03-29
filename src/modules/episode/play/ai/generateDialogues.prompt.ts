@@ -4,7 +4,8 @@ export interface GenerateDialoguesPromptArgs {
   userCharacter: CharacterInfo;
   npcCharacters: CharacterInfo[];
   situation: string;
-  constraints?: string[];
+  /** 통째로 넣는 제약 텍스트 (프롬프트에 Constraints: 블록으로 삽입) */
+  constraints?: string;
   dataTable: Record<string, any>;
 }
 
@@ -12,7 +13,9 @@ export interface GenerateDialoguesPromptArgs {
 export function prepareGenerateDialoguesVariables(
   args: GenerateDialoguesPromptArgs
 ): Record<string, string> {
-  const constraints = (args.constraints ?? []).map((c) => `- ${c}`).join('\n');
+  const constraintsBlock = args.constraints?.trim()
+    ? `Constraints:\n${args.constraints.trim()}\n`
+    : '';
   const npcList = args.npcCharacters
     .map((c) => {
       const personality = c.personality
@@ -32,7 +35,7 @@ export function prepareGenerateDialoguesVariables(
     userCharacterLine: userLine,
     npcList,
     situation: args.situation,
-    constraints: constraints ? `Constraints:\n${constraints}\n` : '',
+    constraints: constraintsBlock,
     dataTable: JSON.stringify(args.dataTable),
   };
 }
@@ -40,7 +43,9 @@ export function prepareGenerateDialoguesVariables(
 export function buildGenerateDialoguesPrompt(
   args: GenerateDialoguesPromptArgs
 ) {
-  const constraints = (args.constraints ?? []).map((c) => `- ${c}`).join('\n');
+  const constraintsBlock = args.constraints?.trim()
+    ? `Constraints:\n${args.constraints.trim()}\n`
+    : '';
 
   const npcList = args.npcCharacters
     .map((c) => {
@@ -62,7 +67,7 @@ User: id=${args.userCharacter.characterId}, name="${args.userCharacter.name}"${a
 NPCs:
 ${npcList}
 Situation: ${args.situation}
-${constraints ? `Constraints:\n${constraints}\n` : ''}
+${constraintsBlock}
 DataTable:
 ${JSON.stringify(args.dataTable)}
 Message type rules:

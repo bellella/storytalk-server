@@ -18,14 +18,14 @@
 - `userCharacterLine` - User: id=..., name="...", personality="..."
 - `npcList` - NPC 목록 (줄바꿈으로 구분)
 - `situation` - 상황 설명
-- `constraints` - Constraints:\n... (없으면 빈 문자열)
+- `constraints` - `Constraints:\n` + 제약 전체 텍스트 + `\n` (없으면 빈 문자열; DB/에디터에는 string 한 덩어리 권장)
 - `dataTable` - JSON.stringify된 dataTable
 
 ### correct_and_dialogues
 - `userCharacterLine` - User: id=..., name="..."
 - `npcList` - NPC 목록
 - `situation` - 상황
-- `constraints` - Constraints:\n... (없으면 빈 문자열)
+- `constraints` - `Constraints:\n` + 제약 전체 텍스트 + `\n` (없으면 빈 문자열; DB/에디터에는 string 한 덩어리 권장)
 - `sceneMessages` - Previous messages:\n... (없으면 빈 문자열)
 - `userText` - 유저 입력 텍스트
 - `dataTablePrompt` - DataTable:\n... (없으면 빈 문자열)
