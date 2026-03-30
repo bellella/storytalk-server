@@ -24,6 +24,7 @@ import { prepareChatPromptVariables } from '@/modules/ai/chat.prompt';
 import { formatCreatedAtDisplay } from '@/common/utils/date.util';
 import { UsageService } from '../usage/usage.service';
 import { UsageFeatureType } from '@/generated/prisma/client';
+import { greetingContentFromCharacterData } from '@/utils/character-greeting.util';
 
 const CHAT_PROMPT_KEY = 'CHAT_PROMPT';
 
@@ -55,7 +56,7 @@ export class ChatService {
             mainImage: true,
             description: true,
             personality: true,
-            greetingMessage: true,
+            data: true,
           },
         },
       },
@@ -66,10 +67,16 @@ export class ChatService {
 
     const affinity = await this.getAffinity(userId, chat.characterId);
 
+    const { data: characterData, ...characterRest } = chat.character;
+
     return {
       chatId: chat.id,
       character: {
-        ...chat.character,
+        ...characterRest,
+        greetingMessage: greetingContentFromCharacterData(
+          characterData,
+          characterRest.name
+        ),
         affinity,
       },
       unreadCount: chat.unreadCount,

@@ -7,6 +7,7 @@ import { StoryModule } from '@/modules/story/story.module';
 import { CharacterModule } from '@/modules/character/character.module';
 import { PromptTemplateModule } from '@/modules/prompt-template/prompt-template.module';
 import { RewardModule } from '@/modules/reward/reward.module';
+import { XpModule } from '@/modules/xp/xp.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { RewardModule } from '@/modules/reward/reward.module';
     CharacterModule,
     PromptTemplateModule,
     RewardModule,
+    XpModule,
   ],
   controllers: [PlayController],
   providers: [PlayService],

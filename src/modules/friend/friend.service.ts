@@ -7,6 +7,7 @@ import { CharacterRelationStatus } from '@/generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { FriendChatItemDto, FriendListItemDto } from './dto/friend.dto';
 import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
+import { greetingContentFromCharacterData } from '@/utils/character-greeting.util';
 
 @Injectable()
 export class FriendService {
@@ -18,7 +19,7 @@ export class FriendService {
   ): Promise<SuccessResponseDto> {
     const character = await this.prisma.character.findUnique({
       where: { id: characterId },
-      select: { name: true, greetingMessage: true },
+      select: { name: true, data: true },
     });
 
     await this.prisma.$transaction(async (tx) => {
@@ -55,9 +56,10 @@ export class FriendService {
           userId,
           characterId,
           isFromUser: false,
-          content:
-            character?.greetingMessage ??
-            `안녕! 나는 ${character?.name ?? ''}야. 잘 부탁해!`,
+          content: greetingContentFromCharacterData(
+            character?.data,
+            character?.name ?? ''
+          ),
         },
       });
 

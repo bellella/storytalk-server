@@ -85,6 +85,7 @@ import {
 import { BranchTriggerSceneData } from './types/scene-data.type';
 import { PromptTemplateService } from '@/modules/prompt-template/prompt-template.service';
 import { RewardService } from '@/modules/reward/reward.service';
+import { XpService } from '@/modules/xp/xp.service';
 
 const PROMPT_KEYS = {
   AI_SLOT_GENERATE_DIALOGUES: 'AI_SLOT_GENERATE_DIALOGUES',
@@ -103,7 +104,8 @@ export class PlayService {
     private storyService: StoryService,
     private characterService: CharacterService,
     private promptTemplateService: PromptTemplateService,
-    private rewardService: RewardService
+    private rewardService: RewardService,
+    private xpService: XpService
   ) {}
 
   async getMyPlayEpisodes(
@@ -182,25 +184,30 @@ export class PlayService {
       endings.map((e) => [`${e.episodeId}:${e.key}`, e])
     );
 
-    return unlocks.map((u) => {
-      const ending = endingMap.get(`${u.episodeId}:${u.endingKey}`);
-      return {
-        id: ending?.id ?? u.id,
-        key: u.endingKey,
-        name: ending?.name ?? u.endingKey,
-        imageUrl: ending?.imageUrl ?? null,
-        reachedCount: u.reachedCount,
-        reachedAt: u.reachedAt.toISOString(),
-        episode: {
-          id: u.episode.id,
-          title: u.episode.title,
-          koreanTitle: u.episode.koreanTitle,
-          thumbnailUrl: u.episode.thumbnailUrl,
-          storyId: u.episode.storyId,
-          storyTitle: u.episode.story?.title ?? null,
-        },
-      };
-    });
+    return unlocks
+      .map((u) => {
+        const ending = endingMap.get(`${u.episodeId}:${u.endingKey}`);
+        return {
+          id: ending?.id ?? u.id,
+          key: u.endingKey,
+          name: ending?.name ?? u.endingKey,
+          imageUrl: ending?.imageUrl ?? null,
+          reachedCount: u.reachedCount,
+          reachedAt: u.reachedAt.toISOString(),
+          episode: {
+            id: u.episode.id,
+            title: u.episode.title,
+            koreanTitle: u.episode.koreanTitle,
+            thumbnailUrl: u.episode.thumbnailUrl,
+            storyId: u.episode.storyId,
+            storyTitle: u.episode.story?.title ?? null,
+          },
+        };
+      })
+      .filter((item) => {
+        const url = item.imageUrl?.trim();
+        return !!url;
+      });
   }
 
   async updateProgress(
@@ -1168,61 +1175,13 @@ export class PlayService {
           );
         }
 
-        // 6) XP 지급 (중복 방지)
-        let xpGained = 0;
-        const xpRule = await tx.xpRule.findFirst({
-          where: {
-            triggerType: XpTriggerType.EPISODE_COMPLETE,
-            isActive: true,
-            OR: [{ startsAt: null }, { startsAt: { lte: now } }],
-            AND: [{ OR: [{ endsAt: null }, { endsAt: { gte: now } }] }],
-          },
-          orderBy: { priority: 'desc' },
+        // 6) XP 지급 (XpRule: PLAY_EPISODE_COMPLETE, 소스 = 이 플레이 세션)
+        const { xpGained } = await this.xpService.grantXpWithinTransaction(tx, {
+          userId,
+          triggerType: XpTriggerType.PLAY_EPISODE_COMPLETE,
+          sourceType: XpSourceType.PLAY_EPISODE,
+          sourceId: playEpisodeId,
         });
-
-        if (xpRule) {
-          const alreadyGranted = await tx.userXpHistory.findUnique({
-            where: {
-              userId_sourceType_sourceId_triggerType: {
-                userId,
-                sourceType: XpSourceType.EPISODE,
-                sourceId: play.episodeId,
-                triggerType: XpTriggerType.EPISODE_COMPLETE,
-              },
-            },
-          });
-
-          if (!alreadyGranted) {
-            await tx.userXpHistory.create({
-              data: {
-                userId,
-                xpRuleId: xpRule.id,
-                triggerType: XpTriggerType.EPISODE_COMPLETE,
-                sourceType: XpSourceType.EPISODE,
-                sourceId: play.episodeId,
-                xpAmount: xpRule.xpAmount,
-              },
-            });
-
-            const currentUser = await tx.user.findUniqueOrThrow({
-              where: { id: userId },
-              select: { xp: true, XpLevel: true },
-            });
-            const newXp = currentUser.xp + xpRule.xpAmount;
-            const nextLevel = await tx.xpLevel.findFirst({
-              where: { requiredTotalXp: { lte: newXp }, isActive: true },
-              orderBy: { requiredTotalXp: 'desc' },
-            });
-            await tx.user.update({
-              where: { id: userId },
-              data: {
-                xp: newXp,
-                XpLevel: nextLevel?.level ?? currentUser.XpLevel,
-              },
-            });
-            xpGained = xpRule.xpAmount;
-          }
-        }
 
         // 7) EpisodeReward 지급 (Reward 테이블, sourceType=EPISODE)
         const episodeRewards = await this.rewardService.grantRewardsForSource(
@@ -1441,7 +1400,7 @@ export class PlayService {
   // }
 
   /**
-   * 결과 조회 — `UserPlayEpisode.result` JSON만 사용 (PlayEpisodeSlot 조회 없음)
+   * 결과 조회 — 평가/XP는 `UserPlayEpisode.result`, 리워드 목록은 DB `Reward` 기준
    */
   async getResult(
     userId: number,
@@ -1493,12 +1452,15 @@ export class PlayService {
       }
     }
 
+    const { episodeRewards, endingRewards } =
+      await this.fetchActiveRewardsForPlayResult(play.episodeId, play.endingId);
+
     const result: PlayResultDto = {
       evaluation: savedResult.evaluation as EvaluationResultDto | null,
       ending: endingInfo,
       xpGained: savedResult.xpGained ?? 0,
-      episodeRewards: this.normalizeEpisodeRewards(savedResult),
-      endingRewards: this.normalizeEndingRewards(savedResult),
+      episodeRewards,
+      endingRewards,
     };
 
     return {
@@ -1772,17 +1734,46 @@ export class PlayService {
     };
   }
 
-  private normalizeEpisodeRewards(savedResult: Record<string, any>) {
-    if (Array.isArray(savedResult.episodeRewards))
-      return savedResult.episodeRewards;
-    if (Array.isArray(savedResult.rewards)) return savedResult.rewards;
-    return [];
-  }
+  /** 활성 Reward 행 + 캐릭터 해금 메타 (퀴즈 완료 `EpisodeRewardDto`와 동일) */
+  private async fetchActiveRewardsForPlayResult(
+    episodeId: number,
+    endingId: number | null
+  ) {
+    const [episodeRows, endingRows] = await Promise.all([
+      this.prisma.reward.findMany({
+        where: {
+          sourceType: RewardSourceType.EPISODE,
+          sourceId: episodeId,
+          isActive: true,
+        },
+        select: { id: true, type: true, payload: true },
+        orderBy: { id: 'asc' },
+      }),
+      endingId
+        ? this.prisma.reward.findMany({
+            where: {
+              sourceType: RewardSourceType.ENDING,
+              sourceId: endingId,
+              isActive: true,
+            },
+            select: { id: true, type: true, payload: true },
+            orderBy: { id: 'asc' },
+          })
+        : Promise.resolve([]),
+    ]);
 
-  private normalizeEndingRewards(savedResult: Record<string, any>) {
-    if (Array.isArray(savedResult.endingRewards))
-      return savedResult.endingRewards;
-    return [];
+    const [episodeRewards, endingRewards] = await Promise.all([
+      Promise.all(
+        episodeRows.map((r) =>
+          this.rewardService.toEpisodeRewardDisplayDto(r)
+        )
+      ),
+      Promise.all(
+        endingRows.map((r) => this.rewardService.toEpisodeRewardDisplayDto(r))
+      ),
+    ]);
+
+    return { episodeRewards, endingRewards };
   }
 
   private async assertAccessiblePlayEpisode(

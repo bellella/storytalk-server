@@ -468,13 +468,15 @@ model Character {
   id    Int            @id @default(autoincrement())
   scope CharacterScope @default(GLOBAL)
 
-  name              String
-  koreanName        String?
-  avatarImage       String?
-  mainImage         String?
-  description       String
-  personality       String?
-  greetingMessage   String?
+  name        String
+  koreanName  String?
+  avatarImage String?
+  mainImage   String?
+  description String
+  personality String?
+
+  data Json?
+
   chatPrompt        String?
   playEpisodePrompt String?
   status            PublishStatus @default(DRAFT)
@@ -704,7 +706,9 @@ model XpLevel {
 
 enum XpTriggerType {
   EPISODE_COMPLETE // 에피소드 완료 시 XP
+  PLAY_EPISODE_COMPLETE
   DAILY_QUIZ_COMPLETE // 오늘의 학습 목표 완료 시 XP
+  ATTENDANCE
 }
 
 model XpRule {
@@ -739,6 +743,8 @@ enum XpSourceType {
   EPISODE
   DAILY_QUIZ_SESSION
   PRACTICE_SESSION
+  ATTENDANCE
+  PLAY_EPISODE
 }
 
 model UserXpHistory {
@@ -962,7 +968,8 @@ model Ending {
   imageUrl  String?
   order     Int     @default(0)
 
-  episode Episode        @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+  episode Episode @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   userPlayEpisodes UserPlayEpisode[]
@@ -1529,15 +1536,15 @@ enum RewardType {
 }
 
 model Reward {
-  id         Int              @id @default(autoincrement())
-  sourceType RewardSourceType
-  sourceId   Int
-  type       RewardType
+  id          Int              @id @default(autoincrement())
+  sourceType  RewardSourceType
+  sourceId    Int
+  type        RewardType
   description String?
-  payload    Json
-  isActive   Boolean          @default(true)
-  createdAt  DateTime         @default(now())
-  updatedAt  DateTime         @updatedAt
+  payload     Json
+  isActive    Boolean          @default(true)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 
   histories UserRewardHistory[]
 
@@ -1545,16 +1552,16 @@ model Reward {
 }
 
 model UserRewardHistory {
-  id         Int              @id @default(autoincrement())
-  userId     Int
-  rewardId   Int?
-  sourceType RewardSourceType
-  sourceId   Int?
-  type       RewardType
+  id          Int              @id @default(autoincrement())
+  userId      Int
+  rewardId    Int?
+  sourceType  RewardSourceType
+  sourceId    Int?
+  type        RewardType
   description String?
-  payload    Json
-  grantKey   String?
-  grantedAt  DateTime         @default(now())
+  payload     Json
+  grantKey    String?
+  grantedAt   DateTime         @default(now())
 
   user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   reward Reward? @relation(fields: [rewardId], references: [id], onDelete: SetNull)

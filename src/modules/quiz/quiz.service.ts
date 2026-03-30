@@ -1,11 +1,13 @@
 import {
   CharacterRelationStatus,
   EpisodeStage,
+  PlayEpisodeStatus,
   QuizSessionType,
   QuizSourceType,
   QuizType,
   RewardSourceType,
   RewardType,
+  StoryType,
   XpSourceType,
   XpTriggerType,
 } from '@/generated/prisma/client';
@@ -22,6 +24,7 @@ import {
 import { Quiz } from '@/generated/prisma/client';
 import { QuizDto } from '../episode/dto/quiz.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { RewardService } from '../reward/reward.service';
 import { XpService } from '../xp/xp.service';
 import { DailyQuizCompleteResponseDto } from './dto/daily-quiz-complete-response.dto';
 import { DailyQuizResponseDto } from './dto/daily-quiz-response.dto';
@@ -43,7 +46,8 @@ export interface QuizSentenceInput {
 export class QuizService {
   constructor(
     private prisma: PrismaService,
-    private xpService: XpService
+    private xpService: XpService,
+    private rewardService: RewardService
   ) {}
 
   async generateQuizzes(
@@ -541,36 +545,80 @@ export class QuizService {
     if (reward.type === RewardType.CHARACTER_INVITE) {
       const characterId = (reward.payload as { characterId: number })
         .characterId;
-      const [character] = await Promise.all([
-        this.prisma.character.findUnique({
-          where: { id: characterId },
-          select: { id: true, name: true, avatarImage: true },
-        }),
-        this.prisma.characterFriend.upsert({
-          where: { userId_characterId: { userId, characterId } },
-          create: {
-            userId,
-            characterId,
-            status: CharacterRelationStatus.INVITABLE,
-            affinity: 0,
-          },
-          update: {},
-        }),
-      ]);
-      return {
-        id: reward.id,
-        type: reward.type,
-        payload: reward.payload,
-        unlockedCharacter: character
-          ? {
-              characterId: character.id,
-              name: character.name,
-              avatarImageUrl: character.avatarImage,
-            }
-          : null,
-      };
+      await this.prisma.characterFriend.upsert({
+        where: { userId_characterId: { userId, characterId } },
+        create: {
+          userId,
+          characterId,
+          status: CharacterRelationStatus.INVITABLE,
+          affinity: 0,
+        },
+        update: {},
+      });
     }
-    return { id: reward.id, type: reward.type, payload: reward.payload };
+    return this.rewardService.toEpisodeRewardDisplayDto(reward);
+  }
+
+  /**
+   * 오늘의 퀴즈 후보 ID (공수 최소: 진행 기록만 사용):
+   * - UNIT 스토리 에피소드: UserEpisode가 있는 에피소드의 EPISODE 퀴즈
+   * - UNIT 스토리 플레이: status=COMPLETED 인 UserPlayEpisode의 PLAY 퀴즈
+   */
+  private async resolveDailyQuizCandidateQuizIds(
+    userId: number
+  ): Promise<number[]> {
+    const [userEpisodeRows, completedPlayRows] = await Promise.all([
+      this.prisma.userEpisode.findMany({
+        where: { userId },
+        select: { episodeId: true },
+      }),
+      this.prisma.userPlayEpisode.findMany({
+        where: {
+          userId,
+          status: PlayEpisodeStatus.COMPLETED,
+          deletedAt: null,
+          episode: { story: { type: StoryType.UNIT } },
+        },
+        select: { id: true },
+      }),
+    ]);
+
+    const unitEpisodeRows = await this.prisma.episode.findMany({
+      where: {
+        id: { in: userEpisodeRows.map((r) => r.episodeId) },
+        story: { type: StoryType.UNIT },
+      },
+      select: { id: true },
+    });
+    const unitSeenEpisodeIds = unitEpisodeRows.map((e) => e.id);
+    const completedPlayIds = completedPlayRows.map((p) => p.id);
+
+    if (unitSeenEpisodeIds.length === 0 && completedPlayIds.length === 0) {
+      return [];
+    }
+
+    const orParts: Array<{
+      sourceType: QuizSourceType;
+      sourceId: { in: number[] };
+    }> = [];
+    if (unitSeenEpisodeIds.length) {
+      orParts.push({
+        sourceType: QuizSourceType.EPISODE,
+        sourceId: { in: unitSeenEpisodeIds },
+      });
+    }
+    if (completedPlayIds.length) {
+      orParts.push({
+        sourceType: QuizSourceType.PLAY,
+        sourceId: { in: completedPlayIds },
+      });
+    }
+
+    const quizzes = await this.prisma.quiz.findMany({
+      where: { isActive: true, OR: orParts },
+      select: { id: true },
+    });
+    return quizzes.map((q) => q.id);
   }
 
   async getDailyQuiz(userId: number): Promise<DailyQuizResponseDto> {
@@ -599,11 +647,19 @@ export class QuizService {
       if (!user) {
         throw new NotFoundException('유저를 찾을 수 없습니다.');
       }
-      // 유저 레벨에 맞는 퀴즈 10개 랜덤 추출
+      const candidateIds = await this.resolveDailyQuizCandidateQuizIds(userId);
+      if (candidateIds.length === 0) {
+        throw new NotFoundException(
+          'UNIT 스토리 에피소드/플레이 퀴즈를 먼저 풀어야 오늘의 퀴즈를 시작할 수 있습니다.'
+        );
+      }
+
+      // 유저 레벨에 맞는 퀴즈 10개 랜덤 추출 (본인이 풀었던 퀴즈 풀 안에서만)
       const quizzes = await this.prisma.quiz.findMany({
         where: {
           isActive: true,
           level: user.level,
+          id: { in: candidateIds },
         },
       });
 
@@ -612,7 +668,9 @@ export class QuizService {
       const selected = shuffled.slice(0, 10);
 
       if (selected.length === 0) {
-        throw new NotFoundException('해당 레벨에 맞는 퀴즈가 없습니다.');
+        throw new NotFoundException(
+          '해당 레벨에 맞는 오늘의 퀴즈 후보가 없습니다. UNIT 에피소드를 더 진행해 보세요.'
+        );
       }
 
       // 세션 생성 + QuizSessionItem 생성
@@ -646,7 +704,6 @@ export class QuizService {
       targetItems = session.quizSessionItems.filter(
         (item) => !answeredQuizIds.has(item.quizId)
       );
-      console.log(session, answeredQuizIds, isCompleted);
     }
 
     const quizzes: QuizDto[] = targetItems.map((item) =>

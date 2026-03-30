@@ -1,6 +1,15 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { RewardType } from '@/generated/prisma/client';
 
+/** 공통: DB Reward 한 건의 타입 + payload (지급 스냅샷·표시 공통) */
+export class RewardPayloadDto {
+  @ApiProperty({ enum: RewardType, enumName: 'RewardType' })
+  type: RewardType;
+
+  @ApiProperty({ description: '리워드 상세 정보(JSON)' })
+  payload: Record<string, any>;
+}
+
 export class UnlockedCharacterDto {
   @ApiProperty()
   characterId: number;
@@ -12,17 +21,12 @@ export class UnlockedCharacterDto {
   avatarImageUrl: string | null;
 }
 
-export class EpisodeRewardDto {
+/** 퀴즈 완료 / 플레이 result 등 — Reward 행 id + 캐릭터 해금 메타 */
+export class EpisodeRewardDto extends RewardPayloadDto {
   @ApiProperty()
   id: number;
 
-  @ApiProperty({ enum: RewardType, enumName: 'RewardType' })
-  type: RewardType;
-
-  @ApiProperty({ description: '리워드 상세 정보(JSON)' })
-  payload: Record<string, any>;
-
-  @ApiProperty({ type: UnlockedCharacterDto, nullable: true, required: false })
+  @ApiPropertyOptional({ type: UnlockedCharacterDto, nullable: true })
   unlockedCharacter?: UnlockedCharacterDto | null;
 }
 

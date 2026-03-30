@@ -1,15 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { RewardPayloadDto } from '@/modules/episode/dto/episode-complete-response.dto';
 
-export class GrantedRewardDto {
-  @ApiProperty({ example: 'COIN', description: '리워드 타입' })
-  type: string;
-
-  @ApiProperty({
-    example: { amount: 100 },
-    description: '리워드 payload (타입마다 다름)',
-  })
-  payload: Record<string, any>;
-}
+/** 출석 지급 결과 — `id` 없음 (`RewardPayloadDto`와 동일 맥락) */
+export class GrantedRewardDto extends RewardPayloadDto {}
 
 export class CheckInResponseDto {
   @ApiProperty({ example: '2026-03-28', description: '출석 날짜 (YYYY-MM-DD)' })

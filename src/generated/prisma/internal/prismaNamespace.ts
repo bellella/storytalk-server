@@ -4732,7 +4732,7 @@ export const CharacterScalarFieldEnum = {
   mainImage: 'mainImage',
   description: 'description',
   personality: 'personality',
-  greetingMessage: 'greetingMessage',
+  data: 'data',
   chatPrompt: 'chatPrompt',
   playEpisodePrompt: 'playEpisodePrompt',
   status: 'status',

@@ -201,7 +201,9 @@ export type FaceTalkStatus = (typeof FaceTalkStatus)[keyof typeof FaceTalkStatus
 
 export const XpTriggerType = {
   EPISODE_COMPLETE: 'EPISODE_COMPLETE',
-  DAILY_QUIZ_COMPLETE: 'DAILY_QUIZ_COMPLETE'
+  PLAY_EPISODE_COMPLETE: 'PLAY_EPISODE_COMPLETE',
+  DAILY_QUIZ_COMPLETE: 'DAILY_QUIZ_COMPLETE',
+  ATTENDANCE: 'ATTENDANCE'
 } as const
 
 export type XpTriggerType = (typeof XpTriggerType)[keyof typeof XpTriggerType]
@@ -210,7 +212,9 @@ export type XpTriggerType = (typeof XpTriggerType)[keyof typeof XpTriggerType]
 export const XpSourceType = {
   EPISODE: 'EPISODE',
   DAILY_QUIZ_SESSION: 'DAILY_QUIZ_SESSION',
-  PRACTICE_SESSION: 'PRACTICE_SESSION'
+  PRACTICE_SESSION: 'PRACTICE_SESSION',
+  ATTENDANCE: 'ATTENDANCE',
+  PLAY_EPISODE: 'PLAY_EPISODE'
 } as const
 
 export type XpSourceType = (typeof XpSourceType)[keyof typeof XpSourceType]

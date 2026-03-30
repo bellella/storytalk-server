@@ -1,7 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { RewardSourceType, XpSourceType, XpTriggerType } from '@/generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { RewardService, GrantedReward } from '../reward/reward.service';
-import { RewardSourceType } from '@/generated/prisma/enums';
+import { XpService } from '../xp/xp.service';
 
 const ATTENDANCE_REWARD_SOURCE_ID = 1;
 
@@ -9,7 +10,8 @@ const ATTENDANCE_REWARD_SOURCE_ID = 1;
 export class AttendanceService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly rewardService: RewardService
+    private readonly rewardService: RewardService,
+    private readonly xpService: XpService
   ) {}
 
   /**
@@ -33,6 +35,11 @@ export class AttendanceService {
       throw new BadRequestException('Already checked in today');
     }
 
+    const attendanceDateKey =
+      today.getFullYear() * 10000 +
+      (today.getMonth() + 1) * 100 +
+      today.getDate();
+
     const rewards = await this.prisma.$transaction(async (tx) => {
       await tx.userAttendance.create({
         data: { userId, attendanceDate: today },
@@ -40,13 +47,22 @@ export class AttendanceService {
 
       const grantKey = `attendance_u${userId}_${today.toISOString().slice(0, 10)}`;
 
-      return this.rewardService.grantRewardsForSource(
+      const granted = await this.rewardService.grantRewardsForSource(
         tx,
         userId,
         RewardSourceType.ATTENDANCE,
         ATTENDANCE_REWARD_SOURCE_ID,
         grantKey
       );
+
+      await this.xpService.grantXpWithinTransaction(tx, {
+        userId,
+        triggerType: XpTriggerType.ATTENDANCE,
+        sourceType: XpSourceType.ATTENDANCE,
+        sourceId: attendanceDateKey,
+      });
+
+      return granted;
     });
 
     return {

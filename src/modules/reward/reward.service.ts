@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { EpisodeRewardDto } from '../episode/dto/episode-complete-response.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   CharacterRelationStatus,
@@ -17,13 +18,50 @@ type Tx = Omit<
 >;
 
 export interface GrantedReward {
-  type: string;
+  type: RewardType;
   payload: Record<string, any>;
 }
 
 @Injectable()
 export class RewardService {
   constructor(private readonly prisma: PrismaService) {}
+
+  /**
+   * 퀴즈 완료 / 플레이 결과 등 API 표시용 — CHARACTER_INVITE면 캐릭터 메타 포함 (지급 로직 없음)
+   */
+  async toEpisodeRewardDisplayDto(
+    reward: { id: number; type: RewardType; payload: unknown }
+  ): Promise<EpisodeRewardDto> {
+    const payload = reward.payload as Record<string, any>;
+    if (reward.type !== RewardType.CHARACTER_INVITE) {
+      return { id: reward.id, type: reward.type, payload };
+    }
+    const characterId = payload?.characterId as number | undefined;
+    if (characterId == null) {
+      return {
+        id: reward.id,
+        type: reward.type,
+        payload,
+        unlockedCharacter: null,
+      };
+    }
+    const character = await this.prisma.character.findUnique({
+      where: { id: characterId },
+      select: { id: true, name: true, avatarImage: true },
+    });
+    return {
+      id: reward.id,
+      type: reward.type,
+      payload,
+      unlockedCharacter: character
+        ? {
+            characterId: character.id,
+            name: character.name,
+            avatarImageUrl: character.avatarImage,
+          }
+        : null,
+    };
+  }
 
   /**
    * sourceType + sourceId에 해당하는 모든 활성 리워드를 조회하고 지급.
@@ -75,7 +113,11 @@ export class RewardService {
       description?: string;
       grantKey?: string;
     }
-  ): Promise<{ granted: boolean; type: string; payload: Record<string, any> }> {
+  ): Promise<{
+    granted: boolean;
+    type: RewardType;
+    payload: Record<string, any>;
+  }> {
     // 중복 체크
     if (reward.grantKey) {
       const exists = await db.userRewardHistory.findUnique({

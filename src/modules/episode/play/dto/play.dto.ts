@@ -7,6 +7,7 @@ import {
   SlotDialogueType,
   SlotMessageType,
 } from '@/generated/prisma/enums';
+import { EpisodeRewardDto } from '@/modules/episode/dto/episode-complete-response.dto';
 import {
   DialogueDto,
   EpisodeDetailDto,
@@ -187,11 +188,6 @@ export class BranchTriggerResponseDto {
   scenes: SceneDto[];
 }
 
-export class RewardGrantDto {
-  type: string;
-  payload: any;
-}
-
 export class EvaluationTurnDto {
   index: number;
   inputType: number | null;
@@ -262,10 +258,10 @@ export class PlayResultDto {
   ending: EndingInfoDto | null;
   /** 완료 시 XP 획득량 */
   xpGained: number;
-  /** 에피소드 완료 리워드 */
-  episodeRewards: RewardGrantDto[];
-  /** 엔딩 도달 리워드 */
-  endingRewards: RewardGrantDto[];
+  /** 에피소드에 연결된 활성 리워드 (퀴즈 완료와 동일 `EpisodeRewardDto`) */
+  episodeRewards: EpisodeRewardDto[];
+  /** 엔딩에 연결된 활성 리워드 */
+  endingRewards: EpisodeRewardDto[];
 }
 
 export class ResultResponseDto {

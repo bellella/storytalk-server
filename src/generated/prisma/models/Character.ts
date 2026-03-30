@@ -45,7 +45,6 @@ export type CharacterMinAggregateOutputType = {
   mainImage: string | null
   description: string | null
   personality: string | null
-  greetingMessage: string | null
   chatPrompt: string | null
   playEpisodePrompt: string | null
   status: $Enums.PublishStatus | null
@@ -64,7 +63,6 @@ export type CharacterMaxAggregateOutputType = {
   mainImage: string | null
   description: string | null
   personality: string | null
-  greetingMessage: string | null
   chatPrompt: string | null
   playEpisodePrompt: string | null
   status: $Enums.PublishStatus | null
@@ -83,7 +81,7 @@ export type CharacterCountAggregateOutputType = {
   mainImage: number
   description: number
   personality: number
-  greetingMessage: number
+  data: number
   chatPrompt: number
   playEpisodePrompt: number
   status: number
@@ -114,7 +112,6 @@ export type CharacterMinAggregateInputType = {
   mainImage?: true
   description?: true
   personality?: true
-  greetingMessage?: true
   chatPrompt?: true
   playEpisodePrompt?: true
   status?: true
@@ -133,7 +130,6 @@ export type CharacterMaxAggregateInputType = {
   mainImage?: true
   description?: true
   personality?: true
-  greetingMessage?: true
   chatPrompt?: true
   playEpisodePrompt?: true
   status?: true
@@ -152,7 +148,7 @@ export type CharacterCountAggregateInputType = {
   mainImage?: true
   description?: true
   personality?: true
-  greetingMessage?: true
+  data?: true
   chatPrompt?: true
   playEpisodePrompt?: true
   status?: true
@@ -258,7 +254,7 @@ export type CharacterGroupByOutputType = {
   mainImage: string | null
   description: string
   personality: string | null
-  greetingMessage: string | null
+  data: runtime.JsonValue | null
   chatPrompt: string | null
   playEpisodePrompt: string | null
   status: $Enums.PublishStatus
@@ -300,7 +296,7 @@ export type CharacterWhereInput = {
   mainImage?: Prisma.StringNullableFilter<"Character"> | string | null
   description?: Prisma.StringFilter<"Character"> | string
   personality?: Prisma.StringNullableFilter<"Character"> | string | null
-  greetingMessage?: Prisma.StringNullableFilter<"Character"> | string | null
+  data?: Prisma.JsonNullableFilter<"Character">
   chatPrompt?: Prisma.StringNullableFilter<"Character"> | string | null
   playEpisodePrompt?: Prisma.StringNullableFilter<"Character"> | string | null
   status?: Prisma.EnumPublishStatusFilter<"Character"> | $Enums.PublishStatus
@@ -327,7 +323,7 @@ export type CharacterOrderByWithRelationInput = {
   mainImage?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrder
   personality?: Prisma.SortOrderInput | Prisma.SortOrder
-  greetingMessage?: Prisma.SortOrderInput | Prisma.SortOrder
+  data?: Prisma.SortOrderInput | Prisma.SortOrder
   chatPrompt?: Prisma.SortOrderInput | Prisma.SortOrder
   playEpisodePrompt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -357,7 +353,7 @@ export type CharacterWhereUniqueInput = Prisma.AtLeast<{
   mainImage?: Prisma.StringNullableFilter<"Character"> | string | null
   description?: Prisma.StringFilter<"Character"> | string
   personality?: Prisma.StringNullableFilter<"Character"> | string | null
-  greetingMessage?: Prisma.StringNullableFilter<"Character"> | string | null
+  data?: Prisma.JsonNullableFilter<"Character">
   chatPrompt?: Prisma.StringNullableFilter<"Character"> | string | null
   playEpisodePrompt?: Prisma.StringNullableFilter<"Character"> | string | null
   status?: Prisma.EnumPublishStatusFilter<"Character"> | $Enums.PublishStatus
@@ -384,7 +380,7 @@ export type CharacterOrderByWithAggregationInput = {
   mainImage?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrder
   personality?: Prisma.SortOrderInput | Prisma.SortOrder
-  greetingMessage?: Prisma.SortOrderInput | Prisma.SortOrder
+  data?: Prisma.SortOrderInput | Prisma.SortOrder
   chatPrompt?: Prisma.SortOrderInput | Prisma.SortOrder
   playEpisodePrompt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -411,7 +407,7 @@ export type CharacterScalarWhereWithAggregatesInput = {
   mainImage?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
   description?: Prisma.StringWithAggregatesFilter<"Character"> | string
   personality?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
-  greetingMessage?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
+  data?: Prisma.JsonNullableWithAggregatesFilter<"Character">
   chatPrompt?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
   playEpisodePrompt?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
   status?: Prisma.EnumPublishStatusWithAggregatesFilter<"Character"> | $Enums.PublishStatus
@@ -429,7 +425,7 @@ export type CharacterCreateInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -456,7 +452,7 @@ export type CharacterUncheckedCreateInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -482,7 +478,7 @@ export type CharacterUpdateInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -509,7 +505,7 @@ export type CharacterUncheckedUpdateInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -536,7 +532,7 @@ export type CharacterCreateManyInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -554,7 +550,7 @@ export type CharacterUpdateManyMutationInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -573,7 +569,7 @@ export type CharacterUncheckedUpdateManyInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -597,7 +593,7 @@ export type CharacterCountOrderByAggregateInput = {
   mainImage?: Prisma.SortOrder
   description?: Prisma.SortOrder
   personality?: Prisma.SortOrder
-  greetingMessage?: Prisma.SortOrder
+  data?: Prisma.SortOrder
   chatPrompt?: Prisma.SortOrder
   playEpisodePrompt?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -621,7 +617,6 @@ export type CharacterMaxOrderByAggregateInput = {
   mainImage?: Prisma.SortOrder
   description?: Prisma.SortOrder
   personality?: Prisma.SortOrder
-  greetingMessage?: Prisma.SortOrder
   chatPrompt?: Prisma.SortOrder
   playEpisodePrompt?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -640,7 +635,6 @@ export type CharacterMinOrderByAggregateInput = {
   mainImage?: Prisma.SortOrder
   description?: Prisma.SortOrder
   personality?: Prisma.SortOrder
-  greetingMessage?: Prisma.SortOrder
   chatPrompt?: Prisma.SortOrder
   playEpisodePrompt?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -790,7 +784,7 @@ export type CharacterCreateWithoutUsersInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -816,7 +810,7 @@ export type CharacterUncheckedCreateWithoutUsersInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -857,7 +851,7 @@ export type CharacterUpdateWithoutUsersInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -883,7 +877,7 @@ export type CharacterUncheckedUpdateWithoutUsersInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -908,7 +902,7 @@ export type CharacterCreateWithoutDialoguesInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -934,7 +928,7 @@ export type CharacterUncheckedCreateWithoutDialoguesInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -975,7 +969,7 @@ export type CharacterUpdateWithoutDialoguesInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -1001,7 +995,7 @@ export type CharacterUncheckedUpdateWithoutDialoguesInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -1026,7 +1020,7 @@ export type CharacterCreateWithoutStoryLinksInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -1052,7 +1046,7 @@ export type CharacterUncheckedCreateWithoutStoryLinksInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -1093,7 +1087,7 @@ export type CharacterUpdateWithoutStoryLinksInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -1119,7 +1113,7 @@ export type CharacterUncheckedUpdateWithoutStoryLinksInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -1144,7 +1138,7 @@ export type CharacterCreateWithoutImagesInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -1170,7 +1164,7 @@ export type CharacterUncheckedCreateWithoutImagesInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -1211,7 +1205,7 @@ export type CharacterUpdateWithoutImagesInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -1237,7 +1231,7 @@ export type CharacterUncheckedUpdateWithoutImagesInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -1262,7 +1256,7 @@ export type CharacterCreateWithoutFriendsInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -1288,7 +1282,7 @@ export type CharacterUncheckedCreateWithoutFriendsInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -1329,7 +1323,7 @@ export type CharacterUpdateWithoutFriendsInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -1355,7 +1349,7 @@ export type CharacterUncheckedUpdateWithoutFriendsInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -1380,7 +1374,7 @@ export type CharacterCreateWithoutCharacterChatsInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -1406,7 +1400,7 @@ export type CharacterUncheckedCreateWithoutCharacterChatsInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -1447,7 +1441,7 @@ export type CharacterUpdateWithoutCharacterChatsInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -1473,7 +1467,7 @@ export type CharacterUncheckedUpdateWithoutCharacterChatsInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -1498,7 +1492,7 @@ export type CharacterCreateWithoutMessagesInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -1524,7 +1518,7 @@ export type CharacterUncheckedCreateWithoutMessagesInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -1565,7 +1559,7 @@ export type CharacterUpdateWithoutMessagesInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -1591,7 +1585,7 @@ export type CharacterUncheckedUpdateWithoutMessagesInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -1616,7 +1610,7 @@ export type CharacterCreateWithoutSlotDialoguesInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -1642,7 +1636,7 @@ export type CharacterUncheckedCreateWithoutSlotDialoguesInput = {
   mainImage?: string | null
   description: string
   personality?: string | null
-  greetingMessage?: string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: string | null
   playEpisodePrompt?: string | null
   status?: $Enums.PublishStatus
@@ -1683,7 +1677,7 @@ export type CharacterUpdateWithoutSlotDialoguesInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -1709,7 +1703,7 @@ export type CharacterUncheckedUpdateWithoutSlotDialoguesInput = {
   mainImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
   personality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  greetingMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   chatPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playEpisodePrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
@@ -1829,7 +1823,7 @@ export type CharacterSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   mainImage?: boolean
   description?: boolean
   personality?: boolean
-  greetingMessage?: boolean
+  data?: boolean
   chatPrompt?: boolean
   playEpisodePrompt?: boolean
   status?: boolean
@@ -1857,7 +1851,7 @@ export type CharacterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   mainImage?: boolean
   description?: boolean
   personality?: boolean
-  greetingMessage?: boolean
+  data?: boolean
   chatPrompt?: boolean
   playEpisodePrompt?: boolean
   status?: boolean
@@ -1876,7 +1870,7 @@ export type CharacterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   mainImage?: boolean
   description?: boolean
   personality?: boolean
-  greetingMessage?: boolean
+  data?: boolean
   chatPrompt?: boolean
   playEpisodePrompt?: boolean
   status?: boolean
@@ -1895,7 +1889,7 @@ export type CharacterSelectScalar = {
   mainImage?: boolean
   description?: boolean
   personality?: boolean
-  greetingMessage?: boolean
+  data?: boolean
   chatPrompt?: boolean
   playEpisodePrompt?: boolean
   status?: boolean
@@ -1905,7 +1899,7 @@ export type CharacterSelectScalar = {
   minUserLevel?: boolean
 }
 
-export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "scope" | "name" | "koreanName" | "avatarImage" | "mainImage" | "description" | "personality" | "greetingMessage" | "chatPrompt" | "playEpisodePrompt" | "status" | "createdAt" | "updatedAt" | "isUserSelectable" | "minUserLevel", ExtArgs["result"]["character"]>
+export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "scope" | "name" | "koreanName" | "avatarImage" | "mainImage" | "description" | "personality" | "data" | "chatPrompt" | "playEpisodePrompt" | "status" | "createdAt" | "updatedAt" | "isUserSelectable" | "minUserLevel", ExtArgs["result"]["character"]>
 export type CharacterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   images?: boolean | Prisma.Character$imagesArgs<ExtArgs>
   dialogues?: boolean | Prisma.Character$dialoguesArgs<ExtArgs>
@@ -1941,7 +1935,7 @@ export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     mainImage: string | null
     description: string
     personality: string | null
-    greetingMessage: string | null
+    data: runtime.JsonValue | null
     chatPrompt: string | null
     playEpisodePrompt: string | null
     status: $Enums.PublishStatus
@@ -2388,7 +2382,7 @@ export interface CharacterFieldRefs {
   readonly mainImage: Prisma.FieldRef<"Character", 'String'>
   readonly description: Prisma.FieldRef<"Character", 'String'>
   readonly personality: Prisma.FieldRef<"Character", 'String'>
-  readonly greetingMessage: Prisma.FieldRef<"Character", 'String'>
+  readonly data: Prisma.FieldRef<"Character", 'Json'>
   readonly chatPrompt: Prisma.FieldRef<"Character", 'String'>
   readonly playEpisodePrompt: Prisma.FieldRef<"Character", 'String'>
   readonly status: Prisma.FieldRef<"Character", 'PublishStatus'>
