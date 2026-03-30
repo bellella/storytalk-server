@@ -672,16 +672,7 @@ export class QuizService {
     });
 
     return {
-      xp: {
-        xpGranted: xpResult.xpGranted,
-        totalXp: xpResult.totalXp,
-        previousLevel: xpResult.previousLevel,
-        currentLevel: xpResult.currentLevel,
-        leveledUp: xpResult.leveledUp,
-        nextLevel: xpResult.nextLevel,
-        xpToNextLevel: xpResult.xpToNextLevel,
-        requiredTotalXp: xpResult.requiredTotalXp,
-      },
+      xp: xpResult,
       result: scoreResult,
     };
   }

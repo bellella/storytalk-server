@@ -79,8 +79,7 @@ export class UserService {
       throw new NotFoundException('User not found');
     }
 
-    const { xpInCurrentLevel, xpToNextLevel } =
-      await this.xpService.getXpProgressForProfile(user.xp, user.XpLevel);
+    const xp = await this.xpService.getXpDto(user.xp, user.XpLevel);
 
     return {
       id: user.id,
@@ -89,9 +88,7 @@ export class UserService {
       gender: user.gender,
       role: user.role,
       level: user.level,
-      xpLevel: user.XpLevel,
-      xpInCurrentLevel,
-      xpToNextLevel,
+      xp,
       dailyStatus: {
         quizCompleted: !!dailySession?.completedAt,
         attendanceChecked: !!todayAttendance,

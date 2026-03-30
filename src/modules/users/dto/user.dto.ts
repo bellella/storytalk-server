@@ -1,5 +1,6 @@
 import { Level, UserGender, UserRole } from '@/generated/prisma/enums';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
+import { XpDto } from '../../xp/dto/xp-progress.dto';
 
 export class UserDto {
   id: number;
@@ -18,17 +19,9 @@ export class SelectedCharacterDto {
 
 export class UserProfileDto extends UserDto {
   level: Level;
-  xpLevel: number;
 
-  @ApiProperty({
-    description: '현재 레벨 구간에서 획득한 XP (진행바용, 누적 총합 아님)',
-  })
-  xpInCurrentLevel: number;
-
-  @ApiPropertyOptional({
-    description: '다음 레벨까지 더 필요한 XP (최고 레벨이면 null)',
-  })
-  xpToNextLevel: number | null;
+  @ApiProperty({ type: XpDto })
+  xp: XpDto;
 
   dailyStatus: DailyStatusDto;
   selectedCharacter: SelectedCharacterDto | null;
