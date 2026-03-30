@@ -1,4 +1,5 @@
 // src/modules/play/dto/play.dto.ts
+import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
 import {
   EpisodeStage,
   PlayEpisodeMode,
@@ -193,26 +194,25 @@ export class RewardGrantDto {
 
 export class EvaluationTurnDto {
   index: number;
-  overallScore: number | null;
-  grammarScore: number | null;
-  fluencyScore: number | null;
-  naturalnessScore: number | null;
-  cefr: string | null;
-  feedback: string | null;
+  inputType: number | null;
+  original: string;
+  corrected: string;
+  explanation: string;
+  improved: string;
+  tips: string;
+  levelLabel: string;
 }
 
-export class EvaluationAggregateDto {
-  overallScore: number | null;
-  grammarScore: number | null;
-  fluencyScore: number | null;
-  naturalnessScore: number | null;
-  cefr: string | null;
-  summary: string | null;
+export class EvaluationSummaryDto {
+  overallComment: string;
+  strengths: string[];
+  improvements: string[];
+  recommendedExpressions: string[];
 }
 
 export class EvaluationResultDto {
   turns: EvaluationTurnDto[];
-  aggregate: EvaluationAggregateDto;
+  summary: EvaluationSummaryDto;
   generatedAt: string;
 }
 
@@ -227,8 +227,7 @@ export class EndingInfoDto {
   episodeKoreanTitle: string | null;
 }
 
-/** completePlayEpisode 응답 - ResultResponseDto와 동일 구조 */
-export type CompletePlayResponseDto = ResultResponseDto;
+export type CompletePlayResponseDto = SuccessResponseDto;
 
 export class PlayEpisodeDto {
   id: number;
@@ -255,27 +254,18 @@ export class ResultEvaluationDto {
   feedback: string;
 }
 
-/** AI_INPUT_SLOT 턴별 평가 + 교정 문장 */
-export class CorrectedSlotDto {
-  type: 'correction' | 'translation';
-  userInput: string;
-  englishText: string;
-  koreanText: string;
-  evaluation: ResultEvaluationDto | null;
-}
-
-/** 플레이 결과 (play.result + slot 데이터 통합) - complete/getResult 공통 */
+/** 플레이 결과 — `UserPlayEpisode.result` JSON 기준 (슬롯 조회·합성 없음) */
 export class PlayResultDto {
-  /** AI 평가 전체 (ROLEPLAY_WITH_EVAL 모드) */
+  /** AI 평가 전체 (ROLEPLAY_WITH_EVAL 모드, `result.evaluation`) */
   evaluation: EvaluationResultDto | null;
   /** 엔딩 도달 시 */
   ending: EndingInfoDto | null;
-  /** 턴별 교정/번역 + 평가 (AI_INPUT_SLOT 슬롯들) */
-  slots: CorrectedSlotDto[];
   /** 완료 시 XP 획득량 */
   xpGained: number;
-  /** 지급된 리워드 (캐릭터 해금 등) */
-  rewards: RewardGrantDto[];
+  /** 에피소드 완료 리워드 */
+  episodeRewards: RewardGrantDto[];
+  /** 엔딩 도달 리워드 */
+  endingRewards: RewardGrantDto[];
 }
 
 export class ResultResponseDto {
@@ -285,7 +275,7 @@ export class ResultResponseDto {
   currentStage: EpisodeStage;
   @ApiProperty({ enum: PlayEpisodeStatus, enumName: 'PlayEpisodeStatus' })
   status: PlayEpisodeStatus;
-  /** 평가, 엔딩, 슬롯 평가 통합 */
+  /** 저장된 play.result (평가·엔딩·XP·리워드) */
   result: PlayResultDto;
 }
 

@@ -11,20 +11,20 @@ export interface EvaluateSlotsPromptArgs {
 export function prepareEvaluateSlotsVariables(
   args: EvaluateSlotsPromptArgs
 ): Record<string, string> {
-  const turnList = args.turns
+  const turns = args.turns
     .map((t) =>
       t.inputType === 'correction'
         ? `Turn ${t.index}: original="${t.userInput}" → corrected="${t.correctedText}"`
         : `Turn ${t.index}: (Korean input, translated to) "${t.correctedText}"`
     )
     .join('\n');
-  return { turnList };
+  return { turns };
 }
 
 export function buildEvaluateSlotsPrompt(
   args: EvaluateSlotsPromptArgs
 ): string {
-  const turnList = args.turns
+  const turns = args.turns
     .map((t) =>
       t.inputType === 'correction'
         ? `Turn ${t.index}: original="${t.userInput}" → corrected="${t.correctedText}"`
@@ -37,7 +37,7 @@ Evaluate the user's English performance across the following conversation turns.
 Only evaluate turns where inputType is "correction" (English input). Skip translation turns in per-turn scores.
 
 Turns:
-${turnList}
+${turns}
 
 Respond with ONLY valid JSON. No markdown, no trailing commas.
 

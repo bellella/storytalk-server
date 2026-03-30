@@ -154,15 +154,15 @@ export class PlayController {
   }
 
   /**
-   * 4️⃣ 플레이 종료 → 결과 생성 + 퀴즈 생성
+   * 4️⃣ 플레이 종료 → 결과 생성 + 퀴즈 생성 (상세는 GET /result)
    * POST /play-episodes/:playEpisodeId/complete
    */
   @Post('/:playEpisodeId/complete')
-  @ApiOkResponse({ type: ResultResponseDto })
+  @ApiOkResponse({ type: SuccessResponseDto })
   completePlayEpisode(
     @ReqUser('id') userId: number,
     @Param('playEpisodeId', ParseIntPipe) playEpisodeId: number
-  ): Promise<ResultResponseDto> {
+  ): Promise<SuccessResponseDto> {
     return this.playService.completePlayEpisode(userId, playEpisodeId);
   }
 
