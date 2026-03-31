@@ -29,6 +29,7 @@ import {
   BranchTriggerResponseDto,
   ChoiceSlotDto,
   ChoiceSlotResponseDto,
+  CompletePlayResponseDto,
   MyPlayEpisodeItemDto,
   PlayEpisodeDetailResponseDto,
   ResultResponseDto,
@@ -158,11 +159,11 @@ export class PlayController {
    * POST /play-episodes/:playEpisodeId/complete
    */
   @Post('/:playEpisodeId/complete')
-  @ApiOkResponse({ type: SuccessResponseDto })
+  @ApiOkResponse({ type: CompletePlayResponseDto })
   completePlayEpisode(
     @ReqUser('id') userId: number,
     @Param('playEpisodeId', ParseIntPipe) playEpisodeId: number
-  ): Promise<SuccessResponseDto> {
+  ): Promise<CompletePlayResponseDto> {
     return this.playService.completePlayEpisode(userId, playEpisodeId);
   }
 

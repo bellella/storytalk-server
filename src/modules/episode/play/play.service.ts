@@ -1,5 +1,4 @@
 import { CursorResponseDto } from '@/common/dtos/cursor-response.dto';
-import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
 import {
   DialogueSpeakerRole,
   DialogueType,
@@ -67,6 +66,7 @@ import {
   BranchTriggerResponseDto,
   ChoiceSlotDto,
   ChoiceSlotResponseDto,
+  CompletePlayResponseDto,
   EndingInfoDto,
   EvaluationResultDto,
   MyPlayEpisodeItemDto,
@@ -1013,7 +1013,7 @@ export class PlayService {
   async completePlayEpisode(
     userId: number,
     playEpisodeId: number
-  ): Promise<SuccessResponseDto> {
+  ): Promise<CompletePlayResponseDto> {
     const play = await this.fetchPlayEpisode(userId, playEpisodeId);
     if (play.status === PlayEpisodeStatus.COMPLETED) {
       return { success: true };
@@ -1022,7 +1022,15 @@ export class PlayService {
       throw new ForbiddenException('Not active');
     }
 
-    await this.prisma.$transaction(
+    const userBefore = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { XpLevel: true },
+    });
+    if (!userBefore) {
+      throw new NotFoundException('유저를 찾을 수 없습니다.');
+    }
+
+    const xpGained = await this.prisma.$transaction(
       async (tx) => {
         // 1) ACTIVE slot 강제 종료(혹시 남아있으면)
         const now = new Date();
@@ -1212,11 +1220,19 @@ export class PlayService {
             rewardsGranted,
           },
         });
+
+        return xpGained;
       },
       { timeout: 60000 }
     );
 
-    return { success: true };
+    const xp = await this.xpService.buildXpProgressAfterGrant(
+      userId,
+      xpGained,
+      userBefore.XpLevel
+    );
+
+    return { success: true, xp };
   }
 
   // async getReplayData(

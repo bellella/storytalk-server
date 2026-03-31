@@ -1,8 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { RewardSourceType, XpSourceType, XpTriggerType } from '@/generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { RewardService, GrantedReward } from '../reward/reward.service';
 import { XpService } from '../xp/xp.service';
+import { XpProgressDto } from '../xp/dto/xp-progress.dto';
 
 const ATTENDANCE_REWARD_SOURCE_ID = 1;
 
@@ -23,6 +24,7 @@ export class AttendanceService {
   async checkIn(userId: number): Promise<{
     attendanceDate: string;
     rewards: GrantedReward[];
+    xp: XpProgressDto;
   }> {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -35,39 +37,56 @@ export class AttendanceService {
       throw new BadRequestException('Already checked in today');
     }
 
+    const userBefore = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { XpLevel: true },
+    });
+    if (!userBefore) {
+      throw new NotFoundException('유저를 찾을 수 없습니다.');
+    }
+
     const attendanceDateKey =
       today.getFullYear() * 10000 +
       (today.getMonth() + 1) * 100 +
       today.getDate();
 
-    const rewards = await this.prisma.$transaction(async (tx) => {
-      await tx.userAttendance.create({
-        data: { userId, attendanceDate: today },
-      });
+    const { granted: rewards, xpGained } = await this.prisma.$transaction(
+      async (tx) => {
+        await tx.userAttendance.create({
+          data: { userId, attendanceDate: today },
+        });
 
-      const grantKey = `attendance_u${userId}_${today.toISOString().slice(0, 10)}`;
+        const grantKey = `attendance_u${userId}_${today.toISOString().slice(0, 10)}`;
 
-      const granted = await this.rewardService.grantRewardsForSource(
-        tx,
-        userId,
-        RewardSourceType.ATTENDANCE,
-        ATTENDANCE_REWARD_SOURCE_ID,
-        grantKey
-      );
+        const granted = await this.rewardService.grantRewardsForSource(
+          tx,
+          userId,
+          RewardSourceType.ATTENDANCE,
+          ATTENDANCE_REWARD_SOURCE_ID,
+          grantKey
+        );
 
-      await this.xpService.grantXpWithinTransaction(tx, {
-        userId,
-        triggerType: XpTriggerType.ATTENDANCE,
-        sourceType: XpSourceType.ATTENDANCE,
-        sourceId: attendanceDateKey,
-      });
+        const { xpGained } = await this.xpService.grantXpWithinTransaction(tx, {
+          userId,
+          triggerType: XpTriggerType.ATTENDANCE,
+          sourceType: XpSourceType.ATTENDANCE,
+          sourceId: attendanceDateKey,
+        });
 
-      return granted;
-    });
+        return { granted, xpGained };
+      }
+    );
+
+    const xp = await this.xpService.buildXpProgressAfterGrant(
+      userId,
+      xpGained,
+      userBefore.XpLevel
+    );
 
     return {
       attendanceDate: today.toISOString().slice(0, 10),
       rewards,
+      xp,
     };
   }
 

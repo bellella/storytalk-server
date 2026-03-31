@@ -150,6 +150,26 @@ export class XpService {
     return { xpGained: rule.xpAmount };
   }
 
+  /**
+   * `grantXpWithinTransaction` 직후(트랜잭션 커밋 후) 응답용.
+   * xpGranted가 0이어도 현재 XP 바·레벨은 최신 유저 기준으로 채운다.
+   */
+  async buildXpProgressAfterGrant(
+    userId: number,
+    xpGranted: number,
+    levelBeforeGrant: number
+  ): Promise<XpProgressDto> {
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw new NotFoundException('유저를 찾을 수 없습니다.');
+    const xpDto = await this.getXpDto(user.xp, user.XpLevel);
+    return {
+      ...xpDto,
+      xpGranted,
+      previousLevel: levelBeforeGrant,
+      leveledUp: user.XpLevel > levelBeforeGrant,
+    };
+  }
+
   private async findActiveXpRule(
     db: DbClient | Tx,
     triggerType: XpTriggerType,

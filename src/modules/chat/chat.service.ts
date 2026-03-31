@@ -275,10 +275,11 @@ export class ChatService {
         },
       });
     }
-    // 채팅방 업데이트
+    // 채팅방 업데이트 — 유저가 방금 메시지를 보내 응답을 기다리는 흐름이므로 NPC 답은 unread 증가 없이 읽음 처리
     await this.updateChatAfterMessage(
       chat.id,
       aiMsgs[aiMsgs.length - 1].id,
+      false,
       true
     );
 
@@ -378,17 +379,26 @@ export class ChatService {
     return messages.reverse();
   }
 
+  /** markAsRead: 실시간 채팅 응답 — unread 증가 없이 읽음 처리 */
   private async updateChatAfterMessage(
     chatId: number,
     messageId: number,
-    incrementUnread: boolean
+    incrementUnread: boolean,
+    markAsRead?: boolean
   ) {
     await this.prisma.characterChat.update({
       where: { id: chatId },
       data: {
         lastMessageId: messageId,
         lastMessageAt: new Date(),
-        ...(incrementUnread ? { unreadCount: { increment: 1 } } : {}),
+        ...(markAsRead
+          ? {
+              lastReadMessageId: messageId,
+              unreadCount: 0,
+            }
+          : incrementUnread
+            ? { unreadCount: { increment: 1 } }
+            : {}),
       },
     });
   }

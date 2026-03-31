@@ -13,7 +13,8 @@ import {
   EpisodeDetailDto,
   SceneDto,
 } from '@/modules/story/dto/episode-detail.dto';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { XpProgressDto } from '@/modules/xp/dto/xp-progress.dto';
 import {
   IsEnum,
   IsInt,
@@ -212,7 +213,16 @@ export class EvaluationResultDto {
   generatedAt: string;
 }
 
-/** completePlayEpisode 응답 - 프론트 표시용 */
+/** POST /play-episodes/:id/complete 응답 */
+export class CompletePlayResponseDto extends SuccessResponseDto {
+  @ApiPropertyOptional({
+    type: XpProgressDto,
+    description:
+      '플레이 완료 XP 지급 후 상태 (이미 완료된 세션 재호출 시 생략)',
+  })
+  xp?: XpProgressDto;
+}
+
 export class EndingInfoDto {
   id: number;
   key: string;
@@ -222,8 +232,6 @@ export class EndingInfoDto {
   episodeTitle: string;
   episodeKoreanTitle: string | null;
 }
-
-export type CompletePlayResponseDto = SuccessResponseDto;
 
 export class PlayEpisodeDto {
   id: number;
