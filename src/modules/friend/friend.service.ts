@@ -7,7 +7,7 @@ import { CharacterRelationStatus } from '@/generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { FriendChatItemDto, FriendListItemDto } from './dto/friend.dto';
 import { SuccessResponseDto } from '@/common/dtos/success-response.dto';
-import { greetingContentFromCharacterData } from '@/utils/character-greeting.util';
+import { greetingPartsFromCharacterData } from '@/utils/character-greeting.util';
 
 @Injectable()
 export class FriendService {
@@ -50,16 +50,18 @@ export class FriendService {
         update: {},
       });
 
+      const { content, payload } = greetingPartsFromCharacterData(
+        character?.data,
+        character?.name ?? ''
+      );
       const message = await tx.message.create({
         data: {
           chatId: chat.id,
           userId,
           characterId,
           isFromUser: false,
-          content: greetingContentFromCharacterData(
-            character?.data,
-            character?.name ?? ''
-          ),
+          content,
+          payload,
         },
       });
 
