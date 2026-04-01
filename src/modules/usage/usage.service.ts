@@ -1,6 +1,7 @@
 import {
   AdRewardType,
   UsageFeatureType,
+  UserRole,
 } from '@/generated/prisma/client';
 import {
   ConflictException,
@@ -28,6 +29,14 @@ const AD_REWARD_AMOUNTS: Record<AdRewardType, number> = {
 export class UsageService {
   constructor(private readonly prisma: PrismaService) {}
 
+  private async isUserAdmin(userId: number): Promise<boolean> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { role: true },
+    });
+    return user?.role === UserRole.ADMIN;
+  }
+
   private getToday(): Date {
     const d = new Date();
     d.setHours(0, 0, 0, 0);
@@ -49,6 +58,18 @@ export class UsageService {
   }
 
   async getUsageStatus(userId: number, featureType: UsageFeatureType): Promise<UsageStatusDto> {
+    if (await this.isUserAdmin(userId)) {
+      const freeLimit = FREE_LIMITS[featureType];
+      return {
+        featureType,
+        usedCount: 0,
+        freeLimit,
+        adRewardedCount: 0,
+        remainingCount: 999_999,
+        canUse: true,
+      };
+    }
+
     const usage = await this.getOrCreateTodayUsage(userId, featureType);
     const remainingCount = Math.max(0, usage.freeLimit + usage.adRewardedCount - usage.usedCount);
     return {
@@ -62,6 +83,8 @@ export class UsageService {
   }
 
   async recordUsage(userId: number, featureType: UsageFeatureType): Promise<void> {
+    if (await this.isUserAdmin(userId)) return;
+
     const usage = await this.getOrCreateTodayUsage(userId, featureType);
     const remaining = usage.freeLimit + usage.adRewardedCount - usage.usedCount;
     if (remaining <= 0) {

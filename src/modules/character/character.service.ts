@@ -121,17 +121,19 @@ export class CharacterService {
   async buildImageMap(characterIds: number[]): Promise<CharacterImageMap> {
     if (!characterIds.length) return new Map();
 
-    const images = await this.prisma.characterImage.findMany({
-      where: { characterId: { in: characterIds } },
-      select: {
-        characterId: true,
-        imageUrl: true,
-        label: true,
-        isDefault: true,
-      },
-    });
+    const [images, characters] = await Promise.all([
+      this.prisma.characterImage.findMany({
+        where: { characterId: { in: characterIds } },
+        select: { characterId: true, imageUrl: true, label: true, isDefault: true },
+      }),
+      this.prisma.character.findMany({
+        where: { id: { in: characterIds } },
+        select: { id: true, avatarImage: true },
+      }),
+    ]);
 
     const map: CharacterImageMap = new Map();
+
     for (const img of images) {
       let labelMap = map.get(img.characterId);
       if (!labelMap) {
@@ -144,6 +146,18 @@ export class CharacterService {
         labelMap.set('default', img.imageUrl);
       }
     }
+
+    // Character.avatarImage → 'avatar' 키로 추가
+    for (const char of characters) {
+      if (!char.avatarImage) continue;
+      let labelMap = map.get(char.id);
+      if (!labelMap) {
+        labelMap = new Map();
+        map.set(char.id, labelMap);
+      }
+      labelMap.set('avatar', char.avatarImage);
+    }
+
     return map;
   }
 
