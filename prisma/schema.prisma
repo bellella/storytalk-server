@@ -96,8 +96,28 @@ model User {
   supportInquiries  SupportInquiry[]
   attendances       UserAttendance[]
   rewardHistories   UserRewardHistory[]
+  userDevices       UserDevice[]
 
   @@unique([email, provider])
+}
+
+model UserDevice {
+  id Int @id @default(autoincrement())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  installationId String
+
+  expoPushToken String? @db.Text
+  pushEnabled   Boolean @default(true)
+
+  platform String // ios / android
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, installationId])
 }
 
 //////////////////////////////////////////////////////

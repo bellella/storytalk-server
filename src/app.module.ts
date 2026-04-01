@@ -28,6 +28,7 @@ import { UsageModule } from './modules/usage/usage.module';
 import { SupportModule } from './modules/support/support.module';
 import { AttendanceModule } from './modules/attendance/attendance.module';
 import { NoticeModule } from './modules/notice/notice.module';
+import { DeviceModule } from './modules/device/device.module';
 
 @Module({
   imports: [
@@ -61,6 +62,7 @@ import { NoticeModule } from './modules/notice/notice.module';
     SupportModule,
     AttendanceModule,
     NoticeModule,
+    DeviceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
