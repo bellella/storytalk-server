@@ -1,11 +1,13 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { RewardSourceType, XpSourceType, XpTriggerType } from '@/generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { RewardService, GrantedReward } from '../reward/reward.service';
 import { XpService } from '../xp/xp.service';
 import { XpProgressDto } from '../xp/dto/xp-progress.dto';
-
-const ATTENDANCE_REWARD_SOURCE_ID = 1;
 
 @Injectable()
 export class AttendanceService {
@@ -19,7 +21,7 @@ export class AttendanceService {
    * 오늘 출석 체크.
    * - 이미 출석했으면 오류
    * - UserAttendance 생성
-   * - Reward 테이블에 sourceType=ATTENDANCE, sourceId=1인 활성 리워드 지급
+   * - Reward 테이블에서 sourceType=ATTENDANCE인 활성 리워드 전부 지급 (sourceId로 조회하지 않음)
    */
   async checkIn(userId: number): Promise<{
     attendanceDate: string;
@@ -58,11 +60,10 @@ export class AttendanceService {
 
         const grantKey = `attendance_u${userId}_${today.toISOString().slice(0, 10)}`;
 
-        const granted = await this.rewardService.grantRewardsForSource(
+        const granted = await this.rewardService.grantRewardsForSourceType(
           tx,
           userId,
           RewardSourceType.ATTENDANCE,
-          ATTENDANCE_REWARD_SOURCE_ID,
           grantKey
         );
 

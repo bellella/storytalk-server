@@ -64,7 +64,7 @@ export class RewardService {
   }
 
   /**
-   * sourceType + sourceId에 해당하는 모든 활성 리워드를 조회하고 지급.
+   * sourceType + sourceId에 해당하는 모든 활성 리워드를 조회하고 지급 (에피소드/엔딩 등 특정 묶음).
    * grantKeyPrefix: 중복 방지 키 접두사 (e.g. "ending_5_ep_3_user_1")
    */
   async grantRewardsForSource(
@@ -87,6 +87,39 @@ export class RewardService {
         payload: reward.payload as Record<string, any>,
         sourceType,
         sourceId,
+        description: reward.description ?? undefined,
+        grantKey,
+      });
+      if (result.granted) {
+        grantedRewards.push({ type: result.type, payload: result.payload });
+      }
+    }
+    return grantedRewards;
+  }
+
+  /**
+   * sourceType만으로 활성 리워드 전부 조회·지급 (sourceId로 필터하지 않음).
+   * 이력에는 각 Reward 행의 sourceId를 그대로 기록.
+   */
+  async grantRewardsForSourceType(
+    db: Tx,
+    userId: number,
+    sourceType: RewardSourceType,
+    grantKeyPrefix: string
+  ): Promise<GrantedReward[]> {
+    const rewards = await db.reward.findMany({
+      where: { sourceType, isActive: true },
+    });
+
+    const grantedRewards: GrantedReward[] = [];
+    for (const reward of rewards) {
+      const grantKey = `${grantKeyPrefix}_r${reward.id}`;
+      const result = await this.grantSingle(db, userId, {
+        rewardId: reward.id,
+        type: reward.type,
+        payload: reward.payload as Record<string, any>,
+        sourceType,
+        sourceId: reward.sourceId,
         description: reward.description ?? undefined,
         grantKey,
       });
