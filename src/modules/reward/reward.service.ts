@@ -200,7 +200,7 @@ export class RewardService {
         await db.coinTransaction.create({
           data: {
             userId,
-            type: CoinTxType.AD_REWARD, // 리워드용 타입 재활용 (필요시 ADMIN_ADJUST)
+            type: CoinTxType.REWARD,
             amount,
             balanceAfter,
           },

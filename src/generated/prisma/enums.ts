@@ -331,6 +331,7 @@ export const CoinTxType = {
   TOPUP: 'TOPUP',
   SPEND: 'SPEND',
   REFUND: 'REFUND',
+  REWARD: 'REWARD',
   AD_REWARD: 'AD_REWARD',
   ADMIN_ADJUST: 'ADMIN_ADJUST'
 } as const

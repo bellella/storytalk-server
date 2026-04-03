@@ -1,7 +1,6 @@
 import { PrismaService } from '@/modules/prisma/prisma.service';
 import {
   BadRequestException,
-  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -26,7 +25,7 @@ export class CheckoutService {
   async buyPlayEpisode(
     userId: number,
     productId: number,
-    couponCode?: string
+    userCouponId?: number
   ): Promise<BuyPlayEpisodeResponseDto> {
     // 1. 상품 조회 및 유효성 검증
     const product = await this.prisma.product.findUnique({
@@ -71,21 +70,20 @@ export class CheckoutService {
     let couponApplyMeta:
       | {
           couponId: number;
-          couponCodeId: number;
+          couponCodeId: number | null;
           userCouponId: number;
           discountAmount: number;
         }
       | null = null;
 
-    if (couponCode) {
-      couponApplyMeta = await this.couponsService.validateDiscountCouponForProduct(
-        {
+    if (userCouponId != null) {
+      couponApplyMeta =
+        await this.couponsService.validateDiscountCouponForProductByUserCoupon({
           userId,
           productId,
           productPrice: product.price,
-          couponCode,
-        }
-      );
+          userCouponId,
+        });
       discountAmount = couponApplyMeta.discountAmount;
     }
 

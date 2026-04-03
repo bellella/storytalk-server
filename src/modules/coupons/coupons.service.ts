@@ -366,34 +366,48 @@ export class CouponsService {
     });
   }
 
-  async validateDiscountCouponForProduct(params: {
+  /**
+   * 쿠폰함의 UserCoupon(AVAILABLE)으로 상품 할인 적용 가능 여부 검증.
+   * 할당된 미사용 CouponCode가 있으면 결제 시 소진용으로 함께 반환 (없으면 null).
+   */
+  async validateDiscountCouponForProductByUserCoupon(params: {
     userId: number;
     productId: number;
     productPrice: number;
-    couponCode: string;
+    userCouponId: number;
   }): Promise<{
     couponId: number;
-    couponCodeId: number;
+    couponCodeId: number | null;
     userCouponId: number;
     discountAmount: number;
   }> {
-    const { userId, productId, productPrice, couponCode } = params;
+    const { userId, productId, productPrice, userCouponId } = params;
     const now = new Date();
 
-    const codeRow = await this.prisma.couponCode.findUnique({
-      where: { code: couponCode },
+    const uc = await this.prisma.userCoupon.findFirst({
+      where: {
+        id: userCouponId,
+        userId,
+        status: UserCouponStatus.AVAILABLE,
+      },
       include: { coupon: true },
     });
 
-    if (!codeRow) throw new NotFoundException('Invalid coupon code');
-    if (codeRow.assignedUserId != null && codeRow.assignedUserId !== userId) {
-      throw new BadRequestException('This coupon is not for you');
-    }
-    if (codeRow.usedAt) {
-      throw new BadRequestException('This coupon code already used');
+    if (!uc) {
+      throw new NotFoundException('User coupon not found or not available');
     }
 
-    const coupon = codeRow.coupon;
+    if (uc.validFrom && now < uc.validFrom) {
+      throw new BadRequestException('Coupon not valid yet');
+    }
+    if (uc.validUntil && now > uc.validUntil) {
+      throw new BadRequestException('Coupon expired');
+    }
+    if (uc.expiredAt) {
+      throw new BadRequestException('Coupon expired');
+    }
+
+    const coupon = uc.coupon;
     if (coupon.status !== CouponStatus.ACTIVE) {
       throw new BadRequestException('Coupon is not active');
     }
@@ -423,50 +437,20 @@ export class CouponsService {
       );
     }
 
-    const userCoupon = await this.prisma.userCoupon.findFirst({
+    const codeRow = await this.prisma.couponCode.findFirst({
       where: {
-        userId,
         couponId: coupon.id,
-        status: UserCouponStatus.AVAILABLE,
+        assignedUserId: userId,
+        usedAt: null,
       },
-      orderBy: { issuedAt: 'desc' },
-      select: { id: true, validFrom: true, validUntil: true, expiredAt: true },
+      select: { id: true },
+      orderBy: { id: 'asc' },
     });
-
-    let userCouponId: number;
-    if (!userCoupon) {
-      const validUntil = this.computeValidUntil(
-        { validUntil: coupon.validUntil, expiresInDays: coupon.expiresInDays },
-        now
-      );
-      const created = await this.prisma.userCoupon.create({
-        data: {
-          userId,
-          couponId: coupon.id,
-          status: UserCouponStatus.AVAILABLE,
-          validFrom: coupon.validFrom,
-          validUntil,
-        },
-        select: { id: true },
-      });
-      userCouponId = created.id;
-    } else {
-      if (userCoupon.validFrom && now < userCoupon.validFrom) {
-        throw new BadRequestException('Coupon not valid yet');
-      }
-      if (userCoupon.validUntil && now > userCoupon.validUntil) {
-        throw new BadRequestException('Coupon expired');
-      }
-      if (userCoupon.expiredAt) {
-        throw new BadRequestException('Coupon expired');
-      }
-      userCouponId = userCoupon.id;
-    }
 
     return {
       couponId: coupon.id,
-      couponCodeId: codeRow.id,
-      userCouponId,
+      couponCodeId: codeRow?.id ?? null,
+      userCouponId: uc.id,
       discountAmount: this.computeDiscountPreview(coupon, productPrice),
     };
   }
@@ -475,7 +459,8 @@ export class CouponsService {
     tx: any;
     userId: number;
     couponId: number;
-    couponCodeId: number;
+    /** 없으면 코드 없이 쿠폰함만 발급된 경우 — CouponCode 행 갱신 생략 */
+    couponCodeId: number | null;
     userCouponId: number;
     userPurchaseId: number;
     discountAmount: number;
@@ -514,12 +499,14 @@ export class CouponsService {
       },
     });
 
-    const updatedCode = await tx.couponCode.updateMany({
-      where: { id: couponCodeId, usedAt: null },
-      data: { usedAt: now, assignedUserId: userId },
-    });
-    if (updatedCode.count === 0) {
-      throw new ConflictException('Coupon code already used');
+    if (couponCodeId != null) {
+      const updatedCode = await tx.couponCode.updateMany({
+        where: { id: couponCodeId, usedAt: null },
+        data: { usedAt: now, assignedUserId: userId },
+      });
+      if (updatedCode.count === 0) {
+        throw new ConflictException('Coupon code already used');
+      }
     }
 
     await tx.coupon.update({

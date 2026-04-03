@@ -1153,6 +1153,7 @@ enum CoinTxType {
   TOPUP // 코인 충전
   SPEND // 에피소드 구매로 차감
   REFUND // 환불/롤백
+  REWARD
   AD_REWARD // 광고 보상(추가할 경우)
   ADMIN_ADJUST
 }

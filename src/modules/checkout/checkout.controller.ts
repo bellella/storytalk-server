@@ -26,7 +26,7 @@ export class CheckoutController {
     return this.checkoutService.buyPlayEpisode(
       user.id,
       body.productId,
-      body.couponCode
+      body.userCouponId
     );
   }
 }

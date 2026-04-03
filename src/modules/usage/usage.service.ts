@@ -8,6 +8,7 @@ import {
   ForbiddenException,
   Injectable,
 } from '@nestjs/common';
+import { getSeoulTodayStart } from '@/common/utils/date.util';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   AdRewardRequestDto,
@@ -38,9 +39,7 @@ export class UsageService {
   }
 
   private getToday(): Date {
-    const d = new Date();
-    d.setHours(0, 0, 0, 0);
-    return d;
+    return getSeoulTodayStart();
   }
 
   private async getOrCreateTodayUsage(userId: number, featureType: UsageFeatureType) {

@@ -1,13 +1,15 @@
-import { IsInt, IsOptional, IsString, Min } from 'class-validator';
+import { IsInt, IsOptional, Min } from 'class-validator';
 
 export class BuyPlayEpisodeDto {
   @IsInt()
   @Min(1)
   productId: number;
 
+  /** GET /coupons/available 등에서 받은 userCouponId */
   @IsOptional()
-  @IsString()
-  couponCode?: string;
+  @IsInt()
+  @Min(1)
+  userCouponId?: number;
 }
 
 export class BuyPlayEpisodeResponseDto {

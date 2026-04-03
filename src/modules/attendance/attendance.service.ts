@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { getSeoulTodayStart } from '@/common/utils/date.util';
 import { RewardSourceType, XpSourceType, XpTriggerType } from '@/generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { RewardService, GrantedReward } from '../reward/reward.service';
@@ -28,8 +29,7 @@ export class AttendanceService {
     rewards: GrantedReward[];
     xp: XpProgressDto;
   }> {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const today = getSeoulTodayStart();
 
     const existing = await this.prisma.userAttendance.findUnique({
       where: { userId_attendanceDate: { userId, attendanceDate: today } },
@@ -93,6 +93,7 @@ export class AttendanceService {
 
   /**
    * 이번 달 출석 목록 조회
+   * TODO: API 쓰기 전에 `from`/`to`를 서버 로컬이 아니라 Asia/Seoul 달력 월 경계로 바꿀 것 (`startOfSeoulCalendarDay` 등).
    */
   async getMonthlyAttendance(
     userId: number,
