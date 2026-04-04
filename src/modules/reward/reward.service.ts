@@ -161,6 +161,12 @@ export class RewardService {
       }
     }
 
+    const resolvedDescription = this.resolveRewardDescription(
+      reward.description,
+      reward.sourceType,
+      reward.type
+    );
+
     // 타입별 실제 지급 처리
     switch (reward.type) {
       case RewardType.CHARACTER_INVITE: {
@@ -203,6 +209,7 @@ export class RewardService {
             type: CoinTxType.REWARD,
             amount,
             balanceAfter,
+            description: resolvedDescription,
           },
         });
         break;
@@ -246,12 +253,36 @@ export class RewardService {
         sourceType: reward.sourceType,
         sourceId: reward.sourceId,
         type: reward.type,
-        description: reward.description,
+        description: resolvedDescription,
         payload: reward.payload,
         grantKey: reward.grantKey,
       },
     });
 
     return { granted: true, type: reward.type, payload: reward.payload };
+  }
+
+  /** DB에 description이 없을 때 source/type 기준 기본 문구 */
+  private resolveRewardDescription(
+    explicit: string | undefined | null,
+    sourceType: RewardSourceType,
+    rewardType: RewardType
+  ): string {
+    const trimmed = explicit?.trim();
+    if (trimmed) return trimmed;
+
+    const bySource: Record<RewardSourceType, string> = {
+      [RewardSourceType.EPISODE]: '에피소드 보상',
+      [RewardSourceType.ENDING]: '엔딩 보상',
+      [RewardSourceType.ATTENDANCE]: '출석 보상',
+      [RewardSourceType.SIGNUP]: '가입 보상',
+      [RewardSourceType.EVENT]: '이벤트 보상',
+      [RewardSourceType.ADMIN]: '보상',
+    };
+    const base = bySource[sourceType] ?? '리워드';
+    if (rewardType === RewardType.COIN) {
+      return `${base} 코인`;
+    }
+    return base;
   }
 }

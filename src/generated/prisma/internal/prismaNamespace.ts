@@ -4821,6 +4821,7 @@ export const CharacterScalarFieldEnum = {
   mainImage: 'mainImage',
   description: 'description',
   personality: 'personality',
+  gender: 'gender',
   data: 'data',
   chatPrompt: 'chatPrompt',
   playEpisodePrompt: 'playEpisodePrompt',
@@ -5187,6 +5188,7 @@ export const CoinTransactionScalarFieldEnum = {
   balanceAfter: 'balanceAfter',
   relatedPurchaseId: 'relatedPurchaseId',
   storeOrderId: 'storeOrderId',
+  description: 'description',
   createdAt: 'createdAt'
 } as const
 
@@ -5519,16 +5521,16 @@ export type ListEnumAuthProviderFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
- * Reference to a field of type 'UserGender'
+ * Reference to a field of type 'Gender'
  */
-export type EnumUserGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserGender'>
+export type EnumGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Gender'>
     
 
 
 /**
- * Reference to a field of type 'UserGender[]'
+ * Reference to a field of type 'Gender[]'
  */
-export type ListEnumUserGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserGender[]'>
+export type ListEnumGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Gender[]'>
     
 
 

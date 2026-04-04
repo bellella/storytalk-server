@@ -4,7 +4,7 @@ import {
   AuthProvider,
   QuizSessionType,
   User,
-  UserGender,
+  Gender,
 } from '@/generated/prisma/client';
 import { UserCreateInput } from '@/generated/prisma/models';
 import { UpdatePersonalInfoDto } from './dto/update-personal-info.dto';
@@ -147,7 +147,7 @@ export class UserService {
         email: `withdrawn+${uniqueSuffix}@storytalk.local`,
         providerId: `withdrawn_${uniqueSuffix}`,
         name: null,
-        gender: UserGender.OTHER,
+        gender: null,
         selectedCharacterId: null,
       },
     });

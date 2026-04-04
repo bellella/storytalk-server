@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { getSeoulTodayStart } from '@/common/utils/date.util';
+import { getSeoulNowDay } from '@/common/utils/date.util';
 import { RewardSourceType, XpSourceType, XpTriggerType } from '@/generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { RewardService, GrantedReward } from '../reward/reward.service';
@@ -29,7 +29,8 @@ export class AttendanceService {
     rewards: GrantedReward[];
     xp: XpProgressDto;
   }> {
-    const today = getSeoulTodayStart();
+    const { start: today, ymdKey: attendanceDateKey, ymdString } =
+      getSeoulNowDay();
 
     const existing = await this.prisma.userAttendance.findUnique({
       where: { userId_attendanceDate: { userId, attendanceDate: today } },
@@ -47,18 +48,13 @@ export class AttendanceService {
       throw new NotFoundException('유저를 찾을 수 없습니다.');
     }
 
-    const attendanceDateKey =
-      today.getFullYear() * 10000 +
-      (today.getMonth() + 1) * 100 +
-      today.getDate();
-
     const { granted: rewards, xpGained } = await this.prisma.$transaction(
       async (tx) => {
         await tx.userAttendance.create({
           data: { userId, attendanceDate: today },
         });
 
-        const grantKey = `attendance_u${userId}_${today.toISOString().slice(0, 10)}`;
+        const grantKey = `attendance_u${userId}_${ymdString}`;
 
         const granted = await this.rewardService.grantRewardsForSourceType(
           tx,
@@ -85,7 +81,7 @@ export class AttendanceService {
     );
 
     return {
-      attendanceDate: today.toISOString().slice(0, 10),
+      attendanceDate: ymdString,
       rewards,
       xp,
     };

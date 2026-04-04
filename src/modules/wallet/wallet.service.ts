@@ -81,6 +81,7 @@ export class WalletService {
           balanceAfter: tx.balanceAfter,
           relatedPurchaseId: tx.relatedPurchaseId,
           purchase: this.mapPurchaseSummary(tx.relatedPurchase),
+          description: tx.description ?? null,
           createdAt: tx.createdAt.toISOString(),
         })
       ),

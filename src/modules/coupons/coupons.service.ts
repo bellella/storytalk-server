@@ -645,9 +645,10 @@ export class CouponsService {
       await tx.coinTransaction.create({
         data: {
           userId,
-          type: CoinTxType.ADMIN_ADJUST,
+          type: CoinTxType.COUPON,
           amount: reward,
           balanceAfter,
+          description: coupon.description ?? coupon.name,
         },
       });
 

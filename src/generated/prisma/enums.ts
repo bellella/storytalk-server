@@ -49,13 +49,13 @@ export const UserRole = {
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
-export const UserGender = {
+export const Gender = {
   MALE: 'MALE',
   FEMALE: 'FEMALE',
   OTHER: 'OTHER'
 } as const
 
-export type UserGender = (typeof UserGender)[keyof typeof UserGender]
+export type Gender = (typeof Gender)[keyof typeof Gender]
 
 
 export const StoryType = {
@@ -333,6 +333,7 @@ export const CoinTxType = {
   REFUND: 'REFUND',
   REWARD: 'REWARD',
   AD_REWARD: 'AD_REWARD',
+  COUPON: 'COUPON',
   ADMIN_ADJUST: 'ADMIN_ADJUST'
 } as const
 

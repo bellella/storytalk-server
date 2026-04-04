@@ -1,4 +1,4 @@
-import { UserGender } from '@/generated/prisma/enums';
+import { Gender } from '@/generated/prisma/enums';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsEnum,
@@ -17,7 +17,7 @@ export class UpdatePersonalInfoDto {
   @IsNotEmpty()
   selectedCharacterId: number;
 
-  @ApiPropertyOptional({ enum: UserGender, enumName: 'UserGender' })
-  @IsEnum(UserGender)
-  gender: UserGender;
+  @ApiPropertyOptional({ enum: Gender, enumName: 'Gender' })
+  @IsEnum(Gender)
+  gender: Gender;
 }

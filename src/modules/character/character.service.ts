@@ -93,6 +93,7 @@ export class CharacterService {
         mainImage: true,
         description: true,
         personality: true,
+        gender: true,
       },
     });
     let affinity = 0;
@@ -107,6 +108,7 @@ export class CharacterService {
       id: character.id,
       name: character.name,
       avatarImage: character.avatarImage ?? '',
+      gender: character.gender,
       mainImage: character.mainImage ?? '',
       description: character.description,
       personality: character.personality ?? '',
@@ -124,7 +126,12 @@ export class CharacterService {
     const [images, characters] = await Promise.all([
       this.prisma.characterImage.findMany({
         where: { characterId: { in: characterIds } },
-        select: { characterId: true, imageUrl: true, label: true, isDefault: true },
+        select: {
+          characterId: true,
+          imageUrl: true,
+          label: true,
+          isDefault: true,
+        },
       }),
       this.prisma.character.findMany({
         where: { id: { in: characterIds } },

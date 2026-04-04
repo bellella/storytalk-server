@@ -1,3 +1,4 @@
+import { mapDialogueToReviewItemDialogueDto } from '@/modules/episode/utils/review-item-dialogue.mapper';
 import { PrismaService } from '@/modules/prisma/prisma.service';
 import {
   ConflictException,
@@ -5,6 +6,10 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { UserReviewItemDto, UserReviewItemListDto } from './dto/review.dto';
+
+const dialogueIncludeForReview = {
+  character: true,
+} as const;
 
 @Injectable()
 export class ReviewService {
@@ -30,26 +35,20 @@ export class ReviewService {
 
     const dialogue = await this.prisma.dialogue.findUnique({
       where: { id: reviewItem.dialogueId },
-      select: {
-        englishText: true,
-        koreanText: true,
-        characterName: true,
-        character: { select: { avatarImage: true } },
-      },
+      include: dialogueIncludeForReview,
     });
 
     return this.mapItem(saved, reviewItem, dialogue);
   }
 
-  async removeReviewItem(userId: number, reviewItemId: number): Promise<void> {
-    const item = await this.prisma.userReviewItem.findUnique({
-      where: { userId_reviewItemId: { userId, reviewItemId } },
+  async removeReviewItem(
+    userId: number,
+    userReviewItemId: number
+  ): Promise<void> {
+    const deleted = await this.prisma.userReviewItem.deleteMany({
+      where: { id: userReviewItemId, userId },
     });
-    if (!item) throw new NotFoundException('Not found');
-
-    await this.prisma.userReviewItem.delete({
-      where: { userId_reviewItemId: { userId, reviewItemId } },
-    });
+    if (deleted.count === 0) throw new NotFoundException('Not found');
   }
 
   async getUserReviewItems(userId: number): Promise<UserReviewItemListDto> {
@@ -62,13 +61,7 @@ export class ReviewService {
     const dialogueIds = items.map((i) => i.reviewItem.dialogueId);
     const dialogues = await this.prisma.dialogue.findMany({
       where: { id: { in: dialogueIds } },
-      select: {
-        id: true,
-        englishText: true,
-        koreanText: true,
-        characterName: true,
-        character: { select: { avatarImage: true } },
-      },
+      include: dialogueIncludeForReview,
     });
     const dialogueMap = new Map(dialogues.map((d) => [d.id, d]));
 
@@ -90,25 +83,39 @@ export class ReviewService {
       order: number;
     },
     dialogue: {
+      id: number;
+      order: number;
+      type: string;
+      characterName: string | null;
+      characterId: number | null;
       englishText: string;
       koreanText: string;
-      characterName: string | null;
-      character: { avatarImage: string | null } | null;
+      charImageLabel: string | null;
+      imageUrl: string | null;
+      audioUrl: string | null;
+      character: {
+        id: number;
+        name: string;
+        koreanName: string | null;
+        avatarImage: string | null;
+        mainImage: string | null;
+        description: string;
+      } | null;
     } | null
   ): UserReviewItemDto {
+    if (!dialogue) {
+      throw new NotFoundException(
+        `Dialogue with id ${reviewItem.dialogueId} not found`
+      );
+    }
     return {
-      id: item.id,
+      userReviewItemId: item.id,
       reviewItemId: item.reviewItemId,
       episodeId: reviewItem.episodeId,
       dialogueId: reviewItem.dialogueId,
       description: reviewItem.description,
       order: reviewItem.order,
-      dialogue: {
-        englishText: dialogue?.englishText ?? '',
-        koreanText: dialogue?.koreanText ?? '',
-        characterName: dialogue?.characterName ?? null,
-        characterAvatarUrl: dialogue?.character?.avatarImage ?? null,
-      },
+      dialogue: mapDialogueToReviewItemDialogueDto(dialogue),
       createdAt: item.createdAt.toISOString(),
     };
   }

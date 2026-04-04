@@ -41,7 +41,7 @@ enum UserRole {
   ADMIN
 }
 
-enum UserGender {
+enum Gender {
   MALE
   FEMALE
   OTHER
@@ -53,7 +53,7 @@ model User {
   email      String
   provider   AuthProvider
   providerId String
-  gender     UserGender?
+  gender     Gender?
   level      Level        @default(BEGINNER)
   XpLevel    Int          @default(1)
   xp         Int          @default(0)
@@ -494,6 +494,7 @@ model Character {
   mainImage   String?
   description String
   personality String?
+  gender      Gender?
 
   data Json?
 
@@ -1155,6 +1156,7 @@ enum CoinTxType {
   REFUND // 환불/롤백
   REWARD
   AD_REWARD // 광고 보상(추가할 경우)
+  COUPON // 쿠폰 코드로 코인 지급
   ADMIN_ADJUST
 }
 
@@ -1172,6 +1174,9 @@ model CoinTransaction {
 
   // 인앱 충전이면 storeOrdferId/receipt 키도 남기기 좋음
   storeOrderId String?
+
+  /// 표시용 (리워드/쿠폰 등 문구 스냅샷)
+  description String?
 
   createdAt DateTime @default(now())
 

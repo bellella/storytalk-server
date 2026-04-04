@@ -21,22 +21,24 @@ import { UserReviewItemDto, UserReviewItemListDto } from './dto/review.dto';
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 
-  @Post('items/:id')
+  /** 카탈로그 `ReviewItem.id`로 담기 */
+  @Post('items/catalog/:reviewItemId')
   @ApiOkResponse({ type: UserReviewItemDto })
   addReviewItem(
     @ReqUser('id') userId: number,
-    @Param('id', ParseIntPipe) reviewItemId: number
+    @Param('reviewItemId', ParseIntPipe) reviewItemId: number
   ): Promise<UserReviewItemDto> {
     return this.reviewService.addReviewItem(userId, reviewItemId);
   }
 
-  @Delete('items/:id')
+  /** 목록의 `userReviewItemId`로 빼기 */
+  @Delete('items/saved/:userReviewItemId')
   @HttpCode(HttpStatus.NO_CONTENT)
   removeReviewItem(
     @ReqUser('id') userId: number,
-    @Param('id', ParseIntPipe) reviewItemId: number
+    @Param('userReviewItemId', ParseIntPipe) userReviewItemId: number
   ): Promise<void> {
-    return this.reviewService.removeReviewItem(userId, reviewItemId);
+    return this.reviewService.removeReviewItem(userId, userReviewItemId);
   }
 
   @Get('items')

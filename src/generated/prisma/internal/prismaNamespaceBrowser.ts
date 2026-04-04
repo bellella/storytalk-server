@@ -378,6 +378,7 @@ export const CharacterScalarFieldEnum = {
   mainImage: 'mainImage',
   description: 'description',
   personality: 'personality',
+  gender: 'gender',
   data: 'data',
   chatPrompt: 'chatPrompt',
   playEpisodePrompt: 'playEpisodePrompt',
@@ -744,6 +745,7 @@ export const CoinTransactionScalarFieldEnum = {
   balanceAfter: 'balanceAfter',
   relatedPurchaseId: 'relatedPurchaseId',
   storeOrderId: 'storeOrderId',
+  description: 'description',
   createdAt: 'createdAt'
 } as const
 

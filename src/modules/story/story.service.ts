@@ -14,6 +14,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { QuizDto } from '../episode/dto/quiz.dto';
 import { QuizService } from '../quiz/quiz.service';
 import { ReviewItemDto } from '../episode/dto/review-item.dto';
+import { mapDialogueToReviewItemDialogueDto } from '../episode/utils/review-item-dialogue.mapper';
 import { UserEpisodeDto } from '../episode/dto/user-episode.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import {
@@ -439,28 +440,7 @@ export class StoryService {
         dialogueId: item.dialogueId,
         description: item.description ?? undefined,
         order: item.order,
-        dialogue: {
-          id: dialogue.id,
-          order: dialogue.order,
-          type: dialogue.type,
-          characterName: dialogue.characterName ?? undefined,
-          characterId: dialogue.characterId ?? undefined,
-          englishText: dialogue.englishText,
-          koreanText: dialogue.koreanText,
-          charImageLabel: dialogue.charImageLabel ?? undefined,
-          imageUrl: dialogue.imageUrl ?? undefined,
-          audioUrl: dialogue.audioUrl ?? undefined,
-          character: dialogue.character
-            ? {
-                id: dialogue.character.id,
-                name: dialogue.character.name,
-                koreanName: dialogue.character.koreanName ?? undefined,
-                avatarImage: dialogue.character.avatarImage ?? undefined,
-                mainImage: dialogue.character.mainImage ?? undefined,
-                description: dialogue.character.description,
-              }
-            : undefined,
-        },
+        dialogue: mapDialogueToReviewItemDialogueDto(dialogue),
       };
     });
   }

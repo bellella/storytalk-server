@@ -29,6 +29,8 @@ export class CoinTransactionItemDto {
   relatedPurchaseId: number | null;
   /** 구매와 연결된 경우에만 — 상품·에피소드·스토리 조인 */
   purchase: CoinTransactionPurchaseSummaryDto | null;
+  /** 리워드/쿠폰 등 스냅샷 문구 (없으면 null) */
+  description: string | null;
   createdAt: string;
 }
 

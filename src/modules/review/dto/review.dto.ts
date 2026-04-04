@@ -1,16 +1,14 @@
+import { ReviewItemDialogueDto } from '@/modules/episode/dto/review-item.dto';
+
 export class UserReviewItemDto {
-  id: number;
+  /** UserReviewItem PK — 삭제 시 `DELETE .../items/saved/:userReviewItemId`에 넣을 값 */
+  userReviewItemId: number;
   reviewItemId: number;
   episodeId: number;
   dialogueId: number;
   description: string | null;
   order: number;
-  dialogue: {
-    englishText: string;
-    koreanText: string;
-    characterName: string | null;
-    characterAvatarUrl: string | null;
-  };
+  dialogue: ReviewItemDialogueDto;
   createdAt: string;
 }
 

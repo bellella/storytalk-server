@@ -50,6 +50,7 @@ export type CoinTransactionMinAggregateOutputType = {
   balanceAfter: number | null
   relatedPurchaseId: number | null
   storeOrderId: string | null
+  description: string | null
   createdAt: Date | null
 }
 
@@ -61,6 +62,7 @@ export type CoinTransactionMaxAggregateOutputType = {
   balanceAfter: number | null
   relatedPurchaseId: number | null
   storeOrderId: string | null
+  description: string | null
   createdAt: Date | null
 }
 
@@ -72,6 +74,7 @@ export type CoinTransactionCountAggregateOutputType = {
   balanceAfter: number
   relatedPurchaseId: number
   storeOrderId: number
+  description: number
   createdAt: number
   _all: number
 }
@@ -101,6 +104,7 @@ export type CoinTransactionMinAggregateInputType = {
   balanceAfter?: true
   relatedPurchaseId?: true
   storeOrderId?: true
+  description?: true
   createdAt?: true
 }
 
@@ -112,6 +116,7 @@ export type CoinTransactionMaxAggregateInputType = {
   balanceAfter?: true
   relatedPurchaseId?: true
   storeOrderId?: true
+  description?: true
   createdAt?: true
 }
 
@@ -123,6 +128,7 @@ export type CoinTransactionCountAggregateInputType = {
   balanceAfter?: true
   relatedPurchaseId?: true
   storeOrderId?: true
+  description?: true
   createdAt?: true
   _all?: true
 }
@@ -221,6 +227,7 @@ export type CoinTransactionGroupByOutputType = {
   balanceAfter: number
   relatedPurchaseId: number | null
   storeOrderId: string | null
+  description: string | null
   createdAt: Date
   _count: CoinTransactionCountAggregateOutputType | null
   _avg: CoinTransactionAvgAggregateOutputType | null
@@ -255,6 +262,7 @@ export type CoinTransactionWhereInput = {
   balanceAfter?: Prisma.IntFilter<"CoinTransaction"> | number
   relatedPurchaseId?: Prisma.IntNullableFilter<"CoinTransaction"> | number | null
   storeOrderId?: Prisma.StringNullableFilter<"CoinTransaction"> | string | null
+  description?: Prisma.StringNullableFilter<"CoinTransaction"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CoinTransaction"> | Date | string
   relatedPurchase?: Prisma.XOR<Prisma.UserPurchaseNullableScalarRelationFilter, Prisma.UserPurchaseWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -268,6 +276,7 @@ export type CoinTransactionOrderByWithRelationInput = {
   balanceAfter?: Prisma.SortOrder
   relatedPurchaseId?: Prisma.SortOrderInput | Prisma.SortOrder
   storeOrderId?: Prisma.SortOrderInput | Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   relatedPurchase?: Prisma.UserPurchaseOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
@@ -284,6 +293,7 @@ export type CoinTransactionWhereUniqueInput = Prisma.AtLeast<{
   balanceAfter?: Prisma.IntFilter<"CoinTransaction"> | number
   relatedPurchaseId?: Prisma.IntNullableFilter<"CoinTransaction"> | number | null
   storeOrderId?: Prisma.StringNullableFilter<"CoinTransaction"> | string | null
+  description?: Prisma.StringNullableFilter<"CoinTransaction"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CoinTransaction"> | Date | string
   relatedPurchase?: Prisma.XOR<Prisma.UserPurchaseNullableScalarRelationFilter, Prisma.UserPurchaseWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -297,6 +307,7 @@ export type CoinTransactionOrderByWithAggregationInput = {
   balanceAfter?: Prisma.SortOrder
   relatedPurchaseId?: Prisma.SortOrderInput | Prisma.SortOrder
   storeOrderId?: Prisma.SortOrderInput | Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.CoinTransactionCountOrderByAggregateInput
   _avg?: Prisma.CoinTransactionAvgOrderByAggregateInput
@@ -316,6 +327,7 @@ export type CoinTransactionScalarWhereWithAggregatesInput = {
   balanceAfter?: Prisma.IntWithAggregatesFilter<"CoinTransaction"> | number
   relatedPurchaseId?: Prisma.IntNullableWithAggregatesFilter<"CoinTransaction"> | number | null
   storeOrderId?: Prisma.StringNullableWithAggregatesFilter<"CoinTransaction"> | string | null
+  description?: Prisma.StringNullableWithAggregatesFilter<"CoinTransaction"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CoinTransaction"> | Date | string
 }
 
@@ -324,6 +336,7 @@ export type CoinTransactionCreateInput = {
   amount: number
   balanceAfter: number
   storeOrderId?: string | null
+  description?: string | null
   createdAt?: Date | string
   relatedPurchase?: Prisma.UserPurchaseCreateNestedOneWithoutCoinTransactionsInput
   user: Prisma.UserCreateNestedOneWithoutCoinTransactionsInput
@@ -337,6 +350,7 @@ export type CoinTransactionUncheckedCreateInput = {
   balanceAfter: number
   relatedPurchaseId?: number | null
   storeOrderId?: string | null
+  description?: string | null
   createdAt?: Date | string
 }
 
@@ -345,6 +359,7 @@ export type CoinTransactionUpdateInput = {
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   relatedPurchase?: Prisma.UserPurchaseUpdateOneWithoutCoinTransactionsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCoinTransactionsNestedInput
@@ -358,6 +373,7 @@ export type CoinTransactionUncheckedUpdateInput = {
   balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
   relatedPurchaseId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -369,6 +385,7 @@ export type CoinTransactionCreateManyInput = {
   balanceAfter: number
   relatedPurchaseId?: number | null
   storeOrderId?: string | null
+  description?: string | null
   createdAt?: Date | string
 }
 
@@ -377,6 +394,7 @@ export type CoinTransactionUpdateManyMutationInput = {
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -388,6 +406,7 @@ export type CoinTransactionUncheckedUpdateManyInput = {
   balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
   relatedPurchaseId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -409,6 +428,7 @@ export type CoinTransactionCountOrderByAggregateInput = {
   balanceAfter?: Prisma.SortOrder
   relatedPurchaseId?: Prisma.SortOrder
   storeOrderId?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -428,6 +448,7 @@ export type CoinTransactionMaxOrderByAggregateInput = {
   balanceAfter?: Prisma.SortOrder
   relatedPurchaseId?: Prisma.SortOrder
   storeOrderId?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -439,6 +460,7 @@ export type CoinTransactionMinOrderByAggregateInput = {
   balanceAfter?: Prisma.SortOrder
   relatedPurchaseId?: Prisma.SortOrder
   storeOrderId?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -543,6 +565,7 @@ export type CoinTransactionCreateWithoutUserInput = {
   amount: number
   balanceAfter: number
   storeOrderId?: string | null
+  description?: string | null
   createdAt?: Date | string
   relatedPurchase?: Prisma.UserPurchaseCreateNestedOneWithoutCoinTransactionsInput
 }
@@ -554,6 +577,7 @@ export type CoinTransactionUncheckedCreateWithoutUserInput = {
   balanceAfter: number
   relatedPurchaseId?: number | null
   storeOrderId?: string | null
+  description?: string | null
   createdAt?: Date | string
 }
 
@@ -594,6 +618,7 @@ export type CoinTransactionScalarWhereInput = {
   balanceAfter?: Prisma.IntFilter<"CoinTransaction"> | number
   relatedPurchaseId?: Prisma.IntNullableFilter<"CoinTransaction"> | number | null
   storeOrderId?: Prisma.StringNullableFilter<"CoinTransaction"> | string | null
+  description?: Prisma.StringNullableFilter<"CoinTransaction"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CoinTransaction"> | Date | string
 }
 
@@ -602,6 +627,7 @@ export type CoinTransactionCreateWithoutRelatedPurchaseInput = {
   amount: number
   balanceAfter: number
   storeOrderId?: string | null
+  description?: string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCoinTransactionsInput
 }
@@ -613,6 +639,7 @@ export type CoinTransactionUncheckedCreateWithoutRelatedPurchaseInput = {
   amount: number
   balanceAfter: number
   storeOrderId?: string | null
+  description?: string | null
   createdAt?: Date | string
 }
 
@@ -649,6 +676,7 @@ export type CoinTransactionCreateManyUserInput = {
   balanceAfter: number
   relatedPurchaseId?: number | null
   storeOrderId?: string | null
+  description?: string | null
   createdAt?: Date | string
 }
 
@@ -657,6 +685,7 @@ export type CoinTransactionUpdateWithoutUserInput = {
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   relatedPurchase?: Prisma.UserPurchaseUpdateOneWithoutCoinTransactionsNestedInput
 }
@@ -668,6 +697,7 @@ export type CoinTransactionUncheckedUpdateWithoutUserInput = {
   balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
   relatedPurchaseId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -678,6 +708,7 @@ export type CoinTransactionUncheckedUpdateManyWithoutUserInput = {
   balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
   relatedPurchaseId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -688,6 +719,7 @@ export type CoinTransactionCreateManyRelatedPurchaseInput = {
   amount: number
   balanceAfter: number
   storeOrderId?: string | null
+  description?: string | null
   createdAt?: Date | string
 }
 
@@ -696,6 +728,7 @@ export type CoinTransactionUpdateWithoutRelatedPurchaseInput = {
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCoinTransactionsNestedInput
 }
@@ -707,6 +740,7 @@ export type CoinTransactionUncheckedUpdateWithoutRelatedPurchaseInput = {
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -717,6 +751,7 @@ export type CoinTransactionUncheckedUpdateManyWithoutRelatedPurchaseInput = {
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
   storeOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -730,6 +765,7 @@ export type CoinTransactionSelect<ExtArgs extends runtime.Types.Extensions.Inter
   balanceAfter?: boolean
   relatedPurchaseId?: boolean
   storeOrderId?: boolean
+  description?: boolean
   createdAt?: boolean
   relatedPurchase?: boolean | Prisma.CoinTransaction$relatedPurchaseArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -743,6 +779,7 @@ export type CoinTransactionSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   balanceAfter?: boolean
   relatedPurchaseId?: boolean
   storeOrderId?: boolean
+  description?: boolean
   createdAt?: boolean
   relatedPurchase?: boolean | Prisma.CoinTransaction$relatedPurchaseArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -756,6 +793,7 @@ export type CoinTransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   balanceAfter?: boolean
   relatedPurchaseId?: boolean
   storeOrderId?: boolean
+  description?: boolean
   createdAt?: boolean
   relatedPurchase?: boolean | Prisma.CoinTransaction$relatedPurchaseArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -769,10 +807,11 @@ export type CoinTransactionSelectScalar = {
   balanceAfter?: boolean
   relatedPurchaseId?: boolean
   storeOrderId?: boolean
+  description?: boolean
   createdAt?: boolean
 }
 
-export type CoinTransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "type" | "amount" | "balanceAfter" | "relatedPurchaseId" | "storeOrderId" | "createdAt", ExtArgs["result"]["coinTransaction"]>
+export type CoinTransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "type" | "amount" | "balanceAfter" | "relatedPurchaseId" | "storeOrderId" | "description" | "createdAt", ExtArgs["result"]["coinTransaction"]>
 export type CoinTransactionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   relatedPurchase?: boolean | Prisma.CoinTransaction$relatedPurchaseArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -800,6 +839,10 @@ export type $CoinTransactionPayload<ExtArgs extends runtime.Types.Extensions.Int
     balanceAfter: number
     relatedPurchaseId: number | null
     storeOrderId: string | null
+    /**
+     * 표시용 (리워드/쿠폰 등 문구 스냅샷)
+     */
+    description: string | null
     createdAt: Date
   }, ExtArgs["result"]["coinTransaction"]>
   composites: {}
@@ -1233,6 +1276,7 @@ export interface CoinTransactionFieldRefs {
   readonly balanceAfter: Prisma.FieldRef<"CoinTransaction", 'Int'>
   readonly relatedPurchaseId: Prisma.FieldRef<"CoinTransaction", 'Int'>
   readonly storeOrderId: Prisma.FieldRef<"CoinTransaction", 'String'>
+  readonly description: Prisma.FieldRef<"CoinTransaction", 'String'>
   readonly createdAt: Prisma.FieldRef<"CoinTransaction", 'DateTime'>
 }
     

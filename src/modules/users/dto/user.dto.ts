@@ -1,4 +1,4 @@
-import { Level, UserGender, UserRole } from '@/generated/prisma/enums';
+import { Level, Gender, UserRole } from '@/generated/prisma/enums';
 import { ApiProperty } from '@nestjs/swagger';
 import { XpDto } from '../../xp/dto/xp-progress.dto';
 
@@ -6,8 +6,8 @@ export class UserDto {
   id: number;
   email: string;
   name: string | null;
-  @ApiProperty({ enum: UserGender, enumName: 'UserGender' })
-  gender: UserGender | null;
+  @ApiProperty({ enum: Gender, enumName: 'Gender' })
+  gender: Gender | null;
   @ApiProperty({ enum: UserRole, enumName: 'UserRole' })
   role: UserRole;
 }
@@ -30,8 +30,8 @@ export class UserProfileDto extends UserDto {
 export class RegisterProfileDto {
   name: string;
 
-  @ApiProperty({ enum: UserGender, enumName: 'UserGender' })
-  gender: UserGender;
+  @ApiProperty({ enum: Gender, enumName: 'Gender' })
+  gender: Gender;
 }
 
 export class DailyStatusDto {
