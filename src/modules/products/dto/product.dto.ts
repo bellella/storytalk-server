@@ -9,8 +9,8 @@ export class EpisodeInProductDto {
   title: string;
   koreanTitle: string | null;
   thumbnailUrl: string | null;
-  /** Episode.tags (Json) */
-  tags?: unknown | null;
+  /** Episode.tags — JSON 배열 파싱 결과 */
+  tags: string[];
   storyId: number;
   storyTitle: string;
   isLiked?: boolean;

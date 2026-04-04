@@ -116,6 +116,7 @@ export class ProductsService {
                 title: true,
                 koreanTitle: true,
                 thumbnailUrl: true,
+                tags: true,
                 story: { select: { id: true, title: true } },
               },
             },
@@ -284,7 +285,7 @@ export class ProductsService {
         title: string;
         koreanTitle: string | null;
         thumbnailUrl: string | null;
-        tags: unknown | null;
+        tags?: unknown | null;
         story: { id: number; title: string };
       };
     },
@@ -295,11 +296,30 @@ export class ProductsService {
       title: ep.episode.title,
       koreanTitle: ep.episode.koreanTitle,
       thumbnailUrl: ep.episode.thumbnailUrl,
-      tags: ep.episode.tags ?? null,
+      tags: this.parseEpisodeTagsJson(ep.episode.tags),
       storyId: ep.episode.story.id,
       storyTitle: ep.episode.story.title,
       ...(typeof isLiked === 'boolean' ? { isLiked } : {}),
     };
+  }
+
+  /** Episode.tags (Json) → 문자열 배열 */
+  private parseEpisodeTagsJson(value: unknown | null | undefined): string[] {
+    if (value == null) return [];
+    if (Array.isArray(value)) {
+      return value.filter((x): x is string => typeof x === 'string');
+    }
+    if (typeof value === 'string') {
+      try {
+        const parsed = JSON.parse(value) as unknown;
+        if (Array.isArray(parsed)) {
+          return parsed.filter((x): x is string => typeof x === 'string');
+        }
+      } catch {
+        return [];
+      }
+    }
+    return [];
   }
 
   private mapProduct(
