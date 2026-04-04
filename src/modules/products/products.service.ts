@@ -12,6 +12,17 @@ import {
   TopCollectionResponseDto,
 } from './dto/product.dto';
 import { CollectionKey } from '@/generated/prisma/enums';
+import { Prisma } from '@/generated/prisma/client';
+
+/** 상품에 묶인 에피소드 미리보기용 — 모든 목록/상세에서 동일 */
+const episodeSelectForProduct: Prisma.EpisodeSelect = {
+  id: true,
+  title: true,
+  koreanTitle: true,
+  thumbnailUrl: true,
+  tags: true,
+  story: { select: { id: true, title: true } },
+};
 
 @Injectable()
 export class ProductsService {
@@ -37,13 +48,7 @@ export class ProductsService {
                   take: 1,
                   include: {
                     episode: {
-                      select: {
-                        id: true,
-                        title: true,
-                        koreanTitle: true,
-                        thumbnailUrl: true,
-                        story: { select: { id: true, title: true } },
-                      },
+                      select: episodeSelectForProduct,
                     },
                   },
                 },
@@ -111,14 +116,7 @@ export class ProductsService {
           take: 1,
           include: {
             episode: {
-              select: {
-                id: true,
-                title: true,
-                koreanTitle: true,
-                thumbnailUrl: true,
-                tags: true,
-                story: { select: { id: true, title: true } },
-              },
+              select: episodeSelectForProduct,
             },
           },
         },
@@ -161,13 +159,7 @@ export class ProductsService {
               take: 1,
               include: {
                 episode: {
-                  select: {
-                    id: true,
-                    title: true,
-                    koreanTitle: true,
-                    thumbnailUrl: true,
-                    story: { select: { id: true, title: true } },
-                  },
+                  select: episodeSelectForProduct,
                 },
               },
             },
@@ -216,14 +208,7 @@ export class ProductsService {
           take: 1,
           include: {
             episode: {
-              select: {
-                id: true,
-                title: true,
-                koreanTitle: true,
-                thumbnailUrl: true,
-                tags: true,
-                story: { select: { id: true, title: true } },
-              },
+              select: episodeSelectForProduct,
             },
           },
         },
